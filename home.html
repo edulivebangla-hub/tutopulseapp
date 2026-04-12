@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TutoPulse App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#4285F4',
+                        darkBlue: '#1A237E',
+                        brandGray: '#757575',
+                        greenBtn: '#C8E6C9',
+                        greenText: '#2E7D32',
+                        redBadgeBg: '#FFEBEE',
+                        redBadgeText: '#C62828',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ===== LIGHT MODE VARIABLES (default) ===== */
+        :root {
+            --bg-primary: #f8f9fb;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f3f4;
+            --text-primary: #333333;
+            --text-secondary: #222222;
+            --text-muted: #8D94A2;
+            --header-bg: #ffffff;
+            --header-text: #31409f;
+            --footer-bg: #ffffff;
+            --card-bg: #ffffff;
+            --card-border: #f1f3f4;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-lg: 0 2px 4px rgba(0,0,0,0.5);
+            --border-light: #d9d9d9;
+            --border-dashed: #b0b0b0;
+            --accent-gold: #ffca28;
+            --pill-bg: #f1f3f4;
+        }
+
+        /* ===== DARK MODE VARIABLES ===== */
+        body.dark {
+            --bg-primary: #121212;
+            --bg-secondary: #000;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #ffffff;
+            --text-muted: #a0a0a0;
+            --header-bg: #1e1e1e;
+            --header-text: #7b8cff;
+            --footer-bg: #1e1e1e;
+            --card-bg: #2d2d2d;
+            --card-border: #3d3d3d;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+            --shadow-md: 0 2px 4px rgba(0,0,0,0.4);
+            --shadow-lg: 0 2px 4px rgba(0,0,0,0.6);
+            --border-light: #444444;
+            --border-dashed: #555555;
+            --accent-gold: #ffca28;
+            --pill-bg: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            text-decoration: none;
+        }
+
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        /* --- Header Styles --- */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: var(--header-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 110px;
+            padding-top: 10px;
+        }
+
+        .header-title {
+            font-family: 'Nunito', sans-serif;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fff;
+        }
+
+        .header-icon {
+            padding: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            color: var(--header-text);
+            justify-content: center;
+        }
+
+        .header-icon:hover {
+            background: rgba(0, 0, 0, 0.08);
+            padding: 7px;
+            border-radius: 50px;
+        }
+
+        body.dark .header-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .gift-img {
+            display: flex;
+            width: 25px;
+            height: 25px;
+        }
+
+        /* --- Main Content Area --- */
+        .app-content {
+            position: fixed;
+            top: 60px;
+            bottom: 65px;
+            width: 100%;
+            overflow-y: auto;
+            background-color: var(--bg-secondary);
+        }
+
+        /* --- Footer Nav Styles --- */
+        .app-footer {
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: var(--footer-bg);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        body.dark .app-footer {
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            width: 65px;
+            height: 100%;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease-in-out;
+        }
+
+        .nav-item.active {
+            color: #31409f;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 50px;
+            padding: 5px;
+        }
+
+        body.dark .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Ripple Effect Elements */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.5s linear;
+            background-color: rgba(49, 64, 120, 0.10);
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(10.5);
+                opacity: 0;
+            }
+        }
+
+        .swiper {
+            width: 100%;
+            padding-top: 10px;
+            padding-bottom: 35px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.5s ease-in-out;
+            opacity: 0.4;
+            margin-left: 22px;
+            margin-right: 22px;
+        }
+
+        .swiper-slide-active {
+            opacity: 1;
+        }
+
+        @media (min-width: 768px) {
+            .swiper-slide {
+                width: 700px;
+                height: 320px;
+            }
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #d1d5db;
+            opacity: 1;
+            margin: 0 3px !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #ffcc00 !important;
+            width: 10px;
+            height: 10px;
+        }
+
+        .container {
+            padding-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        /* Profile Section */
+        .profile-pill {
+            display: flex;
+            align-items: center;
+            background-color: var(--pill-bg);
+            border-radius: 50px;
+            padding: 0px 20px 0px 0px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .avatar-container {
+            width: 60px;
+            background-color: var(--bg-secondary);
+            border-radius: 50%;
+            border: 3px solid var(--accent-gold);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            z-index: 2;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .greeting-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a237e;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        body.dark .greeting-name {
+            color: #a0b4ff;
+        }
+
+        .greeting-name span {
+            color: #7b1fa2;
+        }
+
+        body.dark .greeting-name span {
+            color: #ce93d8;
+        }
+
+        .time-status {
+            font-size: 16px;
+            font-weight: 600;
+            color: #03a9f4;
+            margin: 0;
+            margin-top: 2px;
+            font-weight: 700;
+        }
+
+        /* Wallet Section */
+        .wallet-pill {
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50px;
+            padding: 1px 20px;
+            height: fit-content;
+            background-color: var(--bg-secondary);
+        }
+
+        .currency-symbol {
+            font-size: 20px;
+            font-weight: 800;
+            color: #7b1fa2;
+            margin-right: 2px;
+            display: flex;
+            align-items: center;
+        }
+
+        body.dark .currency-symbol {
+            color: #ce93d8;
+        }
+
+        .amount {
+            font-size: 18px;
+            font-weight: 800;
+            color: #7b1fa2;
+        }
+
+        body.dark .amount {
+            color: #ce93d8;
+        }
+
+        /* Container to center content on large screens */
+        .button-container {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .pill-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .pill-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--pill-bg);
+            padding: 1px 10px;
+            box-shadow: var(--shadow-lg);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .pill-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        body.dark .pill-button:hover {
+            background-color: #3d3d3d;
+        }
+
+        .card-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            justify-items: center;
+        }
+
+        .card-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            width: 80px;
+            height: 80px;
+            box-shadow: var(--shadow-lg);
+            text-decoration: none;
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            transition: background-color 0.2s;
+        }
+
+        .card-button .emblem-container {
+            width: 50px;
+            height: 50px;
+            background-color: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--card-border);
+            margin-bottom: 5px;
+        }
+
+        .card-button img.emblem {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .card-button span {
+            font-size: 10px;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        :root {
+            --primary-blue: #0b57d0;
+            --hover-blue: #083d8e;
+            --error-red: #d93025;
+            --accent-orange: orange;
+            --bg-gray: #f7f7f7;
+            --border-gray: #d9d9d9;
+        }
+
+        .container-exam {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+        }
+
+        .exams {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--text-primary);
+            gap: 5px;
+        }
+
+        .exams div {
+            flex: 1;
+            text-align: center;
+            padding: 10px 5px;
+            cursor: pointer;
+            border-radius: 20px 20px 0 0;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .exams div.active {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border: 2px dashed var(--border-dashed);
+            margin-bottom: 15px;
+            border-radius: 15px;
+            background-color: var(--card-bg);
+            transition: border-color 0.3s;
+        }
+
+        .list-item:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            border-radius: 15px;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--accent-orange);
+            object-fit: cover;
+        }
+
+        .text-info-container-exam {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            margin: 0 0 5px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .info-dates {
+            font-size: 12px;
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .apply-start { color: var(--primary-blue); font-weight: 600; }
+        .last-date { color: var(--error-red); font-weight: 600; }
+
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .icons-container-exam {
+            display: flex;
+            gap: 8px;
+        }
+
+        .pdf-icon {
+            width: 24px;
+            height: 28px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .pdf-label {
+            background-color: var(--error-red);
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 1px 4px;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .apply-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: 2px solid var(--accent-orange);
+            font-size: 13px;
+            font-weight: bold;
+            padding: 6px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .apply-btn:hover {
+            background-color: var(--hover-blue);
+        }
+
+        /* Dark mode toggle button */
+        #darkToggle {
+            cursor: pointer;
+            padding: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .list-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .right-section { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
+            .exams div { font-size: 11px; padding: 8px 2px; }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="app-header">
+        <div class="header-left">
+            <img src="https://i.ibb.co/zW0jJFNF/IMG-20260401-083938.png" alt="TutoPulse Logo" class="logo-img">
+        </div>
+        <div class="header-right">
+           <a href="#"><div class="header-icon">
+                <i data-lucide="search" width="25" height="25"></i>
+            </div></a>
+            <a href="http://action_notifications"><div class="header-icon">
+                <i data-lucide="bell" width="25" height="25"></i>
+            </div></a>
+            <!-- Dark Mode Toggle Button -->
+            <div class="header-icon" style="display: none;" id="darkToggle">
+                🌙
+            </div>
+            <div class="header-icon">
+                <a href="#"> <img src="https://cdn-icons-png.flaticon.com/512/1139/1139982.png" alt="Gift" class="gift-img">
+            </a></div>
+        </div>
+    </header>
+
+    <main class="app-content">
+        <div class="container">
+            <div class="profile-pill">
+                <div class="avatar-container">
+                    <img id="profileAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aninda" alt="Profile">
+                </div>
+                <div class="text-content">
+                    <h1 class="greeting-name">Hi, <span id="displayName">Aninda Halder</span></h1>
+                    <p class="time-status" id="greet">Good Morning</p>
+                </div>
+            </div>
+
+            <div class="wallet-pill">
+                <div class="currency-symbol">
+                    <i data-lucide="badge-indian-rupee" width="18px"></i>
+                </div>
+                <span class="amount" id="balanceAmount">20</span>
+            </div>
+        </div>
+
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <a href="#" class="swiper-slide"><img src="https://i.ibb.co/JWnYFRxY/Add-Text-04-12-11-27-02.jpg" alt="Batch 1"></a>
+                <a href="#" class="swiper-slide"><img src="https://i.ibb.co/y3w7f2n/Add-Text-04-02-01-33-26.jpg" alt="Batch 2"></a>
+                <a href="#" class="swiper-slide"><img src="https://i.ibb.co/ZpRLMgXr/Add-Text-03-31-10-30-22.jpg" alt="Batch 3"></a>
+                <a href="#" class="swiper-slide"><img src="https://i.ibb.co/tMqjsLTd/Add-Text-04-02-01-15-48.jpg" alt="Batch 4"></a>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+        <div class="flex items-center text-xl font-bold mb-0 mt-0 ml-2">
+            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+            Course <span class="text-brandBlue ml-2">Tools</span>
+        </div>
+
+        <div class="button-container">
+            <div class="pill-row">
+                <a href="https://tutopulse.ct.ws/" target="_blank" class="pill-button">
+                    <i data-lucide="globe" width="18px"></i> Website
+                </a>
+                <a href="https://example.com/ebooks" class="pill-button">
+                    <i data-lucide="shopping-cart" width="18px"></i> E-Books
+                </a>
+                <a href="https://example.com/earn" class="pill-button">
+                    <i data-lucide="badge-plus" width="18px"></i> Earn
+                </a>
+                <a href="https://example.com/earn" class="pill-button">
+                    <i data-lucide="grip" width="18px"></i>
+                </a>
+            </div>
+
+            <div class="card-row">
+                <a href="https://example.com/exam-prep" class="card-button">
+                    <div class="emblem-container">
+                        <img src="https://cdn-icons-png.flaticon.com/512/12886/12886027.png" alt="WBBHSE Seal" class="emblem">
+                    </div>
+                    <span>Exam Prep</span>
+                </a>
+                <a href="https://example.com/class-09-10" class="card-button">
+                    <div class="emblem-container">
+                        <img src="https://edulivestore.netlify.app/image/wbbse.png" alt="WBBHSE Seal" class="emblem">
+                    </div>
+                    <span>Class 09-10</span>
+                </a>
+                <a href="https://example.com/class-11-12" class="card-button">
+                    <div class="emblem-container">
+                        <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" alt="WBBHSE Seal" class="emblem">
+                    </div>
+                    <span>Class 11-12</span>
+                </a>
+                <a href="https://example.com/skills" class="card-button">
+                    <div class="emblem-container">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9666/9666850.png" alt="WBBHSE Seal" class="emblem">
+                    </div>
+                    <span>Skills</span>
+                </a>
+            </div>
+        </div>
+
+        <section class="rounded-3xl ml-2 mr-2">
+            <div class="flex items-center text-xl font-bold mb-2">
+                <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+                View<span class="text-brandBlue ml-2">More</span>
+            </div>
+            <div class="grid grid-cols-4 gap-2 text-center">
+                <a href="#" class="group"><div class="bg-blue-600 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2">  <img src="https://cdn-icons-png.flaticon.com/512/12886/12886028.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Mock Test</p></a>
+                <a href="#" class="group"><div class="bg-yellow-300 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2"><img src="https://cdn-icons-png.flaticon.com/512/12886/12886035.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Syllabus</p></a>
+                <a href="#" class="group"><div class="bg-green-600 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2"><img src="https://cdn-icons-png.flaticon.com/512/12886/12886025.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Certificate</p></a>
+                <a href="#" class="group"><div class="bg-red-600 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2">   <img src="https://cdn-icons-png.flaticon.com/512/9666/9666855.png" style="width: 50px;"></div><p class="text-[11px] font-bold leading-tight">Donate</p></a>
+            </div>
+            <div class="grid grid-cols-4 gap-2 text-center" style="margin-top: 10px;">
+                <a href="#" class="group"><div class="bg-red-200 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2">  <img src="https://i.ibb.co/Lz4HvQ2K/RRB-Group-D-Eligibility-Criteria-1.webp" style="width: 40px; border-radius: 50px;"></div><p class="text-[11px] font-bold leading-tight">RRB Exam</p></a>
+                <a href="#" class="group"><div class="bg-orange-200 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2"><img src="https://i.ibb.co/4gfHhkmR/nta.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Neet Prep</p></a>
+                <a href="#" class="group"><div class="bg-pink-200 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2"><img src="https://i.ibb.co/Z6r7DfZq/ssc.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">SSC Exam</p></a>
+                <a href="#" class="group"><div class="bg-blue-200 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2">   <img src="https://i.ibb.co/Vc5qmT25/wbp.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">WBP Exam</p></a>
+            </div>
+        </section>
+
+        <div class="flex items-center text-xl font-bold mb-0 mt-2 ml-2">
+            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+            Useful <span class="text-brandBlue ml-2">Tools</span>
+        </div>
+
+        <div class="container-exam">
+            <div class="exams">
+                <div id="entrance_tab" class="tab-btn" onclick="showTab('entrance')">Entrance Exam</div>
+                <div id="private_tab" class="tab-btn" onclick="showTab('private')">Private Scholarship</div>
+                <div id="govt_tab" class="tab-btn" onclick="showTab('govt')">Govt Scholarship</div>
+            </div>
+
+            <div class="content_wrapper">
+                <div id="entrance_content" class="content">
+                    <div class="list-item">
+                        <div class="logo-section">
+                            <img src="https://i.ibb.co/3YLDXxFG/In-Shot-20260411-081211756.jpg" alt="Logo" class="logo">
+                            <div class="text-info-container-exam">
+                                <p class="title">RRB Group-D 2026</p>
+                                <p class="info-dates">
+                                    <span class="apply-start">Apply Start : 24-01-2026</span><br>
+                                    <span class="last-date">Last Date : 28-02-2026</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="right-section">
+                            <div class="icons-container-exam">
+                                <a href="#" class="pdf-link"><div class="pdf-icon"><span class="pdf-label">PDF</span></div></a>
+                                <a href="#" class="pdf-link"><div class="pdf-icon"><span class="pdf-label">PDF</span></div></a>
+                            </div>
+                            <a href="#" class="apply-btn">Apply</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="private_content" class="content">
+                    <div class="list-item">
+                        <div class="logo-section">
+                            <img src="https://i.ibb.co/3YLDXxFG/In-Shot-20260411-081211756.jpg" alt="Logo" class="logo">
+                            <div class="text-info-container-exam">
+                                <p class="title">Tata Scholarship</p>
+                                <p class="info-dates">
+                                    <span class="apply-start">Apply Start : 24-01-2026</span><br>
+                                    <span class="last-date">Last Date : 15-03-2026</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="right-section">
+                            <div class="icons-container-exam">
+                                <a href="#" class="pdf-link"><div class="pdf-icon"><span class="pdf-label">PDF</span></div></a>
+                            </div>
+                            <a href="#" class="apply-btn">Apply</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="govt_content" class="content">
+                    <div class="list-item">
+                        <div class="logo-section">
+                            <img src="https://i.ibb.co/3YLDXxFG/In-Shot-20260411-081211756.jpg" alt="Logo" class="logo">
+                            <div class="text-info-container-exam">
+                                <p class="title">SVMCM Scholarship</p>
+                                <p class="info-dates">
+                                    <span class="apply-start">Apply Start : 01-01-2026</span><br>
+                                    <span class="last-date">Last Date : 31-12-2026</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="right-section">
+                            <div class="icons-container-exam">
+                                <a href="#" class="pdf-link"><div class="pdf-icon"><span class="pdf-label">PDF</span></div></a>
+                            </div>
+                            <a href="#" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td><img src="https://i.ibb.co/KczpG5dC/refer-and-earn-concept-business-partnership-strategy-illustration-vector-1.jpg" width="300"></td>
+                <td><img src="https://i.ibb.co/HLjHM7CC/Add-Text-04-11-08-30-59.png" width="350"></td>
+            </tr>
+        </table>
+    </main>
+
+    <!-- FOOTER -->
+    <nav class="app-footer">
+        <a href="#" class="nav-item active">
+            <i data-lucide="home" width="24" height="24"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i data-lucide="airplay" width="24" height="24"></i>
+            <span>Courses</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i data-lucide="book-open" width="24" height="24"></i>
+            <span>Study</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i data-lucide="user" width="24" height="24"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script>
+        // ========== DARK MODE TOGGLE ==========
+        const darkToggle = document.getElementById("darkToggle");
+        const body = document.body;
+        
+        if (localStorage.getItem("darkMode") === "true") {
+            body.classList.add("dark");
+            darkToggle.textContent = "☀️";
+        } else {
+            darkToggle.textContent = "🌙";
+        }
+        
+        darkToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            localStorage.setItem("darkMode", isDark);
+            darkToggle.textContent = isDark ? "☀️" : "🌙";
+        });
+
+        // 1. Initialize Lucide Icons
+        lucide.createIcons();
+
+        const footer = document.querySelector('.app-footer');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                const targetUrl = this.getAttribute('href');
+                if (!targetUrl || targetUrl === "") {
+                    e.preventDefault();
+                }
+
+                const rect = footer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const size = rect.width;
+                
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x - (size / 2)}px`;
+                ripple.style.top = `${y - (size / 2)}px`;
+
+                footer.appendChild(ripple);
+
+                if (targetUrl && targetUrl !== "") {
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 200);
+                }
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        var swiper = new Swiper('.swiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            loop: true,
+            coverflowEffect: {
+                rotate: 0,
+                stretch: -20,
+                depth: 350,
+                modifier: 1,
+                slideShadows: false,
+            },
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        lucide.createIcons();
+        
+        let currentBalance = 0;
+        
+        function loadBalance() {
+            let stored = localStorage.getItem("reward_coins");
+            if (stored === null || isNaN(parseInt(stored))) {
+                currentBalance = 0;
+                localStorage.setItem("reward_coins", "0");
+            } else {
+                currentBalance = parseInt(stored, 10);
+            }
+            updateBalanceUI();
+            return currentBalance;
+        }
+        
+        function updateBalanceUI() {
+            const balanceSpan = document.getElementById("balanceAmount");
+            if (balanceSpan) {
+                const currentShown = parseInt(balanceSpan.innerText, 10);
+                if (currentShown !== currentBalance) {
+                    balanceSpan.innerText = currentBalance;
+                    balanceSpan.classList.add("balance-pop");
+                    setTimeout(() => {
+                        balanceSpan.classList.remove("balance-pop");
+                    }, 280);
+                } else {
+                    balanceSpan.innerText = currentBalance;
+                }
+            }
+        }
+        
+        function saveBalance(newValue) {
+            currentBalance = newValue;
+            localStorage.setItem("reward_coins", currentBalance);
+            updateBalanceUI();
+        }
+        
+        function loadProfileData() {
+            let savedName = localStorage.getItem("student_display_name");
+            if (!savedName || savedName.trim() === "") {
+                savedName = "";
+                localStorage.setItem("student_display_name", savedName);
+            }
+            const nameElement = document.getElementById("displayName");
+            if (nameElement) nameElement.innerText = savedName;
+            
+            let savedPic = localStorage.getItem("profile_image_url");
+            if (!savedPic || savedPic === "") {
+                savedPic = "https://api.dicebear.com/7.x/avataaars/svg";
+                localStorage.setItem("profile_image_url", savedPic);
+            }
+            const avatarImg = document.getElementById("profileAvatar");
+            if (avatarImg) avatarImg.src = savedPic;
+        }
+        
+        function listenForExternalUpdates() {
+            window.addEventListener("storage", (event) => {
+                if (event.key === "reward_coins") {
+                    let newCoins = parseInt(event.newValue, 10);
+                    if (!isNaN(newCoins)) {
+                        currentBalance = newCoins;
+                        updateBalanceUI();
+                    }
+                }
+                if (event.key === "student_display_name" && event.newValue) {
+                    const nameElement = document.getElementById("displayName");
+                    if (nameElement) nameElement.innerText = event.newValue;
+                }
+                if (event.key === "profile_image_url" && event.newValue) {
+                    const avatarImg = document.getElementById("profileAvatar");
+                    if (avatarImg) avatarImg.src = event.newValue;
+                }
+            });
+        }
+        
+        function ensureDataIntegrity() {
+            if (localStorage.getItem("reward_coins") === null) {
+                localStorage.setItem("reward_coins", "0");
+            }
+            if (localStorage.getItem("student_display_name") === null) {
+                localStorage.setItem("student_display_name", "");
+            }
+            if (localStorage.getItem("profile_image_url") === null) {
+                localStorage.setItem("profile_image_url", "https://api.dicebear.com/7.x/avataaars/svg");
+            }
+            if (localStorage.getItem("coins") !== null && (localStorage.getItem("reward_coins") === "0" || parseInt(localStorage.getItem("reward_coins")) === 0)) {
+                let oldCoinVal = parseInt(localStorage.getItem("coins"), 10);
+                if (!isNaN(oldCoinVal) && oldCoinVal > 0) {
+                    localStorage.setItem("reward_coins", oldCoinVal);
+                }
+            }
+        }
+        
+        function refreshIcons() {
+            if (typeof lucide !== "undefined" && lucide.createIcons) {
+                lucide.createIcons();
+            }
+        }
+        
+        function initProfileOnlyPage() {
+            ensureDataIntegrity();
+            loadBalance();
+            loadProfileData();
+            listenForExternalUpdates();
+            refreshIcons();
+            
+            const avatar = document.getElementById("profileAvatar");
+            if (avatar) {
+                avatar.onerror = function() {
+                    this.src = "https://api.dicebear.com/7.x/avataaars/svg";
+                    localStorage.setItem("profile_image_url", "https://api.dicebear.com/7.x/avataaars/svg");
+                };
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initProfileOnlyPage);
+        } else {
+            initProfileOnlyPage();
+        }
+        
+        const greet = document.getElementById('greet');
+        const h = new Date().getHours();
+        let greeting = 'Good Morning';
+        if (h >= 4 && h < 7) greeting = 'Good Morning';
+        else if (h >= 7 && h < 10) greeting = 'Reading Time';
+        else if (h >= 10 && h < 14) greeting = 'Good Noon';
+        else if (h >= 14 && h < 18) greeting = 'Good Afternoon';
+        else if (h >= 18 && h < 22) greeting = 'Revision Time';
+        else if (h >= 22 || h < 4) greeting = 'Good Night';
+        greet.innerText = greeting;
+
+        function showTab(tabName) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+
+            const targetContent = document.getElementById(`${tabName}_content`);
+            const targetTab = document.getElementById(`${tabName}_tab`);
+            
+            if(targetContent && targetTab) {
+                targetContent.classList.add('active');
+                targetTab.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('entrance');
+        });
+    </script>
+</body>
+</html>
