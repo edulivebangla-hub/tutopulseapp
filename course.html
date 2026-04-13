@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TutoPulse App - Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#4285F4',
+                        darkBlue: '#1A237E',
+                        brandGray: '#757575',
+                        greenBtn: '#C8E6C9',
+                        greenText: '#2E7D32',
+                        redBadgeBg: '#FFEBEE',
+                        redBadgeText: '#C62828',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ========== GLOBAL RESET & DARK MODE VARIABLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            text-decoration: none;
+        }
+
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+
+        /* ----- LIGHT MODE (default) ----- */
+        body {
+            background-color: #f8f9fb;
+            color: #333;
+            overflow: hidden;
+              --footer-bg: #ffffff; 
+ --text-muted: #8D94A2;
+        }
+
+     /* --- Header Styles --- */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #3047a5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 110px;
+            padding-top: 10px;
+        }
+
+        .header-title {
+            font-family: 'Nunito', sans-serif;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fff;
+        }
+
+        /* Dark mode toggle button style */
+        .dark-mode-toggle-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 22px;
+            transition: all 0.2s;
+            backdrop-filter: blur(2px);
+        }
+        .dark-mode-toggle-btn:hover {
+            background: rgba(255,255,255,0.35);
+            transform: scale(1.02);
+        }
+
+        .search-inner {
+            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+            width: 180px;
+            background-color: #ffffff;
+            border: 1px solid #c8d1db;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            padding: 5px 12px;
+            transition: box-shadow 0.3s ease;
+            gap: 6px;
+        }
+        .search-inner p {
+            color: gray;
+            font-size: 14px;
+            flex: 1;
+        }
+        .search-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .search-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #3347a5;
+        }
+
+        .app-content {
+            position: fixed;
+            top: 60px;
+            bottom: 65px;
+            width: 100%;
+            overflow-y: auto;
+            background-color: #ffffff;
+            transition: background-color 0.3s;
+        }
+
+          /* --- Footer Nav Styles --- */
+        .app-footer {
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: var(--footer-bg);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        body.dark .app-footer {
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            width: 65px;
+            height: 100%;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease-in-out;
+        }
+
+        .nav-item.active {
+            color: #31409f;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 50px;
+            padding: 5px;
+        }
+
+        body.dark .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.5s linear;
+            background-color: rgba(49, 64, 120, 0.15);
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to { transform: scale(3.5); opacity: 0; }
+        }
+
+     .swiper {
+            width: 100%;
+            
+            padding-bottom: 30px; 
+        }
+
+        .swiper-slide {
+            position: relative; /* Required for absolute positioning of text */
+            width: 320px; 
+            height: 230px; /* Increased height to accommodate text better */
+            border-radius: 12px;
+           border: 2px solid #ffc107;
+            transition: 0.5s ease-in-out;
+            overflow: hidden;}
+        
+
+        .swiper-slide-active {
+            opacity: 1;
+        }
+
+        @media (min-width: 768px) {
+            .swiper-slide {
+                width: 700px;
+                height: 350px;
+            }
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%; height: 170px;
+            object-fit: cover;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        /* --- NEW TEXT OVERLAY STYLES --- */
+        .slide-content {
+            position: absolute;
+            bottom: 5;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff; /* Semi-transparent black */
+            color: #000;
+            padding: 8px;
+            text-align: center;
+            
+            
+ }
+
+        .slide-content h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        
+
+        /* Pagination Styling */
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #d1d5db;
+            opacity: 1;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: #ffcc00 !important;
+        }
+
+
+        /* pills & cards */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px;
+            padding: 10px;
+        }
+        .pill-button {
+        -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+            display: inline-block;
+            text-decoration: none;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s ease-in-out;
+        }
+        .course-card {
+             -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            text-decoration: none;
+            color: inherit;
+        }
+        .course-img {
+            width: 120px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: rgba(0,0,0,0.1);
+        }
+        .course-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 0 0 8px 0;
+            line-height: 1.4;
+        }
+        .tutor-card {
+            flex: 0 0 200px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            scroll-snap-align: center;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.2s;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+        }
+        .tutor-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e2e8f0;
+        }
+        .btn-profile {
+            background: orange;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+        .view-all {
+          -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 5px 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        /* ========== DARK MODE OVERRIDES ========== */
+        body.dark {
+            background-color: #121212;
+            color: #e0e0e0;
+               --text-muted: #a0a0a0;
+                  --footer-bg: #1e1e1e;
+        }
+        
+        body.dark .app-content {
+            background-color: #121212;
+        }
+        body.dark .app-footer {
+            background-color: #1e1e2a;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.4);
+        }
+        body.dark .nav-item {
+            color: #a0a0b0;
+        }
+        body.dark .nav-item.active {
+            color: #7c93e0;
+        }
+        body.dark .search-inner {
+            background-color: #2c2c3a;
+            border-color: #444;
+        }
+        body.dark .search-inner p {
+            color: #bbbbbb;
+        }
+        body.dark .search-icon svg {
+            stroke: #ffcc66;
+        }
+        body.dark .pill-button {
+            background-color: #2a2a2e;
+            border-color: #444;
+            color: #f0f0f0;
+        }
+        body.dark .course-card {
+            border-bottom-color: #2c2c2e;
+        }
+        body.dark .course-title {
+            color: #f5f5f5;
+        }
+        body.dark .tutor-card {
+            background: #1e1e2a;
+            border-color: #333;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        body.dark .tutor-name {
+            color: #ffdd99;
+        }
+        body.dark .tutor-subject {
+            color: #bbbbbb;
+        }
+        body.dark .view-all {
+            border-color: #aaa;
+            color: #ddd;
+        }
+        body.dark .slide-content {
+            background: rgba(30, 30, 40, 0.92);
+            color: #fff;
+        }
+        body.dark .slide-content h3 {
+            color: #ffdd99;
+        }
+        body.dark .swiper-slide {
+            border-color: #ffaa33;
+            background: #1e1e2a;
+        }
+        body.dark .container .header h1 span {
+            color: #ffaa66;
+        }
+        body.dark .rating-num {
+            color: #ccc;
+        }
+        body.dark .flex.items-center.text-xl.font-bold {
+            color: #f0f0f0;
+        }
+        body.dark .text-brandBlue {
+            color: #ffaa66;
+        }
+        body.dark .w-1.5.h-6.bg-yellow-400 {
+            background-color: #ffaa33 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER with Dark Mode Toggle Button -->
+      <header class="app-header">
+        <div class="header-left">
+            <img src="https://i.ibb.co/DH40pVCM/1000166169-removebg-preview.png" alt="TutoPulse Logo" class="logo-img">
+        </div>
+        <div class="header-right">
+            <a href="#" class="search-inner">
+                <p style="color: gray;">Search Course</p>
+                <button class="search-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+            </a>
+            <!-- DARK MODE TOGGLE BUTTON (placed in header-right) -->
+            <button id="darkToggle" class="hidden dark-mode-toggle-btn" aria-label="Dark mode toggle">🌙</button>
+        </div>
+    </header>
+
+    <main class="app-content">
+        <div class="button-container">
+            <a href="#" class="pill-button">Nursing</a>
+            <a href="#" class="pill-button">WBJEE</a>
+            <a href="#" class="pill-button">Madhyamik</a>
+            <a href="#" class="pill-button">HS Class 11</a>
+            <a href="#" class="pill-button">ICDS</a>
+            <a href="#" class="pill-button">HS উচ্চমাধ্যমিক</a>
+        </div>
+
+        <!-- TOP COURSES -->
+        <div class="flex items-center text-xl font-bold m-3">
+            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+            Top<span class="text-brandBlue ml-2">Courses</span>
+        </div>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <a href="#" class="swiper-slide">
+                    <img src="https://i.ibb.co/B23R56sq/1000163773.jpg" alt="Batch 1">
+                    <div class="slide-content">
+                        <h3>RRB Group D Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
+                    </div>
+                </a>
+                <a href="#" class="swiper-slide">
+                    <img src="https://i.ibb.co/Xr6GYwkn/1000163766.png" alt="Batch 3">
+                    <div class="slide-content">
+                        <h3>RRB ALP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
+                    </div>
+                </a>
+                <a href="#" class="swiper-slide">
+                    <img src="https://i.ibb.co/rBjr4nL/1000163769.jpg" alt="Batch 2">
+                    <div class="slide-content">
+                        <h3>WBP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
+                    </div>
+                </a>
+                <a href="#" class="swiper-slide">
+                    <img src="https://i.ibb.co/QvxhZ9dh/1000163770.jpg" alt="Batch 3">
+                    <div class="slide-content">
+                        <h3>SSC GD Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <!-- LATEST COURSES -->
+        <div class="container px-3">
+            <div class="header flex justify-between items-center mb-2">
+                <div class="flex items-center text-xl font-bold">
+                    <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+                    Latest<span class="text-brandBlue ml-2">Courses</span>
+                </div>
+                <a href="#" class="view-all">View all</a>
+            </div>
+
+            <a href="#" class="course-card">
+                <img src="https://i.ibb.co/QvxhZ9dh/1000163770.jpg" alt="Starter Batch" class="course-img">
+                <div class="course-info">
+                    <h2 class="course-title">SSC GD Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
+                </div>
+            </a>
+            <a href="#" class="course-card">
+                <img src="https://i.ibb.co/B23R56sq/1000163773.jpg" alt="Class 11" class="course-img">
+                <div class="course-info">
+                    <h2 class="course-title">RRB Group D Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
+                </div>
+            </a>
+            <a href="#" class="course-card">
+                <img src="https://i.ibb.co/rBjr4nL/1000163769.jpg" alt="Class 12" class="course-img">
+                <div class="course-info">
+                    <h2 class="course-title">WBP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
+                </div>
+            </a>
+            <a href="#" class="course-card">
+                <img src="https://i.ibb.co/Xr6GYwkn/1000163766.png" alt="Target 2027" class="course-img">
+                <div class="course-info">
+                    <h2 class="course-title">RRB ALP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
+                </div>
+            </a>
+        </div>
+
+        <!-- TUTORS SECTION -->
+        <div class="flex items-center text-xl font-bold m-3 mt-6">
+            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+            Top<span class="text-brandBlue ml-2">Tutors</span>
+        </div>
+        <div class="slider-container" style="display: flex; gap: 20px; overflow-x: auto; padding: 10px; scroll-snap-type: x mandatory;">
+            <div class="tutor-card">
+                <div class="image-container flex justify-center">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8mjIi75jOqd4WGHM7NVQ9ePsNf0G4oX7C0GVGZL6sLNEWtTVDqssYOGnQt8mlGWNg-5JZWEt_ao93Wp3IziocSM3Rf6UWzYCwwE6XGAa09AfvVQ4MtmeZ4AAvOcUbfi5wnNXA09oK-JQlxRFZdEIQKeOHyGtPfk9e5GNXXd-8mlOXgzRUuLbQ3itSHNox/s716/1000114892.jpg" alt="Tutor" class="tutor-img">
+                </div>
+                <div class="tutor-name flex items-center justify-center gap-1">
+                    Aninda Halder <i data-lucide="verified" style="width: 18px; height: 18px; color: orange;"></i>
+                </div>
+                <div class="tutor-subject">Founder & CEO</div>
+                <a href="https://edulivestore.netlify.app/tutor/anindahalder.html"><button class="btn-profile">View Profile</button></a>
+            </div>
+            <div class="tutor-card">
+                <div class="image-container flex justify-center">
+                    <img src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Tutor" class="tutor-img">
+                </div>
+                <div class="tutor-name flex items-center justify-center gap-1">
+                    Roni Das <i data-lucide="verified" style="width: 18px; height: 18px; color: orange;"></i>
+                </div>
+                <div class="tutor-subject">Co-Founder</div>
+                <a href="https://edulivestore.netlify.app/tutor/ronidas.html"><button class="btn-profile">View Profile</button></a>
+            </div>
+            <div class="tutor-card">
+                <div class="image-container flex justify-center">
+                    <img src="https://i.ibb.co/k60CSDGf/IMG-20260226-200620.jpg" alt="Tutor" class="tutor-img">
+                </div>
+                <div class="tutor-name flex items-center justify-center gap-1">
+                    Debjit Biswas <i data-lucide="verified" style="width: 18px; height: 18px; color: orange;"></i>
+                </div>
+                <div class="tutor-subject">Community Expert</div>
+                <a href="https://edulivestore.netlify.app/tutor/debjit.html"><button class="btn-profile">View Profile</button></a>
+            </div>
+        </div>
+        <div class="h-4"></div>
+    </main>
+
+    <!-- FOOTER -->
+    <nav class="app-footer">
+        <a href="home.html" class="nav-item">
+            <i data-lucide="home" width="24" height="24"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item active">
+            <i data-lucide="airplay" width="24" height="24"></i>
+            <span>Courses</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i data-lucide="book-open" width="24" height="24"></i>
+            <span>Study</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i data-lucide="user" width="24" height="24"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ========== DARK MODE TOGGLE (FULLY INTEGRATED) ==========
+        const darkToggle = document.getElementById("darkToggle");
+        const body = document.body;
+        
+        // Load saved preference or default to light (false)
+        if (localStorage.getItem("darkMode") === "true") {
+            body.classList.add("dark");
+            darkToggle.textContent = "☀️";
+        } else {
+            // ensure dark class removed if saved as false or null
+            body.classList.remove("dark");
+            darkToggle.textContent = "🌙";
+        }
+        
+        // Toggle event listener
+        darkToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            localStorage.setItem("darkMode", isDark);
+            darkToggle.textContent = isDark ? "☀️" : "🌙";
+        });
+
+        // ========== RIPPLE EFFECT FOR FOOTER (unchanged but functional) ==========
+        const footer = document.querySelector('.app-footer');
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                const targetUrl = this.getAttribute('href');
+                if (!targetUrl || targetUrl === "") {
+                    e.preventDefault();
+                }
+                const rect = footer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const size = rect.width;
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x - (size / 2)}px`;
+                ripple.style.top = `${y - (size / 2)}px`;
+                footer.appendChild(ripple);
+                if (targetUrl && targetUrl !== "") {
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 200);
+                }
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // ========== SWIPER CONFIGURATION ==========
+        var swiper = new Swiper('.swiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            loop: true,
+            coverflowEffect: {
+                rotate: 0,
+                stretch: -20,
+                depth: 350,
+                modifier: 1,
+                slideShadows: false,
+            },
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Re-run lucide icons after any dynamic content (just in case for tutor cards)
+        setTimeout(() => {
+            lucide.createIcons();
+        }, 100);
+    </script>
+</body>
+</html>
