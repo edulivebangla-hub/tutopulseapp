@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TutoPulse | Course Enrollment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#4285F4',
+                        darkBlue: '#1A237E',
+                        brandGray: '#757575',
+                        greenBtn: '#C8E6C9',
+                        greenText: '#2E7D32',
+                        receiptBg: '#FFF9F0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+      
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      transition: background 0.3s, color 0.3s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    a, span, p, h1, h2, h3, h4, h5, h6, div {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      text-decoration: none;
+    }
+    
+    img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        /* ========== DARK MODE STYLES ========== */
+        body {
+            background: #F1F5F9;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.2s ease;
+        }
+        
+        body.dark {
+            background: #0F172A;
+        }
+        
+        /* Dark mode card backgrounds */
+        body.dark .bg-white {
+            background-color: #1E293B !important;
+            border-color: #334155 !important;
+        }
+        
+        body.dark .bg-gray-50 {
+            background-color: #0F172A !important;
+        }
+        
+        body.dark .bg-indigo-50\/40 {
+            background-color: rgba(51, 65, 85, 0.6) !important;
+        }
+        
+        body.dark .bg-amber-50 {
+            background-color: #422006 !important;
+        }
+        
+        body.dark .border-gray-100 {
+            border-color: #334155 !important;
+        }
+        
+        body.dark .border-gray-200 {
+            border-color: #475569 !important;
+        }
+        
+        body.dark .border-amber-200 {
+            border-color: #854D0E !important;
+        }
+        
+        body.dark .text-gray-800 {
+            color: #F1F5F9 !important;
+        }
+        
+        body.dark .text-gray-700 {
+            color: #CBD5E1 !important;
+        }
+        
+        body.dark .text-gray-600 {
+            color: #94A3B8 !important;
+        }
+        
+        body.dark .text-gray-500 {
+            color: #64748B !important;
+        }
+        
+        body.dark .text-gray-400 {
+            color: #475569 !important;
+        }
+        
+        body.dark .text-amber-700 {
+            color: #FBBF24 !important;
+        }
+        
+        body.dark .text-indigo-700 {
+            color: #818CF8 !important;
+        }
+        
+        body.dark .app-footer {
+            background: #1E293B;
+            border-top-color: #334155;
+        }
+        
+        body.dark .receipt-paper {
+            background: #1E293B;
+        }
+        
+        body.dark .receipt-paper .bg-gradient-to-r {
+            background: linear-gradient(135deg, #1E293B 0%, #2D3A4E 100%) !important;
+        }
+        
+        body.dark .receipt-paper .bg-white {
+            background: #1E293B !important;
+        }
+        
+        body.dark .receipt-paper .bg-gray-50 {
+            background: #0F172A !important;
+        }
+        
+        body.dark .receipt-paper .border-gray-100 {
+            border-color: #334155 !important;
+        }
+        
+        body.dark .receipt-paper .text-gray-800 {
+            color: #F1F5F9 !important;
+        }
+        
+        body.dark .receipt-paper .text-gray-600 {
+            color: #94A3B8 !important;
+        }
+        
+        body.dark .receipt-paper .text-gray-500 {
+            color: #94A3B8 !important;
+        }
+        
+        body.dark .receipt-paper .text-gray-700 {
+            color: #CBD5E1 !important;
+        }
+        
+        body.dark .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        body.dark #enrollOptionModal .bg-white,
+        body.dark #passwordVerifyModal .bg-white {
+            background: #1E293B !important;
+        }
+        
+        body.dark #enrollOptionModal .bg-indigo-100 {
+            background: #2D3A4E !important;
+        }
+        
+        body.dark .bg-indigo-50 {
+            background-color: #2D3A4E !important;
+        }
+        
+        body.dark .border-indigo-200 {
+            border-color: #4F46E5 !important;
+        }
+        
+        body.dark .bg-emerald-50 {
+            background-color: #064E3B !important;
+        }
+        
+        body.dark .border-emerald-200 {
+            border-color: #059669 !important;
+        }
+        
+        body.dark .text-emerald-800 {
+            color: #6EE7B7 !important;
+        }
+        
+        body.dark .text-indigo-800 {
+            color: #A5B4FC !important;
+        }
+        
+        body.dark .border-gray-300 {
+            border-color: #475569 !important;
+        }
+        
+        body.dark .bg-gray-100 {
+            background-color: #334155 !important;
+        }
+        
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #3047a5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+        
+    
+        .app-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: white;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding: 12px 20px 20px 20px;
+            z-index: 1000;
+            box-shadow: 0 -6px 20px rgba(0,0,0,0.03);
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+        
+        .header-hidden .app-header {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .header-hidden .app-footer {
+            transform: translateY(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .header-hidden .app-content {
+            top: 0;
+            bottom: 0;
+        }
+        
+        .header-hidden {
+            overflow-y: auto;
+        }
+        
+        .app-content {
+            position: fixed;
+            top: 60px;
+            bottom: 80px;
+            width: 100%;
+            overflow-y: auto;
+            background: #F8FAFE;
+            padding: 16px 0 30px 0;
+            transition: top 0.25s ease, bottom 0.25s ease;
+        }
+        
+        body.dark .app-content {
+            background: #0F172A;
+        }
+        
+        /* ===== SCROLLBAR STYLES - RIGHT SIDE APP LINE REMOVED ===== */
+        /* Completely hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+        .app-content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+            display: none;
+        }
+        
+        /* Hide scrollbar for Firefox */
+        .app-content {
+            scrollbar-width: none;
+            -ms-overflow-style: none;  /* Hide scrollbar for IE/Edge */
+        }
+        
+        /* Ensure no scrollbar appears on any other scrolling elements */
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        *::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+            display: none;
+        }
+        
+        /* Maintain smooth scrolling while scrollbar is hidden */
+        .app-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .app-content::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+        
+        /* Fallback: ensure no visible scrollbar line */
+        body {
+            overflow-x: hidden;
+        }
+        
+        .balance-pop {
+            animation: popGlow 0.22s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        
+        @keyframes popGlow {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.2); color: #F59E0B; text-shadow: 0 0 5px #FBBF24; }
+            100% { transform: scale(1); }
+        }
+        
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+        
+        .enroll-card-btn:active { transform: scale(0.97); transition: 0.08s; }
+        .receipt-card {
+            animation: slideUpReceipt 0.32s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        
+        @keyframes slideUpReceipt {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            transform: scale(0);
+            animation: rippleAnim 0.5s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes rippleAnim {
+            to { transform: scale(4); opacity: 0; }
+        }
+        
+        .qr-code-shine:active { transform: scale(0.96); }
+        input:focus { outline: none; box-shadow: 0 0 0 3px rgba(79,70,229,0.2); border-color: #4F46E5; }
+        .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        
+        /* Ensure content scrolling is smooth even with hidden scrollbar */
+        .app-content {
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        .receipt-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+        
+        .receipt-paper {
+            max-width: 380px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
+            animation: slideUpReceipt 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        
+        /* Dark mode toggle button style */
+        #darkToggle {
+            cursor: pointer;
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        #darkToggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        
+        body.dark #darkToggle {
+            background: rgba(0,0,0,0.3);
+        }
+        
+        /* Rupee icon styling */
+        .rupee-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body id="appRoot">
+
+    <!-- HEADER with Dark Mode Toggle -->
+    <header class="app-header">
+        <div class="flex items-center gap-2">
+            <div class="cursor-pointer p-1">
+                <i data-lucide="x" class="text-white/90 w-6 h-6 " onclick="goBack()"></i>
+            </div>
+        </div>
+        <div class="flex gap-3 items-center">
+            <!-- Dark Mode Toggle Button -->
+            <div id="darkToggle" class="cursor-pointer p-1 flex items-center justify-center text-white" style="display: none;">
+                🌙
+            </div>
+            <div class="cursor-pointer p-1">
+                <a href="https://action_share "><i data-lucide="share-2" class="text-white/90 w-5 h-5"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN SCROLLABLE CONTENT - NO VISIBLE SCROLLBAR -->
+    <main class="app-content" id="mainContent">
+        <!-- Banner -->
+        <div class="px-4 mb-4">
+            <div class="overflow-hidden shadow-md ">
+                <img src="https://i.ibb.co/1tmKhVRn/Add-Text-03-19-08-33-27.jpg" alt="Course Banner" class="w-full h-auto object-cover ">
+            </div>
+        </div>
+
+        <!-- Profile + Wallet + QR -->
+        <div class="mx-4 mb-6 bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 p-[2px] shadow-sm">
+                    <div class="w-full h-full rounded-full bg-white overflow-hidden">
+                        <img src="https://i.ibb.co/4pDNDk1/avatar.png" id="profileAvatar" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div>
+                    <h2 class="font-extrabold text-gray-800 text-lg" id="displayName">Learner</h2>
+                    <div class="flex items-center gap-1.5 mt-1 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                        <!-- Replaced ₹ symbol with Lucide icon -->
+                        <i data-lucide="badge-indian-rupee" class="text-amber-600 w-4 h-4"></i>
+                        <span class="text-sm font-black text-amber-700" id="balanceAmount" style="margin-top: 2px;">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-2 rounded-xl border border-gray-200 shadow-sm">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=tutopulse.ct.ws" class="w-16 h-16 mx-auto" alt="QR">
+                <p class="text-[7px] text-center text-gray-400 mt-0.5">Scan & learn</p>
+            </div>
+        </div>
+
+        <!-- Course details -->
+        <div class="mx-5 space-y-5 pb-6">
+            <div>
+                <h1 class="text-xl font-extrabold text-gray-800 leading-tight">Class 12 1st Semester [বাংলা + English] উচ্চমাধ্যমিক প্রথম সেমিস্টার<br><span class="text-sm font-normal text-gray-600">প্র্যাকটিস A+ ব্যাচ | Mock Tests + Video</span></h1>
+            </div>
+            <div class="bg-indigo-50/40 rounded-xl p-4 border-l-4 border-indigo-600">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-bold text-gray-700">👨‍🏫 Created by</span>
+                    <a href="#" class="text-indigo-700 font-bold flex items-center gap-1">Aninda Halder <i data-lucide="badge-check" class="w-4 h-4 text-blue-500"></i></a>
+                </div>
+                <div class="flex items-center gap-2 text-gray-600 text-sm mt-2">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span>Last Updated: 15 April 2026</span>
+                </div>
+                <div class="flex items-center gap-2 text-gray-600 text-sm mt-1">
+                    <i data-lucide="languages" class="w-4 h-4"></i>
+                    <span>বাংলা + English</span>
+                </div>
+                <div class="flex items-center gap-2 text-gray-700 font-semibold mt-2">
+                    <i data-lucide="ticket" class="w-4 h-4 text-emerald-600"></i>
+                    <span>Enrollment Fee :</span>
+                    <span id="courseFeeDisplay" class="text-emerald-700 font-black text-sm inline-flex items-center gap-0.5" style="margin-top: 2px;">
+                        <i data-lucide="badge-indian-rupee" class="w-4 h-4"></i><span>0</span>
+                    </span>
+                </div>
+                <div class="mt-2 text-xs text-gray-500 flex items-center gap-1">
+                    <i data-lucide="info" class="w-3 h-3"></i>
+                    <span>Course ID: <strong class="font-mono">HS-SEM1-2026</strong></span>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2 pb-2 text-orange-700">
+                <span class="bg-white shadow-sm px-3 py-1.5 rounded-full text-xs font-semibold border">📊 20+ Mock Tests</span>
+                <span class="bg-white shadow-sm px-3 py-1.5 rounded-full text-xs font-semibold border">🎥 Recorded Lectures</span>
+                <span class="bg-white shadow-sm px-3 py-1.5 rounded-full text-xs font-semibold border">📘 PDF Notes</span>
+                <span class="bg-white shadow-sm px-3 py-1.5 rounded-full text-xs font-semibold border">🏆 Performance Tracker</span>
+            </div>
+            <!-- Extra content to ensure scrollability (shows that scrollbar is hidden) -->
+            <div class="bg-white/60 rounded-xl p-4 text-gray-600 text-sm leading-relaxed shadow-inner">
+                <p class="font-semibold text-orange-700 mb-2">📌 Course Highlights:</p>
+                <ul class="list-disc pl-5 space-y-1 text-orange-700">
+                    <li>Live doubt clearing sessions every weekend</li>
+                    <li>20 full-length mock tests with detailed solutions</li>
+                    <li>Topic-wise video lectures by expert faculty</li>
+                    <li>Downloadable PDF notes & practice sets</li>
+                    <li>Performance analytics & rank predictor</li>
+                    <li>Access valid till HS-SEM1-2026</li>
+                </ul>
+                </div>
+        </div>
+    </main>
+
+    <!-- Footer Button -->
+    <div class="app-footer safe-bottom">
+        <button id="mainEnrollBtn" class="w-full bg-gradient-to-r from-indigo-700 to-indigo-800 text-white font-extrabold py-4 rounded-2xl shadow-xl text-lg tracking-wide transition-all duration-200 active:scale-98 flex items-center justify-center gap-2">
+            <i data-lucide="graduation-cap" class="w-5 h-5"></i> Enroll Now
+        </button>
+    </div>
+
+    <!-- MODAL: Enrollment Options -->
+    <div id="enrollOptionModal" class="fixed inset-0 flex items-center justify-center z-[60] hidden transition-all">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeOptionModal()"></div>
+        <div class="bg-white rounded-2xl w-[90%] max-w-sm mx-auto p-6 relative z-10 shadow-2xl transform transition-all scale-100">
+            <div class="text-center">
+                <div class="bg-indigo-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto">
+                    <i data-lucide="shield-check" class="w-8 h-8 text-indigo-700"></i>
+                </div>
+                <h3 class="text-xl font-bold mt-3">Unlock Full Access</h3>
+                <p class="text-gray-500 text-sm mt-1">Choose enrollment method</p>
+            </div>
+            <div class="space-y-3 mt-5">
+                <button id="payWithWalletBtn" class="w-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl py-3.5 flex items-center justify-center gap-3 font-bold text-emerald-800 transition">
+                    <i data-lucide="wallet" class="w-5 h-5"></i> 
+                    <span>Pay <span id="modalFeeValue">0</span> <i data-lucide="badge-indian-rupee" class="w-3.5 h-3.5 inline"></i> (Wallet)</span>
+                </button>
+                <button id="passwordUnlockBtn" class="w-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl py-3.5 flex items-center justify-center gap-3 font-bold text-indigo-800">
+                    <i data-lucide="key" class="w-5 h-5"></i> Unlock with Secret Code
+                </button>
+            </div>
+            <button onclick="closeOptionModal()" class="mt-5 w-full text-gray-400 text-sm py-2 border-t border-gray-100 hover:text-gray-600">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Password Verification Modal -->
+    <div id="passwordVerifyModal" class="fixed inset-0 flex items-center justify-center z-[70] hidden transition-all">
+        <div class="absolute inset-0 modal-backdrop" onclick="closePasswordModal()"></div>
+        <div class="bg-white rounded-2xl w-[86%] max-w-sm p-6 relative z-10 shadow-xl">
+            <div class="text-center">
+                <div class="bg-gray-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto">
+                    <i data-lucide="key-round" class="w-6 h-6 text-indigo-600"></i>
+                </div>
+                <h3 class="font-bold text-lg mt-2">Enrollment Key</h3>
+                <p class="text-xs text-gray-500 mb-4">Enter the secret password</p>
+            </div>
+            <input type="password" id="secretPasswordInput" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl py-3 px-4 text-center font-mono tracking-wider focus:border-indigo-400 transition">
+            <button id="verifySecretBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl mt-5 shadow-md transition">Verify & Enroll</button>
+            <button onclick="closePasswordModal()" class="mt-3 w-full text-gray-400 text-sm py-1.5">Back</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="customToast" class="fixed bottom-24 left-4 right-4 bg-gray-900 text-white text-center py-3 rounded-xl text-sm font-medium z-[90] hidden transition-all duration-200 shadow-lg"></div>
+
+    <script>
+        function goBack() {
+  window.history.back();
+        }
+        // ========== DARK MODE TOGGLE ==========
+        const darkToggle = document.getElementById("darkToggle");
+        const body = document.body;
+        if (localStorage.getItem("darkMode") === "true") {
+            body.classList.add("dark");
+            darkToggle.textContent = "☀️";
+        } else {
+            darkToggle.textContent = "🌙";
+        }
+        darkToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            localStorage.setItem("darkMode", isDark);
+            darkToggle.textContent = isDark ? "☀️" : "🌙";
+        });
+        
+        // ---------- CONSTANTS ----------
+        const COURSE_ID = "HS-SEM1-2026";
+        const COURSE_FEE = 0;          
+        const ENROLL_PASSWORD = "BIDHYA2026";
+        const COURSE_REDIRECT = "";
+        const courseDisplayName = "HS SEMESTER 1";
+        const courseIdDisplay = "HS-SEM1-2026";
+            
+        let currentBalance = 0;
+        let isEnrolled = false;
+
+        // DOM elements
+        const balanceSpan = document.getElementById("balanceAmount");
+        const courseFeeSpan = document.getElementById("courseFeeDisplay");
+        const modalFeeSpan = document.getElementById("modalFeeValue");
+        const profileAvatar = document.getElementById("profileAvatar");
+        const displayNameSpan = document.getElementById("displayName");
+        const mainBtn = document.getElementById("mainEnrollBtn");
+        const appRoot = document.getElementById("appRoot");
+        
+        // modals
+        const optionModal = document.getElementById("enrollOptionModal");
+        const passwordModal = document.getElementById("passwordVerifyModal");
+        const toastEl = document.getElementById("customToast");
+
+        function hideHeaderFooterForReceipt() {
+            document.body.classList.add("header-hidden");
+        }
+        function restoreHeaderFooter() {
+            document.body.classList.remove("header-hidden");
+        }
+
+        function showToast(msg, isError = false) {
+            toastEl.innerText = msg;
+            toastEl.classList.remove("hidden");
+            toastEl.style.background = isError ? "#B91C1C" : "#1F2937";
+            setTimeout(() => {
+                toastEl.classList.add("hidden");
+            }, 2200);
+        }
+
+        function loadBalance() {
+            let stored = localStorage.getItem("reward_coins");
+            if (stored === null || isNaN(parseInt(stored))) {
+                currentBalance = 0;
+                localStorage.setItem("reward_coins", "0");
+            } else {
+                currentBalance = parseInt(stored, 10);
+            }
+            updateBalanceUI();
+        }
+        
+        function updateBalanceUI() {
+            if(balanceSpan) balanceSpan.innerText = currentBalance;
+        }
+        
+        function saveBalance(newBal) {
+            currentBalance = Math.max(0, newBal);
+            localStorage.setItem("reward_coins", currentBalance);
+            updateBalanceUI();
+            if(balanceSpan) {
+                balanceSpan.classList.add("balance-pop");
+                setTimeout(() => balanceSpan.classList.remove("balance-pop"), 280);
+            }
+        }
+
+        function checkEnrollment() {
+            let enrolledRaw = localStorage.getItem("enrolled_courses");
+            if(!enrolledRaw) return false;
+            try {
+                let arr = JSON.parse(enrolledRaw);
+                isEnrolled = Array.isArray(arr) && arr.includes(COURSE_ID);
+                return isEnrolled;
+            } catch(e) { return false; }
+        }
+        
+        function markEnrolled() {
+            let raw = localStorage.getItem("enrolled_courses");
+            let courses = raw ? JSON.parse(raw) : [];
+            if(!Array.isArray(courses)) courses = [];
+            if(!courses.includes(COURSE_ID)) {
+                courses.push(COURSE_ID);
+                localStorage.setItem("enrolled_courses", JSON.stringify(courses));
+            }
+            isEnrolled = true;
+        }
+
+        function loadProfile() {
+            let name = localStorage.getItem("student_display_name");
+            if(!name) name = "Student";
+            displayNameSpan.innerText = name;
+            let pic = localStorage.getItem("profile_image_url");
+            if(!pic) pic = "https://i.ibb.co/4pDNDk1/avatar.png";
+            profileAvatar.src = pic;
+            profileAvatar.onerror = () => profileAvatar.src = "https://i.ibb.co/4pDNDk1/avatar.png";
+        }
+
+        function setFeeDisplay() {
+            if(courseFeeSpan) {
+                courseFeeSpan.innerHTML = `<i data-lucide="badge-indian-rupee" class="w-4 h-4"></i><span>${COURSE_FEE}</span>`;
+            }
+            if(modalFeeSpan) modalFeeSpan.innerText = COURSE_FEE;
+            setTimeout(() => lucide.createIcons(), 10);
+        }
+
+        function showReceiptWithDetails(paymentMode) {
+            hideHeaderFooterForReceipt();
+            
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateStr = now.toLocaleDateString('en-GB');
+            
+            let paymentModeText = "";
+            if(paymentMode === "wallet") paymentModeText = "WALLET BALANCE";
+            else if(paymentMode === "password") paymentModeText = "SECRET CODE UNLOCK";
+            else paymentModeText = "Free";
+         
+            const receiptOverlay = document.createElement("div");
+            receiptOverlay.className = "receipt-overlay";
+            receiptOverlay.id = "dynamicReceiptOverlay";
+            receiptOverlay.innerHTML = `
+                <div class="receipt-paper receipt-card">
+                    <div class="bg-gradient-to-r from-indigo-50 to-amber-50 px-5 py-5 text-center border-b border-dashed border-gray-200">
+                        <div class="mx-auto w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-2">
+                            <i data-lucide="check-circle-2" class="w-7 h-7 text-emerald-600"></i>
+                        </div>
+                        <h2 class="text-2xl font-black text-gray-800">🎉 Congratulations!</h2>
+                        <p class="text-sm text-gray-600">Your Course Now Enrolled.</p>
+                    </div>
+                    <div class="p-5 space-y-3 bg-white">
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-500 font-semibold text-sm">Course Name</span>
+                            <span class="font-bold text-gray-800 text-right">${courseDisplayName}</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-500 font-semibold text-sm">Course Fee</span>
+                            <span class="font-extrabold text-emerald-700 text-lg inline-flex items-center gap-0.5"><i data-lucide="badge-indian-rupee" class="w-4 h-4"></i>${COURSE_FEE}</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-500 font-semibold text-sm">Course ID</span>
+                            <span class="font-mono font-bold text-gray-700">${courseIdDisplay}</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-500 font-semibold text-sm">Payment Mode</span>
+                            <span class="font-medium text-gray-800 flex items-center gap-1"><i data-lucide="${paymentMode === 'wallet' ? 'wallet' : 'key'}" class="w-3.5 h-3.5"></i> ${paymentModeText}</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                            <span class="text-gray-500 font-semibold text-sm">Time</span>
+                            <span class="font-medium text-gray-700">${timeStr}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 font-semibold text-sm">Date</span>
+                            <span class="font-medium text-gray-700">${dateStr}</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-4 text-center border-t border-gray-100">
+                        <div class="text-2xl font-black text-indigo-700 flex items-center justify-center gap-1">
+                            <i data-lucide="badge-indian-rupee" class="w-5 h-5"></i> <span>${COURSE_FEE}</span>
+                        </div>
+                        <p class="text-[10px] text-gray-400 mt-1 flex items-center justify-center gap-1"><i data-lucide="printer" class="w-3 h-3"></i> Enrollment Successful ✓</p>
+                        <button id="receiptStartBtn" class="mt-4 w-full bg-indigo-600 text-white py-2.5 rounded-xl font-bold text-sm shadow-md">Start Learning</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(receiptOverlay);
+            lucide.createIcons();
+            
+            const startBtn = document.getElementById("receiptStartBtn");
+            if(startBtn) {
+                startBtn.addEventListener("click", () => {
+                    if(receiptOverlay) receiptOverlay.remove();
+                    restoreHeaderFooter();
+                    window.location.href = COURSE_REDIRECT;
+                });
+            }
+            receiptOverlay.addEventListener("click", (e) => {
+                if(e.target === receiptOverlay) {
+                    receiptOverlay.remove();
+                    restoreHeaderFooter();
+                }
+            });
+        }
+
+        function finalizeEnrollment(paymentMode = "wallet") {
+            if(isEnrolled) {
+                window.location.href = COURSE_REDIRECT;
+                return;
+            }
+            markEnrolled();
+            if(mainBtn) {
+                mainBtn.innerHTML = `<i data-lucide="play-circle" class="w-5 h-5"></i> Continue Course`;
+                mainBtn.classList.remove("from-indigo-700", "to-indigo-800");
+                mainBtn.classList.add("from-emerald-600", "to-teal-600");
+            }
+            showReceiptWithDetails(paymentMode);
+        }
+
+        function enrollWithWallet() {
+            if(currentBalance >= COURSE_FEE) {
+                let newBal = currentBalance - COURSE_FEE;
+                saveBalance(newBal);
+                finalizeEnrollment("wallet");
+                return true;
+            } else {
+                showToast(`⚠️ Insufficient balance! Need ${COURSE_FEE} coins. You have ${currentBalance}.`, true);
+                return false;
+            }
+        }
+
+        function verifyPasswordAndEnroll(pwd) {
+            if(pwd === ENROLL_PASSWORD) {
+                finalizeEnrollment("password");
+                return true;
+            } else {
+                showToast("❌ Invalid secret code. Try again!", true);
+                return false;
+            }
+        }
+
+        function openOptionModal() {
+            if(isEnrolled) {
+                window.location.href = COURSE_REDIRECT;
+                return;
+            }
+            if(COURSE_FEE === 0) {
+                finalizeEnrollment("complimentary");
+                return;
+            }
+            optionModal.classList.remove("hidden");
+            lucide.createIcons();
+        }
+        
+        function closeOptionModal() { optionModal.classList.add("hidden"); }
+        function openPasswordModal() {
+            closeOptionModal();
+            passwordModal.classList.remove("hidden");
+            document.getElementById("secretPasswordInput").value = "";
+            setTimeout(() => document.getElementById("secretPasswordInput")?.focus(), 80);
+        }
+        function closePasswordModal() { passwordModal.classList.add("hidden"); }
+
+        function bindEvents() {
+            const walletBtn = document.getElementById("payWithWalletBtn");
+            const pwdBtn = document.getElementById("passwordUnlockBtn");
+            const verifyBtn = document.getElementById("verifySecretBtn");
+
+            if(walletBtn) walletBtn.onclick = () => {
+                closeOptionModal();
+                enrollWithWallet();
+            };
+            if(pwdBtn) pwdBtn.onclick = () => {
+                closeOptionModal();
+                openPasswordModal();
+            };
+            if(verifyBtn) verifyBtn.onclick = () => {
+                const inputField = document.getElementById("secretPasswordInput");
+                const val = inputField ? inputField.value : "";
+                if(verifyPasswordAndEnroll(val)) {
+                    closePasswordModal();
+                } else {
+                    if(inputField) { inputField.value = ""; inputField.focus(); }
+                }
+            };
+            const pwdInput = document.getElementById("secretPasswordInput");
+            if(pwdInput) {
+                pwdInput.addEventListener("keypress", (e) => {
+                    if(e.key === "Enter") verifyBtn.click();
+                });
+            }
+            if(mainBtn) mainBtn.addEventListener("click", openOptionModal);
+        }
+
+        function updateEnrollButton() {
+            checkEnrollment();
+            if(isEnrolled && mainBtn) {
+                mainBtn.innerHTML = `<i data-lucide="play-circle" class="w-5 h-5"></i> Continue Course`;
+                mainBtn.classList.remove("from-indigo-700", "to-indigo-800");
+                mainBtn.classList.add("from-emerald-600", "to-teal-600");
+            } else if(mainBtn) {
+                mainBtn.innerHTML = `<i data-lucide="graduation-cap" class="w-5 h-5"></i> Enroll Now`;
+                mainBtn.classList.remove("from-emerald-600", "to-teal-600");
+                mainBtn.classList.add("from-indigo-700", "to-indigo-800");
+            }
+        }
+
+        function initStorage() {
+            if(localStorage.getItem("reward_coins") === null) localStorage.setItem("reward_coins", "520");
+            if(localStorage.getItem("enrolled_courses") === null) localStorage.setItem("enrolled_courses", JSON.stringify([]));
+            if(!localStorage.getItem("student_display_name")) localStorage.setItem("student_display_name", "Anwesha Roy");
+            if(!localStorage.getItem("profile_image_url")) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
+        }
+
+        function syncStorageEvents() {
+            window.addEventListener("storage", (e) => {
+                if(e.key === "reward_coins") {
+                    let newVal = parseInt(e.newValue,10);
+                    if(!isNaN(newVal)) { currentBalance = newVal; updateBalanceUI(); }
+                }
+                if(e.key === "enrolled_courses") { checkEnrollment(); updateEnrollButton(); }
+            });
+        }
+
+        function init() {
+            initStorage();
+            loadBalance();
+            loadProfile();
+            setFeeDisplay();
+            checkEnrollment();
+            updateEnrollButton();
+            bindEvents();
+            syncStorageEvents();
+            lucide.createIcons();
+        }
+        
+        if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+        else init();
+    </script>
+</body>
+</html>
