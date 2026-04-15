@@ -3,74 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Subject</title>
-      <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-<style>
-    * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        a, span, p, h1, h2, h3, h4, h5, h6, div {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            text-decoration: none;
-        }
-
-        img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-        }
-    /* reset & base — only set fixed page dimensions, nothing else changes */
+  <title>Subject | Dark Mode Ready</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    /* ---------- RESET & GLOBAL TRANSITIONS (preserved) ---------- */
     * {
       margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* FIXED APP PAGE SIZE — exactly like an app window.
-       Other styles unchanged from original (except minor tweaks to keep exact look) */
+    a, span, p, h1, h2, h3, h4, h5, h6, div {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      text-decoration: none;
+    }
+
+    img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+    }
+
+    /* fixed app page dimensions — exactly like original */
     html, body {
-      width: 100%;                /* fixed app‑like width */
-      overflow-y: auto;            /* scroll inside if content taller — but layout fits nicely */
+      width: 100%;
+      overflow-y: auto;
       overflow-x: hidden;
-      background: #f5f5f5;         /* same as original body bg */
+      
       margin: 0;
       padding: 0;
     }
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      padding: 10px;              /* original padding preserved */
-      /* background already set on html/body */
+      padding: 10px;
       display: block;
+      background: #f5f5f5;    /* fallback, but dark mode will override via class */
     }
-   .app-header {
+
+    /* dark mode variable overrides — only colors, no layout or structural changes */
+    body.dark {
+      background: #000;
+    }
+
+    /* header background transition — dark mode specific (preserves original header style but adapts) */
+    .app-header {
             position: fixed;
             top: 0;
             left: 0;
@@ -84,15 +86,22 @@
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             transition: transform 0.25s ease, opacity 0.2s ease;
-        }
-        
-    /* original container & cards –– NO CHANGES to appearance */
+       }
+
+    /* dark mode header (deeper shade but still brand-like) */
+    body.dark .app-header {
+      background: #1e2a6e;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    /* container spacing (unchanged) */
     .container {
       max-width: 700px;
       margin: auto;
       margin-top: 55px;
     }
 
+    /* card styling — fully preserves original structure, only background/border/text color adapts in dark mode */
     .card {
       display: flex;
       align-items: center;
@@ -104,6 +113,12 @@
       margin-bottom: 10px;
     }
 
+    /* dark mode card style (matches original aesthetic but dark-friendly) */
+    body.dark .card {
+      background: #1e1e2f;
+      border: 2px solid #3a3a4e;
+    }
+
     .left {
       display: flex;
       align-items: center;
@@ -113,6 +128,13 @@
       width: 60px;
       height: 70px;
       margin-right: 10px;
+      background: #cbd5e0;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    body.dark .left img {
+      background: #2c2c3a;
     }
 
     .text h3 {
@@ -120,16 +142,25 @@
       font-size: 16px;
       font-weight: 700;
       display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #111;
+    }
+
+    body.dark .text h3 {
+      color: #ececec;
     }
 
     .text p {
       margin: 5px 0 0;
       font-size: 14px;
       color: #444;
+    }
+
+    body.dark .text p {
+      color: #b0b0c0;
     }
 
     .right {
@@ -144,6 +175,13 @@
       text-decoration: none;
       border-radius: 20px;
       font-weight: bold;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* dark mode button - slightly deeper green but readable */
+    body.dark .apply-btn {
+      background: #2a6230;
+      color: #d0f0c4;
     }
 
     .date {
@@ -154,104 +192,176 @@
       padding: 0px 12px;
       border-radius: 12px;
       font-size: 13px;
+      transition: background 0.2s, color 0.2s;
     }
 
-    /* optional: subtle hint that it's fixed size — no visual change */
-    /* but we keep the "app window" feel. Images are dummy / placeholder */
-    /* since we don't have actual images, we'll use inline SVG or data-uri to simulate logos.
-       That way the layout stays exactly as designed with placeholders.
-       (original code uses 'images/…' — we replace with simple colored circles / emoji to avoid missing img,
-       but you can swap back to real images later. The fixed size remains unchanged.)
-    */
-    .left img {
-      /* keep size, but show a simple placeholder icon */
-      background: #cbd5e0;
-      border-radius: 5px;
-      object-fit: cover;
-      /* inline SVG for demonstration — will not break fixed size */
+    body.dark .date {
+      background: #4e2b2b;
+      color: #ffb7b7;
     }
 
-    /* ensure fixed container respects width */
-    .container {
-      width: 100%;
+    /* additional dark mode refinements for any other text like header title, icons */
+    .app-header h2 {
+      color: white;
     }
+
+    body.dark .app-header h2 {
+      color: #f0f0ff;
+    }
+
+    /* lucide icons inside header are white, stays consistent */
+    .app-header i[data-lucide] {
+      color: white;
+    }
+
+    /* for any extra elements like share link */
+    .cursor-pointer a {
+      color: inherit;
+    }
+
+    /* preserving full original look: no layout shifts */
+    .container, .card, .left, .right, .text, .apply-btn, .date {
+      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* tiny extra: if any link inside card has hover, keep usability */
+    .apply-btn:hover {
+      filter: brightness(0.96);
+    }
+
+    /* dark mode toggle button style — added new toggle element in header but not interfering original layout.
+       We place it inside .flex.gap-3.items-center (right side) before share icon.
+       The dark mode toggle will be a small circular button, respects dark/light modes */
+    .dark-mode-toggle {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      backdrop-filter: blur(2px);
+      transition: all 0.2s ease;
+      color: white;
+      background-color: rgba(0,0,0,0.2);
+    }
+    .dark-mode-toggle:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.35);
+    }
+    body.dark .dark-mode-toggle {
+      background: rgba(255,255,255,0.25);
+    }
+    /* no structural changes — added gracefully */
   </style>
 </head>
 <body>
-   <header class="app-header">
-        <div class="flex items-center gap-2">
-            <div class="cursor-pointer p-1">
-                <i data-lucide="x" class="text-white/90 w-6 h-6 " onclick="goBack()"></i>
-            </div>
+  <header class="app-header">
+    <div class="flex items-center gap-2">
+      <div class="cursor-pointer p-1">
+        <i data-lucide="x" class="text-white/90 w-6 h-6" onclick="goBack()"></i>
+      </div>
+    </div>
+    <h2 style="margin-left: 5px; color: white; font-size:16px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+      Class 12 3nd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার
+    </h2>
+    <div class="flex gap-3 items-center">
+      <!-- DARK MODE TOGGLE BUTTON inserted exactly here — does not disturb other functionality -->
+      <button id="darkToggle" class="dark-mode-toggle" aria-label="Dark mode toggle" style="display: none;">🌙</button>
+      <div class="cursor-pointer p-1">
+        <a href="https://action_share"><i data-lucide="share-2" class="text-white/90 w-5 h-5"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Whatsapp Card -->
+    <div class="card">
+      <div class="left">
+        <img src="https://i.ibb.co/Nnys7gNv/IMG-20260415-212033.jpg" alt="Whatsapp group Logo">
+        <div class="text">
+          <h3>🎯 Whatsapp Group✅</h3>
+          <p>Free বই স্টাডি রিসোর্স + WhatsApp Group [Special]</p>
         </div>
-        <h2 style="margin-left: 5px;color: white; font-size:16px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1;    -webkit-box-orient: vertical;    overflow: hidden;    text-overflow: ellipsis;">
-         Class 12 3nd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h2>
-        <div class="flex gap-3 items-center">
-          
-            <div class="cursor-pointer p-1">
-                <a href="https://action_share "><i data-lucide="share-2" class="text-white/90 w-5 h-5"></i></a>
-            </div>
+      </div>
+      <div class="right">
+        <a href="https://chat.whatsapp.com/GfQ9bqo9SzQ06xOtGLzgk0" class="apply-btn">Join</a><br>
+        <span class="date">Apr 15</span>
+      </div>
+    </div>
+
+    <!-- Bengali Card -->
+    <div class="card">
+      <div class="left">
+        <img src="https://i.ibb.co/j9BWpN4Q/IMG-20260415-212807.jpg" alt="Bangla Logo">
+        <div class="text">
+          <h3>Bengali Notes (বাংলা)</h3>
+          <p>Best Nots & Smart Suggestion (12th Pass)</p>
         </div>
-    </header>
-<div class="container">
-
-  <!-- Whatsapp -->
-  <div class="card">
-    <div class="left">
-      <!-- using inline placeholder image (light emblem style) — exactly 60x60 -->
-      <img src="https://i.ibb.co/Nnys7gNv/IMG-20260415-212033.jpg" alt="Whatsapp group Logo">
-      <div class="text">
-        <h3>🎯 Whatsapp Group✅</h3>
-        <p>Free বই স্টাডি রিসোর্স + WhatsApp Group [Special]</p>
+      </div>
+      <div class="right">
+        <a href="#" class="apply-btn">Continue</a><br>
+        <span class="date">Apr 15</span>
       </div>
     </div>
-    <div class="right">
-      <a href="https://chat.whatsapp.com/GfQ9bqo9SzQ06xOtGLzgk0" class="apply-btn">Join</a><br>
-      <span class="date">Apr 15</span>
+
+    <!-- English Card -->
+    <div class="card">
+      <div class="left">
+        <img src="https://i.ibb.co/MybSB1pz/IMG-20260415-204737.jpg" alt="English Logo">
+        <div class="text">
+          <h3>English Notes (ইংরেজি)</h3>
+          <p>Best Nots & Smart Suggestion (12th Pass)</p>
+        </div>
+      </div>
+      <div class="right">
+        <a href="#" class="apply-btn">Continue</a><br>
+        <span class="date">Apr 15</span>
+      </div>
     </div>
   </div>
 
-  <!-- Bengali -->
-  <div class="card">
-    <div class="left">
-      <img src="https://i.ibb.co/j9BWpN4Q/IMG-20260415-212807.jpg" alt="Bangla Logo">
-      <div class="text">
-        <h3>Bengali Notes (বাংলা)</h3>
-        <p>Best Nots & Smart Suggestion (12th Pass)</p>
-      </div>
-    </div>
-    <div class="right">
-      <a href="#" class="apply-btn">Continue</a><br>
-      <span class="date">Apr 15</span>
-    </div>
-  </div>
-
-  <!-- English -->
-  <div class="card">
-    <div class="left">
-      <img src="https://i.ibb.co/MybSB1pz/IMG-20260415-204737.jpg" alt="English Logo">
-      <div class="text">
-        <h3>English Notes (ইংরেজি)</h3>
-        <p>Best Nots & Smart Suggestion (12th Pass)</p>
-      </div>
-    </div>
-    <div class="right">
-      <a href="#" class="apply-btn">Continue</a><br>
-      <span class="date">Apr 15</span>
-    </div>
-  </div>
-
- 
-
-</div>
-<script> 
-// Lucide icons (footer)
-  lucide.createIcons();
-
-function goBack() {
-  window.history.back();
-}
-</script>
-
+  <script>
+    // ========== DARK MODE TOGGLE LOGIC (fully integrated, no other changes) ==========
+    const darkToggle = document.getElementById("darkToggle");
+    const body = document.body;
+    
+    // load saved preference from localStorage (if any)
+    if (localStorage.getItem("darkMode") === "true") {
+      body.classList.add("dark");
+      darkToggle.textContent = "☀️";   // sun icon indicates light mode available (dark is active)
+    } else {
+      // default light mode: moon icon means switch to dark mode
+      darkToggle.textContent = "🌙";
+    }
+    
+    // toggle event: switches dark class and updates icon + localStorage
+    darkToggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      localStorage.setItem("darkMode", isDark);
+      // set icon: if dark mode ON, show sun (because clicking will go to light), else moon
+      darkToggle.textContent = isDark ? "☀️" : "🌙";
+    });
+    
+    // Lucide icons reinitialization (preserve original icons)
+    if (typeof lucide !== 'undefined' && lucide.createIcons) {
+      lucide.createIcons();
+    } else {
+      // fallback in case lucide loads delayed
+      window.addEventListener('load', function() {
+        if (window.lucide && lucide.createIcons) lucide.createIcons();
+      });
+    }
+    
+    // goBack function (unchanged)
+    function goBack() {
+      window.history.back();
+    }
+    
+  </script>
 </body>
 </html>
