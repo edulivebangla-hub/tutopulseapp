@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Subject</title>
+      <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+<style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            text-decoration: none;
+        }
+
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+    /* reset & base — only set fixed page dimensions, nothing else changes */
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    /* FIXED APP PAGE SIZE — exactly like an app window.
+       Other styles unchanged from original (except minor tweaks to keep exact look) */
+    html, body {
+      width: 100%;                /* fixed app‑like width */
+      overflow-y: auto;            /* scroll inside if content taller — but layout fits nicely */
+      overflow-x: hidden;
+      background: #f5f5f5;         /* same as original body bg */
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 10px;              /* original padding preserved */
+      /* background already set on html/body */
+      display: block;
+    }
+   .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #3047a5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+        
+    /* original container & cards –– NO CHANGES to appearance */
+    .container {
+      max-width: 700px;
+      margin: auto;
+      margin-top: 55px;
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f9f9f9;
+      border: 2px solid #d6d6e7;
+      border-radius: 10px;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+    }
+
+    .left img {
+      width: 60;
+      height: 70px;
+      margin-right: 10px;
+    }
+
+    .text h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+
+    .text p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .right {
+      text-align: center;
+    }
+
+    .apply-btn {
+      display: inline-block;
+      padding: 5px 20px;
+      background: #b8d8b8;
+      color: #2d5a2d;
+      text-decoration: none;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .date {
+      margin-top: 10px;
+      display: inline-block;
+      background: #f5d6d6;
+      color: #a33;
+      padding: 0px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    /* optional: subtle hint that it's fixed size — no visual change */
+    /* but we keep the "app window" feel. Images are dummy / placeholder */
+    /* since we don't have actual images, we'll use inline SVG or data-uri to simulate logos.
+       That way the layout stays exactly as designed with placeholders.
+       (original code uses 'images/…' — we replace with simple colored circles / emoji to avoid missing img,
+       but you can swap back to real images later. The fixed size remains unchanged.)
+    */
+    .left img {
+      /* keep size, but show a simple placeholder icon */
+      background: #cbd5e0;
+      border-radius: 5px;
+      object-fit: cover;
+      /* inline SVG for demonstration — will not break fixed size */
+    }
+
+    /* ensure fixed container respects width */
+    .container {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+   <header class="app-header">
+        <div class="flex items-center gap-2">
+            <div class="cursor-pointer p-1">
+                <i data-lucide="x" class="text-white/90 w-6 h-6 " onclick="goBack()"></i>
+            </div>
+        </div>
+        <h2 style="margin-left: 5px;color: white; font-size:16px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1;    -webkit-box-orient: vertical;    overflow: hidden;    text-overflow: ellipsis;">
+         Class 12 3nd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h2>
+        <div class="flex gap-3 items-center">
+          
+            <div class="cursor-pointer p-1">
+                <a href="https://action_share "><i data-lucide="share-2" class="text-white/90 w-5 h-5"></i></a>
+            </div>
+        </div>
+    </header>
+<div class="container">
+
+  <!-- Whatsapp -->
+  <div class="card">
+    <div class="left">
+      <!-- using inline placeholder image (light emblem style) — exactly 60x60 -->
+      <img src="https://i.ibb.co/Nnys7gNv/IMG-20260415-212033.jpg" alt="Whatsapp group Logo">
+      <div class="text">
+        <h3>🎯 Whatsapp Group✅</h3>
+        <p>Free বই স্টাডি রিসোর্স + WhatsApp Group [Special]</p>
+      </div>
+    </div>
+    <div class="right">
+      <a href="https://chat.whatsapp.com/GfQ9bqo9SzQ06xOtGLzgk0" class="apply-btn">Join</a><br>
+      <span class="date">Apr 15</span>
+    </div>
+  </div>
+
+  <!-- Bengali -->
+  <div class="card">
+    <div class="left">
+      <img src="https://i.ibb.co/j9BWpN4Q/IMG-20260415-212807.jpg" alt="Bangla Logo">
+      <div class="text">
+        <h3>Bengali Notes (বাংলা)</h3>
+        <p>Best Nots & Smart Suggestion (12th Pass)</p>
+      </div>
+    </div>
+    <div class="right">
+      <a href="#" class="apply-btn">Continue</a><br>
+      <span class="date">Apr 15</span>
+    </div>
+  </div>
+
+  <!-- English -->
+  <div class="card">
+    <div class="left">
+      <img src="https://i.ibb.co/MybSB1pz/IMG-20260415-204737.jpg" alt="English Logo">
+      <div class="text">
+        <h3>English Notes (ইংরেজি)</h3>
+        <p>Best Nots & Smart Suggestion (12th Pass)</p>
+      </div>
+    </div>
+    <div class="right">
+      <a href="#" class="apply-btn">Continue</a><br>
+      <span class="date">Apr 15</span>
+    </div>
+  </div>
+
+ 
+
+</div>
+<script> 
+// Lucide icons (footer)
+  lucide.createIcons();
+
+function goBack() {
+  window.history.back();
+}
+</script>
+
+</body>
+</html>
