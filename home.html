@@ -259,7 +259,7 @@
             }
         }
 
-/* Swiper */
+        /* Swiper */
         .swiper {
             width: 100%;
             padding-top: 20px;
@@ -306,8 +306,6 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            display: flex;
-            align-items: center;
             gap: 20px;
             padding-right: 10px;
             padding-left: 10px;
@@ -687,7 +685,6 @@
     </style>
 </head>
 <body>
-    <!-- HEADER -->
     <header class="app-header">
         <div class="header-left">
             <img src="https://i.ibb.co/DH40pVCM/1000166169-removebg-preview.png" alt="TutoPulse Logo" class="logo-img">
@@ -699,7 +696,6 @@
             <a href="http://action_notifications"><div class="header-icon">
                 <i data-lucide="bell" width="25" height="25"></i>
             </div></a>
-            <!-- Dark Mode Toggle Button -->
             <div class="header-icon" style="display: none;" id="darkToggle">
                 🌙
             </div>
@@ -765,25 +761,25 @@
             <div class="card-row">
                 <a href="https://example.com/exam-prep" class="card-button">
                     <div class="emblem-container">
-                        <img src="https://cdn-icons-png.flaticon.com/512/12886/12886027.png" alt="WBBHSE Seal" class="emblem">
+                        <img src="https://cdn-icons-png.flaticon.com/512/12886/12886027.png" alt="Seal" class="emblem">
                     </div>
                     <span>Exam Prep</span>
                 </a>
                 <a href="https://example.com/class-09-10" class="card-button">
                     <div class="emblem-container">
-                        <img src="https://edulivestore.netlify.app/image/wbbse.png" alt="WBBHSE Seal" class="emblem">
+                        <img src="https://edulivestore.netlify.app/image/wbbse.png" alt="Seal" class="emblem">
                     </div>
                     <span>Class 09-10</span>
                 </a>
                 <a href="hs/hs.html" class="card-button">
                     <div class="emblem-container">
-                        <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" alt="WBBHSE Seal" class="emblem">
+                        <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" alt="Seal" class="emblem">
                     </div>
                     <span>Class 11-12</span>
                 </a>
                 <a href="https://example.com/skills" class="card-button">
                     <div class="emblem-container">
-                        <img src="https://cdn-icons-png.flaticon.com/512/9666/9666850.png" alt="WBBHSE Seal" class="emblem">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9666/9666850.png" alt="Seal" class="emblem">
                     </div>
                     <span>Skills</span>
                 </a>
@@ -796,7 +792,7 @@
                 View<span class="text-brandBlue ml-2">More</span>
             </div>
             <div class="grid grid-cols-4 gap-2 text-center">
-                <a href="#" class="group"><div class="bg-blue-600 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2">  <img src="https://cdn-icons-png.flaticon.com/512/12886/12886028.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Mock Test</p></a>
+                <a href="#" class="group"><div class="bg-blue-600 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2"> <img src="https://cdn-icons-png.flaticon.com/512/12886/12886028.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Mock Test</p></a>
                 <a href="#" class="group"><div class="bg-yellow-300 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2"><img src="https://cdn-icons-png.flaticon.com/512/12886/12886035.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Syllabus</p></a>
                 <a href="#" class="group"><div class="bg-green-600 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2"><img src="https://cdn-icons-png.flaticon.com/512/12886/12886025.png" style="width: 40px;"></div><p class="text-[11px] font-bold leading-tight">Certificate</p></a>
                 <a href="#" class="group"><div class="bg-red-600 w-14 h-14 active:scale-95 rounded-2xl mx-auto flex items-center justify-center mb-2">   <img src="https://cdn-icons-png.flaticon.com/512/9666/9666855.png" style="width: 50px;"></div><p class="text-[11px] font-bold leading-tight">Donate</p></a>
@@ -895,7 +891,6 @@
         </table>
     </main>
 
-    <!-- FOOTER -->
     <nav class="app-footer">
         <a href="#" class="nav-item active">
             <i data-lucide="home" width="24" height="24"></i>
@@ -934,7 +929,6 @@
             darkToggle.textContent = isDark ? "☀️" : "🌙";
         });
 
-        // 1. Initialize Lucide Icons
         lucide.createIcons();
 
         const footer = document.querySelector('.app-footer');
@@ -943,7 +937,7 @@
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 const targetUrl = this.getAttribute('href');
-                if (!targetUrl || targetUrl === "") {
+                if (!targetUrl || targetUrl === "" || targetUrl === "#") {
                     e.preventDefault();
                 }
 
@@ -961,7 +955,7 @@
 
                 footer.appendChild(ripple);
 
-                if (targetUrl && targetUrl !== "") {
+                if (targetUrl && targetUrl !== "" && targetUrl !== "#") {
                     setTimeout(() => {
                         window.location.href = targetUrl;
                     }, 200);
@@ -996,8 +990,6 @@
             },
         });
 
-        lucide.createIcons();
-        
         let currentBalance = 0;
         
         function loadBalance() {
@@ -1009,142 +1001,51 @@
                 currentBalance = parseInt(stored, 10);
             }
             updateBalanceUI();
-            return currentBalance;
         }
         
         function updateBalanceUI() {
             const balanceSpan = document.getElementById("balanceAmount");
             if (balanceSpan) {
-                const currentShown = parseInt(balanceSpan.innerText, 10);
-                if (currentShown !== currentBalance) {
-                    balanceSpan.innerText = currentBalance;
-                    balanceSpan.classList.add("balance-pop");
-                    setTimeout(() => {
-                        balanceSpan.classList.remove("balance-pop");
-                    }, 280);
-                } else {
-                    balanceSpan.innerText = currentBalance;
-                }
+                balanceSpan.innerText = currentBalance;
             }
-        }
-        
-        function saveBalance(newValue) {
-            currentBalance = newValue;
-            localStorage.setItem("reward_coins", currentBalance);
-            updateBalanceUI();
         }
         
         function loadProfileData() {
-            let savedName = localStorage.getItem("student_display_name");
-            if (!savedName || savedName.trim() === "") {
-                savedName = "";
-                localStorage.setItem("student_display_name", savedName);
-            }
+            let savedName = localStorage.getItem("student_display_name") || "Aninda Halder";
             const nameElement = document.getElementById("displayName");
             if (nameElement) nameElement.innerText = savedName;
             
-            let savedPic = localStorage.getItem("profile_image_url");
-            if (!savedPic || savedPic === "") {
-                savedPic = "https://api.dicebear.com/7.x/avataaars/svg";
-                localStorage.setItem("profile_image_url", savedPic);
-            }
+            let savedPic = localStorage.getItem("profile_image_url") || "https://i.ibb.co/4pDNDk1/avatar.png";
             const avatarImg = document.getElementById("profileAvatar");
             if (avatarImg) avatarImg.src = savedPic;
         }
-        
-        function listenForExternalUpdates() {
-            window.addEventListener("storage", (event) => {
-                if (event.key === "reward_coins") {
-                    let newCoins = parseInt(event.newValue, 10);
-                    if (!isNaN(newCoins)) {
-                        currentBalance = newCoins;
-                        updateBalanceUI();
-                    }
-                }
-                if (event.key === "student_display_name" && event.newValue) {
-                    const nameElement = document.getElementById("displayName");
-                    if (nameElement) nameElement.innerText = event.newValue;
-                }
-                if (event.key === "profile_image_url" && event.newValue) {
-                    const avatarImg = document.getElementById("profileAvatar");
-                    if (avatarImg) avatarImg.src = event.newValue;
-                }
-            });
-        }
-        
-        function ensureDataIntegrity() {
-            if (localStorage.getItem("reward_coins") === null) {
-                localStorage.setItem("reward_coins", "0");
-            }
-            if (localStorage.getItem("student_display_name") === null) {
-                localStorage.setItem("student_display_name", "");
-            }
-            if (localStorage.getItem("profile_image_url") === null) {
-                localStorage.setItem("profile_image_url", "https://api.dicebear.com/7.x/avataaars/svg");
-            }
-            if (localStorage.getItem("coins") !== null && (localStorage.getItem("reward_coins") === "0" || parseInt(localStorage.getItem("reward_coins")) === 0)) {
-                let oldCoinVal = parseInt(localStorage.getItem("coins"), 10);
-                if (!isNaN(oldCoinVal) && oldCoinVal > 0) {
-                    localStorage.setItem("reward_coins", oldCoinVal);
-                }
-            }
-        }
-        
-        function refreshIcons() {
-            if (typeof lucide !== "undefined" && lucide.createIcons) {
-                lucide.createIcons();
-            }
-        }
-        
-        function initProfileOnlyPage() {
-            ensureDataIntegrity();
+
+        function initApp() {
             loadBalance();
             loadProfileData();
-            listenForExternalUpdates();
-            refreshIcons();
-            
-            const avatar = document.getElementById("profileAvatar");
-            if (avatar) {
-                avatar.onerror = function() {
-                    this.src = "https://api.dicebear.com/7.x/avataaars/svg";
-                    localStorage.setItem("profile_image_url", "https://api.dicebear.com/7.x/avataaars/svg");
-                };
-            }
+            showTab('entrance');
         }
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initProfileOnlyPage);
-        } else {
-            initProfileOnlyPage();
-        }
-        
+
         const greet = document.getElementById('greet');
         const h = new Date().getHours();
         let greeting = 'Good Morning';
-        if (h >= 4 && h < 7) greeting = 'Good Morning';
-        else if (h >= 7 && h < 10) greeting = 'Reading Time';
-        else if (h >= 10 && h < 14) greeting = 'Good Noon';
+        if (h >= 4 && h < 11) greeting = 'Good Morning';
+        else if (h >= 11 && h < 14) greeting = 'Good Noon';
         else if (h >= 14 && h < 18) greeting = 'Good Afternoon';
         else if (h >= 18 && h < 22) greeting = 'Revision Time';
-        else if (h >= 22 || h < 4) greeting = 'Good Night';
-        greet.innerText = greeting;
+        else greeting = 'Good Night';
+        if(greet) greet.innerText = greeting;
 
         function showTab(tabName) {
             document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-
             const targetContent = document.getElementById(`${tabName}_content`);
             const targetTab = document.getElementById(`${tabName}_tab`);
-            
-            if(targetContent && targetTab) {
-                targetContent.classList.add('active');
-                targetTab.classList.add('active');
-            }
+            if(targetContent) targetContent.classList.add('active');
+            if(targetTab) targetTab.classList.add('active');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            showTab('entrance');
-        });
+        window.onload = initApp;
     </script>
 </body>
 </html>
