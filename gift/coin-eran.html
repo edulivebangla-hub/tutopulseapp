@@ -7,6 +7,48 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
+         /* Disable text selection and dragging globally */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+    transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Additional protection for links and text */
+  a, span, p, h1, h2, h3, h4, h5, h6, div {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+    text-decoration: none;
+  }
+  
+  /* Prevent image dragging and long press */
+  img {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+  }
         /* ===== NEW DESIGN SYSTEM ===== */
         :root {
             --gradient-bg: linear-gradient(180deg, #f8fafc 0%, #e0e7ff 100%);
