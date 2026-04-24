@@ -2,53 +2,55 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>HS 11-12</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-        /* ===== LIGHT MODE VARIABLES (default) ===== */
-       * {
-      
-      box-sizing: border-box;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
-      transition: background 0.3s, color 0.3s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    
-    a, span, p, h1, h2, h3, h4, h5, h6, div {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
-      text-decoration: none;
-    }
-    
-    img {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
-    }
-    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            text-decoration: none;
+        }
+
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+
         :root {
+            --text:#000;
             --primary-color: #0075BB;
-            --text-dark: #333;
+            --text-dark: #000;
             --text-light: #666;
             --bg-gray: #f8f9fa;
             --white: #ffffff;
@@ -56,36 +58,32 @@
             --transition: all 0.3s ease;
             --header-bg: #6aa0ff;
             --controls-bg: #F0F4FF;
+            --card-bg: #ffffff;
+            --card-border: #f1f5f9;
         }
 
         /* Dark mode variables */
         body.dark {
-            --text-dark: #e0e0e0;
-            --text-light: #b0b0b0;
+            --text:ffffff;
+            --text-dark: #ffffff;
+            --text-light: #b0b0;
             --bg-gray: #000;
-            --white: #2d2d2d;
+            --white: #1e293b;
+            --card-bg: #1e293b;
+            --card-border: #334155;
             --header-bg: #6aa0ff;
-            --controls-bg: #2d2d2d;
+            --controls-bg: #1e293b;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-   /* Base Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Removes default blue tap highlight */
         }
 
         body {
-            
             margin: 0;
-            
             background-color: var(--bg-gray);
             color: var(--text-dark);
             -webkit-tap-highlight-color: transparent;
-            
         }
 
+        /* --- Header Styles --- UNCHANGED */
         header {
             position: fixed;
             top: 0;
@@ -117,7 +115,9 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s; padding: 5px;
+            transition: all 0.3s;
+            padding: 5px;
+            border-radius: 50px;
         }
 
         header .right {
@@ -126,15 +126,6 @@
             gap: 15px;
         }
 
-        /* --- Main Content Area --- */
-        .app-content {
-            position: fixed;
-            top: 60px;
-            bottom:0;
-            width: 100%;
-            overflow-y: auto;
-            background-color: var(--bg-gray);
-        }
         .dark-toggle, .transaction-btn {
             background: none;
             color: #ffff;
@@ -142,39 +133,30 @@
             cursor: pointer;
             border: none;
             display: flex;
-            align-items: center; padding: 5px;
-        }
-
-        .transaction-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            align-items: center;
+            padding: 5px;
             border-radius: 50px;
         }
 
-        .dark-toggle:hover {
+        .transaction-btn:hover, .dark-toggle:hover, .left .back-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-        }
-
-        .left .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            
         }
 
         /* Controls Bar */
         .controls {
             background: var(--controls-bg);
-            margin-top: 0;
             right: 0;
             border-bottom-left-radius: 15px;
             border-top-left-radius: 15px;
-            padding: 10px 10px;
+            padding: 10px 12px;
             display: flex;
             justify-content: flex-end;
             gap: 15px;
             position: fixed;
-            z-index: 1000;
+            z-index: 999;
             transition: background-color 0.3s ease;
+            top: 7px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
 
         .view-btn {
@@ -188,13 +170,21 @@
             color: var(--primary-color);
         }
 
+        /* --- Main Content Area --- */
+        .app-content {
+            position: fixed;
+            top: 60px;
+            bottom: 0;
+            width: 100%;
+            overflow-y: auto;
+            background-color: var(--bg-gray);
+        }
+
         /* Content Container */
         .course-container {
-            padding: 10px 15px 30px;
+            padding: 8px 15px 30px;
             display: grid;
             gap: 20px;
-            top: 70px;
-            margin-top: 10px;
             transition: var(--transition);
         }
 
@@ -206,26 +196,32 @@
         /* Grid View Toggle - 2 items per row */
         .course-container.grid-mode {
             grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
-        /* Smooth Card Design */
+        /* NEW SMOOTH CARD DESIGN */
         .card {
             overflow: hidden;
-            transition: var(--transition);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
-            color: inherit;
+            color: var(--text);
             display: flex;
             flex-direction: column;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0.09);
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+            border: 1px solid var(--card-border);
         }
 
       
+
         .image-box {
             position: relative;
             width: 100%;
-            height: 100%;
-            padding-top: 50.25%; /* 16:9 Aspect Ratio */
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
             overflow: hidden;
+            
         }
 
         .image-box img {
@@ -234,25 +230,32 @@
             left: 0;
             width: 100%;
             height: 100%;
-            
+            object-fit: cover;
             background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
             animation: 1.5s shine linear infinite;
+            transition: transform 0.4s ease;
+        }
+
+       
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         .card-body {
-            padding: 2px;
+            padding: 14px 16px 1px;
         }
 
         .card-title {
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 800;
             line-height: 1.4;
             margin-bottom: 8px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            color: var(--text-dark);
+            color: var(--text);
         }
 
         .card-meta {
@@ -261,6 +264,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-weight: 700;
         }
 
         .rating {
@@ -269,23 +273,35 @@
             display: flex;
             align-items: center;
             gap: 3px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         /* Adjustments for List Mode specifically */
         .list-mode .card {
-            flex-direction: row; /* Optional: set to column if you want big images in list */
-            flex-direction: column; 
+            flex-direction: column;
         }
 
         @media (max-width: 400px) {
             .course-container.grid-mode {
-                gap: 10px;
-                padding: 10px;
+                gap: 12px;
+                padding: 8px 10px 30px;
             }
-            .card-title { font-size: 16px; font-weight: 700;}
+            .card-title { font-size: 15px; font-weight: 800;}
         }
-.hidden{display: none;}
+
+        .hidden { display: none !important; }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        .no-results i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -298,43 +314,47 @@
     </div>
     <h3>HS 11-12</h3>
     <div class="right">
-      <button id="darkToggle" class="dark-toggle hidden">🌙</button>
-       <div class="controls">
+      <button id="darkToggle" class="dark-toggle" style="display: none;">🌙</button>
+      <div class="controls">
         <i id="listBtn" data-lucide="square" class="view-btn active" onclick="setView('list')"></i>
-        <i id="gridBtn" data-lucide="layout-grid" class="view-btn " onclick="setView('grid')"></i>
-    </div><a href="https://action_share" class="transaction-btn">
+        <i id="gridBtn" data-lucide="layout-grid" class="view-btn" onclick="setView('grid')"></i>
+      </div>
+      <a href="https://action_share" class="transaction-btn">
         <i data-lucide="share2" class="icon-img"></i>
       </a>
     </div>
   </header>
- <main class="app-content">
 
-<a href="#"><img src="https://i.ibb.co/x8cGxqS3/Add-Text-04-14-12-22-36.jpg" style="width: 100%; margin-top: 5px;"></a>
+ <main class="app-content">
+    <a href="#"><img src="https://i.ibb.co/x8cGxqS3/Add-Text-04-14-12-22-36.jpg" style="width: 100%; margin-top: 5px;"></a>
    
     <main id="courseGrid" class="course-container list-mode">
         
-        <a href="sem3/enroll.html" class="card">
+        <a href="sem3/enroll.html" class="card" data-course="course1">
             <div class="image-box">
                 <img src="https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg" alt="Course Image">
             </div>
             <div class="card-body">
                 <div class="card-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</div>
-              
+               
             </div>
         </a>
 
-        <a href="sem1/enroll.html" class="card">
+        <a href="sem1/enroll.html" class="card" data-course="course2">
             <div class="image-box">
                 <img src="https://i.ibb.co/TxnkPbXT/Add-Text-04-17-08-28-13.jpg" alt="Course Image">
             </div>
             <div class="card-body">
                 <div class="card-title">Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</div>
-             
+               
             </div>
         </a>
+
+        <!-- Add more courses with data-course="course3", course4, etc -->
  
     </main>
  </main>
+
     <script>
         function goBack() {
             window.history.back();
@@ -379,10 +399,47 @@
             const isDark = body.classList.contains("dark");
             localStorage.setItem("darkMode", isDark);
             darkToggle.textContent = isDark ? "☀️" : "🌙";
-            
-            // Recreate icons to ensure they render properly in dark mode (optional)
             lucide.createIcons();
         });
+
+        // ========== URL PARAMETER FILTER ==========
+        function filterByURL() {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id'); // e.g. course.html?id=course1
+            
+            if (!courseId) {
+                // No filter, show all
+                return;
+            }
+
+            const allCards = document.querySelectorAll('.card');
+            let found = false;
+
+            allCards.forEach(card => {
+                if (card.dataset.course === courseId) {
+                    card.style.display = 'flex';
+                    found = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show "not found" message if no match
+            if (!found) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <i data-lucide="search-x"></i>
+                        <h3 style="margin-top:16px;font-weight:800;color:var(--text-dark);">Course not found</h3>
+                        <p style="margin-top:8px;color:var(--text-light);">No course matches id="${courseId}"</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        // Run filter on page load
+        window.addEventListener('DOMContentLoaded', filterByURL);
+        window.addEventListener('load', filterByURL);
     </script>
 </body>
 </html>
