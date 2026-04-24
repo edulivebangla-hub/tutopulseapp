@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tuto AI - Your Study Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* Disable text selection and dragging globally */
     * {
@@ -193,6 +192,7 @@
             gap: 10px;
             margin-bottom: 20px;
             animation: fadeIn 0.3s ease;
+            position: relative;
         }
 
         @keyframes fadeIn {
@@ -226,8 +226,14 @@
             font-size: 14px;
         }
 
-  .msg-content {
+  .msg-wrapper {
             max-width: 75%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+  .msg-content {
             padding: 12px 16px;
             border-radius: 20px;
             line-height: 1.5;
@@ -251,6 +257,41 @@
             background: var(--user-msg);
             color: white;
             border-bottom-right-radius: 4px;
+        }
+
+      /* MESSAGE COPY BUTTON */
+ .msg-actions {
+            display: flex;
+            gap: 6px;
+            padding: 0 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+ .message:hover .msg-actions,
+ .message:active .msg-actions {
+            opacity: 1;
+        }
+
+ .copy-msg-btn {
+            padding: 4px 10px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+ .copy-msg-btn:active {
+            background: var(--primary);
+            color: white;
+            transform: scale(0.95);
         }
 
       /* CLICKABLE URLS & COPYABLE NUMBERS */
@@ -449,6 +490,13 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
+        /* Mobile: always show copy button */
+        @media (max-width: 768px) {
+            .msg-actions {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -565,6 +613,15 @@
             });
         }
 
+        // Copy full message - FIXED to handle all characters
+        function copyMessage(btn) {
+            const msgDiv = btn.closest('.message');
+            const rawText = msgDiv.getAttribute('data-fulltext');
+            navigator.clipboard.writeText(rawText).then(() => {
+                showToast('Message copied!');
+            });
+        }
+
         function showToast(msg) {
             toast.textContent = msg;
             toast.classList.add('show');
@@ -591,9 +648,8 @@
             // Phone numbers (10+ digits)
             formatted = formatted.replace(
                 /(\+?\d[\d\s-]{8,}\d)/g,
-                '<span class="copy-item" onclick="copyToClipboard(\'$1\')">$1 <i data-lucide="copy"></i></span>'
+                '<span class="copy-item" onclick="copyToClipboard(\'$1\')">$1 <i data-lucide="copy" width="20px"></i></span>'
             );
-
 
             // **Bold** markdown
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -629,7 +685,7 @@
                             {
                                 parts: [
                                     {
-                                        text: `You are Tuto AI, a friendly study assistant for students. Be encouraging, explain step-by-step, use examples. Keep answers concise but thorough. If you give numbers, URLs, or steps, make them clear. Contact Number 9339061296 and Email admin.tutopulse@gmail.com. devoloper name Aninda Halder the Founder of TutoPulse. User asks: ${text}`
+                                        text: `You are Tuto AI, a friendly study assistant. When you give answers with calculator, calendar, numbers, or steps, make them clear and short correct answer. Always be encouraging. If you provide a phone number, email, or important number, make it stand out.TutoPulse. User asks: ${text}`
                                     }
                                 ]
                             }
@@ -665,6 +721,7 @@
         function addMessage(text, sender) {
             const msgDiv = document.createElement('div');
             msgDiv.className = `message ${sender}`;
+            msgDiv.setAttribute('data-fulltext', text);
 
             const avatar = sender === 'ai'
          ? '<img src="https://i.ibb.co/5hj3z4JG/Add-Text-04-14-08-22-15.png" class="msg-avatar ai-avatar-msg" alt="Tuto AI">'
@@ -672,9 +729,21 @@
 
             const formattedText = sender === 'ai'? formatMessage(text) : text.replace(/\n/g, '<br>');
 
+            const copyBtn = sender === 'ai' ? `
+                <div class="msg-actions">
+                    <button class="copy-msg-btn" onclick="copyMessage(this)">
+                        <i data-lucide="copy" width="12" height="12"></i>
+                        Copy
+                    </button>
+                </div>
+            ` : '';
+
             const content = `
                 ${avatar}
-                <div class="msg-content ${sender}-msg">${formattedText}</div>
+                <div class="msg-wrapper">
+                    <div class="msg-content ${sender}-msg">${formattedText}</div>
+                    ${copyBtn}
+                </div>
             `;
 
             msgDiv.innerHTML = content;
@@ -690,8 +759,10 @@
             typingDiv.id = 'typing';
             typingDiv.innerHTML = `
                 <img src="https://i.ibb.co/5hj3z4JG/Add-Text-04-14-08-22-15.png" class="msg-avatar ai-avatar-msg" alt="Tuto AI">
-                <div class="ai-msg2">
-                    <img src="https://i.gifer.com/ZZ5H.gif" class="typing-gif" alt="Typing...">
+                <div class="msg-wrapper">
+                    <div class="ai-msg2">
+                        <img src="https://i.gifer.com/ZZ5H.gif" class="typing-gif" alt="Typing...">
+                    </div>
                 </div>
             `;
             chatContainer.appendChild(typingDiv);
