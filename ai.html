@@ -48,7 +48,7 @@
         }
 
         /* HEADER WITH BACK ARROW + LOGO */
-     .app-header {
+  .app-header {
             position: fixed;
             top: 0;
             left: 0;
@@ -63,7 +63,7 @@
             gap: 12px;
         }
 
-     .back-btn {
+  .back-btn {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -76,19 +76,19 @@
             flex-shrink: 0;
         }
 
-     .back-btn:active {
+  .back-btn:active {
             background: rgba(255, 255, 0.2);
             transform: scale(0.95);
         }
 
-     .header-info {
+  .header-info {
             flex: 1;
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-     .ai-logo {
+  .ai-logo {
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -97,21 +97,21 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-     .header-title {
+  .header-title {
             color: white;
             font-size: 18px;
             font-weight: 900;
             letter-spacing: -0.3px;
         }
 
-     .header-subtitle {
+  .header-subtitle {
             color: rgba(255, 255, 0.8);
             font-size: 11px;
             font-weight: 700;
             margin-top: -2px;
         }
 
-     .dark-toggle {
+  .dark-toggle {
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -126,13 +126,13 @@
             transition: all 0.2s;
         }
 
-     .dark-toggle:active {
+  .dark-toggle:active {
             background: rgba(255, 255, 0.25);
             transform: scale(0.95);
         }
 
         /* CHAT AREA */
-     .chat-container {
+  .chat-container {
             position: fixed;
             top: 60px;
             bottom: 80px;
@@ -142,11 +142,11 @@
             background: var(--bg);
         }
 
-     .chat-container::-webkit-scrollbar {
+  .chat-container::-webkit-scrollbar {
             display: none;
         }
 
-     .message {
+  .message {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
@@ -158,11 +158,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-     .message.user {
+  .message.user {
             flex-direction: row-reverse;
         }
 
-     .msg-avatar {
+  .msg-avatar {
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -170,11 +170,11 @@
             object-fit: cover;
         }
 
-     .ai-avatar-msg {
+  .ai-avatar-msg {
             border: 2px solid #fbbf24;
         }
 
-     .user-avatar-msg {
+  .user-avatar-msg {
             background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: white;
             display: flex;
@@ -184,7 +184,7 @@
             font-size: 14px;
         }
 
-     .msg-content {
+  .msg-content {
             max-width: 75%;
             padding: 12px 16px;
             border-radius: 20px;
@@ -195,31 +195,31 @@
             white-space: pre-wrap;
         }
 
-     .ai-msg {
+  .ai-msg {
             background: var(--ai-msg);
             color: var(--text-dark);
             border-bottom-left-radius: 4px;
         }
-  .ai-msg2 {
-            
-            color: var(--text-dark);
+.ai-msg2 {
+              color: var(--text-dark);
             border-bottom-left-radius: 4px;
         }
-     .user-msg {
+
+  .user-msg {
             background: var(--user-msg);
             color: white;
             border-bottom-right-radius: 4px;
         }
 
       /* CLICKABLE URLS & COPYABLE NUMBERS */
-     .msg-content a {
+  .msg-content a {
             color: var(--link);
             text-decoration: underline;
             font-weight: 800;
             word-break: break-all;
         }
 
-     .copy-item {
+  .copy-item {
             display: inline-flex;
             align-items: center;
             gap: 4px;
@@ -235,27 +235,27 @@
             user-select: all;
         }
 
-     .copy-item:active {
+  .copy-item:active {
             transform: scale(0.96);
             background: var(--primary);
             color: white;
         }
 
-     .copy-item i {
+  .copy-item i {
             width: 12px;
             height: 12px;
             opacity: 0.7;
         }
 
-     .typing-gif {
-            width: 30px;
+  .typing-gif {
+            width: 50px;
             height: 30px;
             object-fit: contain;
-            
+            padding: 2px 0;
         }
 
         /* INPUT AREA */
-     .input-container {
+  .input-container {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -268,7 +268,7 @@
             align-items: flex-end;
         }
 
-     .input-wrapper {
+  .input-wrapper {
             flex: 1;
             background: var(--bg);
             border: 2px solid var(--border);
@@ -280,7 +280,7 @@
             transition: all 0.3s;
         }
 
-     .input-wrapper:focus-within {
+  .input-wrapper:focus-within {
             border-color: var(--primary);
             box-shadow: 0 0 3px rgba(99, 102, 241, 0.1);
         }
@@ -302,7 +302,7 @@
             color: var(--text-light);
         }
 
-     .send-btn {
+  .send-btn {
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -318,48 +318,49 @@
             flex-shrink: 0;
         }
 
-     .send-btn:active {
+  .send-btn:active {
             transform: scale(0.92);
         }
 
-     .send-btn:disabled {
+  .send-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
         /* WELCOME MESSAGE */
-     .welcome {
+  .welcome {
             text-align: center;
             padding: 40px 20px;
             color: var(--text-light);
         }
 
-     .welcome-icon {
+  .welcome-icon {
             width: 80px;
             height: 80px;
             margin: 0 auto 16px;
-             border-radius: 24px;
+              border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-              }
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+        }
 
-     .welcome-title {
+  .welcome-title {
             font-size: 24px;
             font-weight: 900;
             color: var(--text-dark);
             margin-bottom: 8px;
         }
 
-     .welcome-text {
+  .welcome-text {
             font-size: 14px;
             line-height: 1.6;
             max-width: 300px;
             margin: 0 auto;
         }
 
-     .suggestions {
+  .suggestions {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
@@ -367,7 +368,7 @@
             justify-content: center;
         }
 
-     .suggestion-chip {
+  .suggestion-chip {
             padding: 10px 16px;
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -379,13 +380,13 @@
             transition: all 0.2s;
         }
 
-     .suggestion-chip:active {
+  .suggestion-chip:active {
             background: var(--primary);
             color: white;
             transform: scale(0.95);
         }
 
-     .toast {
+  .toast {
             position: fixed;
             bottom: 100px;
             left: 50%;
@@ -402,7 +403,7 @@
             transition: all 0.3s;
         }
 
-     .toast.show {
+  .toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
@@ -420,23 +421,23 @@
             <img src="https://i.ibb.co/5hj3z4JG/Add-Text-04-14-08-22-15.png" alt="Tuto AI" class="ai-logo">
             <div>
                 <div class="header-title">Tuto AI</div>
-                <div class="header-subtitle">TutoPulse AI • Online</div>
+                <div class="header-subtitle">Tuto AI • Google AI</div>
             </div>
         </div>
 
-        <button style="display: none;" class="dark-toggle" id="darkToggle">🌙</button>
+        <button class="dark-toggle" style="display: none;" id="darkToggle">🌙</button>
     </header>
 
     <!-- CHAT CONTAINER -->
     <div class="chat-container" id="chatContainer">
         <div class="welcome" id="welcome">
             <div class="welcome-icon">
-               <img src="https://i.gifer.com/ZZ5H.gif" style="width: 60px;"></div>
+                <img src="https://i.ibb.co/5hj3z4JG/Add-Text-04-14-08-22-15.png" style="width: 80px;"></div>
             
             <div class="welcome-title">Hi, I'm Tuto AI 👋</div>
             <div class="welcome-text">Ask me anything about your studies. I can help with math, science, essays, and more!</div>
             <div class="suggestions">
-                <div class="suggestion-chip" onclick="sendSuggestion('Explain Pythagoras theorem')">📐 Pythagoras theorem</div>
+                <div class="suggestion-chip" onclick="sendSuggestion('Explain how AI works in a few words')">🤖 How AI works</div>
                 <div class="suggestion-chip" onclick="sendSuggestion('Help me write an essay')">✍️ Write an essay</div>
                 <div class="suggestion-chip" onclick="sendSuggestion('Solve: 2x + 5 = 15')">🔢 Solve equation</div>
             </div>
@@ -471,11 +472,10 @@
         const toast = document.getElementById('toast');
 
         let isTyping = false;
-        let conversationHistory = [];
 
-        // ⚠️ REPLACE WITH YOUR API KEY - USE BACKEND IN PRODUCTION!
-        const API_KEY = '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';
-        const API_URL = 'https://api.openai.com/v1/responses';
+        // GOOGLE AI STUDIO API - GEMMA 3 1B
+        const API_KEY = 'AIzaSyD2W63C0os3tmO8lc1OK4Gzz6ZjzuXfcoc';
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-1b-it:generateContent`;
 
         // Dark mode
         if (localStorage.getItem("darkMode") === "true") {
@@ -533,37 +533,32 @@
         function formatMessage(text) {
             // Escape HTML first
             let formatted = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            
+
             // URLs - make clickable
             formatted = formatted.replace(
-                /(https?:\/\/[^\s<]+)/g, 
+                /(https?:\/\/[^\s<]+)/g,
                 '<a href="$1" target="_blank" rel="noopener">$1</a>'
             );
-            
+
             // Email
             formatted = formatted.replace(
                 /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g,
                 '<a href="mailto:$1">$1</a>'
             );
-            
+
             // Phone numbers (10+ digits)
             formatted = formatted.replace(
                 /(\+?\d[\d\s-]{8,}\d)/g,
                 '<span class="copy-item" onclick="copyToClipboard(\'$1\')">$1 <i data-lucide="copy"></i></span>'
             );
-            
-            // Standalone numbers (like answers, IDs) - 4+ digits
-            formatted = formatted.replace(
-                /\b(\d{4,})\b/g,
-                '<span class="copy-item" onclick="copyToClipboard(\'$1\')">$1 <i data-lucide="copy"></i></span>'
-            );
-            
+
+
             // **Bold** markdown
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            
+
             // Newlines
             formatted = formatted.replace(/\n/g, '<br>');
-            
+
             return formatted;
         }
 
@@ -573,7 +568,6 @@
 
             welcome.style.display = 'none';
             addMessage(text, 'user');
-            conversationHistory.push({ role: 'user', content: text });
 
             messageInput.value = '';
             messageInput.style.height = 'auto';
@@ -586,13 +580,22 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
+                        'X-goog-api-key': API_KEY
                     },
                     body: JSON.stringify({
-                        model: 'gpt-5.4-mini',
-                        input: text,
-                        store: true,
-                        instructions: 'You are Tuto AI, a friendly study assistant. When you give answers with numbers, URLs, or steps, make them clear. Always be encouraging. If you provide a phone number, email, or important number, make it stand out.'
+                        contents: [
+                            {
+                                parts: [
+                                    {
+                                        text: `You are Tuto AI, a friendly study assistant for students. Be encouraging, explain step-by-step, use examples. Keep answers concise but thorough. If you give numbers, URLs, or steps, make them clear. TutoPulse Website link tutopulse.ct.ws and Contact Number 9339061296 and Email admin.tutopulse@gmail.com. devoloper name Aninda Halder the Founder of TutoPulse. User asks: ${text}`
+                                    }
+                                ]
+                            }
+                        ],
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 800
+                        }
                     })
                 });
 
@@ -602,15 +605,14 @@
                 }
 
                 const data = await response.json();
-                const aiResponse = data.output_text || data.output?.[0]?.content?.[0]?.text || 'No response';
+                const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
 
                 hideTyping();
                 addMessage(aiResponse, 'ai');
-                conversationHistory.push({ role: 'assistant', content: aiResponse });
 
             } catch (error) {
                 hideTyping();
-                addMessage(`⚠️ Error : Please check your limit and try again later.`, 'ai');
+                addMessage(`⚠️ Error: Please try again later.`, 'ai');
                 console.error('API Error:', error);
             }
 
@@ -623,10 +625,10 @@
             msgDiv.className = `message ${sender}`;
 
             const avatar = sender === 'ai'
-           ? '<img src="https://i.ibb.co/5hj3z4JG/Add-Text-04-14-08-22-15.png" class="msg-avatar ai-avatar-msg" alt="Tuto AI">'
+         ? '<img src="https://i.ibb.co/5hj3z4JG/Add-Text-04-14-08-22-15.png" class="msg-avatar ai-avatar-msg" alt="Tuto AI">'
                 : '<div class="msg-avatar user-avatar-msg">U</div>';
 
-            const formattedText = sender === 'ai' ? formatMessage(text) : text.replace(/\n/g, '<br>');
+            const formattedText = sender === 'ai'? formatMessage(text) : text.replace(/\n/g, '<br>');
 
             const content = `
                 ${avatar}
