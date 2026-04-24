@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TutoPulse - Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            text-decoration: none;
+        }
+
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+
+        body {
+            background: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* --- Header Styles --- UNCHANGED */
+       .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #3047a5;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            gap: 12px;
+        }
+
+       .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+       .back-btn:active {
+            background: rgba(255,255,255,0.15);
+            transform: scale(0.95);
+        }
+
+       .search-container {
+            flex: 1;
+            position: relative;
+            max-width: 500px;
+        }
+
+       .search-input {
+            width: 100%;
+            height: 40px;
+            border-radius: 50px;
+            border: none;
+            padding: 0 45px 0 18px;
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+            
+            color: #1e293b;
+            transition: all 0.3s;
+        }
+
+       .search-input:focus {
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255,255,0.3);
+        }
+
+       .search-input::placeholder {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+       .search-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            pointer-events: none;
+        }
+
+       .clear-btn {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #475569;
+        }
+
+       .clear-btn.show {
+            display: flex;
+        }
+
+        /* MAIN CONTENT */
+       .app-content {
+            margin-top: 60px;
+            padding: 20px 16px;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* SEARCH RESULTS DROPDOWN */
+       .search-results {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            z-index: 999;
+        }
+
+       .search-results.show {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+       .result-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            text-decoration: none;
+            color: #1e293b;
+            transition: all 0.2s;
+            gap: 12px;
+        }
+
+       .result-item:hover {
+            background: #f8fafc;
+        }
+
+       .result-item:active {
+            background: #f1f5f9;
+        }
+
+       .result-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+       .result-text {
+            flex: 1;
+        }
+
+       .result-title {
+            font-weight: 800;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+       .result-desc {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+       .no-results {
+            
+            padding: 40px 20px;
+            text-align: center;
+            color: #64748b;
+        }
+
+       .no-results-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+        }
+
+       .no-results-title {
+            font-weight: 800;
+            font-size: 18px;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+       .no-results-text {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* DEMO CONTENT */
+       .demo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid #f1f5f9;
+        }
+
+       .demo-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+       .demo-text {
+            color: #64748b;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+       .highlight {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e293b;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER WITH BACK + SEARCH -->
+    <header class="app-header">
+        <div class="back-btn" onclick="goBack()">
+            <i data-lucide="arrow-left" width="22" height="22"></i>
+        </div>
+        
+        <div class="search-container">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput" 
+                placeholder="Search courses, topics..."
+                autocomplete="on"
+                autofocus
+                enterkeyhint="search"
+            >
+            <div class="clear-btn" id="clearBtn" onclick="clearSearch()">
+                <i data-lucide="x" width="12" height="12"></i>
+            </div>
+            <i data-lucide="search" width="18" height="18" class="search-icon"></i>
+        </div>
+    </header>
+
+    <!-- SEARCH RESULTS DROPDOWN -->
+    <div class="search-results" id="searchResults"></div>
+
+   
+
+    <script>
+        lucide.createIcons();
+
+        // Sample searchable data - replace with your actual data
+        const searchData = [
+            {
+                id: 1,
+                title: "Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার",
+                desc: "Advanced Course & Technology",
+                url: "hs/hs.html?id=course1",
+                icon: "search",
+                keywords: ["class12","hs", "3rd semester", "বাংলা + english", "উচ্চমাধ্যমিক তৃতীয় সেমিস্টার", "class 12"]
+            },
+            {
+                id: 2,
+                title: "Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার",
+                desc: "Full syllabus practice papers",
+                url: "hs/hs.html?id=course2",
+                icon: "search",
+                keywords: ["class11","hs", "1st semester", "বাংলা + english", "একাদশ প্রথম সেমিস্টার", "class 11"]
+            },
+           
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // AUTO FOCUS ON LOAD - Makes keyboard appear
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.click();
+            }, 100);
+        });
+
+        // Also focus when page becomes visible
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                setTimeout(() => searchInput.focus(), 100);
+            }
+        });
+
+        function goBack() {
+            if (document.referrer) {
+                window.history.back();
+            } else {
+                window.location.href = 'home.html';
+            }
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchResults.classList.remove('show');
+            clearBtn.classList.remove('show');
+            searchInput.focus();
+        }
+
+        // Live search function
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.trim().toLowerCase();
+            
+            if (query.length === 0) {
+                searchResults.classList.remove('show');
+                clearBtn.classList.remove('show');
+                return;
+            }
+
+            clearBtn.classList.add('show');
+
+            if (query.length < 2) {
+                searchResults.classList.remove('show');
+                return;
+            }
+
+            const results = searchData.filter(item => {
+                const searchText = item.title.toLowerCase() + ' ' + item.desc.toLowerCase() + ' ' + item.keywords.join(' ');
+                return searchText.includes(query);
+            });
+
+            displayResults(results, query);
+        });
+
+        function displayResults(results, query) {
+            searchResults.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">
+                            <i data-lucide="search-x" width="28" height="28"></i>
+                        </div>
+                        <div class="no-results-title">Not found</div>
+                        <div class="no-results-text">No results for "${query}"</div>
+                    </div>
+                `;
+            } else {
+                results.forEach(item => {
+                    const resultHTML = `
+                        <a href="${item.url}" class="result-item">
+                            <div class="result-icon">
+                                <i data-lucide="${item.icon}" width="20" height="20"></i>
+                            </div>
+                            <div class="result-text">
+                                <div class="result-title">${highlightMatch(item.title, query)}</div>
+                                <div class="result-desc">${item.desc}</div>
+                            </div>
+                            <i data-lucide="chevron-right" width="18" height="18" style="color: #cbd5e1;"></i>
+                        </a>
+                    `;
+                    searchResults.innerHTML += resultHTML;
+                });
+            }
+
+            searchResults.classList.add('show');
+            lucide.createIcons();
+        }
+
+        function highlightMatch(text, query) {
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.app-header') && !e.target.closest('.search-results')) {
+                searchResults.classList.remove('show');
+            }
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const firstResult = searchResults.querySelector('.result-item');
+                if (firstResult) {
+                    window.location.href = firstResult.href;
+                }
+            }
+        });
+
+        searchInput.addEventListener('focus', function() {
+            if (this.value.trim().length >= 2) {
+                searchResults.classList.add('show');
+            }
+        });
+    </script>
+</body>
+</html>
