@@ -583,9 +583,7 @@
         function goBack() {
             if (document.referrer) {
                 window.history.back();
-            } else {
-                window.location.href = 'home.html';
-            }
+            } 
         }
 
         function sendSuggestion(text) {
@@ -685,8 +683,8 @@
                             {
                                 parts: [
                                     {
-                                        text: `You are Tuto AI, a friendly study assistant. When you give answers with calculator, calendar, numbers, or steps, make them clear and short correct answer. Always be encouraging. If you provide a phone number, email, or important number, make it stand out.TutoPulse. User asks: ${text}`
-                                    }
+                                        text: `You are Tuto AI,তোমার বাংলা নাম টিউটো এআই, a friendly study assistant. সমস্ত উত্তর বাংলাতে দাও. When you give answers with calculator, calendar, numbers, or steps, make them clear and short correct answer. Always be encouraging. If you provide a phone number, email, or important number, make it stand out.no url provide. User asks: ${text}`
+                                     }
                                 ]
                             }
                         ],
