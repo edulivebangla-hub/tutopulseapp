@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Chapter - English</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    /* ---------- RESET & GLOBAL TRANSITIONS (preserved) ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a, span, p, h1, h2, h3, h4, h5, h6, div {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      text-decoration: none;
+    }
+
+    img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+    }
+
+    /* fixed app page dimensions — exactly like original */
+    html, body {
+      width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 10px;
+      display: block;
+      background: #f5f5f5;    /* fallback, but dark mode will override via class */
+    }
+
+    /* dark mode variable overrides — only colors, no layout or structural changes */
+    body.dark {
+      background: #000;
+    }
+
+    /* header background transition — dark mode specific (preserves original header style but adapts) */
+    .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #3047a5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.25s ease, opacity 0.2s ease;
+       }
+
+ 
+
+    /* container spacing (unchanged) */
+    .container {
+      max-width: 700px;
+      margin: auto;
+      margin-top: 55px;
+    }
+
+    /* card styling — fully preserves original structure, only background/border/text color adapts in dark mode */
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f9f9f9;
+      border: 2px solid #d6d6e7;
+      border-radius: 10px;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+    }
+
+    /* dark mode card style (matches original aesthetic but dark-friendly) */
+    body.dark .card {
+      background: #1e1e2f;
+      border: 2px solid #3a3a4e;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+    }
+
+    .left img {
+      width: 60px;
+      height: 60px;
+      margin-right: 10px;
+      background: #cbd5e0;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    body.dark .left img {
+      background: #2c2c3a;
+    }
+
+    .text h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #111;
+    }
+
+    body.dark .text h3 {
+      color: #ececec;
+    }
+
+    .text p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    body.dark .text p {
+      color: #b0b0c0;
+    }
+
+    .right {
+      text-align: center;
+    }
+
+    .apply-btn {
+      display: inline-block;
+      padding: 3px 20px;
+      background: #b8d8b8;
+      color: #2d5a2d;
+      text-decoration: none;
+      border-radius: 20px;
+      font-weight: bold;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* dark mode button - slightly deeper green but readable */
+    body.dark .apply-btn {
+      background: #2a6230;
+      color: #d0f0c4;
+    }
+
+    .date {
+      margin-top: 10px;
+      display: inline-block;
+      background: #f5d6d6;
+      color: #a33;
+      padding: 0px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    body.dark .date {
+      background: #4e2b2b;
+      color: #ffb7b7;
+    }
+
+    /* additional dark mode refinements for any other text like header title, icons */
+    .app-header h2 {
+      color: white;
+    }
+
+    body.dark .app-header h2 {
+      color: #f0f0ff;
+    }
+
+    /* lucide icons inside header are white, stays consistent */
+    .app-header i[data-lucide] {
+      color: white;
+    }
+
+    /* for any extra elements like share link */
+    .cursor-pointer a {
+      color: inherit;
+    }
+
+    /* preserving full original look: no layout shifts */
+    .container, .card, .left, .right, .text, .apply-btn, .date {
+      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* tiny extra: if any link inside card has hover, keep usability */
+    .apply-btn:hover {
+      filter: brightness(0.96);
+    }
+
+    /* dark mode toggle button style — added new toggle element in header but not interfering original layout.
+       We place it inside .flex.gap-3.items-center (right side) before share icon.
+       The dark mode toggle will be a small circular button, respects dark/light modes */
+    .dark-mode-toggle {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      backdrop-filter: blur(2px);
+      transition: all 0.2s ease;
+      color: white;
+      background-color: rgba(0,0,0,0.2);
+    }
+    .dark-mode-toggle:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.35);
+    }
+    body.dark .dark-mode-toggle {
+      background: rgba(255,255,255,0.25);
+    }
+    /* no structural changes — added gracefully */
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="flex items-center gap-2">
+      <div class="cursor-pointer p-1">
+        <i data-lucide="x" class="text-white/90 w-6 h-6" onclick="goBack()"></i>
+      </div>
+    </div>
+    <h2 style="margin-left: 5px; color: white; font-size:16px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+      English Notes (ইংরেজি)
+    </h2>
+    <div class="flex gap-3 items-center">
+      <!-- DARK MODE TOGGLE BUTTON inserted exactly here — does not disturb other functionality -->
+      <button id="darkToggle" class="dark-mode-toggle" aria-label="Dark mode toggle" style="display: none;">🌙</button>
+      <div class="cursor-pointer p-1">
+        <a href="https://action_share"><i data-lucide="share-2" class="text-white/90 w-5 h-5"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+ <!-- Chapter 1 -->
+  <div class="card">
+    <div class="left">
+     
+      <img src="https://i.ibb.co/bgZGQ5CN/Add-Text-04-01-09-20-32-jpg.jpg" alt="Logo">
+      <div class="text">
+        <h3>"The Night Train at Deoli Summary, MCQ Question Answer - Sem 3"</h3>
+        <p>Smart Notes + Suggestion + Video Class</p>
+      </div>
+    </div>
+    <div class="right">
+      <a href="https://tutopulse.ct.ws/the-night-train-at-deoli-3rd-semester/" class="apply-btn">Open</a><br>
+      <span class="date">Apr 26</span>
+    </div>
+  </div>
+ <!-- Chapter 2 -->
+  <div class="card">
+    <div class="left">
+     
+      <img src="https://i.ibb.co/bR5pZvPG/Add-Text-04-02-10-26-50-jpg.jpg" alt="Logo">
+      <div class="text">
+        <h3>"Strong Roots by APJ Abdul Kalam , MCQ Question Answer - Sem 3"</h3>
+        <p>Smart Notes + Suggestion + Video Class</p>
+      </div>
+    </div>
+    <div class="right">
+      <a href="https://tutopulse.ct.ws/strong-roots-apj-abdul-kalam-sem-3/" class="apply-btn">Open</a><br>
+      <span class="date">Apr 26</span>
+    </div>
+  </div>
+ <!-- Chapter 3 -->
+  <div class="card">
+    <div class="left">
+     
+      <img src="https://i.ibb.co/XTGXNDH/IMG-20260403-WA0017.jpg" alt="Logo">
+      <div class="text">
+        <h3>"The Bet by Anton Chekov , Summary MCQ Questions and Answers"</h3>
+        <p>Smart Notes + Suggestion + Video Class</p>
+      </div>
+    </div>
+    <div class="right">
+      <a href="https://tutopulse.ct.ws/the-bet-by-anton-chekov-sem-3/" class="apply-btn">Open</a><br>
+      <span class="date">Apr 26</span>
+    </div>
+  </div>
+ <!-- Chapter 4 -->
+  <div class="card">
+    <div class="left">
+     
+      <img src="https://i.ibb.co/nNXHsJCw/Whats-App-Image-2026-04-05-at-7-27-27-PM.jpg" alt="Logo">
+      <div class="text">
+        <h3>"'Ulysses' by Alfred, Lord Tennyson Semester 3 HS 2026-27"</h3>
+        <p>Smart Notes + Suggestion + Video Class</p>
+      </div>
+    </div>
+    <div class="right">
+      <a href="https://tutopulse.ct.ws/ulysses-by-alfred-lord-tennyson-semester-3-hs/" class="apply-btn">Open</a><br>
+      <span class="date">Apr 26</span>
+    </div>
+  </div>
+ 
+  </div>
+  <script>
+    // ========== DARK MODE TOGGLE LOGIC (fully integrated, no other changes) ==========
+    const darkToggle = document.getElementById("darkToggle");
+    const body = document.body;
+    
+    // load saved preference from localStorage (if any)
+    if (localStorage.getItem("darkMode") === "true") {
+      body.classList.add("dark");
+      darkToggle.textContent = "☀️";   // sun icon indicates light mode available (dark is active)
+    } else {
+      // default light mode: moon icon means switch to dark mode
+      darkToggle.textContent = "🌙";
+    }
+    
+    // toggle event: switches dark class and updates icon + localStorage
+    darkToggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      localStorage.setItem("darkMode", isDark);
+      // set icon: if dark mode ON, show sun (because clicking will go to light), else moon
+      darkToggle.textContent = isDark ? "☀️" : "🌙";
+    });
+    
+    // Lucide icons reinitialization (preserve original icons)
+    if (typeof lucide !== 'undefined' && lucide.createIcons) {
+      lucide.createIcons();
+    } else {
+      // fallback in case lucide loads delayed
+      window.addEventListener('load', function() {
+        if (window.lucide && lucide.createIcons) lucide.createIcons();
+      });
+    }
+    
+    // goBack function (unchanged)
+    function goBack() {
+      window.history.back();
+    }
+    
+  </script>
+</body>
+</html>
