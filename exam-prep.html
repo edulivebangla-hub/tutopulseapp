@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>Tuto AI - Video Class</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Noto+Sans+Bengali:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --primary: #f59e0b;
+      --primary-glow: rgba(245, 158, 11, 0.4);
+      --bg: #000;
+    }
+
+    html, body {
+      background: var(--bg);
+      font-family: 'Nunito', 'Noto Sans Bengali', sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      touch-action: none;
+    }
+
+    .player {
+      width: 100%;
+      height: 100vh;
+      background: #000;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* FORCE LANDSCAPE ON PORTRAIT */
+    @media screen and (orientation: portrait) {
+      .player {
+        width: 100vh;
+        height: 100vw;
+        transform: rotate(90deg);
+        transform-origin: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50vw;
+        margin-left: -50vh;
+      }
+    }
+
+    .video-box {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* BLOCK YOUTUBE CLICKS */
+    #youtube-frame {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .touch-blocker {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: transparent;
+    }
+
+    /* CONTROLS */
+    .controls {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, 
+        rgba(0,0,0,0.75) 0%, 
+        rgba(0,0,0,0) 25%, 
+        rgba(0,0,0,0) 75%, 
+        rgba(0,0,0,0.9) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: env(safe-area-inset-top) 24px env(safe-area-inset-bottom);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10;
+    }
+
+    .controls.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* TOP BAR */
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      gap: 16px;
+    }
+
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .back-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(20px);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .back-btn:active {
+      transform: scale(0.92);
+      background: rgba(255,255,255,0.28);
+    }
+
+    .title {
+      color: white;
+      font-size: 20px;
+      font-weight: 800;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+      letter-spacing: -0.3px;
+    }
+
+    /* CENTER CONTROLS */
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      z-index: 15;
+    }
+
+    .btn-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(20px);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .btn-circle:active {
+      transform: scale(0.92);
+      background: rgba(255,255,255,0.25);
+    }
+
+    .btn-play {
+      width: 88px;
+      height: 88px;
+      background: white;
+      color: black;
+      border: none;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    }
+
+    .btn-play:active {
+      transform: scale(0.94);
+    }
+
+    /* BOTTOM CONTROLS */
+    .bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-bottom: 8px;
+    }
+
+    /* PROGRESS BAR */
+    .progress-wrap {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 20px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #fbbf24);
+      border-radius: 20px;
+      width: 0%;
+      position: relative;
+      transition: width 0.15s linear;
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    .progress::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .progress-wrap:hover .progress::after {
+      opacity: 1;
+    }
+
+    input[type="range"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* CONTROL BUTTONS */
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .left, .right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 15px;
+      backdrop-filter: blur(20px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .btn:active {
+      transform: scale(0.94);
+      background: rgba(255,255,255,0.28);
+    }
+
+    .btn-icon {
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .time {
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+      min-width: 115px;
+      letter-spacing: 0.3px;
+    }
+
+    /* VOLUME */
+    .volume-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="range"].vol {
+      width: 85px;
+      height: 5px;
+      accent-color: white;
+      cursor: pointer;
+    }
+
+    /* SPEED MENU */
+    .speed-wrap {
+      position: relative;
+    }
+
+    .speed-menu {
+      position: absolute;
+      bottom: 65px;
+      right: 0;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 8px;
+      display: none;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 140px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+
+    .speed-menu.show {
+      display: flex;
+      animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .speed-btn {
+      padding: 12px 20px;
+      color: white;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 800;
+      text-align: left;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .speed-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .speed-btn.active {
+      background: var(--primary);
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    @media (max-width: 640px) {
+      .btn span { display: none; }
+      .volume-box { display: none; }
+      .title { font-size: 17px; }
+      .center { gap: 24px; }
+      .btn-circle { width: 60px; height: 60px; }
+      .btn-play { width: 78px; height: 78px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="player" id="player">
+  <div class="video-box" id="videoBox">
+    <div id="youtube-frame"></div>
+    <div class="touch-blocker" id="touchBlocker"></div>
+    
+    <div class="controls" id="controls">
+      <!-- TOP WITH BACK BUTTON -->
+      <div class="top">
+        <div class="top-left">
+          <button class="back-btn" onclick="goBack()">
+            <i data-lucide="arrow-left" size="24"></i>
+          </button>
+          <div class="title">Tuto AI - বিড়াল প্রবন্ধ</div>
+        </div>
+        <button class="btn btn-icon" onclick="toggleFull()">
+          <i data-lucide="maximize-2" size="22"></i>
+        </button>
+      </div>
+
+      <!-- CENTER - PLAY/PAUSE CHANGES -->
+      <div class="center">
+        <button class="btn-circle" onclick="skip(-10)">
+          <i data-lucide="rotate-ccw" size="28"></i>
+        </button>
+        <button class="btn-circle btn-play" onclick="playPause()">
+          <i data-lucide="play" size="36" id="playIcon"></i>
+        </button>
+        <button class="btn-circle" onclick="skip(10)">
+          <i data-lucide="rotate-cw" size="28"></i>
+        </button>
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="bottom">
+        <div class="progress-wrap">
+          <div class="progress" id="progress"></div>
+          <input type="range" id="seek" value="0" min="0" max="100">
+        </div>
+        
+        <div class="buttons">
+          <div class="left">
+            <button class="btn btn-icon" onclick="playPause()">
+              <i data-lucide="pause" size="22" id="playIconSmall"></i>
+            </button>
+            
+            <div class="volume-box">
+              <button class="btn btn-icon" onclick="toggleMute()">
+                <i data-lucide="volume-2" size="22" id="volIcon"></i>
+              </button>
+              <input type="range" class="vol" id="volume" min="0" max="1" step="0.1" value="1">
+            </div>
+            
+            <div class="time">
+              <span id="current">0:00</span> / <span id="total">0:00</span>
+            </div>
+          </div>
+
+          <div class="right">
+            <div class="speed-wrap">
+              <button class="btn" onclick="toggleSpeed()">
+                <i data-lucide="gauge" size="20"></i>
+                <span id="speedText">1x</span>
+              </button>
+              <div class="speed-menu" id="speedMenu">
+                <button class="speed-btn" onclick="setSpeed(0.5)">0.5x</button>
+                <button class="speed-btn" onclick="setSpeed(0.75)">0.75x</button>
+                <button class="speed-btn active" onclick="setSpeed(1)">1x Normal</button>
+                <button class="speed-btn" onclick="setSpeed(1.25)">1.25x</button>
+                <button class="speed-btn" onclick="setSpeed(1.5)">1.5x</button>
+                <button class="speed-btn" onclick="setSpeed(2)">2x</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  lucide.createIcons();
+
+  const VIDEO_ID = "KbeRIRy0A3s";
+  let player;
+  let isPlaying = false;
+  let hideTimer;
+
+  const controls = document.getElementById('controls');
+  const videoBox = document.getElementById('videoBox');
+  const touchBlocker = document.getElementById('touchBlocker');
+  const playIcon = document.getElementById('playIcon');
+  const playIconSmall = document.getElementById('playIconSmall');
+  const progress = document.getElementById('progress');
+  const seek = document.getElementById('seek');
+  const current = document.getElementById('current');
+  const total = document.getElementById('total');
+  const volume = document.getElementById('volume');
+  const volIcon = document.getElementById('volIcon');
+  const speedMenu = document.getElementById('speedMenu');
+  const speedText = document.getElementById('speedText');
+
+  // BACK BUTTON
+  function goBack() {
+    if (document.referrer && document.referrer !== window.location.href) {
+      window.history.back();
+    } else {
+      window.close();
+    }
+  }
+
+  // YOUTUBE API
+  window.onYouTubeIframeAPIReady = function() {
+    player = new YT.Player('youtube-frame', {
+      videoId: VIDEO_ID,
+      playerVars: {
+        controls: 0,
+        rel: 0,
+        modestbranding: 1,
+        iv_load_policy: 3,
+        fs: 0,
+        playsinline: 1,
+        disablekb: 1,
+        enablejsapi: 1,
+        origin: window.location.origin
+      },
+      events: {
+        onReady: (e) => {
+          player.setVolume(80);
+          startProgress();
+          lockLandscape();
+        },
+        onStateChange: (e) => {
+          if (e.data === YT.PlayerState.PLAYING) {
+            isPlaying = true;
+            updatePlayIcon();
+          } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+            isPlaying = false;
+            updatePlayIcon();
+            showControls();
+          }
+        }
+      }
+    });
+  };
+
+  // LOCK LANDSCAPE
+  async function lockLandscape() {
+    try {
+      if (screen.orientation && screen.orientation.lock) {
+        await screen.orientation.lock('landscape');
+      }
+    } catch (e) {}
+  }
+
+  // SHOW/HIDE CONTROLS
+  function showControls() {
+    controls.classList.add('show');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      if (isPlaying) controls.classList.remove('show');
+    }, 3000);
+  }
+
+  touchBlocker.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (controls.classList.contains('show')) {
+      controls.classList.remove('show');
+    } else {
+      showControls();
+    }
+  });
+
+  // PLAY/PAUSE - ICON CHANGES
+  function playPause() {
+    if (!player) return;
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+    showControls();
+  }
+
+  function updatePlayIcon() {
+    const icon = isPlaying ? 'pause' : 'play';
+    playIcon.setAttribute('data-lucide', icon);
+    playIconSmall.setAttribute('data-lucide', icon);
+    lucide.createIcons();
+  }
+
+  // SKIP
+  function skip(sec) {
+    if (!player) return;
+    player.seekTo(player.getCurrentTime() + sec, true);
+    showControls();
+  }
+
+  // PROGRESS
+  function startProgress() {
+    setInterval(() => {
+      if (!player?.getDuration) return;
+      try {
+        const dur = player.getDuration();
+        const cur = player.getCurrentTime();
+        if (dur > 0) {
+          const percent = (cur / dur) * 100;
+          progress.style.width = percent + '%';
+          seek.value = percent;
+          current.textContent = formatTime(cur);
+        }
+      } catch (e) {}
+    }, 100);
+  }
+
+  player && player.addEventListener && player.addEventListener('onReady', () => {
+    total.textContent = formatTime(player.getDuration());
+  });
+
+  seek.addEventListener('input', (e) => {
+    if (!player) return;
+    const time = (e.target.value / 100) * player.getDuration();
+    player.seekTo(time, true);
+  });
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+  }
+
+  // VOLUME
+  volume.addEventListener('input', (e) => {
+    if (!player) return;
+    player.setVolume(e.target.value * 100);
+    updateVolIcon();
+  });
+
+  function toggleMute() {
+    if (!player) return;
+    if (player.isMuted()) {
+      player.unMute();
+      volume.value = player.getVolume() / 100;
+    } else {
+      player.mute();
+    }
+    updateVolIcon();
+    showControls();
+  }
+
+  function updateVolIcon() {
+    if (!player) return;
+    const vol = player.isMuted() ? 0 : player.getVolume();
+    if (vol === 0) {
+      volIcon.setAttribute('data-lucide', 'volume-x');
+    } else if (vol < 50) {
+      volIcon.setAttribute('data-lucide', 'volume-1');
+    } else {
+      volIcon.setAttribute('data-lucide', 'volume-2');
+    }
+    lucide.createIcons();
+  }
+
+  // SPEED
+  function toggleSpeed() {
+    speedMenu.classList.toggle('show');
+    showControls();
+  }
+
+  function setSpeed(speed) {
+    if (!player) return;
+    player.setPlaybackRate(speed);
+    speedText.textContent = speed + 'x';
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    speedMenu.classList.remove('show');
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.speed-wrap')) {
+      speedMenu.classList.remove('show');
+    }
+  });
+
+  // FULLSCREEN
+  function toggleFull() {
+    if (!document.fullscreenElement) {
+      videoBox.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+    showControls();
+  }
+
+  // KEYBOARD
+  document.addEventListener('keydown', (e) => {
+    if (e.key === ' ') { e.preventDefault(); playPause(); }
+    if (e.key === 'ArrowLeft') skip(-5);
+    if (e.key === 'ArrowRight') skip(5);
+    if (e.key === 'f') toggleFull();
+    if (e.key === 'm') toggleMute();
+  });
+
+  // INIT
+  setTimeout(showControls, 500);
+</script>
+
+</body>
+</html>
