@@ -90,7 +90,7 @@
             left: 0;
             width: 100%;
             color: #ffffff;
-            height: 60px;
+            height: 50px;
             background: #3047a5;
             display: flex;
             align-items: center;
@@ -155,7 +155,7 @@
             position: fixed;
             z-index: 999;
             transition: background-color 0.3s ease;
-            top: 7px;
+            top: px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
 
@@ -173,7 +173,7 @@
         /* --- Main Content Area --- */
         .app-content {
             position: fixed;
-            top: 60px;
+            top: 50px;
             bottom: 0;
             width: 100%;
             overflow-y: auto;
@@ -182,7 +182,7 @@
 
         /* Content Container */
         .course-container {
-            padding: 8px 15px 30px;
+            padding: 15px 15px 30px;
             display: grid;
             gap: 20px;
             transition: var(--transition);
@@ -196,7 +196,7 @@
         /* Grid View Toggle - 2 items per row */
         .course-container.grid-mode {
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 10px;
         }
 
         /* NEW SMOOTH CARD DESIGN */
@@ -208,10 +208,9 @@
             display: flex;
             flex-direction: column;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0.09);
-            background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
-            border: 1px solid var(--card-border);
+            
+            border-radius: 10px;         
+            border: 2px solid var(--card-border);
         }
 
       
@@ -221,7 +220,7 @@
             width: 100%;
             padding-top: 56.25%; /* 16:9 Aspect Ratio */
             overflow: hidden;
-            
+           border-radius: 10px; 
         }
 
         .image-box img {
@@ -243,7 +242,7 @@
         }
 
         .card-body {
-            padding: 14px 16px 1px;
+            padding: 2px 5px 1px;
         }
 
         .card-title {
@@ -286,7 +285,7 @@
                 gap: 12px;
                 padding: 8px 10px 30px;
             }
-            .card-title { font-size: 15px; font-weight: 800;}
+            .card-title { font-size: 14px; font-weight: 800;}
         }
 
         .hidden { display: none !important; }
@@ -326,8 +325,6 @@
   </header>
 
  <main class="app-content">
-    <a href="#"><img src="https://i.ibb.co/x8cGxqS3/Add-Text-04-14-12-22-36.jpg" style="width: 100%; margin-top: 5px;"></a>
-   
     <main id="courseGrid" class="course-container list-mode">
         
         <a href="sem3/enroll.html" class="card" data-course="course1">
@@ -353,6 +350,8 @@
         <!-- Add more courses with data-course="course3", course4, etc -->
  
     </main>
+
+   
  </main>
 
     <script>
