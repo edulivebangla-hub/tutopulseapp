@@ -66,7 +66,10 @@
             -ms-user-drag: none;
             user-drag: none;
         }
-
+   :root {
+            --card-width: 280px;
+            --blue-accent: #0033ad;
+        }
         /* ----- LIGHT MODE (default) ----- */
         body {
             background-color: #f8f9fb;
@@ -82,7 +85,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 60px;
+            height: 50px;
             background: #3047a5;
             display: flex;
             align-items: center;
@@ -100,7 +103,7 @@
 
         .logo-img {
             width: 150px;
-            padding-top: 10px;
+            
         }
 
         .header-title {
@@ -170,7 +173,7 @@
 
         .app-content {
             position: fixed;
-            top: 60px;
+            top: 50px;
             bottom: 65px;
             width: 100%;
             overflow-y: auto;
@@ -241,7 +244,7 @@
      .swiper {
             width: 100%;
             
-            padding-bottom: 30px; 
+            padding-bottom: 32px; 
         }
 
         .swiper-slide {
@@ -249,7 +252,7 @@
             width: 320px; 
             height: 230px; /* Increased height to accommodate text better */
             border-radius: 12px;
-           border: 2px solid #ffc107;
+           border: 2px solid ;
             transition: 0.5s ease-in-out;
             overflow: hidden;}
         
@@ -284,7 +287,7 @@
             background: #fff; /* Semi-transparent black */
             color: #000;
             padding: 8px;
-            text-align: center;
+            
             
             
  }
@@ -314,7 +317,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            margin: 15px;
+            margin: 10px;
             padding: 10px;
         }
         .pill-button {
@@ -325,7 +328,7 @@
             background-color: #ffffff;
             border: 2px solid #e0e0e0;
             border-radius: 50px;
-            padding: 8px 12px;
+            padding: 5px 12px;
             font-size: 14px;
             font-weight: bold;
             transition: all 0.2s ease-in-out;
@@ -334,13 +337,14 @@
              -webkit-tap-highlight-color: rgba(0,0,0,0.05);
             display: flex;
             gap: 15px;
+            
             padding: 15px 0;
             border-bottom: 1px solid #eee;
             text-decoration: none;
             color: inherit;
         }
         .course-img {
-            width: 120px;
+            width: 100px;
             height: 80px;
             border-radius: 8px;
             object-fit: cover;
@@ -473,6 +477,86 @@
         body.dark .w-1.5.h-6.bg-yellow-400 {
             background-color: #ffaa33 !important;
         }
+
+
+
+    /* Container for the 1-row layout */
+        .primium-row {
+            display: flex;
+            
+            overflow-x:auto; /* Enables touch scrolling */
+            padding-bottom: 10px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Hide scrollbar for clean look */
+        .primium-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .primium-card {           
+            flex: 0 0 var(--card-width);
+            height: 200px;                      
+            border-radius: 10px; margin-right: 15px;
+            position: relative;
+            background-size: cover;
+            background-position: center;           
+            overflow: hidden;         
+            border-radius: 10px;         
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            scroll-snap-align: center;
+            border: 2px solid #3047a5;
+            transition: transform 0.3s ease, background 0.2s;
+            }
+
+        /* Overlay to make text readable */
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            background: linear-gradient(transparent, rgba(0,0,1,0.8),rgba(0,0,0,0.8));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .primium-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.3;
+            max-width: 65%;
+        }
+
+        .join-btn {
+            background-color: var(--blue-accent);
+            color: white;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .join-btn:active {
+            transform: scale(0.95);
+        }
+
+        .chevron-icon {
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(-45deg);
+        }
     </style>
 </head>
 <body>
@@ -499,14 +583,32 @@
 
     <main class="app-content">
         <div class="button-container">
-            <a href="#" class="pill-button">Nursing</a>
-            <a href="#" class="pill-button">WBJEE</a>
-            <a href="#" class="pill-button">Madhyamik</a>
-            <a href="#" class="pill-button">HS Class 11</a>
-            <a href="#" class="pill-button">ICDS</a>
-            <a href="#" class="pill-button">HS উচ্চমাধ্যমিক</a>
+            <a href="hs/hs.html?id=course8" class="pill-button">Nursing</a>
+            <a href="hs/hs.html?id=course8" class="pill-button">WBJEE</a>
+            <a href="hs/hs.html?id=course8" class="pill-button">Madhyamik</a>
+            <a href="hs/hs.html?id=course2" class="pill-button">HS Class 11</a>
+            <a href="hs/hs.html?id=course8" class="pill-button">ICDS</a>
+            <a href="hs/hs.html?id=course1" class="pill-button">HS উচ্চমাধ্যমিক</a>
+        </div>
+  <div class="primium-row">
+        <!-- Card 1 -->
+        <div class="primium-card" style="margin-left: 15px; background-image: url('https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg');">
+            <div class="card-content">
+                <p class="primium-title">Class 12 3rd Semester Science Practice Sugg...</p>
+                <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
+            </div>
         </div>
 
+        <!-- Card 2 -->
+        <div class="primium-card" style="background-image: url('https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg');">
+            <div class="card-content">
+                <p class="primium-title">Class 11 1st Semester Science Practice Sugg...</p>
+                <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
+            </div>
+        </div>
+
+     
+    </div>
         <!-- TOP COURSES -->
         <div class="flex items-center text-xl font-bold m-3">
             <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
@@ -705,8 +807,8 @@
             loop: true,
             coverflowEffect: {
                 rotate: 0,
-                stretch: -20,
-                depth: 350,
+                stretch: -30,
+                depth: 100,
                 modifier: 1,
                 slideShadows: false,
             },
@@ -726,4 +828,4 @@
         }, 100);
     </script>
 </body>
-</html>
+</html>            
