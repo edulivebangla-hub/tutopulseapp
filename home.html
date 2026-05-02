@@ -132,7 +132,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 60px;
+            height: 50px;
             background:#3047a5;
             display: flex;
             align-items: center;
@@ -165,6 +165,9 @@
             background: transparent;
             color: #fff;
         }
+  .header-icon:active { transform: scale(0.95); }
+       
+
         .gift-img {
             width: 26px;
             height: 26px;
@@ -173,7 +176,7 @@
         /* ===== MAIN CONTENT - NO SCROLLBAR ===== */
         .app-content {
             position: fixed;
-            top: 60px;
+            top: 50px;
             bottom: 60px;
             width: 100%;
             overflow-y: auto;
@@ -253,13 +256,13 @@
        /* ===== NEW SWIPER DESIGN ===== */
         .swiper {
             width: 100%;
-            padding: 10px 0 32px;
+            padding: 1px 0 32px;
         }
         .swiper-slide {
             background-position: center;
             background-size: cover;
             width: 300px;
-            height: 120px;
+            
             margin-right: 20px;
             margin-left: 20px;
             border-radius: 10px;
@@ -275,7 +278,7 @@
             
         }
         @media (min-width: 768px) {
-            .swiper-slide { width: 700px; height: 320px; }
+            .swiper-slide { width: 400px; height: 300px; }
         }
         .swiper-slide img {
             display: block;
@@ -320,7 +323,7 @@
             height: 55px;
             border-radius: 50px;
             overflow: hidden;
-            
+            border: 4px solid var(--text-primary);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         .profile-avatar img {
@@ -329,13 +332,13 @@
             object-fit: cover;
         }
         .motto {
-            font-size: 14px;
+            font-size: 12px;
             color: violet;
             line-height: 1.4;
             font-weight: 700;
         }
         .name {
-            font-size: 19px;
+            font-size: 16px;
             font-weight: 800;
             color: var(--text);
         }
@@ -350,13 +353,14 @@
             transition: all 0.2s;
             border: 1px solid rgba(0,0,0,0.2);
         }
+        .coin-link:active { transform: scale(0.95); }
        
         .coin-icon { color: #3047a5; width: 20px; height: 20px; }
         .coin-balance {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
-            color: var(--text);
-            margin: 0 6px;
+            color: #3047a5;
+            
         }
         .chevron-icon { color: #fbbf24; width: 18px; height: 18px; }
 
@@ -399,16 +403,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
             background: var(--pill-bg);
             backdrop-filter: blur(10px);
-            padding: 8px 12px;
-            box-shadow: var(--shadow-sm);
-            border-radius: 14px;
+            padding: 2px 12px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+            border-radius: 10px;
             text-decoration: none;
             color: var(--text-primary);
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid var(--card-border);
         }
@@ -490,7 +494,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            box-shadow: var(--shadow-sm);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
             background: var(--card-bg);
             border: 1px solid var(--card-border);
         }
@@ -525,7 +529,7 @@
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            padding: 12px 8px;
+            padding: 5px 8px;
             font-size: 11px;
             font-weight: 700;
             cursor: pointer;
@@ -544,8 +548,8 @@
             bottom: -2px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 3px;
+            width: 80px;
+            height: 4px;
             background: var(--brand-blue);
             border-radius: 3px;
         }
@@ -558,7 +562,7 @@
             align-items: center;
             border: 1px solid var(--card-border);
             border-radius: 15px;
-            padding: 16px;
+            padding: 16px; border: 2px solid var(--brand-blue);
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             box-shadow: var(--shadow-sm);
@@ -572,7 +576,7 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 4px;
+            width: 2px;
             background: linear-gradient(180deg, var(--brand-blue), var(--dark-blue));
         }
      
@@ -625,6 +629,9 @@
             filter: brightness(1.1);
             
         }
+ .apply-btn:active { transform: scale(0.95); }
+       
+
         .date-badge {
             position: absolute;
             bottom: 0;
@@ -633,11 +640,25 @@
             color: var(--badge-date-text);
             padding: 0px 10px;
             border-top-left-radius: 16px;
-            border-bottom-right-radius: 20px;
+            border-bottom-right-radius: 15px;
             font-size: 11px;
             font-weight: 800;
             border-left: 2px solid var(--badge-date-border);
             border-top: 2px solid var(--badge-date-border);
+        }
+ .date-badge2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 15px;
+            border-bottom-right-radius: 10px;
+            color: #3047a5;
+            padding: 0px 10px;
+            
+            font-size: 11px;
+            font-weight: 800;
+            border-bottom: 2px solid var(--brand-blue);
+            border-right: 2px solid var(--brand-blue);
         }
 
         /* ===== UTILITY ===== */
@@ -685,9 +706,9 @@
         <img src="https://i.ibb.co/V06DvN6c/Add-Text-04-14-08-48-50.png" alt="BidhyaBari Logo" class="logo-img">
     </div>
     <div class="header-right">
-        <div class="header-icon"><a href="search.html"><i data-lucide="search" width="25" height="25"></i></a></div>
-        <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell" width="26" height="26" color="#fff" style="margin-top: 6px;"></i></a></div>
-        <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><img src="https://cdn-icons-png.flaticon.com/512/1139/1139982.png" alt="Gift" class="gift-img"></a></div>
+        <div class="header-icon"><a href="search.html"><i data-lucide="search" width="25"></i></a></div>
+        <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell-check" width="25" color="#fff" ></i></a></div>
+        <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><i data-lucide="gift" width="25" color="#fff" ></i></a></div>
         <div class="header-icon hidden" id="darkToggle" style="cursor:pointer;">
             <i data-lucide="moon" width="24" height="24"></i>
         </div>
@@ -704,10 +725,9 @@
                 <p class="name" id="displayName">Loading....</p>
             </div>
         </div>
-        <a href="gift/coin-eran.html" class="coin-link">
-            <i data-lucide="badge-indian-rupee" class="coin-icon"></i>
-            <span class="coin-balance" id="balanceAmount">0</span>
-            <i data-lucide="chevron-right" class="chevron-icon"></i>
+        <a href="ai.html" class="coin-link">
+            <i data-lucide="bot-message-square" class="coin-icon" style="margin-right: 5px; color: #fbbf24;"></i><span> Meet AI</span>
+          <i data-lucide="chevron-right" class="chevron-icon"></i>
         </a>
     </div>
 
@@ -723,46 +743,6 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-
-
-
-
-  <div class=" w-full p-3 flex gap-4">
-
-        <!-- Button 1: Madhyamik Result -->
-        <a href="https://result-tutopulse.ct.ws/madhyamik-result-2026-check-now/" target="_blank"
-           class="btn-glow flex-1 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-2 text-white flex flex-col items-center justify-center gap-3 shadow-[0_4px_16px_rgba(37,99,235,0.3)] hover:shadow-[0_8px_24px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:-translate-y-0.5 transition-all duration-300">
-
-            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <img src="https://edulivestore.netlify.app/image/wbbse.png" alt="WBBSE" class="w-10 h-10 object-contain">
-            </div>
-
-            <div class="text-center">
-                <div class="text-[15px] font-bold leading-tight">Madhyamik Result 2026</div>
-                <div class="text-xs font-medium opacity-90 mt-1">
-                    Class 10 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </div>
-            </div>
-        </a>
-
-        <!-- Button 2: HS Result -->
-        <a href="https://result-tutopulse.ct.ws/wbchse-semester-4-result-2026-check-now/" target="_blank"
-           class="btn-glow flex-1 bg-gradient-to-br from-violet-600 to-violet-700 rounded-2xl p-2 text-white flex flex-col items-center justify-center gap-3 shadow-[0_4px_16px_rgba(124,58,237,0.3)] hover:shadow-[0_8px_24px_rgba(124,58,237,0.4)] hover:-translate-y-1 active:-translate-y-0.5 transition-all duration-300">
-
-            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" alt="WBCHSE" class="w-10 h-10 object-contain">
-            </div>
-
-            <div class="text-center">
-                <div class="text-[15px] font-bold leading-tight">HS Result 2026</div>
-                <div class="text-xs font-medium opacity-90 mt-1">
-                    Class 12 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </div>
-            </div>
-        </a>
-
-    </div>
-
     <div class="section-title" style="margin-left: 16px;">
         <div class="title-accent"></div>
         <span>Courses and</span><span style="color: var(--brand-blue); margin-left: 8px;">Preparation</span>
@@ -776,8 +756,9 @@
             <a href="https://edulive.ooulet.com/" target="_blank" class="pill-button">
                 <i data-lucide="shopping-cart" width="18px"></i> Shop
             </a>
-            <a href="ai.html" class="pill-button" style="background: #fbbf24;">
-                <i data-lucide="aperture" width="18px"></i> AI
+            <a href="gift/coin-eran.html" class="pill-button" style="background: #fbbf24;">
+                <i data-lucide="badge-indian-rupee" color="#3047a5" width="18"></i>   <span class="coin-balance" id="balanceAmount">0</span>
+            
             </a>
             <a href="course.html" class="pill-button">
                 <i data-lucide="grip" width="18px"></i>
@@ -842,9 +823,9 @@
 
     <!-- TABS -->
     <div class="tabs-container">
-        <div id="tab-entrance" class="tab active" onclick="switchTab('entrance')"><img src="https://cdn-icons-png.flaticon.com/512/1055/1055666.png"><span>Entrance Exams</span></div>
-        <div id="tab-private" class="tab" onclick="switchTab('private')"><img src="https://cdn-icons-png.flaticon.com/512/5049/5049381.png"><span>Private Scholarship</span></div>
-        <div id="tab-govt" class="tab" onclick="switchTab('govt')"><img src="https://cdn-icons-png.flaticon.com/512/17649/17649912.png"><span>Govt. Scholarship</span></div>
+        <div id="tab-entrance" class="tab active" onclick="switchTab('entrance')"><img src="https://cdn-icons-png.flaticon.com/512/1055/1055666.png"><span>Entrance<li>Exams</li></span></div>
+        <div id="tab-private" class="tab" onclick="switchTab('private')"><img src="https://i.ibb.co/hFJQB6wj/logo-crpf.png"><span>Govt. & Pvt.<li>Jobs</li></span></div>
+        <div id="tab-govt" class="tab" onclick="switchTab('govt')"><img src="https://cdn-icons-png.flaticon.com/512/17649/17649912.png"><span>Govt. & Pvt.<li>Scholarship</li></span></div>
     </div>
     <div id="list-content" class="ml-2 mr-2 space-y-4"></div>
     
@@ -970,18 +951,20 @@
         // Tab Data
         const contentData = {
             entrance: [
-                { title: "CRPF 2026", desc: "Tradesman Constable Recruitment 2026", date: "MAY 19", icon: "https://i.ibb.co/hFJQB6wj/logo-crpf.png", url: "https://crpf.gov.in/User-Registration" },
+                { title: "CRPF 2026", desc: "Tradesman Constable Recruitment 2026", date: "MAY 19", type:"Govt.Job", icon: "https://i.ibb.co/hFJQB6wj/logo-crpf.png", url: "https://crpf.gov.in/User-Registration" },
               ],
             private: [
-                { title: "Sitaram Jindal Scholarship", desc: "10th Pass. 12th Pass, UG PG 75% Marks", date: "JAN 31", icon: "https://unpkg.com/lucide-static@latest/icons/badge-alert.svg", url: "https://www.sitaramjindalfoundation.org/" },
-                { title: "TATA Pankh Scholarship", desc: "Class 11-12. UG. ITI. Diploma 60% Marks", date: "JAN 10", icon: "https://unpkg.com/lucide-static@latest/icons/badge-alert.svg", url: "https://www.buddy4study.com/page/the-tata-capital-pankh-scholarship-programme" }
-            ],
+                { title: "CRPF 2026", desc: "Tradesman Constable Recruitment 2026", date: "MAY 19", type:"Govt.Job", icon: "https://i.ibb.co/hFJQB6wj/logo-crpf.png", url: "https://crpf.gov.in/User-Registration" },
+             ],
             govt: [
-                { title: "Oasis Scholarship", desc: "SC/ST/OBC Scholarship West Bengal", date: "MAY 10", icon: "https://i.ibb.co/4RsV4P8y/Emblem-of-West-Bengal-2.png", url: "https://oasis.gov.in/" },
-                { title: "SVMCM Scholarship", desc: "Higher Education Grant 2026", date: "MAR 31", icon: "https://i.ibb.co/fVsmg70r/images-24.jpg", url: "https://svmcm.wbhed.gov.in/" },
-                { title: "Nabanna Scholarship", desc: "Financial aid offered by West Bengal Chief Minister's Relief Fund.", date: "JUN 05", icon: "https://i.ibb.co/DDNGPYbh/wbgov.png", url: "https://cmrf.wb.gov.in/" },
-                { title: "Aikyashree Scholarship", desc: "Scholarship for minority students in West Bengal from WBMDFC.", date: "MAR 31", icon: "https://i.ibb.co/7JH9QBSC/aikyashree.png", url: "https://wbmdfcscholarship.in/" },
-                { title: "National Scholarship Portal", desc: "Central govt scholarships for SC/ST/OBC and minority students", date: "JUN 05", icon: "https://i.ibb.co/mCh6RLwx/NEET-Exam-Pattern-2025-Changed-1.jpg", url: "https://scholarships.gov.in/" }
+                { title: "Oasis Scholarship", desc: "SC/ST/OBC Scholarship West Bengal", date: "MAY 10", type:"Govt.Scholarship", icon: "https://i.ibb.co/4RsV4P8y/Emblem-of-West-Bengal-2.png", url: "https://oasis.gov.in/" },
+                { title: "SVMCM Scholarship", desc: "Higher Education Grant 2026", date: "MAR 31",type:"Govt.Scholarship", icon: "https://i.ibb.co/fVsmg70r/images-24.jpg", url: "https://svmcm.wbhed.gov.in/" },
+                { title: "Nabanna Scholarship", desc: "Financial aid offered by West Bengal Chief Minister's Relief Fund.", date: "JUN 05",type:"Govt.Scholarship", icon: "https://i.ibb.co/DDNGPYbh/wbgov.png", url: "https://cmrf.wb.gov.in/" },
+                { title: "Aikyashree Scholarship", desc: "Scholarship for minority students in West Bengal from WBMDFC.", date: "MAR 31",type:"Govt.Scholarship", icon: "https://i.ibb.co/7JH9QBSC/aikyashree.png", url: "https://wbmdfcscholarship.in/" },
+                { title: "National Scholarship Portal", desc: "Central govt scholarships for SC/ST/OBC and minority students", date: "JUN 05", type:"Govt.Scholarship",  icon: "https://i.ibb.co/mCh6RLwx/NEET-Exam-Pattern-2025-Changed-1.jpg", url: "https://scholarships.gov.in/" },
+                { title: "Sitaram Jindal Scholarship", desc: "10th Pass. 12th Pass, UG PG 75% Marks", date: "JAN 31",type:"Pvt.Scholarship", icon: "https://unpkg.com/lucide-static@latest/icons/badge-alert.svg", url: "https://www.sitaramjindalfoundation.org/" },
+                { title: "TATA Pankh Scholarship", desc: "Class 11-12. UG. ITI. Diploma 60% Marks", date: "JAN 10", type:"Pvt.Scholarship", icon: "https://unpkg.com/lucide-static@latest/icons/badge-alert.svg", url: "https://www.buddy4study.com/page/the-tata-capital-pankh-scholarship-programme" }
+           
             ]
         };
 
@@ -1001,6 +984,7 @@
                     <div class="card-content"><h4 class="card-title">${item.title}</h4><p class="card-desc">${item.desc}</p></div>
                     <a href="${item.url}" target="_blank" class="apply-btn">Apply</a>
                     <div class="date-badge">${item.date}</div>
+                    <div class="date-badge2">${item.type}</div>
                 `;
                 container.appendChild(card);
             });
