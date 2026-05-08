@@ -1,390 +1,43 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>Result Check</title>
-
-<style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family:Arial,sans-serif;
-    }
-
-    body{
-        background:#f4f7fb;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        min-height:100vh;
-        padding:20px;
-    }
-
-    .container{
-        width:100%;
-        max-width:500px;
-        background:#fff;
-        border-radius:12px;
-        padding:25px;
-        box-shadow:0 5px 20px rgba(0,0,0,0.1);
-    }
-
-    h2{
-        text-align:center;
-        margin-bottom:20px;
-        color:#0a3a2a;
-    }
-
-    .form-group{
-        margin-bottom:15px;
-    }
-
-    label{
-        display:block;
-        margin-bottom:6px;
-        font-weight:bold;
-    }
-
-    input{
-        width:100%;
-        padding:12px;
-        border:1px solid #ccc;
-        border-radius:8px;
-        font-size:16px;
-    }
-
-    button{
-        width:100%;
-        padding:12px;
-        border:none;
-        border-radius:8px;
-        background:#0a3a2a;
-        color:#fff;
-        font-size:16px;
-        cursor:pointer;
-        transition:0.3s;
-    }
-
-    button:hover{
-        background:#0f5b42;
-    }
-
-    .loader{
-        display:none;
-        text-align:center;
-        margin-top:10px;
-    }
-
-    .message-box{
-        margin-top:15px;
-        padding:12px;
-        border-radius:8px;
-        display:none;
-    }
-
-    .error-msg{
-        background:#ffe6e6;
-        color:#c40000;
-    }
-
-    .result-box{
-        display:none;
-        margin-top:20px;
-    }
-
-    .result-box table{
-        width:100%;
-        border-collapse:collapse;
-    }
-
-    .result-box table td{
-        border:1px solid #ddd;
-        padding:10px;
-    }
-
-    .result-box table tr:nth-child(even){
-        background:#f9f9f9;
-    }
-
-    .status{
-        font-weight:bold;
-        color:green;
-    }
-
-    .btn-group{
-        margin-top:20px;
-        display:flex;
-        gap:10px;
-    }
-
-    .btn-group button{
-        flex:1;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WBBSE Result 2026</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-
 <body>
+    <main>
+        <div class="card">
+            <div class="inner">
+                <div class="logo">
+                    <img src="/static/img/logo.webp" alt="WBBSE Logo" width="100" height="100">
+                </div>
+                <h1>West Bengal Board of Secondary Education</h1>
+                <h2>WBBSE 10<sup>th</sup> Result 2026</h2>
+                <h3>Provisional Results for Madhyamik Pariksha(SE) - Year 2026</h3>
+                <form method="POST" action=".">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="SJb8H9Cy7VG6FBMD9wQ3vnC2rIx9vD2LJ2YCHN81MNMgKJu1DE0N67uQfZC16Sus">
+                    <p>
+    <label for="id_roll_no">Roll Number</label>
+    <input type="text" name="roll_no" maxlength="11" required id="id_roll_no">
+    
+    
+  </p>
 
-<div class="container">
-
-    <h2>Result Check</h2>
-
-    <!-- Form -->
-    <form id="marksheetForm">
-
-        <div class="form-group">
-            <label>Roll Number</label>
-            <input type="text" name="roll" placeholder="Enter Roll Number" required>
+  
+  <p>
+    <label for="id_dob">Date of Birth</label>
+    <input type="date" name="dob" required id="id_dob">
+    
+    
+      
+    
+  </p>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Date of Birth</label>
-            <input type="date" name="dob" required>
-        </div>
-
-        <button type="submit">
-            <span class="btn-text">Check Result</span>
-        </button>
-
-        <div class="loader">
-            Loading...
-        </div>
-
-        <div id="formMsg" class="message-box"></div>
-
-    </form>
-
-    <!-- Result -->
-    <div class="result-box" id="result-view-wrapper">
-
-        <table>
-            <tr>
-                <td>Roll Number</td>
-                <td id="res-roll">-</td>
-            </tr>
-
-            <tr>
-                <td>Name</td>
-                <td id="res-name">-</td>
-            </tr>
-
-            <tr>
-                <td>Status</td>
-                <td id="res-status" class="status">-</td>
-            </tr>
-
-            <tr>
-                <td>Total Marks</td>
-                <td id="res-total">-</td>
-            </tr>
-
-            <tr>
-                <td>Overall Grade</td>
-                <td id="res-overall-grade">-</td>
-            </tr>
-        </table>
-
-        <h3 style="margin-top:20px;">Subject Marks</h3>
-
-        <table>
-
-            <tr>
-                <td>First Language</td>
-                <td id="res-fl-marks">-</td>
-                <td id="res-fl-grade">-</td>
-            </tr>
-
-            <tr>
-                <td>Second Language</td>
-                <td id="res-sl-marks">-</td>
-                <td id="res-sl-grade">-</td>
-            </tr>
-
-            <tr>
-                <td>Mathematics</td>
-                <td id="res-math-marks">-</td>
-                <td id="res-math-grade">-</td>
-            </tr>
-
-            <tr>
-                <td>Physical Science</td>
-                <td id="res-psc-marks">-</td>
-                <td id="res-psc-grade">-</td>
-            </tr>
-
-            <tr>
-                <td>Life Science</td>
-                <td id="res-lsc-marks">-</td>
-                <td id="res-lsc-grade">-</td>
-            </tr>
-
-            <tr>
-                <td>History</td>
-                <td id="res-hist-marks">-</td>
-                <td id="res-hist-grade">-</td>
-            </tr>
-
-            <tr>
-                <td>Geography</td>
-                <td id="res-geog-marks">-</td>
-                <td id="res-geog-grade">-</td>
-            </tr>
-
-            <tr>
-                <td>Optional Subject</td>
-                <td id="res-opt-marks">-</td>
-                <td id="res-opt-grade">-</td>
-            </tr>
-
-        </table>
-
-        <div class="btn-group">
-
-            <button id="btnDownloadPdf" type="button">
-                Download PDF
-            </button>
-
-            <button type="button" onclick="resetSearch()">
-                Check Another
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script>
-
-document.addEventListener('DOMContentLoaded', () => {
-
-    const marksheetForm = document.getElementById('marksheetForm');
-
-    marksheetForm.addEventListener('submit', async function(e){
-
-        e.preventDefault();
-
-        const btnText = document.querySelector('.btn-text');
-        const loader = document.querySelector('.loader');
-        const msgBox = document.getElementById('formMsg');
-
-        const rollVal = this.querySelector('input[name="roll"]').value.trim();
-        const dobVal = this.querySelector('input[name="dob"]').value;
-
-        btnText.style.display = 'none';
-        loader.style.display = 'block';
-        msgBox.style.display = 'none';
-
-        try{
-
-            const response = await fetch(
-                `https://d24xsspkw6gusw.cloudfront.net/?roll=${rollVal}&dob=${dobVal}`,
-                {
-                    method:'GET',
-                    headers:{
-                        'accept':'application/json'
-                    }
-                }
-            );
-
-            if(!response.ok){
-
-                if(response.status === 403){
-
-                    const errorData = await response.json();
-
-                    let errorMessage = errorData.error || 'Access denied';
-
-                    if(errorData.result_publish_time){
-
-                        const publishDate = new Date(errorData.result_publish_time);
-
-                        errorMessage += `<br>Publish Time: ${publishDate.toLocaleString()}`;
-                    }
-
-                    throw new Error(errorMessage);
-                }
-
-                throw new Error('Server Error');
-            }
-
-            const data = await response.json();
-
-            if(data && data.roll_number){
-
-                marksheetForm.style.display = 'none';
-
-                document.getElementById('result-view-wrapper').style.display = 'block';
-
-                document.getElementById('res-roll').innerText = data.roll_number || '-';
-                document.getElementById('res-name').innerText = data.name || '-';
-                document.getElementById('res-status').innerText = data.result_status || '-';
-                document.getElementById('res-total').innerText = data.aggregate || '-';
-                document.getElementById('res-overall-grade').innerText = data.overall_grade || '-';
-
-                const subjects = data.subjects || {};
-
-                setSubject('fl', subjects.fl);
-                setSubject('sl', subjects.sl);
-                setSubject('math', subjects.math);
-                setSubject('psc', subjects.psc);
-                setSubject('lsc', subjects.lsc);
-                setSubject('hist', subjects.hist);
-                setSubject('geog', subjects.geog);
-                setSubject('opt', subjects.opt);
-
-                document.getElementById('btnDownloadPdf').onclick = function(){
-
-                    const printUrl =
-                    `/madhyamik/print.html?roll=${encodeURIComponent(rollVal)}&dob=${encodeURIComponent(dobVal)}`;
-
-                    window.location.href = printUrl;
-                };
-
-            }else{
-                throw new Error('Result not found');
-            }
-
-        }catch(err){
-
-            msgBox.className = 'message-box error-msg';
-            msgBox.innerHTML = err.message;
-            msgBox.style.display = 'block';
-
-        }finally{
-
-            btnText.style.display = 'inline';
-            loader.style.display = 'none';
-        }
-
-    });
-
-});
-
-function setSubject(prefix, subject){
-
-    document.getElementById(`res-${prefix}-marks`).innerText =
-        subject?.marks || '-';
-
-    document.getElementById(`res-${prefix}-grade`).innerText =
-        subject?.grade || '-';
-}
-
-function resetSearch(){
-
-    document.getElementById('marksheetForm').reset();
-
-    document.getElementById('marksheetForm').style.display = 'block';
-
-    document.getElementById('result-view-wrapper').style.display = 'none';
-
-    document.getElementById('formMsg').style.display = 'none';
-}
-
-</script>
-
+    </main>
 </body>
 </html>
