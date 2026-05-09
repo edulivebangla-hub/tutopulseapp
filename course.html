@@ -67,7 +67,7 @@
             user-drag: none;
         }
    :root {
-            --card-width: 280px;
+            --card-width: 260px;
             --blue-accent: #0033ad;
         }
         /* ----- LIGHT MODE (default) ----- */
@@ -76,7 +76,7 @@
             color: #333;
             overflow: hidden;
               --footer-bg: #ffffff; 
- --text-muted: #8D94A2;
+ --text-muted: #8D94A2; --tp:#ffffff;
         }
 
      /* --- Header Styles --- */
@@ -249,8 +249,8 @@
 
         .swiper-slide {
             position: relative; /* Required for absolute positioning of text */
-            width: 320px; 
-            height: 230px; /* Increased height to accommodate text better */
+            width: 280px; height: 180px;
+            /* Increased height to accommodate text better */
             border-radius: 12px;
            border: 2px solid ;
             transition: 0.5s ease-in-out;
@@ -270,7 +270,7 @@
 
         .swiper-slide img {
             display: block;
-            width: 100%; height: 170px;
+            width: 100%; 
             object-fit: cover;
             border-top-right-radius: 10px;
             border-top-left-radius: 10px;
@@ -280,21 +280,14 @@
         /* --- NEW TEXT OVERLAY STYLES --- */
         .slide-content {
             position: absolute;
-            bottom: 5;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff; /* Semi-transparent black */
-            color: #000;
-            padding: 8px;
-            
-            
-            
- }
-
-        .slide-content h3 {
-            font-size: 1rem;
-            margin-bottom: 5px;
+            bottom: 0;
+            width: 100%; color: white;
+            padding: 12px;
+            box-sizing: border-box;
+            background: linear-gradient(transparent, rgba(0,0,1,0.8),rgba(0,0,0,0.8));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         
@@ -400,6 +393,7 @@
             color: #e0e0e0;
                --text-muted: #a0a0a0;
                   --footer-bg: #1e1e1e;
+           --tp:#121212;
         }
         
         body.dark .app-content {
@@ -497,14 +491,14 @@
 
         .primium-card {           
             flex: 0 0 var(--card-width);
-            height: 200px;                      
+            height: 240px;                      
             border-radius: 10px; margin-right: 15px;
             position: relative;
             background-size: cover;
             background-position: center;           
             overflow: hidden;         
             border-radius: 10px;         
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            
             scroll-snap-align: center;
             border: 2px solid #3047a5;
             transition: transform 0.3s ease, background 0.2s;
@@ -536,7 +530,7 @@
             background-color: var(--blue-accent);
             color: white;
             text-decoration: none;
-            padding: 8px 18px;
+            padding: 5px 18px;
             border-radius: 12px;
             font-size: 15px;
             font-weight: 500;
@@ -547,7 +541,7 @@
         }
 
         .join-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.98);
         }
 
         .chevron-icon {
@@ -617,29 +611,18 @@
         <div class="swiper">
             <div class="swiper-wrapper">
                 <a href="#" class="swiper-slide">
-                    <img src="https://i.ibb.co/B23R56sq/1000163773.jpg" alt="Batch 1">
+                    <img src="https://i.ibb.co/39schx5B/Class12.png" alt="Batch 1">
                     <div class="slide-content">
-                        <h3>RRB Group D Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
+                        <h3>Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h3>
                     </div>
                 </a>
                 <a href="#" class="swiper-slide">
-                    <img src="https://i.ibb.co/Xr6GYwkn/1000163766.png" alt="Batch 3">
+                    <img src="https://i.ibb.co/PGJHwqW9/Class11.png" alt="Batch 3">
                     <div class="slide-content">
-                        <h3>RRB ALP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
+                        <h3>Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</h3>
                     </div>
                 </a>
-                <a href="#" class="swiper-slide">
-                    <img src="https://i.ibb.co/rBjr4nL/1000163769.jpg" alt="Batch 2">
-                    <div class="slide-content">
-                        <h3>WBP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
-                    </div>
-                </a>
-                <a href="#" class="swiper-slide">
-                    <img src="https://i.ibb.co/QvxhZ9dh/1000163770.jpg" alt="Batch 3">
-                    <div class="slide-content">
-                        <h3>SSC GD Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h3>
-                    </div>
-                </a>
+              
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -655,29 +638,18 @@
             </div>
 
             <a href="#" class="course-card">
-                <img src="https://i.ibb.co/QvxhZ9dh/1000163770.jpg" alt="Starter Batch" class="course-img">
+                <img src="https://i.ibb.co/39schx5B/Class12.png" alt="Starter Batch" class="course-img">
                 <div class="course-info">
-                    <h2 class="course-title">SSC GD Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
+                    <h2 class="course-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h2>
                 </div>
             </a>
             <a href="#" class="course-card">
-                <img src="https://i.ibb.co/B23R56sq/1000163773.jpg" alt="Class 11" class="course-img">
+                <img src="https://i.ibb.co/PGJHwqW9/Class11.png" alt="Class 11" class="course-img">
                 <div class="course-info">
-                    <h2 class="course-title">RRB Group D Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
+                    <h2 class="course-title">Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</h2>
                 </div>
             </a>
-            <a href="#" class="course-card">
-                <img src="https://i.ibb.co/rBjr4nL/1000163769.jpg" alt="Class 12" class="course-img">
-                <div class="course-info">
-                    <h2 class="course-title">WBP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
-                </div>
-            </a>
-            <a href="#" class="course-card">
-                <img src="https://i.ibb.co/Xr6GYwkn/1000163766.png" alt="Target 2027" class="course-img">
-                <div class="course-info">
-                    <h2 class="course-title">RRB ALP Exam Preparation 2026 (প্র্যাকটিস A+) বিনামূল্যে ব্যাচ!📌</h2>
-                </div>
-            </a>
+          
         </div>
 
         <!-- TUTORS SECTION -->
@@ -691,17 +663,17 @@
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8mjIi75jOqd4WGHM7NVQ9ePsNf0G4oX7C0GVGZL6sLNEWtTVDqssYOGnQt8mlGWNg-5JZWEt_ao93Wp3IziocSM3Rf6UWzYCwwE6XGAa09AfvVQ4MtmeZ4AAvOcUbfi5wnNXA09oK-JQlxRFZdEIQKeOHyGtPfk9e5GNXXd-8mlOXgzRUuLbQ3itSHNox/s716/1000114892.jpg" alt="Tutor" class="tutor-img">
                 </div>
                 <div class="tutor-name flex items-center justify-center gap-1">
-                    Aninda Halder <i data-lucide="verified" style="width: 18px; height: 18px; color: orange;"></i>
+                    Aninda Halder <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #FFD036;"></i>
                 </div>
                 <div class="tutor-subject">Founder & CEO</div>
-                <a href="https://edulivestore.netlify.app/tutor/anindahalder.html"><button class="btn-profile">View Profile</button></a>
+                <a href="anindahalder.html"><button class="btn-profile">View Profile</button></a>
             </div>
             <div class="tutor-card">
                 <div class="image-container flex justify-center">
                     <img src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Tutor" class="tutor-img">
                 </div>
                 <div class="tutor-name flex items-center justify-center gap-1">
-                    Roni Das <i data-lucide="verified" style="width: 18px; height: 18px; color: orange;"></i>
+                    Roni Das <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #FFD036;"></i>
                 </div>
                 <div class="tutor-subject">Co-Founder</div>
                 <a href="https://edulivestore.netlify.app/tutor/ronidas.html"><button class="btn-profile">View Profile</button></a>
@@ -711,7 +683,7 @@
                     <img src="https://i.ibb.co/k60CSDGf/IMG-20260226-200620.jpg" alt="Tutor" class="tutor-img">
                 </div>
                 <div class="tutor-name flex items-center justify-center gap-1">
-                    Debjit Biswas <i data-lucide="verified" style="width: 18px; height: 18px; color: orange;"></i>
+                    Debjit Biswas <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #FFD036;"></i>
                 </div>
                 <div class="tutor-subject">Community Expert</div>
                 <a href="https://edulivestore.netlify.app/tutor/debjit.html"><button class="btn-profile">View Profile</button></a>
@@ -828,4 +800,4 @@
         }, 100);
     </script>
 </body>
-</html>            
+</html>                        
