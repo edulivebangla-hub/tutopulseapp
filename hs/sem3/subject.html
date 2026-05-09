@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Subject </title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <style>
-    /* ---------- RESET & GLOBAL TRANSITIONS (preserved) ---------- */
-    * {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</title>
+    <!-- Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -22,10 +19,10 @@
       -moz-user-drag: none;
       -ms-user-drag: none;
       user-drag: none;
-      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      transition: background 0.3s, color 0.3s;
       -webkit-tap-highlight-color: transparent;
     }
-
+    
     a, span, p, h1, h2, h3, h4, h5, h6, div {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -37,7 +34,7 @@
       user-drag: none;
       text-decoration: none;
     }
-
+    
     img {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -47,317 +44,238 @@
       -moz-user-drag: none;
       -ms-user-drag: none;
       user-drag: none;
-    }
-
-    /* fixed app page dimensions — exactly like original */
-    html, body {
-      width: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
       
-      margin: 0;
-      padding: 0;
     }
+        :root {
+            --bg-color: #f8fafc;
+            --header-bg: #2d42a7;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-blue: #4472f1;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 10px;
-      display: block;
-      background: #f5f5f5;    /* fallback, but dark mode will override via class */
-    }
+        /* Dark Mode Colors */
+        body.dark {
+            --bg-color: #121212;
+            --header-bg: #1a1a1a;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
 
-    /* dark mode variable overrides — only colors, no layout or structural changes */
-    body.dark {
-      background: #000;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-    /* header background transition — dark mode specific (preserves original header style but adapts) */
-    .app-header {
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg-color);
+        }
+
+        /* Header Styles */
+        .header {
             position: fixed;
             top: 0;
-            left: 0;
+            left: 0; gap: 15px;
             width: 100%;
+            color: #ffffff;
             height: 50px;
             background: #3047a5;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 16px;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: transform 0.25s ease, opacity 0.2s ease;
-       }
+        }
 
-    
+        .header-content {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
 
-    /* container spacing (unchanged) */
-    .container {
-      max-width: 700px;
-      margin: auto;
-      margin-top: 50px;
-    }
+        #darkToggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+  .app-content {
+            position: fixed;
+            top: 50px;
+            bottom: 0px;
+            width: 100%;
+            overflow-y: auto;
+            background: var(--bg-surface);
+            transition: background-color 0.3s;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .app-content::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            background: transparent;
+        }
+        /* List Styles */
+        .list-container {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    /* card styling — fully preserves original structure, only background/border/text color adapts in dark mode */
-    .card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #f9f9f9;
-      border: 2px solid #d6d6e7;
-      border-radius: 10px;
-      padding: 5px 10px;
-      margin-bottom: 10px;
-    }
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
 
-    /* dark mode card style (matches original aesthetic but dark-friendly) */
-    body.dark .card {
-      background: #1e1e2f;
-      border: 2px solid #3a3a4e;
-    }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            transform: translateY(0);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-    .left {
-      display: flex;
-      align-items: center;
-    }
+        .card:active {
+            transform: scale(0.99);
+        }
 
-    .left img {
-      width: 60px;
-      height: 70px;
-      margin-right: 10px;
-      background: #cbd5e0;
-      border-radius: 5px;
-      object-fit: cover;
-    }
+        .badge-num {
+            background-color: var(--accent-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
 
-    body.dark .left img {
-      background: #2c2c3a;
-    }
+        .card-text {
+            flex-grow: 1;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
 
-    .text h3 {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 700;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: #111;
-    }
-
-    body.dark .text h3 {
-      color: #ececec;
-    }
-
-    .text p {
-      margin: 5px 0 0;
-      font-size: 14px;
-      color: #444;
-    }
-
-    body.dark .text p {
-      color: #b0b0c0;
-    }
-
-    .right {
-      text-align: center;
-    }
-
-    .apply-btn {
-      display: inline-block;
-      padding: 5px 20px;
-      background: #b8d8b8;
-      color: #2d5a2d;
-      text-decoration: none;
-      border-radius: 20px;
-      font-weight: bold;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    /* dark mode button - slightly deeper green but readable */
-    body.dark .apply-btn {
-      background: #2a6230;
-      color: #d0f0c4;
-    }
-
-    .date {
-      margin-top: 10px;
-      display: inline-block;
-      background: #f5d6d6;
-      color: #a33;
-      padding: 0px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    body.dark .date {
-      background: #4e2b2b;
-      color: #ffb7b7;
-    }
-
-    /* additional dark mode refinements for any other text like header title, icons */
-    .app-header h2 {
-      color: white;
-    }
-
-    body.dark .app-header h2 {
-      color: #f0f0ff;
-    }
-
-    /* lucide icons inside header are white, stays consistent */
-    .app-header i[data-lucide] {
-      color: white;
-    }
-
-    /* for any extra elements like share link */
-    .cursor-pointer a {
-      color: inherit;
-    }
-
-    /* preserving full original look: no layout shifts */
-    .container, .card, .left, .right, .text, .apply-btn, .date {
-      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
-    }
-
-    /* tiny extra: if any link inside card has hover, keep usability */
-    .apply-btn:hover {
-      filter: brightness(0.96);
-    }
-
-    /* dark mode toggle button style — added new toggle element in header but not interfering original layout.
-       We place it inside .flex.gap-3.items-center (right side) before share icon.
-       The dark mode toggle will be a small circular button, respects dark/light modes */
-    .dark-mode-toggle {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      backdrop-filter: blur(2px);
-      transition: all 0.2s ease;
-      color: white;
-      background-color: rgba(0,0,0,0.2);
-    }
-    .dark-mode-toggle:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,0.35);
-    }
-    body.dark .dark-mode-toggle {
-      background: rgba(255,255,255,0.25);
-    }
-    /* no structural changes — added gracefully */
-  </style>
+        .chevron-icon {
+            color: #ccc;
+            flex-shrink: 0;
+        }
+    </style>
 </head>
 <body>
-  <header class="app-header">
-    <div class="flex items-center gap-2">
-      <div class="cursor-pointer p-1">
-        <i data-lucide="x" class="text-white/90 w-6 h-6" onclick="goBack()"></i>
-      </div>
-    </div>
-    <h2 style="margin-left: 5px; color: white; font-size:16px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-      Class 12 3nd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার
-    </h2>
-    <div class="flex gap-3 items-center">
-      <!-- DARK MODE TOGGLE BUTTON inserted exactly here — does not disturb other functionality -->
-      <button id="darkToggle" class="dark-mode-toggle" aria-label="Dark mode toggle" style="display: none;">🌙</button>
-      <div class="cursor-pointer p-1">
-        <a href="https://action_share"><i data-lucide="share-2" class="text-white/90 w-5 h-5"></i></a>
-      </div>
-    </div>
-  </header>
 
-  <div class="container">
-    <!-- Whatsapp Card -->
-    <div class="card">
-      <div class="left">
-        <img src="https://i.ibb.co/Nnys7gNv/IMG-20260415-212033.jpg" alt="Whatsapp group Logo">
-        <div class="text">
-          <h3>🎯 Whatsapp Group✅</h3>
-          <p>Free বই স্টাডি রিসোর্স + WhatsApp Group [Special]</p>
+<div class="container">
+    <header class="header">
+        <i data-lucide="x" onclick="goBack()"></i>
+        <div class="header-content">
+            Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার
         </div>
-      </div>
-      <div class="right">
-        <a href="https://chat.whatsapp.com/GfQ9bqo9SzQ06xOtGLzgk0" class="apply-btn">Join</a><br>
-        <span class="date">Apr 15</span>
-      </div>
-    </div>
+        <button style="display: none;" id="darkToggle" title="Toggle Dark Mode">
+            <i data-lucide="moon"></i>
+        </button>
+    </header>
+<main class="app-content">
+    <div class="list-container">
+        <!-- Item 1 -->
+        <a href="https://wa.me/yourlink" class="card-link">
+            <div class="card">
+                <div class="badge-num">1</div>
+                <div class="card-text">🎯 Free বই স্টাডি রিসোর্স + ✅ WhatsApp Group [Special]</div>
+                <i data-lucide="chevron-right" class="chevron-icon"></i>
+            </div>
+        </a>
 
-    <!-- Bengali Card -->
-    <div class="card">
-      <div class="left">
-        <img src="https://i.ibb.co/SXT7VmDx/Add-Text-05-03-11-38-21.jpg" alt="Bangla Logo">
-        <div class="text">
-          <h3>Bengali Notes (বাংলা)</h3>
-          <p>Best Nots & Smart Suggestion (12th Pass)</p>
-        </div>
-      </div>
-      <div class="right">
-        <a href="bangla/chapter.html" class="apply-btn">Continue</a><br>
-        <span class="date">Apr 15</span>
-      </div>
-    </div>
+       
 
-    <!-- English Card -->
-    <div class="card">
-      <div class="left">
-        <img src="https://i.ibb.co/6RjPB8MD/Add-Text-05-03-11-39-08.jpg" alt="English Logo">
-        <div class="text">
-          <h3>English Notes (ইংরেজি)</h3>
-          <p>Best Nots & Smart Suggestion (12th Pass)</p>
-        </div>
-      </div>
-      <div class="right">
-        <a href="english/cheptar.html" class="apply-btn">Continue</a><br>
-        <span class="date">Apr 15</span>
-      </div>
-    </div>
-  </div>
+        <!-- Item 2 -->
+        <a href="b" class="card-link">
+            <div class="card">
+                <div class="badge-num">2</div>
+                <div class="card-text">Bangla ( বাংলা ) - Notes</div>
+                <i data-lucide="chevron-right" class="chevron-icon"></i>
+            </div>
+        </a>
 
-  <script>
-    // ========== DARK MODE TOGGLE LOGIC (fully integrated, no other changes) ==========
-    const darkToggle = document.getElementById("darkToggle");
+        <!-- Item 3 -->
+        <a href="e" class="card-link">
+            <div class="card">
+                <div class="badge-num">3</div>
+                <div class="card-text">English (  ইংরেজি ) - Notes</div>
+                <i data-lucide="chevron-right" class="chevron-icon"></i>
+            </div>
+        </a>
+    </div>
+</div>
+</main>
+<script>
+function goBack() {
+            window.history.back();
+        }
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Dark Mode Toggle Logic
+    const darkToggle = document.getElementById('darkToggle');
     const body = document.body;
-    
-    // load saved preference from localStorage (if any)
-    if (localStorage.getItem("darkMode") === "true") {
-      body.classList.add("dark");
-      darkToggle.textContent = "☀️";   // sun icon indicates light mode available (dark is active)
-    } else {
-      // default light mode: moon icon means switch to dark mode
-      darkToggle.textContent = "🌙";
+
+    // Check Local Storage on Load
+    if(localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark');
+        updateToggleIcon();
     }
-    
-    // toggle event: switches dark class and updates icon + localStorage
-    darkToggle.addEventListener("click", () => {
-      body.classList.toggle("dark");
-      const isDark = body.classList.contains("dark");
-      localStorage.setItem("darkMode", isDark);
-      // set icon: if dark mode ON, show sun (because clicking will go to light), else moon
-      darkToggle.textContent = isDark ? "☀️" : "🌙";
+
+    function updateToggleIcon() {
+        const isDark = body.classList.contains('dark');
+        const iconElem = darkToggle.querySelector('i');
+        if(iconElem) {
+            const iconName = isDark ? 'sun' : 'moon';
+            // We replace the icon by updating the attribute and re-triggering Lucide
+            iconElem.setAttribute('data-lucide', iconName);
+            lucide.createIcons(); 
+        }
+    }
+
+    darkToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        localStorage.setItem('darkMode', body.classList.contains('dark'));
+        updateToggleIcon();
+        
+        // Swiper check (from your snippet)
+        if(window.swiperInstance) window.swiperInstance.update();
     });
-    
-    // Lucide icons reinitialization (preserve original icons)
-    if (typeof lucide !== 'undefined' && lucide.createIcons) {
-      lucide.createIcons();
-    } else {
-      // fallback in case lucide loads delayed
-      window.addEventListener('load', function() {
-        if (window.lucide && lucide.createIcons) lucide.createIcons();
-      });
-    }
-    
-    // goBack function (unchanged)
-    function goBack() {
-      window.history.back();
-    }
-    
-  </script>
+</script>
+
 </body>
 </html>
