@@ -277,12 +277,12 @@
        /* ===== NEW SWIPER DESIGN ===== */
         .swiper {
             width: 100%;
-            padding: 1px 0 32px;
+            padding: 1px 0 30px;
         }
         .swiper-slide {
             background-position: center;
             background-size: cover;
-            width: 300px;
+            width: 280px;
             
             
             border-radius: 10px;
@@ -343,8 +343,8 @@
             height: 55px;
             border-radius: 50px;
             overflow: hidden;
-            border: 2px solid var(--text-primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border: 2px solid white;
+            
         }
         .profile-avatar img {
             width: 100%;
@@ -364,7 +364,7 @@
         }
         .coin-link {
             text-decoration: none;
-            display: flex;
+            display: flex; gap: 5px;
             align-items: center;
             background-color: var(--coin-link-bg);
             backdrop-filter: blur(10px);
@@ -426,25 +426,25 @@
             gap: 5px;
             background: var(--pill-bg);
             backdrop-filter: blur(10px);
-            padding: 2px 12px;
+            padding: 8px 15px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
             border-radius: 10px;
             text-decoration: none;
             color: var(--text-primary);
             font-weight: 600;
-            font-size: 14px;
+            font-size: 16px;
             transition: all 0.2s;
             border: 1px solid var(--card-border);
         }
 
-          .pill-button:active { transform: scale(0.95); }
+          .pill-button:active { transform: scale(0.99); }
        
 
         /* ===== NEW CARD BUTTONS ===== */
         .card-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 5px;
             justify-items: center;
             padding: 5px;
         }
@@ -457,8 +457,8 @@
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             border-radius: 18px;
-            width: 78px;
-            height: 78px;
+            width: 80px;
+            height: 80px;
             box-shadow: var(--shadow-sm);
             text-decoration: none;
             color: var(--text-primary);
@@ -496,7 +496,7 @@
             text-align: center;
             white-space: nowrap;
         }
-  .card-button:active { transform: scale(0.95); }
+  .card-button:active { transform: scale(0.99); }
        
         /* ===== NEW COURSE GRID ===== */
         .grid-4 {
@@ -776,8 +776,8 @@
                 <p class="name" id="displayName">Loading....</p>
             </div>
         </div>
-        <a href="ai.html" class="coin-link">
-            <i data-lucide="bot-message-square" class="coin-icon" style="margin-right: 5px; color: #fbbf24;"></i><span> Meet AI</span>
+        <a href="gift/coin-eran.html" class="coin-link">
+            <i data-lucide="badge-indian-rupee" class="coin-icon" stroke-width="2" style="color: #3047a5;fill: #FFD036;"></i><span class="coin-balance" id="balanceAmount"> 0</span>
           <i data-lucide="chevron-right" class="chevron-icon"></i>
         </a>
     </div>
@@ -807,10 +807,7 @@
             <a href="https://edulive.ooulet.com/" target="_blank" class="pill-button">
                 <i data-lucide="shopping-cart" width="18px"></i> Shop
             </a>
-            <a href="gift/coin-eran.html" class="pill-button" style="background: #fbbf24;">
-                <i data-lucide="badge-indian-rupee" color="#3047a5" width="18"></i>   <span class="coin-balance" id="balanceAmount">0</span>
-            
-            </a>
+          
             <a href="course.html" class="pill-button">
                 <i data-lucide="grip" width="18px"></i>
             </a>
