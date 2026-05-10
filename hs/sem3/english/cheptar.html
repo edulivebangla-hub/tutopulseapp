@@ -1,16 +1,29 @@
+<script>// --- APP DATA & LOGIC ---
+    const subjects = [
+      { id: 1, name: "The Night Train at Deoli Summary, MCQ Question Answer - Sem 3", content: { date: "May 09, 2026", title: "🔥 The Night Train at Deoli Summary, MCQ Question Answer - Sem 3", image1: "https://i.ibb.co/bgZGQ5CN/Add-Text-04-01-09-20-32-jpg.jpg", text: "Official WBCHSE Curriculum for Class 12 Arts 3rd Semester.", button1: {text: "View Notes", link: "https://tutopulse.ct.ws/the-night-train-at-deoli-3rd-semester/"} }},
+      { id: 2, name: "Strong Roots by APJ Abdul Kalam , MCQ Question Answer - Sem 3", content: { date: "May 09, 2026", title: "🔥 Strong Roots by APJ Abdul Kalam , MCQ Question Answer - Sem 3", image1: "https://i.ibb.co/bR5pZvPG/Add-Text-04-02-10-26-50-jpg.jpg", text: "Official WBCHSE Curriculum for Class 12 Arts 3rd Semester.", button1: {text: "View Notes", link: "https://tutopulse.ct.ws/strong-roots-apj-abdul-kalam-sem-3/"} }},
+      { id: 3, name: "The Bet by Anton Chekov , Summary MCQ Questions and Answers", content: { date: "May 09, 2026", title: "🔥 The Bet by Anton Chekov , Summary MCQ Questions and Answers", image1: "https://i.ibb.co/XTGXNDH/IMG-20260403-WA0017.jpg", text: "Official WBCHSE Curriculum for Class 12 Arts 3rd Semester.", button1: {text: "View Notes", link: "https://tutopulse.ct.ws/the-bet-by-anton-chekov-sem-3/"} }},
+      { id: 4, name: "‘Ulysses’ by Alfred, Lord Tennyson Semester 3 HS 2026-27", content: { date: "May 09, 2026", title: "🔥 'Ulysses' by Alfred, Lord Tennyson Semester 3 HS 2026-27", image1: "https://i.ibb.co/nNXHsJCw/Whats-App-Image-2026-04-05-at-7-27-27-PM.jpg", text: "Official WBCHSE Curriculum for Class 12 Arts 3rd Semester.", button1: {text: "View Notes", link: "https://tutopulse.ct.ws/ulysses-by-alfred-lord-tennyson-semester-3-hs/"} }},
+      { id: 5, name: "‘Our Casuarina Tree’ – Toru Dutt", content: { date: "May 09, 2026", title: "🔥 'Our Casuarina Tree' – Toru Dutt", image1: "https://tutopulse.ct.ws/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-30-at-8.12.45-PM.jpeg", text: "Official WBCHSE Curriculum for Class 12 Arts 3rd Semester.", button1: {text: "View Notes", link: "https://tutopulse.ct.ws/our-casuarina-tree-toru-dutt-mcq-class-12-hs-3rd-semester/"} }},
+     
+
+
+
+
+
+
+];</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Chapter - English</title>
+  <title></title>
+  <meta name="theme-color" content="#3047a5">
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  
   <style>
-    /* ---------- RESET & GLOBAL TRANSITIONS (preserved) ---------- */
-    * {
+* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -22,10 +35,10 @@
       -moz-user-drag: none;
       -ms-user-drag: none;
       user-drag: none;
-      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      transition: background 0.3s, color 0.3s;
       -webkit-tap-highlight-color: transparent;
     }
-
+    
     a, span, p, h1, h2, h3, h4, h5, h6, div {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -37,7 +50,7 @@
       user-drag: none;
       text-decoration: none;
     }
-
+    
     img {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -47,348 +60,341 @@
       -moz-user-drag: none;
       -ms-user-drag: none;
       user-drag: none;
-    }
-
-    /* fixed app page dimensions — exactly like original */
-    html, body {
-      width: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
       
-      margin: 0;
-      padding: 0;
+    }
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --header: #3047a5;
+      --accent: #3b82f6;
+      --border: #e2e8f0;
+      --success: #22c55e;
     }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 10px;
-      display: block;
-      background: #f5f5f5;    /* fallback, but dark mode will override via class */
-    }
-
-    /* dark mode variable overrides — only colors, no layout or structural changes */
+    /* Applied when body has .dark class */
     body.dark {
-      background: #000;
+      --bg: #000;
+      --card: #1e293b;
+      --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
+      --border: #334155;
     }
 
-    /* header background transition — dark mode specific (preserves original header style but adapts) */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body { background: var(--bg); overflow-x: hidden; color: var(--text-main); transition: background 0.3s; }
+
+    /* HEADER */
     .app-header {
-            position: fixed;
+    position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            color: #ffffff;
             height: 50px;
             background: #3047a5;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: transform 0.25s ease, opacity 0.2s ease;
-       }
+            padding: 0 16px;
+            z-index: 1000; }
+    .close-btn, .theme-toggle { background: transparent; border: none; padding: 8px; cursor: pointer; }
+    .close-btn { margin-right: 12px; }
+    .close-btn svg, .theme-toggle svg { color: white; width: 24px; height: 24px; }
+    .header-title { color: white; font-size: 15px; font-weight: 700; flex: 1; }
 
- 
+       .app-content {
+            position: fixed;
+            top: 50px;
+            bottom: 0px;
+            width: 100%;
+            overflow-y: auto;
+            background: var(--bg-surface);
+            transition: background-color 0.3s;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .app-content::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            background: transparent;
+        }
+    /* LIST STYLES */
+    .subject-list {padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+    .subject-item {
+      background: var(--card); border-radius: 16px; padding: 15px;
+      display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .subject-item:active { transform: scale(0.99); }
+    .subject-num {
+      width: 30px; height: 30px; background: var(--accent); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800;
+    }
+    .subject-item.completed .subject-num { background: var(--success); }
+    .subject-name { flex: 1; font-size: 16px; font-weight: 700; color: var(--text-main); 
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;}
+    .status-icon { color: var(--success); display: none; width: 20px; height: 20px; }
+    .subject-item.completed .status-icon { display: block; }
+    .subject-item.completed .subject-arrow { display: none; }
+    .subject-arrow { color: var(--text-sub); width: 20px; height: 20px; }
 
-    /* container spacing (unchanged) */
-    .container {
-      max-width: 700px;
-      margin: auto;
-      margin-top: 50px;
+    /* BOTTOM SHEET */
+    .bottom-sheet {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 85vh;
+      background: var(--card); border-radius: 24px 24px 0 0; z-index: 2000;
+      transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
     }
+    .bottom-sheet.open { transform: translateY(0); }
+    .sheet-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px); z-index: 1999; opacity: 0;
+      pointer-events: none; transition: opacity 0.3s;
+    }
+    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+    
+    .sheet-header { 
+      position: sticky; top: 0; background: var(--card); 
+      padding: 12px 16px; border-bottom: 1px solid var(--border); 
+      z-index: 10; display: flex; align-items: center; justify-content: space-between;
+    }
+    .drag-handle { width: 40px; height: 5px; background: var(--border); border-radius: 10px; position: absolute; left: 50%; transform: translateX(-50%); }
+    .sheet-close-icon { background: #3047a5; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; }
 
-    /* card styling — fully preserves original structure, only background/border/text color adapts in dark mode */
-    .card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #f9f9f9;
-      border: 2px solid #d6d6e7;
-      border-radius: 10px;
-      padding: 5px 10px;
-      margin-bottom: 10px;
-    }
+    .sheet-content { padding: 20px 16px 120px; }
+    .sheet-date { color: var(--text-sub); font-size: 13px; margin-bottom: 8px; }
+    .sheet-title { font-size: 20px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); }
+    .sheet-divider { height: 2px; background: #3047a5; margin: 20px 0; }
+    .sheet-image { width: 100%; border-radius: 12px; margin: 16px 0; object-fit: cover; }
+    .sheet-text { color: var(--text-sub); font-size: 15px; line-height: 1.6; white-space: pre-line; }
 
-    /* dark mode card style (matches original aesthetic but dark-friendly) */
-    body.dark .card {
-      background: #1e1e2f;
-      border: 2px solid #3a3a4e;
+    .sheet-actions {
+      position: fixed; bottom: 0; left: 0; width: 100%; 
+      padding: 16px; background: var(--card); border-top: 1px solid var(--border);
+      display: flex; gap: 10px; z-index: 11;
     }
+    .sheet-btn {
+      flex: 1; padding: 14px; background: var(--header); color: white; 
+      border-radius: 12px; font-weight: 700; text-decoration: none; text-align: center;
+      border: none; font-size: 14px;
+    }
+    .complete-btn { background: var(--success); }
+    .complete-btn:disabled { background: #94a3b8; cursor: not-allowed; }
 
-    .left {
-      display: flex;
-      align-items: center;
+    /* VIEWER SYSTEM */
+    .viewer {
+      position: fixed; inset: 0; background: var(--bg);
+      display: none; justify-content: center; align-items: center;
+      z-index: 3000; touch-action: none; overflow: hidden;
     }
-
-    .left img {
-      width: 60px;
-      height: 60px;
-      margin-right: 10px;
-      background: #cbd5e0;
-      border-radius: 5px;
-      object-fit: cover;
+    .viewer img { 
+      max-width: 100%; max-height: 100%; 
+      will-change: transform;
+      transform-origin: center center;
     }
-
-    body.dark .left img {
-      background: #2c2c3a;
+    .close-btn-viewer {
+      position: absolute; top: 30px; right: 20px;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: #3047a5; border: none;
+      color: white; z-index: 3100; display: flex; align-items: center; justify-content: center;
     }
-
-    .text h3 {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 700;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: #111;
-    }
-
-    body.dark .text h3 {
-      color: #ececec;
-    }
-
-    .text p {
-      margin: 5px 0 0;
-      font-size: 14px;
-      color: #444;
-    }
-
-    body.dark .text p {
-      color: #b0b0c0;
-    }
-
-    .right {
-      text-align: center;
-    }
-
-    .apply-btn {
-      display: inline-block;
-      padding: 3px 20px;
-      background: #b8d8b8;
-      color: #2d5a2d;
-      text-decoration: none;
-      border-radius: 20px;
-      font-weight: bold;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    /* dark mode button - slightly deeper green but readable */
-    body.dark .apply-btn {
-      background: #2a6230;
-      color: #d0f0c4;
-    }
-
-    .date {
-      margin-top: 10px;
-      display: inline-block;
-      background: #f5d6d6;
-      color: #a33;
-      padding: 0px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    body.dark .date {
-      background: #4e2b2b;
-      color: #ffb7b7;
-    }
-
-    /* additional dark mode refinements for any other text like header title, icons */
-    .app-header h2 {
-      color: white;
-    }
-
-    body.dark .app-header h2 {
-      color: #f0f0ff;
-    }
-
-    /* lucide icons inside header are white, stays consistent */
-    .app-header i[data-lucide] {
-      color: white;
-    }
-
-    /* for any extra elements like share link */
-    .cursor-pointer a {
-      color: inherit;
-    }
-
-    /* preserving full original look: no layout shifts */
-    .container, .card, .left, .right, .text, .apply-btn, .date {
-      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
-    }
-
-    /* tiny extra: if any link inside card has hover, keep usability */
-    .apply-btn:hover {
-      filter: brightness(0.96);
-    }
-
-    /* dark mode toggle button style — added new toggle element in header but not interfering original layout.
-       We place it inside .flex.gap-3.items-center (right side) before share icon.
-       The dark mode toggle will be a small circular button, respects dark/light modes */
-    .dark-mode-toggle {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      backdrop-filter: blur(2px);
-      transition: all 0.2s ease;
-      color: white;
-      background-color: rgba(0,0,0,0.2);
-    }
-    .dark-mode-toggle:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,0.35);
-    }
-    body.dark .dark-mode-toggle {
-      background: rgba(255,255,255,0.25);
-    }
-    /* no structural changes — added gracefully */
   </style>
 </head>
 <body>
+
   <header class="app-header">
-    <div class="flex items-center gap-2">
-      <div class="cursor-pointer p-1">
-        <i data-lucide="x" class="text-white/90 w-6 h-6" onclick="goBack()"></i>
-      </div>
-    </div>
-    <h2 style="margin-left: 5px; color: white; font-size:16px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-      English Notes (ইংরেজি)
-    </h2>
-    <div class="flex gap-3 items-center">
-      <!-- DARK MODE TOGGLE BUTTON inserted exactly here — does not disturb other functionality -->
-      <button id="darkToggle" class="dark-mode-toggle" aria-label="Dark mode toggle" style="display: none;">🌙</button>
-      <div class="cursor-pointer p-1">
-        <a href="https://action_share"><i data-lucide="share-2" class="text-white/90 w-5 h-5"></i></a>
-      </div>
-    </div>
+    <button class="close-btn" onclick="history.back()"><i data-lucide="arrow-left"></i></button>
+    <h1 class="header-title">English ( ইংরেজি ) - Notes</h1>
+    <!-- ID 'darkToggle' added here to match your script -->
+    <button style="display: none;"class="theme-toggle" id="darkToggle"><i data-lucide="moon"></i></button>
   </header>
 
-  <div class="container">
+  <main class="app-content">
+    <div class="subject-list" id="subjectList"></div>
+  </main>
 
- <!-- Chapter 1 -->
-  <div class="card">
-    <div class="left">
-     
-      <img src="https://i.ibb.co/bgZGQ5CN/Add-Text-04-01-09-20-32-jpg.jpg" alt="Logo">
-      <div class="text">
-        <h3>"The Night Train at Deoli Summary, MCQ Question Answer - Sem 3"</h3>
-        <p>Smart Notes + Suggestion + Video Class</p>
-      </div>
+  <div class="sheet-backdrop" id="backdrop" onclick="history.back()"></div>
+  <div class="bottom-sheet" id="bottomSheet">
+    <div class="sheet-header">
+      <div class="drag-handle"></div>
+      <div style="flex: 1"></div>
+      <button class="sheet-close-icon" onclick="history.back()"><i data-lucide="x"></i></button>
     </div>
-    <div class="right">
-      <a href="https://tutopulse.ct.ws/the-night-train-at-deoli-3rd-semester/" target="_blank" class="apply-btn">Open</a><br>
-      <span class="date">Apr 26</span>
-    </div>
+    <div class="sheet-content" id="sheetContent"></div>
+    <div class="sheet-actions" id="sheetActions"></div>
   </div>
- <!-- Chapter 2 -->
-  <div class="card">
-    <div class="left">
-     
-      <img src="https://i.ibb.co/bR5pZvPG/Add-Text-04-02-10-26-50-jpg.jpg" alt="Logo">
-      <div class="text">
-        <h3>"Strong Roots by APJ Abdul Kalam , MCQ Question Answer - Sem 3"</h3>
-        <p>Smart Notes + Suggestion + Video Class</p>
-      </div>
-    </div>
-    <div class="right">
-      <a href="https://tutopulse.ct.ws/strong-roots-apj-abdul-kalam-sem-3/" target="_blank" class="apply-btn">Open</a><br>
-      <span class="date">Apr 26</span>
-    </div>
+
+  <div class="viewer" id="viewer">
+    <button class="close-btn-viewer" onclick="history.back()"><i data-lucide="x"></i></button>
+    <img id="viewerImg" draggable="false">
   </div>
- <!-- Chapter 3 -->
-  <div class="card">
-    <div class="left">
-     
-      <img src="https://i.ibb.co/XTGXNDH/IMG-20260403-WA0017.jpg" alt="Logo">
-      <div class="text">
-        <h3>"The Bet by Anton Chekov , Summary MCQ Questions and Answers"</h3>
-        <p>Smart Notes + Suggestion + Video Class</p>
-      </div>
-    </div>
-    <div class="right">
-      <a href="https://tutopulse.ct.ws/the-bet-by-anton-chekov-sem-3/" target="_blank" class="apply-btn">Open</a><br>
-      <span class="date">Apr 26</span>
-    </div>
-  </div>
- <!-- Chapter 4 -->
-  <div class="card">
-    <div class="left">
-     
-      <img src="https://i.ibb.co/nNXHsJCw/Whats-App-Image-2026-04-05-at-7-27-27-PM.jpg" alt="Logo">
-      <div class="text">
-        <h3>"'Ulysses' by Alfred, Lord Tennyson Semester 3 HS 2026-27"</h3>
-        <p>Smart Notes + Suggestion + Video Class</p>
-      </div>
-    </div>
-    <div class="right">
-      <a href="https://tutopulse.ct.ws/ulysses-by-alfred-lord-tennyson-semester-3-hs/" target="_blank" class="apply-btn">Open</a><br>
-      <span class="date">Apr 26</span>
-    </div>
-  </div>
-  <!-- Chapter 5 -->
-  <div class="card">
-    <div class="left">
-     
-      <img src="https://tutopulse.ct.ws/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-30-at-8.12.45-PM.jpeg" alt="Logo">
-      <div class="text">
-        <h3>'Our Casuarina Tree' – Toru Dutt</h3>
-        <p>MCQ | Class 12 HS | 3rd Semester</p>
-      </div>
-    </div>
-    <div class="right">
-      <a href="https://tutopulse.ct.ws/our-casuarina-tree-toru-dutt-mcq-class-12-hs-3rd-semester/" target="_blank" class="apply-btn">Open</a><br>
-      <span class="date">Apr 30</span>
-    </div>
-  </div>
-  </div>
+
   <script>
-    // ========== DARK MODE TOGGLE LOGIC (fully integrated, no other changes) ==========
-    const darkToggle = document.getElementById("darkToggle");
+  
+
+    // --- DARK MODE LOGIC ---
+    const darkToggle = document.getElementById('darkToggle');
     const body = document.body;
-    
-    // load saved preference from localStorage (if any)
-    if (localStorage.getItem("darkMode") === "true") {
-      body.classList.add("dark");
-      darkToggle.textContent = "☀️";   // sun icon indicates light mode available (dark is active)
-    } else {
-      // default light mode: moon icon means switch to dark mode
-      darkToggle.textContent = "🌙";
+
+    // Check saved preference
+    if(localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark');
     }
-    
-    // toggle event: switches dark class and updates icon + localStorage
-    darkToggle.addEventListener("click", () => {
-      body.classList.toggle("dark");
-      const isDark = body.classList.contains("dark");
-      localStorage.setItem("darkMode", isDark);
-      // set icon: if dark mode ON, show sun (because clicking will go to light), else moon
-      darkToggle.textContent = isDark ? "☀️" : "🌙";
+
+    function updateToggleIcon() {
+        const isDark = body.classList.contains('dark');
+        const iconElem = darkToggle.querySelector('i');
+        if(iconElem) {
+            const iconName = isDark ? 'sun' : 'moon';
+            iconElem.setAttribute('data-lucide', iconName);
+            // Refresh only the toggle icon
+            lucide.createIcons({
+                icons: { [iconName]: iconElem }
+            });
+        }
+    }
+
+    darkToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        localStorage.setItem('darkMode', body.classList.contains('dark'));
+        updateToggleIcon();
     });
-    
-    // Lucide icons reinitialization (preserve original icons)
-    if (typeof lucide !== 'undefined' && lucide.createIcons) {
-      lucide.createIcons();
-    } else {
-      // fallback in case lucide loads delayed
-      window.addEventListener('load', function() {
-        if (window.lucide && lucide.createIcons) lucide.createIcons();
+
+    // Initial icon setup
+    updateToggleIcon();
+    lucide.createIcons();
+
+  
+    let completedLessonNames = JSON.parse(localStorage.getItem('completedLessonNames')) || [];
+
+    function renderList() {
+      const subjectList = document.getElementById('subjectList');
+      subjectList.innerHTML = '';
+      subjects.forEach(sub => {
+        const isDone = completedLessonNames.includes(sub.name);
+        const item = document.createElement('div');
+        item.className = `subject-item ${isDone ? 'completed' : ''}`;
+        item.onclick = () => openSheet(sub);
+        item.innerHTML = `
+          <div class="subject-num">${sub.id}</div>
+          <div class="subject-name">${sub.name}</div>
+          <i data-lucide="check-circle-2" class="status-icon"></i>
+          <i data-lucide="sticker" class="subject-arrow"></i>
+        `;
+        subjectList.appendChild(item);
       });
+      lucide.createIcons();
     }
-    
-    // goBack function (unchanged)
-    function goBack() {
-      window.history.back();
+
+    function openSheet(subject) {
+      const c = subject.content;
+      const isDone = completedLessonNames.includes(subject.name);
+      
+      document.getElementById('sheetContent').innerHTML = `
+        <div class="sheet-date">${c.date}</div>
+        <h2 class="sheet-title">${c.title}</h2>
+             <div class="sheet-divider"></div>
+        ${c.image1 ? `<img src="${c.image1}" class="sheet-image" onclick="openViewer('${c.image1}')">` : ''}
+        <p class="sheet-text">${c.text}</p>
+      `;
+
+      document.getElementById('sheetActions').innerHTML = `
+  <button class="sheet-btn complete-btn" id="markDoneBtn" 
+          onclick="markAsComplete('${subject.name}')" ${isDone ? 'disabled' : ''}>
+          ${isDone ? 'Completed' : 'Mark as Complete'}
+        </button>
+        ${c.button1 ? `<a href="${c.button1.link}" class="sheet-btn" target="_blank">${c.button1.text}</a>` : ''}
+      
+      `;
+
+      document.getElementById('backdrop').classList.add('open');
+      document.getElementById('bottomSheet').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      history.pushState({view: 'sheet'}, "");
+      lucide.createIcons();
     }
-    
+
+    function markAsComplete(name) {
+      if (!completedLessonNames.includes(name)) {
+        completedLessonNames.push(name);
+        localStorage.setItem('completedLessonNames', JSON.stringify(completedLessonNames));
+        const btn = document.getElementById('markDoneBtn');
+        if(btn) { btn.innerText = "Completed"; btn.disabled = true; }
+        renderList();
+        setTimeout(() => history.back(), 500);
+      }
+    }
+
+    // --- VIEWER SYSTEM ---
+    const viewer = document.getElementById('viewer');
+    const viewerImg = document.getElementById('viewerImg');
+    let scale = 1, lastScale = 1, translateX = 0, translateY = 0, startX = 0, startY = 0, prevDiff = -1, lastTap = 0;
+
+    function openViewer(src) {
+      viewerImg.src = src;
+      viewer.style.display = "flex";
+      scale = 1; translateX = 0; translateY = 0;
+      updateTransform(false);
+      history.pushState({view: 'viewer'}, "");
+    }
+
+    function updateTransform(animate = false) {
+      viewerImg.style.transition = animate ? "transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)" : "none";
+      viewerImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
+
+    viewer.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+        let now = Date.now();
+        if (now - lastTap < 300) {
+          scale = (scale > 1.1) ? 1 : 2.5;
+          if(scale === 1) { translateX = 0; translateY = 0; }
+          updateTransform(true);
+          lastTap = 0; return;
+        }
+        lastTap = now;
+      } else if (e.touches.length === 2) {
+        prevDiff = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        lastScale = scale;
+      }
+    });
+
+    viewer.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (e.touches.length === 1 && scale > 1) {
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        updateTransform(false);
+      } else if (e.touches.length === 2) {
+        const curDiff = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        if (prevDiff > 0) scale = Math.min(Math.max(1, lastScale * (curDiff / prevDiff)), 5);
+        updateTransform(false);
+      }
+    }, { passive: false });
+
+    window.onpopstate = () => {
+      document.getElementById('backdrop').classList.remove('open');
+      document.getElementById('bottomSheet').classList.remove('open');
+      viewer.style.display = "none";
+      document.body.style.overflow = '';
+    };
+
+    renderList();
   </script>
 </body>
 </html>
