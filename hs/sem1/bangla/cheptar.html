@@ -1,25 +1,13 @@
-<script>// --- APP DATA & LOGIC ---
-    const subjects = [
-      { id: 1, name: "পুঁইমাচা প্রশ্ন উত্তর বিভূতিভূষণ বন্দ্যোপাধ্যায় একাদশ প্রথম সেমিস্টার", content: { date: "May 09, 2026", title: "🔥 পুঁইমাচা প্রশ্ন উত্তর বিভূতিভূষণ বন্দ্যোপাধ্যায় একাদশ প্রথম সেমিস্টার", image1: "https://tutopulse.ct.ws/wp-content/uploads/2026/04/AddText_04-25-07.30.33.jpg.jpeg", text: "Official WBCHSE Curriculum for 1st Semester.", button1: {text: "View Notes", link: "https://tutopulse.ct.ws/puimacha-bibhutibhushan-bandyopadhyay-hs-sem1/"} }},
-     
-
-
-
-
-
-
-];</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title></title>
+  <title>Bangla Notes | HS Semester 1</title>
   <meta name="theme-color" content="#3047a5">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-* {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -56,8 +44,8 @@
       -moz-user-drag: none;
       -ms-user-drag: none;
       user-drag: none;
-      
     }
+    
     :root {
       --bg: #f8fafc;
       --card: #ffffff;
@@ -69,9 +57,8 @@
       --success: #22c55e;
     }
 
-    /* Applied when body has .dark class */
     body.dark {
-      --bg: #000;
+      --bg: #000000;
       --card: #1e293b;
       --text-main: #f1f5f9;
       --text-sub: #94a3b8;
@@ -79,205 +66,454 @@
     }
 
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Nunito', sans-serif;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
 
-    body { background: var(--bg); overflow-x: hidden; color: var(--text-main); transition: background 0.3s; }
+    body {
+      background: var(--bg);
+      overflow-x: hidden;
+      color: var(--text-main);
+      transition: background 0.3s;
+    }
 
-    /* HEADER */
+    /* HEADER — fixed */
     .app-header {
-    position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            color: #ffffff;
-            height: 50px;
-            background: #3047a5;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1000; }
-    .close-btn, .theme-toggle { background: transparent; border: none; padding: 8px; cursor: pointer; }
-    .close-btn { margin-right: 12px; }
-    .close-btn svg, .theme-toggle svg { color: white; width: 24px; height: 24px; }
-    .header-title { color: white; font-size: 15px; font-weight: 700; flex: 1; }
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      color: #ffffff;
+      height: 50px;
+      background: #3047a5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 1000;
+    }
+    
+    .close-btn, .theme-toggle {
+      background: transparent;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+    }
+    
+    .close-btn {
+      margin-right: 12px;
+    }
+    
+    .close-btn svg, .theme-toggle svg {
+      color: white;
+      width: 24px;
+      height: 24px;
+    }
+    
+    .header-title {
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      flex: 1;
+    }
 
-       .app-content {
-            position: fixed;
-            top: 50px;
-            bottom: 0px;
-            width: 100%;
-            overflow-y: auto;
-            background: var(--bg-surface);
-            transition: background-color 0.3s;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .app-content::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            background: transparent;
-        }
+    /* MAIN SCROLLABLE CONTENT (fixed area) */
+    .app-content {
+      position: fixed;
+      top: 50px;
+      bottom: 0px;
+      width: 100%;
+      overflow-y: auto;
+      background: var(--bg);
+      transition: background-color 0.3s;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .app-content::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      background: transparent;
+    }
+    
     /* LIST STYLES */
-    .subject-list {padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+    .subject-list {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
     .subject-item {
-      background: var(--card); border-radius: 16px; padding: 15px;
-      display: flex; align-items: center; gap: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer;
+      background: var(--card);
+      border-radius: 16px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      cursor: pointer;
       transition: transform 0.1s;
     }
-    .subject-item:active { transform: scale(0.99); }
-    .subject-num {
-      width: 30px; height: 30px; background: var(--accent); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 800;
+    
+    .subject-item:active {
+      transform: scale(0.99);
     }
-    .subject-item.completed .subject-num { background: var(--success); }
-    .subject-name { flex: 1; font-size: 16px; font-weight: 700; color: var(--text-main); 
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;}
-    .status-icon { color: var(--success); display: none; width: 20px; height: 20px; }
-    .subject-item.completed .status-icon { display: block; }
-    .subject-item.completed .subject-arrow { display: none; }
-    .subject-arrow { color: var(--text-sub); width: 20px; height: 20px; }
+    
+    .subject-num {
+      width: 30px;
+      height: 30px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+    }
+    
+    .subject-item.completed .subject-num {
+      background: var(--success);
+    }
+    
+    .subject-name {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .status-icon {
+      color: var(--success);
+      display: none;
+      width: 20px;
+      height: 20px;
+    }
+    
+    .subject-item.completed .status-icon {
+      display: block;
+    }
+    
+    .subject-item.completed .subject-arrow {
+      display: none;
+    }
+    
+    .subject-arrow {
+      color: var(--text-sub);
+      width: 20px;
+      height: 20px;
+    }
 
     /* BOTTOM SHEET */
     .bottom-sheet {
-      position: fixed; bottom: 0; left: 0; width: 100%; height: 85vh;
-      background: var(--card); border-radius: 24px 24px 0 0; z-index: 2000;
-      transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 85vh;
+      background: var(--card);
+      border-radius: 24px 24px 0 0;
+      z-index: 2000;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
-    .bottom-sheet.open { transform: translateY(0); }
-    .sheet-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(4px); z-index: 1999; opacity: 0;
-      pointer-events: none; transition: opacity 0.3s;
-    }
-    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
     
-    .sheet-header { 
-      position: sticky; top: 0; background: var(--card); 
-      padding: 12px 16px; border-bottom: 1px solid var(--border); 
-      z-index: 10; display: flex; align-items: center; justify-content: space-between;
+    .bottom-sheet.open {
+      transform: translateY(0);
     }
-    .drag-handle { width: 40px; height: 5px; background: var(--border); border-radius: 10px; position: absolute; left: 50%; transform: translateX(-50%); }
-    .sheet-close-icon { background: #3047a5; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; }
+    
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    
+    .sheet-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    /* sheet header (sticky inside sheet) */
+    .sheet-header {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    
+    .drag-handle {
+      width: 40px;
+      height: 5px;
+      background: var(--border);
+      border-radius: 10px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .sheet-close-icon {
+      background: #3047a5;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #ffffff;
+    }
+    
+    /* scrollable content area */
+    .sheet-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px 20px 16px;
+      scrollbar-width: thin;
+    }
+    
+    .sheet-scroll-area::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .sheet-date {
+      color: var(--text-sub);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    
+    .sheet-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+    
+    .sheet-divider {
+      height: 2px;
+      background: #3047a5;
+      margin: 20px 0;
+    }
+    
+    .sheet-image {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0;
+      object-fit: cover;
+      cursor: pointer;
+    }
+    
+    .sheet-text {
+      color: var(--text-sub);
+      font-size: 15px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
 
-    .sheet-content { padding: 20px 16px 120px; }
-    .sheet-date { color: var(--text-sub); font-size: 13px; margin-bottom: 8px; }
-    .sheet-title { font-size: 20px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); }
-    .sheet-divider { height: 2px; background: #3047a5; margin: 20px 0; }
-    .sheet-image { width: 100%; border-radius: 12px; margin: 16px 0; object-fit: cover; }
-    .sheet-text { color: var(--text-sub); font-size: 15px; line-height: 1.6; white-space: pre-line; }
-
+    /* FIXED ACTION BUTTONS (position fixed, independent of sheet scroll) */
     .sheet-actions {
-      position: fixed; bottom: 0; left: 0; width: 100%; 
-      padding: 16px; background: var(--card); border-top: 1px solid var(--border);
-      display: flex; gap: 10px; z-index: 11;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      z-index: 2001;
+      backdrop-filter: blur(0px);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+      transition: background 0.2s;
     }
+    
+    /* when bottom-sheet is open, we ensure actions are visible above */
+    .bottom-sheet.open ~ .sheet-actions,
+    .sheet-actions {
+      transform: translateY(0);
+    }
+    
     .sheet-btn {
-      flex: 1; padding: 14px; background: var(--header); color: white; 
-      border-radius: 12px; font-weight: 700; text-decoration: none; text-align: center;
-      border: none; font-size: 14px;
+      flex: 1;
+      padding: 14px 12px;
+      background: var(--header);
+      color: white;
+      border-radius: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      text-align: center;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
     }
-    .complete-btn { background: var(--success); }
-    .complete-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+    
+    .sheet-btn:active {
+      transform: scale(0.97);
+    }
+    
+    .complete-btn {
+      background: var(--success);
+    }
+    
+    .complete-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      opacity: 0.7;
+      transform: none;
+    }
+    
+    /* extra bottom padding on scrollable area so content doesn't hide behind fixed buttons */
+    .sheet-scroll-area {
+      padding-bottom: 90px;
+    }
 
     /* VIEWER SYSTEM */
     .viewer {
-      position: fixed; inset: 0; background: var(--bg);
-      display: none; justify-content: center; align-items: center;
-      z-index: 3000; touch-action: none; overflow: hidden;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 3000;
+      touch-action: none;
+      overflow: hidden;
     }
-    .viewer img { 
-      max-width: 100%; max-height: 100%; 
+    
+    .viewer img {
+      max-width: 100%;
+      max-height: 100%;
       will-change: transform;
       transform-origin: center center;
     }
+    
     .close-btn-viewer {
-      position: absolute; top: 30px; right: 20px;
-      width: 40px; height: 40px; border-radius: 50%;
-      background: #3047a5; border: none;
-      color: white; z-index: 3100; display: flex; align-items: center; justify-content: center;
+      position: absolute;
+      top: 30px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #3047a5;
+      border: none;
+      color: white;
+      z-index: 3100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    
+    /* No other structural changes */
+    @media (max-width: 480px) {
+      .sheet-btn {
+        padding: 12px 10px;
+        font-size: 14px;
+      }
+      .sheet-scroll-area {
+        padding-bottom: 100px;
+      }
     }
   </style>
 </head>
 <body>
 
   <header class="app-header">
-    <button class="close-btn" onclick="history.back()"><i data-lucide="arrow-left"></i></button>
-    <h1 class="header-title">Bangla ( বাংলা ) - Notes</h1>
-    <!-- ID 'darkToggle' added here to match your script -->
-    <button style="display: none;"class="theme-toggle" id="darkToggle"><i data-lucide="moon"></i></button>
+    <button class="close-btn" onclick="handleCloseOrBack()"><i data-lucide="arrow-left"></i></button>
+    <h1 class="header-title">Bangla (বাংলা) - Notes</h1>
+    <button style="display: none;" class="theme-toggle" id="darkToggle"><i data-lucide="moon"></i></button>
   </header>
 
   <main class="app-content">
     <div class="subject-list" id="subjectList"></div>
   </main>
 
-  <div class="sheet-backdrop" id="backdrop" onclick="history.back()"></div>
+  <!-- backdrop & bottom sheet -->
+  <div class="sheet-backdrop" id="backdrop" onclick="closeAllSheets()"></div>
   <div class="bottom-sheet" id="bottomSheet">
     <div class="sheet-header">
       <div class="drag-handle"></div>
       <div style="flex: 1"></div>
-      <button class="sheet-close-icon" onclick="history.back()"><i data-lucide="x"></i></button>
+      <button class="sheet-close-icon" onclick="closeAllSheets()"><i data-lucide="x"></i></button>
     </div>
-    <div class="sheet-content" id="sheetContent"></div>
-    <div class="sheet-actions" id="sheetActions"></div>
+    <!-- scrollable content area -->
+    <div class="sheet-scroll-area" id="sheetScrollContent">
+      <div id="sheetContentInner">
+        <!-- dynamic content injected here -->
+      </div>
+    </div>
   </div>
 
+  <!-- FIXED ACTION BUTTONS - placed outside bottom-sheet but inside body to be fixed -->
+  <div class="sheet-actions" id="sheetActions"></div>
+
   <div class="viewer" id="viewer">
-    <button class="close-btn-viewer" onclick="history.back()"><i data-lucide="x"></i></button>
+    <button class="close-btn-viewer" onclick="closeImageViewer()"><i data-lucide="x"></i></button>
     <img id="viewerImg" draggable="false">
   </div>
 
   <script>
-  
+    // --- APP DATA ---
+    const subjects = [
+      { id: 1, name: "পুঁইমাচা  উত্তর বিভূতিভূষণ বন্দ্যোপাধ্যায় একাদশ প্রথম সেমিস্টার", content: { date: "May 09, 2026", title: "🔥 পুঁইমাচা প্রশ্ন উত্তর বিভূতিভূষণ বন্দ্যোপাধ্যায় একাদশ প্রথম সেমিস্টার", image1: "https://tutopulse.ct.ws/wp-content/uploads/2026/04/AddText_04-25-07.30.33.jpg.jpeg", text: "➡️ কিভাবে জয়েন করবে?\n\n• হোমপেজে থাকা উচ্চ মাধ্যমিক বাটন অথবা নিচের বারে থাকা Courses বাটনে ক্লিক করো।\n• Scroll ↓ Down করে নিচের দিকে যাবে!\n• Syllabus & Curriculum অপশনে ক্লিক করো", button1: {text: "View Notes", link: "https://tutopulse.ct.ws/puimacha-bibhutibhushan-bandyopadhyay-hs-sem1/"} }}
+    ];
 
     // --- DARK MODE LOGIC ---
     const darkToggle = document.getElementById('darkToggle');
     const body = document.body;
-
-    // Check saved preference
     if(localStorage.getItem('darkMode') === 'true') {
         body.classList.add('dark');
     }
-
     function updateToggleIcon() {
         const isDark = body.classList.contains('dark');
         const iconElem = darkToggle.querySelector('i');
         if(iconElem) {
             const iconName = isDark ? 'sun' : 'moon';
             iconElem.setAttribute('data-lucide', iconName);
-            // Refresh only the toggle icon
-            lucide.createIcons({
-                icons: { [iconName]: iconElem }
-            });
+            lucide.createIcons({ icons: { [iconName]: iconElem } });
         }
     }
-
-    darkToggle.addEventListener('click', () => {
-        body.classList.toggle('dark');
-        localStorage.setItem('darkMode', body.classList.contains('dark'));
-        updateToggleIcon();
-    });
-
-    // Initial icon setup
-    updateToggleIcon();
+    if(darkToggle) {
+      darkToggle.addEventListener('click', () => {
+          body.classList.toggle('dark');
+          localStorage.setItem('darkMode', body.classList.contains('dark'));
+          updateToggleIcon();
+      });
+      updateToggleIcon();
+    }
+    
     lucide.createIcons();
 
-  
+    // --- COMPLETED TRACKING ---
     let completedLessonNames = JSON.parse(localStorage.getItem('completedLessonNames')) || [];
 
     function renderList() {
       const subjectList = document.getElementById('subjectList');
+      if(!subjectList) return;
       subjectList.innerHTML = '';
       subjects.forEach(sub => {
         const isDone = completedLessonNames.includes(sub.name);
@@ -295,63 +531,132 @@
       lucide.createIcons();
     }
 
+    // Global references
+    let currentOpenSubject = null;
+
     function openSheet(subject) {
+      currentOpenSubject = subject;
       const c = subject.content;
       const isDone = completedLessonNames.includes(subject.name);
       
-      document.getElementById('sheetContent').innerHTML = `
-        <div class="sheet-date">${c.date}</div>
-        <h2 class="sheet-title">${c.title}</h2>
-             <div class="sheet-divider"></div>
-        ${c.image1 ? `<img src="${c.image1}" class="sheet-image" onclick="openViewer('${c.image1}')">` : ''}
-        <p class="sheet-text">${c.text}</p>
-      `;
-
-      document.getElementById('sheetActions').innerHTML = `
-  <button class="sheet-btn complete-btn" id="markDoneBtn" 
-          onclick="markAsComplete('${subject.name}')" ${isDone ? 'disabled' : ''}>
-          ${isDone ? 'Completed' : 'Mark as Complete'}
-        </button>
-        ${c.button1 ? `<a href="${c.button1.link}" class="sheet-btn" target="_blank">${c.button1.text}</a>` : ''}
+      // Inject content into scrollable area
+      const contentContainer = document.getElementById('sheetContentInner');
+      if(contentContainer) {
+        contentContainer.innerHTML = `
+          <div class="sheet-date">${c.date}</div>
+          <h2 class="sheet-title">${c.title}</h2>
+          <div class="sheet-divider"></div>
+          ${c.image1 ? `<img src="${c.image1}" class="sheet-image" onclick="openViewer('${c.image1}')">` : ''}
+          <p class="sheet-text">${c.text.replace(/\n/g, '<br>')}</p>
+        `;
+      }
       
-      `;
-
+      // Update fixed action buttons area (position fixed)
+      const actionsDiv = document.getElementById('sheetActions');
+      if(actionsDiv) {
+        actionsDiv.innerHTML = `
+          <button class="sheet-btn complete-btn" id="markDoneBtnFixed" 
+            onclick="markAsComplete('${subject.name.replace(/'/g, "\\'")}')" ${isDone ? 'disabled' : ''}>
+            ${isDone ? 'Completed' : 'Mark as Complete'}
+          </button>
+          ${c.button1 ? `<a href="${c.button1.link}" class="sheet-btn" target="_blank">${c.button1.text}</a>` : ''}
+        `;
+        lucide.createIcons();
+      }
+      
+      // Show backdrop and bottom sheet
       document.getElementById('backdrop').classList.add('open');
       document.getElementById('bottomSheet').classList.add('open');
       document.body.style.overflow = 'hidden';
+      
+      // reset scroll top inside sheet-scroll-area
+      const scrollArea = document.querySelector('.sheet-scroll-area');
+      if(scrollArea) scrollArea.scrollTop = 0;
+      
+      // push history state for back navigation
       history.pushState({view: 'sheet'}, "");
-      lucide.createIcons();
     }
-
+    
     function markAsComplete(name) {
       if (!completedLessonNames.includes(name)) {
         completedLessonNames.push(name);
         localStorage.setItem('completedLessonNames', JSON.stringify(completedLessonNames));
-        const btn = document.getElementById('markDoneBtn');
-        if(btn) { btn.innerText = "Completed"; btn.disabled = true; }
+        
+        // update button (fixed actions) if present
+        const btn = document.getElementById('markDoneBtnFixed');
+        if(btn) { 
+          btn.innerText = "Completed"; 
+          btn.disabled = true;
+          btn.style.opacity = "0.7";
+        }
+        // also update if we want to refresh list and maybe close sheet later
         renderList();
-        setTimeout(() => history.back(), 500);
+        // optional: auto close after short delay
+        setTimeout(() => {
+          closeAllSheets();
+        }, 600);
       }
     }
-
-    // --- VIEWER SYSTEM ---
+    
+    function closeAllSheets() {
+      const backdrop = document.getElementById('backdrop');
+      const sheet = document.getElementById('bottomSheet');
+      if(backdrop) backdrop.classList.remove('open');
+      if(sheet) sheet.classList.remove('open');
+      document.body.style.overflow = '';
+      // clear active subject
+      currentOpenSubject = null;
+      // optional: reset actions content to avoid showing stale data
+      const actionsDiv = document.getElementById('sheetActions');
+      if(actionsDiv && !document.getElementById('bottomSheet').classList.contains('open')) {
+        // do not erase completely but might clear later, but fine it will be replaced when needed.
+      }
+      // if viewer is open we don't want to conflict, but no need
+    }
+    
+    function handleCloseOrBack() {
+      // If sheet is open, close sheet first, else go back in history
+      if(document.getElementById('bottomSheet').classList.contains('open')) {
+        closeAllSheets();
+        return;
+      }
+      if(viewer.style.display === 'flex') {
+        closeImageViewer();
+        return;
+      }
+      history.back();
+    }
+    
+    // --- VIEWER SYSTEM (zoomable) ---
     const viewer = document.getElementById('viewer');
     const viewerImg = document.getElementById('viewerImg');
     let scale = 1, lastScale = 1, translateX = 0, translateY = 0, startX = 0, startY = 0, prevDiff = -1, lastTap = 0;
-
+    
     function openViewer(src) {
       viewerImg.src = src;
       viewer.style.display = "flex";
       scale = 1; translateX = 0; translateY = 0;
       updateTransform(false);
       history.pushState({view: 'viewer'}, "");
+      document.body.style.overflow = 'hidden';
     }
-
+    
+    function closeImageViewer() {
+      viewer.style.display = "none";
+      document.body.style.overflow = '';
+      if(document.getElementById('bottomSheet').classList.contains('open')) {
+        // if sheet is also open, keep body overflow hidden? but fine.
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+    
     function updateTransform(animate = false) {
       viewerImg.style.transition = animate ? "transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)" : "none";
       viewerImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
-
+    
     viewer.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         startX = e.touches[0].clientX - translateX;
@@ -369,7 +674,7 @@
         lastScale = scale;
       }
     });
-
+    
     viewer.addEventListener('touchmove', (e) => {
       e.preventDefault();
       if (e.touches.length === 1 && scale > 1) {
@@ -382,14 +687,115 @@
         updateTransform(false);
       }
     }, { passive: false });
-
-    window.onpopstate = () => {
+    
+    viewer.addEventListener('touchend', (e) => {
+      prevDiff = -1;
+    });
+    
+    // Back button handling (popstate)
+    window.onpopstate = (event) => {
+      // if viewer is open -> close viewer
+      if(viewer.style.display === 'flex') {
+        closeImageViewer();
+        return;
+      }
+      // else close bottom sheet if open
+      if(document.getElementById('bottomSheet').classList.contains('open')) {
+        closeAllSheets();
+        return;
+      }
+      // otherwise do nothing
+    };
+    
+    // Additional helper for closing from backdrop click
+    function closeAllSheetsAndReturn() {
+      closeAllSheets();
+    }
+    
+    // Ensure action buttons are always visible and don't overlap incorrectly.
+    // When sheet closes, actions panel will be hidden? Actually we keep it empty but visible.
+    // But to make sure actions don't appear when sheet closed, we can hide the actions container when sheet closed.
+    // Currently action container is always present but we can manage its display.
+    function syncActionsVisibility() {
+      const actions = document.getElementById('sheetActions');
+      const isSheetOpen = document.getElementById('bottomSheet').classList.contains('open');
+      if(actions) {
+        actions.style.display = isSheetOpen ? 'flex' : 'none';
+      }
+    }
+    
+    // Override original open/close to sync visibility
+    const origCloseAll = closeAllSheets;
+    window.closeAllSheets = function() {
+      origCloseAll();
+      syncActionsVisibility();
+    };
+    
+    // Patch openSheet to show actions and sync
+    const origOpenSheet = openSheet;
+    window.openSheet = function(subject) {
+      origOpenSheet(subject);
+      syncActionsVisibility();
+    };
+    
+    // Re-declare to avoid conflicts, but we attach to window.
+    window.markAsComplete = markAsComplete;
+    window.openViewer = openViewer;
+    window.closeImageViewer = closeImageViewer;
+    window.handleCloseOrBack = handleCloseOrBack;
+    window.closeAllSheets = closeAllSheets;
+    
+    // initial call to override openSheet behavior properly
+    openSheet = function(subject) {
+      currentOpenSubject = subject;
+      const c = subject.content;
+      const isDone = completedLessonNames.includes(subject.name);
+      const contentContainer = document.getElementById('sheetContentInner');
+      if(contentContainer) {
+        contentContainer.innerHTML = `
+          <div class="sheet-date">${c.date}</div>
+          <h2 class="sheet-title">${c.title}</h2>
+          <div class="sheet-divider"></div>
+          ${c.image1 ? `<img src="${c.image1}" class="sheet-image" onclick="openViewer('${c.image1}')">` : ''}
+          <p class="sheet-text">${c.text.replace(/\n/g, '<br>')}</p>
+        `;
+      }
+      const actionsDiv = document.getElementById('sheetActions');
+      if(actionsDiv) {
+        actionsDiv.innerHTML = `
+          <button class="sheet-btn complete-btn" id="markDoneBtnFixed" 
+            onclick="markAsComplete('${subject.name.replace(/'/g, "\\'")}')" ${isDone ? 'disabled' : ''}>
+            ${isDone ? 'Completed' : 'Mark as Complete'}
+          </button>
+          ${c.button1 ? `<a href="${c.button1.link}" class="sheet-btn" target="_blank">${c.button1.text}</a>` : ''}
+        `;
+        actionsDiv.style.display = 'flex';
+        lucide.createIcons();
+      }
+      document.getElementById('backdrop').classList.add('open');
+      document.getElementById('bottomSheet').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      const scrollArea = document.querySelector('.sheet-scroll-area');
+      if(scrollArea) scrollArea.scrollTop = 0;
+      history.pushState({view: 'sheet'}, "");
+    };
+    
+    closeAllSheets = function() {
       document.getElementById('backdrop').classList.remove('open');
       document.getElementById('bottomSheet').classList.remove('open');
-      viewer.style.display = "none";
       document.body.style.overflow = '';
+      const actionsDiv = document.getElementById('sheetActions');
+      if(actionsDiv) actionsDiv.style.display = 'none';
+      currentOpenSubject = null;
     };
-
+    
+    // reassign global references
+    window.openSheet = openSheet;
+    window.closeAllSheets = closeAllSheets;
+    
+    // initial sync: actions hidden by default
+    document.getElementById('sheetActions').style.display = 'none';
+    
     renderList();
   </script>
 </body>
