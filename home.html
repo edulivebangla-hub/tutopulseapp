@@ -334,6 +334,89 @@
             pointer-events: auto;
             opacity: 1;
         }
+
+
+
+
+
+
+
+
+ /* Container styling matching the image layout */
+        .wrapper { padding: 10px;
+            display: flex;
+            align-items: center;
+           
+        }
+
+        .label {
+            font-size: 14px; border-radius: 100px;
+            padding: 0px 5px;
+            font-weight: 700;
+            color: #07789B; border: 2px solid #000000;
+            letter-spacing: -0.5px;
+        }
+
+        .separator {
+            
+            width: 20px;
+            height: 2px;
+            background-color: #000000;
+        }
+
+        /* Capsule container with bold black border */
+        .capsule-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 2px solid #000000;
+            border-radius: 100px;
+            padding: 5px 5px;
+           
+            
+        }
+
+        /* Dark pill for the balance display */
+        .balance-pill {
+            background-color: #1a0805; /* Deep dark brown/black */
+            color: #ffffff;
+            border-radius: 100px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .currency-symbol {
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+        }
+
+        /* Blue pill for the action button */
+        .link-btn {
+            background-color: #0f799f; /* Deep teal blue */
+            color: #ffffff;
+            border: none;
+            border-radius: 100px;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            text-decoration: none;
+        }
+
+        /* Button interactive states */
+        .link-btn:hover {
+            background-color: #0c6383;
+        }
+
+        .link-btn:active {
+            transform: scale(0.97);
+        }
     </style>
 </head>
 <body>
@@ -365,7 +448,20 @@
         <div class="slider-track" id="sliderTrack"></div>
         <div class="slider-dots" id="sliderDots"></div>
     </div>
-
+<div class="wrapper">
+        <span class="label">Balance</span>
+        <div class="separator"></div>
+        
+        <div class="capsule-container">
+            <div class="balance-pill">
+                <span class="currency-symbol"><i data-lucide="badge-indian-rupee" width="14" height="14"></i></span>
+                <span id="balanceAmount">0</span>
+            </div>
+            
+            <a href="gift/coin-eran.html" class="link-btn">Gift 🎁</a>
+        <a href="gift/coin-eran.html" class="link-btn">+ Add</a>
+        </div>
+    </div>
     <!-- STUDY COURSE SECTION + SKELETON -->
     <div class="section-header"><h2 class="section-title">Top <span>Study Course</span></h2><a href="#" class="view-all-btn">View all</a></div>
     <div id="courseGridWrapper">
@@ -404,6 +500,8 @@
             <a href="#" class="action-card"><img class="action-icon" src="https://img.icons8.com/color/96/scroll.png" alt="HS"><span>HS'26 Result &rarr;</span></a>
         </div>
     </div>
+
+
 
     <!-- TABS + CARD SECTIONS -->
     <div class="nav-scroll-container"><div class="nav-tabs" id="tabHeaders">
@@ -599,10 +697,33 @@
             if(window.swiperInstance) window.swiperInstance.update();
         });
 
-        // Profile & greeting setup
-        let savedName = localStorage.getItem("student_display_name"); if(!savedName) savedName = "Aninda Halder"; document.getElementById("displayName").innerText = savedName;
-        let savedPic = localStorage.getItem("profile_image_url"); if(savedPic) document.getElementById("profileAvatar").src = savedPic;
-        const hour = new Date().getHours();
+       // Coin & Profile
+        let currentBalance = 0;
+        function loadBalance() {
+            let stored = localStorage.getItem("reward_coins");
+            if(stored === null || isNaN(parseInt(stored))) { currentBalance = 0; localStorage.setItem("reward_coins", "0"); }
+            else { currentBalance = parseInt(stored, 10); }
+            const balanceSpan = document.getElementById("balanceAmount");
+            if(balanceSpan) balanceSpan.innerText = currentBalance;
+        }
+        function loadProfileData() {
+            let savedName = localStorage.getItem("student_display_name");
+            if(!savedName || savedName.trim() === "") { savedName = "TutoPulse"; localStorage.setItem("student_display_name", savedName); }
+            const nameEl = document.getElementById("displayName");
+            if(nameEl) nameEl.innerText = savedName;
+            let savedPic = localStorage.getItem("profile_image_url");
+            if(!savedPic || savedPic === "") { savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; localStorage.setItem("profile_image_url", savedPic); }
+            const avatar = document.getElementById("profileAvatar");
+            if(avatar) avatar.src = savedPic;
+        }
+        function ensureDataIntegrity() {
+            if(localStorage.getItem("reward_coins") === null) localStorage.setItem("reward_coins", "0");
+            if(localStorage.getItem("student_display_name") === null) localStorage.setItem("student_display_name", "TutoPulse");
+            if(localStorage.getItem("profile_image_url") === null) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
+        }
+        ensureDataIntegrity();
+        loadBalance();
+        loadProfileData();  const hour = new Date().getHours();
 
 const GREETINGS_CONFIG = [
   { upTo: 3,  text: 'Good Night 🌝' },
@@ -679,6 +800,12 @@ const greeting = GREETINGS_CONFIG.find(slot => hour < slot.upTo).text;  document
             searchResultsContainer.innerHTML = buildCardsWithTarget(filtered);
         });
     })();
+
+
+
+
+
+  
 </script>
 </body>
 </html>
