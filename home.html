@@ -440,194 +440,6 @@
             <div class="avatar-wrapper"><img id="profileAvatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'><path d='M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z'/></svg>" alt="Icon"></div>
             <div class="profile-text"><div class="subtitle" id="greet">Give a Quiz!</div><div class="username" id="displayName">Aninda Halder</div></div>
         </div>
-        <div class="verified-badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83ar(--text-dark); }
-        .section-title span { color: #3b82f6; }
-        .view-all-btn { border: 1px solid #1e3a8a; color: #1e3a8a; padding: 6px 16px; border-radius: 20px; font-size: 15px; font-weight: 500; background: transparent; }
-        body.dark .view-all-btn { border-color: #60a5fa; color: #60a5fa; }
-        .course-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 14px; }
-        .course-card { background: var(--card-bg); border: 2px solid var(--border-purple); border-radius: 16px; padding: 8px 4px; display: flex; flex-direction: column; align-items: center; text-align: center; aspect-ratio: 1/1; }
-        .course-icon-wrapper { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; }
-        .course-icon-wrapper img { width: 100%; height: 100%; object-fit: contain; }
-        .course-card span { font-size: 10px; font-weight: 500; color: var(--text-dark); }
-        .action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 16px 14px; }
-        .action-card { background: var(--card-bg); border: 1px solid var(--border-purple); border-radius: 16px; padding: 5px; display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
-        .action-icon { width: 40px; height: 40px; object-fit: contain; }
-        .action-card span { font-size: 14px; font-weight: 500; color: var(--text-dark); }
-        
-        /* TABS */
-        .nav-scroll-container { width: 100%; overflow-x: auto; white-space: nowrap; border-bottom: 1px solid var(--border-purple); background: var(--card-bg); position: sticky; top: 0; z-index: 10; }
-        .nav-scroll-container::-webkit-scrollbar { display: none; }
-        .nav-tabs { display: flex; padding: 10px 5px 0 5px; }
-        .tab-item { display: inline-flex; flex-direction: column; align-items: center; justify-content: space-between; min-width: 125px; padding: 8px 5px; cursor: pointer; text-decoration: none; color: var(--text-muted); font-size: 12px; font-weight: 500; text-align: center; }
-        .tab-item img { width: 32px; height: 32px; object-fit: contain; margin-bottom: 2px; }
-        .tab-item.active { color: var(--primary-blue); }
-        .tab-item.active::after { content: ''; display: block; width: 100%; height: 4px; background-color: var(--primary-blue); border-top-left-radius: 4px; border-top-right-radius: 4px; margin-top: 2px; }
-        .tab-panel { display: none; padding: 16px; }
-        .tab-panel.active { display: block; }
-        .cards-container { display: none; animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-        .card-link { text-decoration: none; color: inherit; display: block; margin-bottom: 5px; }
-        .card { background: var(--bg-light-blue); border: 1px solid var(--border-purple); border-radius: 18px; padding: 15px; display: flex; position: relative; align-items: flex-start; transition: transform 0.15s ease; }
-        .card:active { transform: scale(0.985); }
-        .card-logo { width: 50px; height: 50px; background: var(--card-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 14px; flex-shrink: 0; padding: 2px; overflow: hidden; }
-        .card-logo img { width: 100%; height: 100%; object-fit: contain; }
-        .card-info { flex-grow: 1; padding-right: 70px; }
-        .card-title { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
-        .card-details { font-size: 13.5px; color: var(--text-muted); line-height: 1.45; }
-        .apply-btn { position: absolute; top: 16px; right: 16px; background-color: var(--btn-green); color: var(--btn-green-text); padding: 7px 18px; border-radius: 20px; font-size: 14px; font-weight: 500; cursor: pointer; }
-        .date-badge { position: absolute; bottom: 0; right: 16px; background-color: var(--badge-red-bg); color: var(--badge-red-text); padding: 3px 10px; border-top-left-radius: 6px; border-top-right-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid rgba(198,40,40,0.12); border-bottom: none; }
-        
-        /* Skeleton card specific */
-        .skeleton-card {
-            background: var(--skeleton-bg);
-            border: 1px solid var(--border-purple);
-            border-radius: 18px;
-            padding: 16px;
-            display: flex;
-            margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-        .skeleton-logo { width: 54px; height: 54px; background: var(--skeleton-bg); border-radius: 50%; margin-right: 14px; flex-shrink: 0; }
-        .skeleton-info { flex-grow: 1; padding-right: 70px; }
-        .skeleton-line { background: var(--skeleton-bg); border-radius: 4px; margin-bottom: 8px; }
-        .skeleton-line.title { width: 55%; height: 16px; margin-top: 4px; }
-        .skeleton-line.text { width: 90%; height: 12px; }
-        .skeleton-btn { position: absolute; top: 16px; right: 16px; width: 64px; height: 31px; background: var(--skeleton-bg); border-radius: 20px; }
-        .skeleton-card::after {
-            content: "";
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            transform: translateX(-100%);
-            background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.6) 60%, rgba(255,255,255,0) 100%);
-            animation: shimmer 1.4s infinite;
-        }
-        .skeleton-course, .skeleton-action {
-            background: var(--skeleton-bg);
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-        .skeleton-course::after, .skeleton-action::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            transform: translateX(-100%);
-            background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
-            animation: shimmer 1.2s infinite;
-        }
-
-        /* EXTRA FEATURE STYLING: SEARCH MODAL */
-        #searchModal {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            pointer-events: none;
-            opacity: 0;
-        }
-        #searchModal.open {
-            pointer-events: auto;
-            opacity: 1;
-        }
-
-
-
- /* Container styling matching the image layout */
-        .wrapper { padding: 10px;
-            display: flex;
-            align-items: center;
-           
-        }
-
-        .label {
-            font-size: 14px; border-radius: 100px;
-            padding: 0px 5px;
-            font-weight: 700;
-            color: #07789B; border: 2px solid #000000;
-            letter-spacing: -0.5px;
-        }
-
-        .separator {
-            
-            width: 20px;
-            height: 2px;
-            background-color: #000000;
-        }
-
-        /* Capsule container with bold black border */
-        .capsule-container {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 2px solid #000000;
-            border-radius: 100px;
-            padding: 5px 5px;
-           
-            
-        }
-
-        /* Dark pill for the balance display */
-        .balance-pill {
-            background-color: #1a0805; /* Deep dark brown/black */
-            color: #ffffff;
-            border-radius: 100px;
-            padding: 5px 15px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 14px;
-            font-weight: 600;
-            user-select: none;
-        }
-
-        .currency-symbol {
-            font-family: Arial, sans-serif;
-            font-weight: 500;
-        }
-
-        /* Blue pill for the action button */
-        .link-btn {
-            background-color: #0f799f; /* Deep teal blue */
-            color: #ffffff;
-            border: none;
-            border-radius: 100px;
-            padding: 5px 15px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            text-decoration: none;
-        }
-
-        /* Button interactive states */
-        .link-btn:hover {
-            background-color: #0c6383;
-        }
-
-        .link-btn:active {
-            transform: scale(0.97);
-        }
-    </style>
-</head>
-<body>
-
-<header class="app-header">
-    <div class="header-left"><img src="https://tutogenius.page.gd/wp-content/uploads/2026/05/TutoGenius-Logo.png" alt="BidhyaBari Logo" class="logo-img"></div>
-    <div class="header-right">
-        <div class="header-icon" id="searchTriggerBtn"><i data-lucide="search" width="25"></i></div>
-        <a href="http://action_notifications" class="header-icon"><i data-lucide="bell-check" width="25" color="#fff"></i></a>
-        <div class="header-icon"><i data-lucide="gift" width="25" color="#fff"></i></div>
-        <!-- Fixed: Dark mode element matching javascript expectations -->
-        <div class="header-icon dark-mode-toggle" id="darkToggle" style="display: none;">
-            <i data-lucide="moon" width="20" height="20"></i>
-        </div>
-    </div>
-</header>
-
-<main class="app-content">
-    <div class="profile">
-        <div class="profile-container">
-            <div class="avatar-wrapper"><img id="profileAvatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'><path d='M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z'/></svg>" alt="Icon"></div>
-            <div class="profile-text"><div class="subtitle" id="greet">Give a Quiz!</div><div class="username" id="displayName">Aninda Halder</div></div>
-        </div>
         <div class="verified-badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
     </div>
 
@@ -987,7 +799,13 @@ const greeting = GREETINGS_CONFIG.find(slot => hour < slot.upTo).text;  document
 
             searchResultsContainer.innerHTML = buildCardsWithTarget(filtered);
         });
-    })(); 
+    })();
+
+
+
+
+
+  
 </script>
 </body>
 </html>
