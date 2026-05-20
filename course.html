@@ -26,6 +26,27 @@
         }
     </script>
 
+    <!-- Theme and meta tags -->
+    <meta name="theme-color" content="#07789B">
+    <meta name="msapplication-navbutton-color" content="#07789B">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ECINET">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Android Chrome / Edge / Opera -->
+    <meta name="theme-color" content="#07789B">
+
+    <!-- Windows Phone / Microsoft Edge -->
+    <meta name="msapplication-navbutton-color" content="#07789B">
+
+    <!-- iOS Safari - Web App Mode -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ECINET">
+
+    <!-- General -->
+    <meta name="mobile-web-app-capable" content="yes">
+
     <style>
         /* ========== GLOBAL RESET & DARK MODE VARIABLES ========== */
         * {
@@ -66,27 +87,27 @@
             -ms-user-drag: none;
             user-drag: none;
         }
-   :root {
+        :root {
             --card-width: 260px;
-            --blue-accent: #0033ad;
+            --blue-accent: #07789B;
         }
         /* ----- LIGHT MODE (default) ----- */
         body {
             background-color: #f8f9fb;
             color: #333;
             overflow: hidden;
-              --footer-bg: #ffffff; 
- --text-muted: #8D94A2; --tp:#ffffff;
+            --footer-bg: #ffffff; 
+            --text-muted: #8D94A2; --tp:#ffffff;
         }
 
-     /* --- Header Styles --- */
+        /* --- Header Styles --- */
         .app-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 50px;
-            background: #3047a5;
+            background: #07789B;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -103,7 +124,6 @@
 
         .logo-img {
             width: 150px;
-            
         }
 
         .header-title {
@@ -144,7 +164,7 @@
         .search-inner {
             -webkit-tap-highlight-color: rgba(0,0,0,0.05);
             width: 180px;
-            background-color: #ffffff;
+            background-color: #FAF1EB;
             border: 1px solid #c8d1db;
             border-radius: 50px;
             display: flex;
@@ -168,7 +188,7 @@
         .search-icon svg {
             width: 20px;
             height: 20px;
-            stroke: #3347a5;
+            stroke: #07789B;
         }
 
         .app-content {
@@ -177,11 +197,11 @@
             bottom: 65px;
             width: 100%;
             overflow-y: auto;
-            background-color: #ffffff;
+            background: linear-gradient(to bottom, #FAF1EB 0%, #ffffff 50%);
             transition: background-color 0.3s;
         }
 
-          /* --- Footer Nav Styles --- */
+        /* --- Footer Nav Styles --- */
         .app-footer {
             overflow: hidden;
             position: fixed;
@@ -220,7 +240,7 @@
         }
 
         .nav-item.active {
-            color: #31409f;
+            color: #07789B;
             background: rgba(0, 0, 0, 0.02);
             border-radius: 50px;
             padding: 5px;
@@ -241,9 +261,8 @@
             to { transform: scale(3.5); opacity: 0; }
         }
 
-     .swiper {
+        .swiper {
             width: 100%;
-            
             padding-bottom: 32px; 
         }
 
@@ -252,10 +271,10 @@
             width: 280px; height: 180px;
             /* Increased height to accommodate text better */
             border-radius: 12px;
-           border: 2px solid ;
+            border: 2px solid ;
             transition: 0.5s ease-in-out;
-            overflow: hidden;}
-        
+            overflow: hidden;
+        }
 
         .swiper-slide-active {
             opacity: 1;
@@ -290,8 +309,6 @@
             align-items: center;
         }
 
-        
-
         /* Pagination Styling */
         .swiper-pagination-bullet {
             width: 10px;
@@ -304,7 +321,6 @@
             background: #ffcc00 !important;
         }
 
-
         /* pills & cards */
         .button-container {
             display: flex;
@@ -314,7 +330,7 @@
             padding: 10px;
         }
         .pill-button {
-        -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
             display: inline-block;
             text-decoration: none;
             color: #1a1a1a;
@@ -327,11 +343,10 @@
             transition: all 0.2s ease-in-out;
         }
         .course-card {
-             -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
             display: flex;
             gap: 15px;
-            
-            padding: 15px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #eee;
             text-decoration: none;
             color: inherit;
@@ -354,8 +369,7 @@
             background: #ffffff;
             border-radius: 16px;
             padding: 10px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            scroll-snap-align: center;
+              scroll-snap-align: center;
             text-align: center;
             transition: transform 0.3s ease, background 0.2s;
             border: 2px solid rgba(0, 0, 0, 0.05);
@@ -378,7 +392,7 @@
             width: 100%;
         }
         .view-all {
-          -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
             border: 1px solid #333;
             border-radius: 20px;
             padding: 5px 15px;
@@ -391,9 +405,9 @@
         body.dark {
             background-color: #121212;
             color: #e0e0e0;
-               --text-muted: #a0a0a0;
-                  --footer-bg: #1e1e1e;
-           --tp:#121212;
+            --text-muted: #a0a0a0;
+            --footer-bg: #1e1e1e;
+            --tp:#121212;
         }
         
         body.dark .app-content {
@@ -472,12 +486,9 @@
             background-color: #ffaa33 !important;
         }
 
-
-
-    /* Container for the 1-row layout */
+        /* Container for the 1-row layout */
         .primium-row {
             display: flex;
-            
             overflow-x:auto; /* Enables touch scrolling */
             padding-bottom: 10px;
             scroll-snap-type: x mandatory;
@@ -498,11 +509,10 @@
             background-position: center;           
             overflow: hidden;         
             border-radius: 10px;         
-            
             scroll-snap-align: center;
-            border: 2px solid #3047a5;
+            border: 2px solid #07789B;
             transition: transform 0.3s ease, background 0.2s;
-            }
+        }
 
         /* Overlay to make text readable */
         .card-content {
@@ -551,14 +561,35 @@
             padding: 3px;
             transform: rotate(-45deg);
         }
+
+        /* ========== SKELETON LOADING FEATURES ========== */
+        @keyframes skeletonPulse {
+            0% { background-color: #e5e7eb; }
+            50% { background-color: #f3f4f6; }
+            100% { background-color: #e5e7eb; }
+        }
+        body.dark @keyframes skeletonPulse {
+            0% { background-color: #2a2a35; }
+            50% { background-color: #374151; }
+            100% { background-color: #2a2a35; }
+        }
+
+        .skeleton {
+            animation: skeletonPulse 1.5s infinite ease-in-out !important;
+            background-image: none !important;
+            border-color: transparent !important;
+        }
+        .skeleton * {
+            visibility: hidden !important;
+        }
     </style>
 </head>
 <body>
 
     <!-- HEADER with Dark Mode Toggle Button -->
-      <header class="app-header">
+    <header class="app-header">
         <div class="header-left">
-            <img src="https://i.ibb.co/V06DvN6c/Add-Text-04-14-08-48-50.png" alt="TutoPulse Logo" class="logo-img">
+            <img src="https://tutogenius.page.gd/wp-content/uploads/2026/05/TutoGenius-Logo.png" alt="TutoPulse Logo" class="logo-img">
         </div>
         <div class="header-right">
             <a href="search.html" class="search-inner">
@@ -584,25 +615,25 @@
             <a href="hs/hs.html?id=course8" class="pill-button">ICDS</a>
             <a href="hs/hs.html?id=course1" class="pill-button">HS উচ্চমাধ্যমিক</a>
         </div>
-  <div class="primium-row">
-        <!-- Card 1 -->
-        <div class="primium-card" style="margin-left: 15px; background-image: url('https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg');">
-            <div class="card-content">
-                <p class="primium-title">Class 12 3rd Semester Science Practice Sugg...</p>
-                <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
+        
+        <div class="primium-row">
+            <!-- Card 1 -->
+            <div class="primium-card skeleton" data-bg="https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg" style="margin-left: 15px;">
+                <div class="card-content">
+                    <p class="primium-title">Class 12 3rd Semester Science Practice Sugg...</p>
+                    <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="primium-card skeleton" data-bg="https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg">
+                <div class="card-content">
+                    <p class="primium-title">Class 11 1st Semester Science Practice Sugg...</p>
+                    <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
+                </div>
             </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="primium-card" style="background-image: url('https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg');">
-            <div class="card-content">
-                <p class="primium-title">Class 11 1st Semester Science Practice Sugg...</p>
-                <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
-            </div>
-        </div>
-
-     
-    </div>
         <!-- TOP COURSES -->
         <div class="flex items-center text-xl font-bold m-3">
             <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
@@ -610,19 +641,18 @@
         </div>
         <div class="swiper">
             <div class="swiper-wrapper">
-                <a href="hs/sem3/enroll.html" class="swiper-slide">
+                <a href="hs/sem3/enroll.html" class="swiper-slide skeleton">
                     <img src="https://i.ibb.co/39schx5B/Class12.png" alt="Batch 1">
                     <div class="slide-content">
                         <h3>Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h3>
                     </div>
                 </a>
-                <a href="hs/sem1/enroll.html" class="swiper-slide">
+                <a href="hs/sem1/enroll.html" class="swiper-slide skeleton">
                     <img src="https://i.ibb.co/PGJHwqW9/Class11.png" alt="Batch 3">
                     <div class="slide-content">
                         <h3>Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</h3>
                     </div>
                 </a>
-              
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -638,18 +668,21 @@
             </div>
 
             <a href="hs/sem3/enroll.html" class="course-card">
-                <img src="https://i.ibb.co/39schx5B/Class12.png" alt="Starter Batch" class="course-img">
+                <div class="course-img skeleton" style="width:150px; height:80px; border-radius:8px;">
+                    <img src="https://i.ibb.co/39schx5B/Class12.png" alt="Starter Batch" class="w-full h-full object-cover rounded-[8px] hidden">
+                </div>
                 <div class="course-info">
                     <h2 class="course-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h2>
                 </div>
             </a>
             <a href="hs/sem1/enroll.html" class="course-card">
-                <img src="https://i.ibb.co/PGJHwqW9/Class11.png" alt="Class 11" class="course-img">
+                <div class="course-img skeleton" style="width:150px; height:80px; border-radius:8px;">
+                    <img src="https://i.ibb.co/PGJHwqW9/Class11.png" alt="Class 11" class="w-full h-full object-cover rounded-[8px] hidden">
+                </div>
                 <div class="course-info">
                     <h2 class="course-title">Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</h2>
                 </div>
             </a>
-          
         </div>
 
         <!-- TUTORS SECTION -->
@@ -658,36 +691,23 @@
             Top<span class="text-brandBlue ml-2">Tutors</span>
         </div>
         <div class="slider-container" style="display: flex; gap: 20px; overflow-x: auto; padding: 10px; scroll-snap-type: x mandatory;">
-            <div class="tutor-card">
+            
+
+
+         <div class="tutor-card">
                 <div class="image-container flex justify-center">
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8mjIi75jOqd4WGHM7NVQ9ePsNf0G4oX7C0GVGZL6sLNEWtTVDqssYOGnQt8mlGWNg-5JZWEt_ao93Wp3IziocSM3Rf6UWzYCwwE6XGAa09AfvVQ4MtmeZ4AAvOcUbfi5wnNXA09oK-JQlxRFZdEIQKeOHyGtPfk9e5GNXXd-8mlOXgzRUuLbQ3itSHNox/s716/1000114892.jpg" alt="Tutor" class="tutor-img">
+                    <div class="tutor-img skeleton" style="width:80px; height:80px; border-radius:50%;">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8mjIi75jOqd4WGHM7NVQ9ePsNf0G4oX7C0GVGZL6sLNEWtTVDqssYOGnQt8mlGWNg-5JZWEt_ao93Wp3IziocSM3Rf6UWzYCwwE6XGAa09AfvVQ4MtmeZ4AAvOcUbfi5wnNXA09oK-JQlxRFZdEIQKeOHyGtPfk9e5GNXXd-8mlOXgzRUuLbQ3itSHNox/s716/1000114892.jpg" alt="Tutor" class="w-full h-full object-cover rounded-full hidden">
+                    </div>
                 </div>
-                <div class="tutor-name flex items-center justify-center gap-1">
-                    Aninda Halder <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #FFD036;"></i>
+                <div class="tutor-name flex items-center justify-center gap-1 mt-2">
+                    Aninda Halder <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #07789B;"></i>
                 </div>
                 <div class="tutor-subject">Founder & CEO</div>
                 <a href="anindahalder.html"><button class="btn-profile">View Profile</button></a>
             </div>
-            <div class="tutor-card">
-                <div class="image-container flex justify-center">
-                    <img src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Tutor" class="tutor-img">
-                </div>
-                <div class="tutor-name flex items-center justify-center gap-1">
-                    Roni Das <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #FFD036;"></i>
-                </div>
-                <div class="tutor-subject">Co-Founder</div>
-                <a href="https://edulivestore.netlify.app/tutor/ronidas.html"><button class="btn-profile">View Profile</button></a>
-            </div>
-            <div class="tutor-card">
-                <div class="image-container flex justify-center">
-                    <img src="https://i.ibb.co/k60CSDGf/IMG-20260226-200620.jpg" alt="Tutor" class="tutor-img">
-                </div>
-                <div class="tutor-name flex items-center justify-center gap-1">
-                    Debjit Biswas <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #FFD036;"></i>
-                </div>
-                <div class="tutor-subject">Community Expert</div>
-                <a href="https://edulivestore.netlify.app/tutor/debjit.html"><button class="btn-profile">View Profile</button></a>
-            </div>
+            
+            
         </div>
         <div class="h-4"></div>
     </main>
@@ -717,6 +737,39 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
+        // ========== SKELETON IMAGE LOADING MANAGER ==========
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Manage standard image tags nested inside containers
+            const skeletonContainers = document.querySelectorAll(".skeleton");
+            
+            skeletonContainers.forEach(container => {
+                const img = container.querySelector("img");
+                if (img) {
+                    const handleLoad = () => {
+                        container.classList.remove("skeleton");
+                        img.classList.remove("hidden");
+                    };
+                    if (img.complete) {
+                        handleLoad();
+                    } else {
+                        img.addEventListener("load", handleLoad);
+                    }
+                }
+            });
+
+            // 2. Manage CSS inline background images (Premium row cards)
+            const premiumCards = document.querySelectorAll(".primium-card[data-bg]");
+            premiumCards.forEach(card => {
+                const imgUrl = card.getAttribute("data-bg");
+                const tempImg = new Image();
+                tempImg.src = imgUrl;
+                tempImg.onload = () => {
+                    card.style.backgroundImage = `url('${imgUrl}')`;
+                    card.classList.remove("skeleton");
+                };
+            });
+        });
+
         // ========== DARK MODE TOGGLE (FULLY INTEGRATED) ==========
         const darkToggle = document.getElementById("darkToggle");
         const body = document.body;
@@ -726,7 +779,6 @@
             body.classList.add("dark");
             darkToggle.textContent = "☀️";
         } else {
-            // ensure dark class removed if saved as false or null
             body.classList.remove("dark");
             darkToggle.textContent = "🌙";
         }
@@ -739,7 +791,7 @@
             darkToggle.textContent = isDark ? "☀️" : "🌙";
         });
 
-        // ========== RIPPLE EFFECT FOR FOOTER (unchanged but functional) ==========
+        // ========== RIPPLE EFFECT FOR FOOTER ==========
         const footer = document.querySelector('.app-footer');
         const navItems = document.querySelectorAll('.nav-item');
         
@@ -794,7 +846,7 @@
             },
         });
 
-        // Re-run lucide icons after any dynamic content (just in case for tutor cards)
+        // Re-run lucide icons after any dynamic content
         setTimeout(() => {
             lucide.createIcons();
         }, 100);
