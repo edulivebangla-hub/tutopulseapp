@@ -16,10 +16,10 @@
             theme: {
                 extend: {
                     colors: {
-                        brandBlue: '#4285F4',
-                        darkBlue: '#1A237E',
-                        brandGray: '#757575',
-                        greenBtn: '#C8E6C9',
+                        brandBlue: '#07789B',
+                        darkBlue: '#07789B',
+                        brandGray: '#07789B',
+                        greenBtn: '#07789B',
                         greenText: '#2E7D32',
                         redBadgeBg: '#FFEBEE',
                         redBadgeText: '#C62828',
@@ -92,7 +92,7 @@
             left: 0;
             width: 100%;
             height: 50px;
-            background: #3047a5;
+            background: #07789B;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -158,12 +158,12 @@
             bottom: 65px;
             width: 100%;
             overflow-y: auto;
-            background-color: #ffffff;
+            background: linear-gradient(to bottom, #FAF1EB 0%, #ffffff 80%);
         }
         
         /* Dark mode adjustment for main content */
         body.dark .app-content {
-            background-color: #000;
+            background: #000;
         }
 
            /* --- Footer Nav Styles --- */
@@ -205,7 +205,7 @@
         }
 
         .nav-item.active {
-            color: #31409f;
+            color: #07789B;
             background: rgba(0, 0, 0, 0.02);
             border-radius: 50px;
             padding: 5px;
@@ -438,23 +438,21 @@
   <!-- HEADER - UNCHANGED -->
 <header class="app-header">
     <div class="header-left">
-        <img src="https://i.ibb.co/V06DvN6c/Add-Text-04-14-08-48-50.png" alt="BidhyaBari Logo" class="logo-img">
+        <img src="https://tutogenius.page.gd/wp-content/uploads/2026/05/TutoGenius-Logo.png" alt="BidhyaBari Logo" class="logo-img">
     </div>
     <div class="header-right">
-        <div class="header-icon"><a href="search.html"><i data-lucide="search" width="25"></i></a></div>
-        <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell-check" width="25" color="#fff" ></i></a></div>
-        <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><i data-lucide="gift" width="25" color="#fff" ></i></a></div>
-        <div class="header-icon hidden" id="darkToggle" style="cursor:pointer;">
+        <h2>Profile & Settings</h2>
+     <div class="header-icon hidden" id="darkToggle" style="cursor:pointer;">
             <i data-lucide="moon" width="24" height="24"></i>
         </div>
-    </div>
+</div>
 </header>
 
     <!-- MAIN CONTENT AREA (Scrollable) -->
     <main class="app-content">
         <div class="main-content-inner">
             <!-- Enhanced Profile Card with sleek glassmorphism -->
-            <div class="glass-card rounded-3xl p-2 shadow-lg border border-white/40 transition-all hover:shadow-xl mb-5" id="profileCard" style="border: 2px solid #3047a5;">
+            <div class="glass-card rounded-3xl p-2 shadow-lg border border-white/40 transition-all hover:shadow-xl mb-5" id="profileCard" style="border: 2px solid #07789B;">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-5">
                         <div class="avatar-upload-wrapper relative w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-md ring-2 ring-blue-100/60">
