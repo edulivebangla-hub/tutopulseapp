@@ -489,7 +489,7 @@
 
   <!-- HEADER -->
   <header class="app-header">
-    <button class="close-btn" onclick="history.back()">
+    <button class="close-btn" onclick="goBack()">
       <i data-lucide="x" size="26" stroke-width="2.5"></i>
     </button>
     <h1 class="header-title">About Tutor</h1>
@@ -577,10 +577,9 @@
         }
 
 
-  // CLOSE BUTTON
-  document.querySelector('.close-btn').addEventListener('click', () => {
-    history.back();
-  });
+ function goBack() {
+            window.history.back();
+        }
 
   // SKELETON LOADING CONTROLLER
   document.addEventListener("DOMContentLoaded", () => {
