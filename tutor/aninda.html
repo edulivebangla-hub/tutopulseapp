@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>About Tutor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#4285F4',
+                        darkBlue: '#1A237E',
+                        brandGray: '#757575',
+                        greenBtn: '#C8E6C9',
+                        greenText: '#2E7D32',
+                        redBadgeBg: '#FFEBEE',
+                        redBadgeText: '#C62828',
+                    }
+                }
+            }
+        }
+    </script>
+  <style>
+   /* Disable text selection and dragging globally */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+    transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Additional protection for links and text */
+  a, span, p, h1, h2, h3, h4, h5, h6, div {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+    text-decoration: none;
+  }
+  
+  /* Prevent image dragging and long press */
+  img {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+  }
+:root {
+            --card-width: 260px;
+            --blue-accent: #0033ad;
+            
+            /* LIGHT MODE VARS */
+            color: #000;
+            --bg-page: #ffffff;
+            --bg-surface: linear-gradient(to bottom, #FAF1EB 0%, #ffffff 100%);
+            --bg-white: #ffffff;
+            --bg-disclaimer: #e8e7f3;
+            --text-primary: #1f2937;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+
+        body.dark {
+            color: #ffffff;
+            --bg-page: #000;
+            --bg-surface: #000;
+            --bg-white: #1e293b;
+            --bg-disclaimer: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --card-bg: #1e293b;
+            --shadow-color: rgba(0,0,0,0.3);
+        }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Nunito', sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+     body, html {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            background-color: var(--bg-page);
+            overflow: hidden;
+        }
+        body::-webkit-scrollbar, html::-webkit-scrollbar {
+            display: none;
+        }
+
+    img {
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    /* HEADER */
+ .app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background: #07789B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+ .close-btn {
+      position: absolute;
+      left: 16px;
+      background: transparent;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+ .close-btn svg {
+      color: white;
+    }
+
+ .header-title {
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+    }
+   /* ===== MAIN CONTENT - NO SCROLLBAR ===== */
+        .app-content {
+            position: fixed;
+            top: 50px;
+            bottom: 10px;
+            width: 100%;
+            overflow-y: auto;
+            background: var(--bg-surface);
+            transition: background-color 0.3s;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .app-content::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            background: transparent;
+        }
+    /* BLUE SECTION */
+ .blue-section {
+      background: #07789B;
+      padding: 24px 16px 15px;
+      border-radius: 0 0 50px 50px;
+      text-align: center;
+    }
+
+ .tutor-logo {
+      width: 90px;
+      height: 90px;
+      background: white;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+ .tutor-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+ .tutor-logo img.loaded {
+      opacity: 1;
+    }
+
+ .tutor-name {
+      align-items: center;
+      justify-content: center;
+      display: flex; gap: 5px;
+      color: white;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+ .tutor-tagline {
+      color: #FFD036;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+ .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+ .social-icon {
+      width: 44px;
+      height: 44px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+ .social-icon img {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      z-index: 10;
+ }
+
+ .social-icon img.loaded {
+      opacity: 1;
+ }
+
+ .social-icon:active {
+      transform: scale(0.95);
+    }
+
+    /* STATS SECTION */
+ .stats-section {
+      display: flex;
+      justify-content: space-around;
+      padding: 24px 16px 20px;
+      background: var(--bg-white);
+    }
+
+ .stat-item {
+      text-align: left;
+    }
+
+ .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+ .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* DESCRIPTION */
+ .description {
+      padding: 0 16px 24px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      background: var(--bg-white);
+    }
+
+    /* COURSES SECTION */
+ .courses-section {
+      padding: 0 16px 100px;
+      background: var(--bg-white);
+    }
+
+ .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+ .course-card {
+      display: flex;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+ .course-card:last-child {
+      border-bottom: none;
+    }
+
+ .course-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--bg-surface);
+    }
+
+ .course-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+ .course-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+ .course-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+ .course-students {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+ .course-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+ .stars {
+      color: #fbbf24;
+      font-size: 14px;
+    }
+
+ .rating-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+   /* Container for the 1-row layout */
+        .ads-row {
+            display: flex;
+            margin-top: 10px;
+            overflow-x:auto; /* Enables touch scrolling */
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Hide scrollbar for clean look */
+        .ads-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ads-card {           
+            flex: 0 0 var(--card-width);
+            height: 180px;   
+            background: var(--exam-bg);                    
+            border-radius: 10px; margin-right: 10px;
+            position: relative;
+            background-size: cover;
+            background-position: center;           
+            overflow: hidden;         
+            border-radius: 10px;         
+            box-shadow: 0 10px 15px -3px var(--shadow-color);
+            scroll-snap-align: center;
+            border: 2px solid #3047a5;
+            transition: transform 0.3s ease, background 0.2s;
+        }
+
+        /* Initial transparent fallback style for background loading frames */
+        .ads-card.bg-loading {
+            background-image: none !important;
+        }
+
+        /* Overlay to make text readable */
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            background: linear-gradient(transparent, rgba(0,0,1,0.8),rgba(0,0,0,0.8));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .card-content.loaded {
+            opacity: 1;
+        }
+
+        .ads-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.3;
+            max-width: 100%;
+        }
+
+        .join-btn {
+            background-color: var(--blue-accent);
+            color: white;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .join-btn:active {
+            transform: scale(0.95);
+        }
+
+        .chevron-icon {
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(-45deg);
+        }
+
+        /* Skeleton base utility styling overlay layer */
+        .skeleton-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: #e2e8f0;
+            z-index: 5;
+            border-radius: inherit;
+        }
+        body.dark .skeleton-overlay::before {
+            background-color: #334155;
+        }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <button class="close-btn" onclick="history.back()">
+      <i data-lucide="x" size="26" stroke-width="2.5"></i>
+    </button>
+    <h1 class="header-title">About Tutor</h1>
+  </header>
+<main class="app-content">
+  <!-- BLUE SECTION -->
+  <div class="blue-section animate-in">
+    <div class="tutor-logo skeleton-overlay animate-pulse">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8mjIi75jOqd4WGHM7NVQ9ePsNf0G4oX7C0GVGZL6sLNEWtTVDqssYOGnQt8mlGWNg-5JZWEt_ao93Wp3IziocSM3Rf6UWzYCwwE6XGAa09AfvVQ4MtmeZ4AAvOcUbfi5wnNXA09oK-JQlxRFZdEIQKeOHyGtPfk9e5GNXXd-8mlOXgzRUuLbQ3itSHNox/s716/1000114892.jpg"
+           alt="TutoPulse"
+           onerror="this.src='https://via.placeholder.com/100x100/3047a5/ffffff?text=TutoPulse'">
+    </div>
+
+    <h2 class="tutor-name">Aninda Halder <span>   <i data-lucide="verified" size="24" stroke-width="2" style="color: #07789B;fill: #FFD036;"></i>
+   </span></h2>
+   
+    <p class="tutor-tagline">#1 Education Platform India!!</p>
+    
+    <div class="social-icons">
+      <a href="https://TutoPulse.ct.ws" target="_blank" class="social-icon skeleton-overlay animate-pulse">
+        <img src="https://cdn-icons-png.flaticon.com/512/12523/12523070.png" style="width: 30px;">
+      </a>
+      <a href="https://youtube.com/@TutoPulseApp" target="_blank" class="social-icon skeleton-overlay animate-pulse">
+        <img src="https://cdn-icons-png.flaticon.com/512/15047/15047410.png" style="width: 30px;">
+      </a>
+      <a href="https://wa.me/919339061296" target="_blank" class="social-icon skeleton-overlay animate-pulse">
+        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" style="width: 30px;">
+      </a>
+    </div>
+  </div>
+
+  <!-- STATS SECTION -->
+  <!-- Tutor About -->
+        <div class="flex items-center text-xl font-bold m-3">
+            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+            Tutor<span class="text-brandBlue ml-2" style="color: #07789B;">About</span>
+        </div>
+       <h4 style="padding: 15px;"> Hi, Students. I am Aninda Founder of TutoGenius. I make a Big Education Platform. I am Allready Passing HS 2026</h4>
+  <!-- TOP COURSES -->
+        <div class="flex items-center text-xl font-bold m-3">
+            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
+            Tutor<span class="text-brandBlue ml-2" style="color: #07789B;">Courses</span>
+        </div>
+ <div class="ads-row">
+        <!-- Card 1 -->
+        <a href="#" class="ads-card skeleton-overlay animate-pulse bg-loading" data-bg="https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg" style="margin-left: 10px;">
+           <div class="card-content">
+                <p class="ads-title">Class 11 1st Semester Science Practice Sugg...</p>
+             </div> 
+        </a>
+
+        <!-- Card 2 -->
+        <a href="#" class="ads-card skeleton-overlay animate-pulse bg-loading" data-bg="https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg">          
+         <div class="card-content">
+                <p class="ads-title">Class 11 1st Semester Science Practice Sugg...</p>
+               </div>
+           </a>    
+    </div>
+</main>
+<script>
+  // INIT ICONS
+  lucide.createIcons();
+
+   // Dark Mode Toggle
+        const darkToggle = document.getElementById('darkToggle');
+        const body = document.body;
+        if(localStorage.getItem('darkMode') === 'true') body.classList.add('dark');
+        function updateToggleIcon() {
+            const isDark = body.classList.contains('dark');
+            const iconElem = darkToggle?.querySelector('i');
+            if(iconElem) {
+                const iconName = isDark ? 'sun' : 'moon';
+                iconElem.setAttribute('data-lucide', iconName);
+                lucide.createIcons({ icons: { [iconName]: iconElem } });
+            }
+        }
+        updateToggleIcon();
+        if(darkToggle) {
+            darkToggle.addEventListener('click', () => {
+                body.classList.toggle('dark');
+                localStorage.setItem('darkMode', body.classList.contains('dark'));
+                updateToggleIcon();
+                if(window.swiperInstance) window.swiperInstance.update();
+            });
+        }
+
+
+  // CLOSE BUTTON
+  document.querySelector('.close-btn').addEventListener('click', () => {
+    history.back();
+  });
+
+  // SKELETON LOADING CONTROLLER
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Process Standard Images (img elements)
+    const images = document.querySelectorAll("img");
+    images.forEach(img => {
+      const parentContainer = img.closest(".skeleton-overlay");
+      
+      const clearSkeleton = () => {
+        img.classList.add("loaded");
+        if (parentContainer) {
+          parentContainer.classList.remove("skeleton-overlay", "animate-pulse");
+        }
+      };
+
+      if (img.complete) {
+        clearSkeleton();
+      } else {
+        img.addEventListener("load", clearSkeleton);
+        img.addEventListener("error", clearSkeleton); // Clear if image fails to load
+      }
+    });
+
+    // 2. Process CSS Background Cards
+    const bgCards = document.querySelectorAll(".ads-card[data-bg]");
+    bgCards.forEach(card => {
+      const bgUrl = card.getAttribute("data-bg");
+      const content = card.querySelector(".card-content");
+      
+      if (bgUrl) {
+        const tempImg = new Image();
+        tempImg.src = bgUrl;
+        
+        const clearBgSkeleton = () => {
+          card.style.backgroundImage = `url('${bgUrl}')`;
+          card.classList.remove("skeleton-overlay", "animate-pulse", "bg-loading");
+          if (content) content.classList.add("loaded");
+        };
+
+        if (tempImg.complete) {
+          clearBgSkeleton();
+        } else {
+          tempImg.addEventListener("load", clearBgSkeleton);
+          tempImg.addEventListener("error", clearBgSkeleton);
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
