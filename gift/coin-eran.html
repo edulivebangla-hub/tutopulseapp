@@ -3,52 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Reward Hub | TutoPulse</title>
+    <title>Reward Hub | TutoGenius</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-         /* Disable text selection and dragging globally */
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -ms-user-drag: none;
-    user-drag: none;
-    transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Additional protection for links and text */
-  a, span, p, h1, h2, h3, h4, h5, h6, div {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -ms-user-drag: none;
-    user-drag: none;
-    text-decoration: none;
-  }
-  
-  /* Prevent image dragging and long press */
-  img {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -ms-user-drag: none;
-    user-drag: none;
-    pointer-events: none;
-  }
+        /* Disable text selection and dragging globally */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Additional protection for links and text */
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            text-decoration: none;
+        }
+        
+        /* Prevent image dragging and long press */
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+        }
+
         /* ===== NEW DESIGN SYSTEM ===== */
         :root {
             --gradient-bg: linear-gradient(180deg, #f8fafc 0%, #e0e7ff 100%);
@@ -67,7 +68,7 @@
             --shadow-hover: 0 8px 32px rgba(15, 23, 42, 0.12);
             --popup: #ffffff;
             --overlay: rgba(15, 23, 42, 0.5);
-            --bg: #f5f7ff;
+            --bg: #FAF1EB;
         }
 
         body.dark {
@@ -90,13 +91,6 @@
             --overlay: rgba(0, 0, 0, 0.7);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg);
@@ -106,12 +100,12 @@
         }
 
         /* FIXED HEADER */
-    .header {
+        .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: #3047a5;
+            background: #07789B;
             color: white;
             padding: 18px 20px 28px;
             z-index: 100;
@@ -119,19 +113,19 @@
             box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
         }
 
-    .header-content {
+        .header-content {
             max-width: 640px;
             margin: 0 auto;
         }
 
-    .nav-row {
+        .nav-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 22px;
         }
 
-    .icon-circle {
+        .icon-circle {
             width: 42px;
             height: 42px;
             border-radius: 50%;
@@ -144,26 +138,27 @@
             transition: all 0.2s;
         }
 
-    .icon-circle:active {
+        .icon-circle:active {
             transform: scale(0.92);
         }
 
-    .header-title {
+        .header-title {
             font-size: 1.3rem;
             font-weight: 800;
             letter-spacing: -0.4px;
         }
 
-    .profile-card {
+        .profile-card {
             display: flex;
             align-items: center;
             gap: 14px;
             padding: 14px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
         }
 
-    .avatar {
+        .avatar {
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -171,17 +166,17 @@
             object-fit: cover;
         }
 
-    .profile-details {
+        .profile-details {
             flex: 1;
         }
 
-    .profile-name {
+        .profile-name {
             font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 6px;
         }
 
-    .coin-pill {
+        .coin-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -194,7 +189,7 @@
             box-shadow: 0 4px 14px rgba(251, 191, 36, 0.5);
         }
 
-    .progress-wrap {
+        .progress-wrap {
             width: 68px;
             height: 68px;
             border-radius: 50%;
@@ -205,10 +200,10 @@
             padding: 4px;
         }
 
-    .progress-value {
+        .progress-value {
             width: 100%;
             height: 100%;
-            background: #3047a5;
+            background: #07789B;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -218,7 +213,7 @@
         }
 
         /* MAIN CONTENT */
-    .container {
+        .container {
             margin-top: 210px;
             padding: 24px 20px;
             max-width: 640px;
@@ -226,7 +221,7 @@
             margin-right: auto;
         }
 
-    .action-card {
+        .action-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
@@ -240,28 +235,28 @@
             transition: all 0.3s ease;
         }
 
-    .action-card:active {
+        .action-card:active {
             transform: scale(0.98);
         }
 
-    .card-text {
+        .card-text {
             flex: 1;
         }
 
-    .card-title {
+        .card-title {
             font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-main);
             margin-bottom: 4px;
         }
 
-    .card-subtitle {
+        .card-subtitle {
             font-size: 0.85rem;
             color: var(--text-sub);
             font-weight: 500;
         }
 
-    .cta-btn {
+        .cta-btn {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
             color: white;
             border: none;
@@ -274,28 +269,88 @@
             box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
         }
 
-    .cta-btn:active {
+        .cta-btn:active {
             transform: scale(0.95);
         }
 
-    .cta-btn.disabled {
+        .cta-btn.disabled {
             background: var(--success);
             opacity: 0.7;
             cursor: default;
         }
 
-    .redeem-card {
+        .redeem-card {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-    .cta-btn.redeem {
+        .cta-btn.redeem {
             background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
             box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
         }
 
+        /* ===== SKELETON FEATURE SYSTEM ===== */
+        .skeleton-shimmer {
+            background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+            background-size: 200% 100%;
+            animation: loadingShimmer 1.5s infinite linear;
+        }
+
+        .header-skeleton-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: loadingShimmer 1.5s infinite linear;
+        }
+
+        @keyframes loadingShimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .profile-skeleton {
+            position: absolute;
+            inset: 0;
+            background: #07789B;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            z-index: 5;
+        }
+
+        .skeleton-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        .skeleton-line {
+            height: 16px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px 22px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .skeleton-btn {
+            width: 90px;
+            height: 40px;
+            border-radius: 14px;
+        }
+
         /* POPUP SYSTEM */
-    .popup-backdrop {
+        .popup-backdrop {
             position: fixed;
             inset: 0;
             background: var(--overlay);
@@ -306,12 +361,12 @@
             z-index: 998;
         }
 
-    .popup-backdrop.show {
+        .popup-backdrop.show {
             opacity: 1;
             visibility: visible;
         }
 
-    .popup-panel {
+        .popup-panel {
             position: fixed;
             bottom: -100%;
             left: 0;
@@ -327,11 +382,11 @@
             overflow-y: auto;
         }
 
-    .popup-panel.show {
+        .popup-panel.show {
             bottom: 0;
         }
 
-    .popup-drag {
+        .popup-drag {
             width: 40px;
             height: 4px;
             background: var(--border);
@@ -339,7 +394,7 @@
             margin: 0 auto 24px;
         }
 
-    .popup-close {
+        .popup-close {
             position: absolute;
             top: 20px;
             right: 24px;
@@ -354,21 +409,21 @@
             cursor: pointer;
         }
 
-    .popup-heading {
+        .popup-heading {
             font-size: 1.6rem;
             font-weight: 800;
             color: var(--text-main);
             margin-bottom: 8px;
         }
 
-    .qr-section {
+        .qr-section {
             display: flex;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
             margin: 24px 0;
         }
 
-    .qr-item {
+        .qr-item {
             width: 150px;
             background: var(--bg);
             border-radius: 2px;
@@ -377,13 +432,13 @@
             border: 1px solid var(--border);
         }
 
-    .qr-item img {
+        .qr-item img {
             display: flex;
             width: 100%;
             border-radius: 2px;
         }
 
-    .qr-tag {
+        .qr-tag {
             font-size: 0.75rem;
             font-weight: 700;
             margin-top: 12px;
@@ -394,11 +449,11 @@
             border-radius: 50px;
         }
 
-    .form-group {
+        .form-group {
             margin: 20px 0;
         }
 
-    .form-label {
+        .form-label {
             font-weight: 700;
             color: var(--text-main);
             display: block;
@@ -406,7 +461,7 @@
             font-size: 0.95rem;
         }
 
-    .form-input {
+        .form-input {
             width: 100%;
             padding: 16px 18px;
             border-radius: 14px;
@@ -420,12 +475,12 @@
             transition: 0.3s;
         }
 
-    .form-input:focus {
+        .form-input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
 
-    .submit-btn {
+        .submit-btn {
             background: linear-gradient(135deg, var(--warning) 0%, #ea580c 100%);
             color: white;
             padding: 16px;
@@ -440,7 +495,7 @@
             box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
         }
 
-    .withdraw-btn {
+        .withdraw-btn {
             background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
             color: white;
             padding: 16px;
@@ -452,7 +507,7 @@
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
 
-    .info-text {
+        .info-text {
             font-size: 0.8rem;
             color: var(--text-sub);
             text-align: center;
@@ -462,7 +517,7 @@
             border-radius: 50px;
         }
 
-    .toast {
+        .toast {
             position: fixed;
             bottom: 100px;
             left: 50%;
@@ -487,20 +542,21 @@
             50% { transform: scale(1.15); }
         }
 
-    .coin-bounce {
+        .coin-bounce {
             animation: bounce 0.4s ease;
         }
 
         @media (max-width: 480px) {
-        .qr-section {
+            .qr-section {
                 grid-template-columns: 1fr;
             }
-        .container {
+            .container {
                 padding: 20px 16px;
             }
         }
-.hidden{
- display: none;}
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -511,18 +567,27 @@
             <div class="icon-circle" onclick="history.back()">
                 <i data-lucide="arrow-left"></i>
             </div>
-            <div class="header-title">Reward & Eran</div>
+            <div class="header-title">Reward & Earn</div>
             <div style="display: flex; gap: 8px;">
                 <div class="icon-circle" onclick="openInfo()">
                     <i data-lucide="help-circle"></i>
                 </div>
-                <div class="icon-circle hidden" id="themeBtn">
-                    <i data-lucide="moon"></i>
+                <div class="icon-circle" id="themeBtn" style="display: none;">
+                    
                 </div>
             </div>
         </div>
 
         <div class="profile-card">
+            <div class="profile-skeleton" id="profileSkeleton">
+                <div class="skeleton-avatar header-skeleton-shimmer"></div>
+                <div class="profile-details">
+                    <div class="skeleton-line header-skeleton-shimmer" style="width: 50%;"></div>
+                    <div class="skeleton-line header-skeleton-shimmer" style="width: 35%; height: 24px; border-radius: 50px;"></div>
+                </div>
+                <div class="skeleton-avatar header-skeleton-shimmer" style="width:68px; height:68px;"></div>
+            </div>
+
             <img id="profileAvatar" src="https://i.ibb.co/4pDNDk1/avatar.png" alt="avatar" class="avatar">
             <div class="profile-details">
                 <div class="profile-name" id="displayName">Loading...</div>
@@ -539,34 +604,59 @@
 </header>
 
 <main class="container">
-    <div class="action-card" id="dailyCard">
-        <div class="card-text">
-            <div class="card-title">Daily Check-In</div>
-            <div class="card-subtitle" id="dailySub">Earn ₹5 every day</div>
+    <div id="cardsSkeletonContainer">
+        <div class="skeleton-card">
+            <div class="card-text">
+                <div class="skeleton-line skeleton-shimmer" style="width: 40%; height: 18px;"></div>
+                <div class="skeleton-line skeleton-shimmer" style="width: 60%; height: 14px; margin-bottom:0;"></div>
+            </div>
+            <div class="skeleton-btn skeleton-shimmer"></div>
         </div>
-        <button class="cta-btn" id="dailyBtn" onclick="claimDaily()">Claim</button>
+        <div class="skeleton-card">
+            <div class="card-text">
+                <div class="skeleton-line skeleton-shimmer" style="width: 45%; height: 18px;"></div>
+                <div class="skeleton-line skeleton-shimmer" style="width: 55%; height: 14px; margin-bottom:0;"></div>
+            </div>
+            <div class="skeleton-btn skeleton-shimmer"></div>
+        </div>
+        <div class="skeleton-card">
+            <div class="card-text">
+                <div class="skeleton-line skeleton-shimmer" style="width: 35%; height: 18px;"></div>
+                <div class="skeleton-line skeleton-shimmer" style="width: 50%; height: 14px; margin-bottom:0;"></div>
+            </div>
+            <div class="skeleton-btn skeleton-shimmer"></div>
+        </div>
     </div>
 
-    <div class="action-card redeem-card" id="redeemCard">
-        <div class="card-text">
-            <div class="card-title">Redeem Rewards</div>
-            <div class="card-subtitle">Enter code & unlock bonuses</div>
+    <div id="actualCardsContent" class="hidden">
+        <div class="action-card" id="dailyCard">
+            <div class="card-text">
+                <div class="card-title">Daily Check-In</div>
+                <div class="card-subtitle" id="dailySub">Earn ₹5 every day</div>
+            </div>
+            <button class="cta-btn" id="dailyBtn" onclick="claimDaily()">Claim</button>
         </div>
-        <button class="cta-btn redeem" onclick="openRedeem()">
-            Redeem
-        </button>
-    </div>
 
-    <div class="action-card" id="newUserCard">
-        <div class="card-text">
-            <div class="card-title">New User Bonus</div>
-            <div class="card-subtitle">Welcome gift — 20 points</div>
+        <div class="action-card redeem-card" id="redeemCard">
+            <div class="card-text">
+                <div class="card-title">Redeem Rewards</div>
+                <div class="card-subtitle">Enter code & unlock bonuses</div>
+            </div>
+            <button class="cta-btn redeem" onclick="openRedeem()">
+                Redeem
+            </button>
         </div>
-        <button class="cta-btn" id="newUserBtn" onclick="claimNewUser()">Claim</button>
+
+        <div class="action-card" id="newUserCard">
+            <div class="card-text">
+                <div class="card-title">New User Bonus</div>
+                <div class="card-subtitle">Welcome gift — 20 points</div>
+            </div>
+            <button class="cta-btn" id="newUserBtn" onclick="claimNewUser()">Claim</button>
+        </div>
     </div>
 </main>
 
-<!-- Info Popup -->
 <div class="popup-backdrop" id="infoBackdrop" onclick="closeInfo()"></div>
 <div class="popup-panel" id="infoPanel">
     <div class="popup-drag"></div>
@@ -583,7 +673,6 @@
     </a>
 </div>
 
-<!-- Redeem Popup -->
 <div class="popup-backdrop" id="redeemBackdrop" onclick="closeRedeem()"></div>
 <div class="popup-panel" id="redeemPanel">
     <div class="popup-drag"></div>
@@ -644,7 +733,6 @@
         lucide.createIcons();
     });
 
-    // UPDATED FUNCTIONS - ONLY THESE CHANGED
     let currentBalance = 0;
 
     function loadBalance() {
@@ -682,8 +770,18 @@
         updateProgress();
         checkDaily();
         checkNewUser();
+        
+        // Artificial loader delay to display shimmer skeleton cleanly
+        setTimeout(() => {
+            // Hide structural skeletons
+            document.getElementById("profileSkeleton").classList.add("hidden");
+            document.getElementById("cardsSkeletonContainer").classList.add("hidden");
+            
+            // Show real operational interface elements
+            document.getElementById("actualCardsContent").classList.remove("hidden");
+            document.getElementById("themeBtn").classList.remove("hidden");
+        }, 1500);
     }
-    // END OF YOUR REQUESTED CHANGES
 
     function saveCoins(val) {
         currentBalance = val;
@@ -697,8 +795,10 @@
 
     function bounceCoins() {
         const el = document.getElementById("balanceAmount");
-        el.classList.add("coin-bounce");
-        setTimeout(() => el.classList.remove("coin-bounce"), 400);
+        if(el) {
+            el.classList.add("coin-bounce");
+            setTimeout(() => el.classList.remove("coin-bounce"), 400);
+        }
     }
 
     function showToast(text) {
