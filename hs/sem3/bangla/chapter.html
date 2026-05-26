@@ -6,20 +6,14 @@
       { id: 4, name: "বাঙ্গালা ভাষা - স্বামী বিবেকানন্দ (প্রবন্ধ) তৃতীয় সেমিস্টার MCQ প্রশ্ন উত্তর", content: { date: "May 08, 2026", title: "🔥বাঙ্গালা ভাষা - স্বামী বিবেকানন্দ (প্রবন্ধ) তৃতীয় সেমিস্টার MCQ প্রশ্ন উত্তর", image1: "https://i.ibb.co/rRs2x53h/IMG-20260423-WA0002.jpg", text: "🔥Physical Geography focus: Landforms and Climate cycles.", button1: {text: "View Notes", link: "https://tutopulse.22web.org/bangala-vasa-swami-bibekananda-sem-3/"} }},
       { id: 5, name: "পোটরাজ গল্প MCQ প্রশ্ন উত্তর উচ্চমাধ্যমিক বাংলা তৃতীয় সেমিস্টার", content: { date: "May 08, 2026", title: "🔥পোটরাজ গল্প MCQ প্রশ্ন উত্তর উচ্চমাধ্যমিক বাংলা তৃতীয় সেমিস্টার", image1: "https://i.ibb.co/jkQhn7rJ/potraj-bangla.png", text: "🔥Physical Geography focus: Landforms and Climate cycles.", button1: {text: "View Notes", link: "https://tutopulse.22web.org/potraj-sankar-rau-kharat-hs-sem3-2026/"} }},
       { id: 6, name: "তার সঙ্গে - পাবলো নেরুদা , MCQ প্রশ্ন উত্তর বাংলা তৃতীয় সেমিস্টার", content: { date: "May 08, 2026", title: "🔥'তার সঙ্গে' পাবলো নেরুদা , MCQ প্রশ্ন উত্তর বাংলা তৃতীয় সেমিস্টার", image1: "https://tutopulse.22web.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-24-at-8.00.03-PM.jpeg", text: "🔥Physical Geography focus: Landforms and Climate cycles.", button1: {text: "View Notes", link: "https://tutopulse.22web.org/tar-songe-pablo-neruda-hs-sem3/"} }},
-     
-
-
-
-
-
-];</script>
+     ];</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Bangla Notes | HS Semester 1</title>
-  <meta name="theme-color" content="#3047a5">
+  <meta name="theme-color" content="#07789B">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     * {
@@ -62,14 +56,16 @@
     }
     
     :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
+      --bg: #FAF1EB;
+      --card: #FAF1EB;
       --text-main: #1e293b;
       --text-sub: #64748b;
-      --header: #3047a5;
+      --header: #07789B;
       --accent: #3b82f6;
       --border: #e2e8f0;
       --success: #22c55e;
+      --skeleton-bg: #e2e8f0;
+      --skeleton-shimmer: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
     }
 
     body.dark {
@@ -78,15 +74,8 @@
       --text-main: #f1f5f9;
       --text-sub: #94a3b8;
       --border: #334155;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Nunito', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      --skeleton-bg: #334155;
+      --skeleton-shimmer: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
     }
 
     body {
@@ -94,6 +83,7 @@
       overflow-x: hidden;
       color: var(--text-main);
       transition: background 0.3s;
+      font-family: 'Nunito', sans-serif;
     }
 
     /* HEADER — fixed */
@@ -104,7 +94,7 @@
       width: 100%;
       color: #ffffff;
       height: 50px;
-      background: #3047a5;
+      background: #07789B;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -170,9 +160,10 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.09);
       cursor: pointer;
-      transition: transform 0.1s;
+      transition: transform 0.1s, opacity 0.4s ease;
+      opacity: 1;
     }
     
     .subject-item:active {
@@ -225,6 +216,84 @@
       color: var(--text-sub);
       width: 20px;
       height: 20px;
+    }
+
+    /* SMOOTH SKELETON ANIMATIONS */
+    .skeleton-item {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      pointer-events: none;
+    }
+
+    .skeleton-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--skeleton-shimmer);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+
+    .skeleton-text-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skeleton-line {
+      height: 14px;
+      border-radius: 4px;
+      background: var(--skeleton-shimmer);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+
+    .skeleton-line.short {
+      width: 65%;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* 3-DOT LOADING SPINNER STYLE */
+    .dot-loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 20px 0;
+      width: 100%;
+    }
+
+    .loading-dot {
+      width: 12px;
+      height: 12px;
+      background-color: #07789B;
+      border-radius: 50%;
+      display: inline-block;
+      animation: smoothDotBounce 1.4s infinite ease-in-out both;
+    }
+
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes smoothDotBounce {
+      0%, 80%, 100% { 
+        transform: scale(0);
+        opacity: 0.4;
+      } 
+      40% { 
+        transform: scale(1.0);
+        opacity: 1;
+      }
     }
 
     /* BOTTOM SHEET */
@@ -289,7 +358,7 @@
     }
     
     .sheet-close-icon {
-      background: #3047a5;
+      background: #07789B;
       border: none;
       width: 32px;
       height: 32px;
@@ -328,7 +397,7 @@
     
     .sheet-divider {
       height: 2px;
-      background: #3047a5;
+      background: #07789B;
       margin: 20px 0;
     }
     
@@ -347,7 +416,7 @@
       white-space: pre-line;
     }
 
-    /* FIXED ACTION BUTTONS (position fixed, independent of sheet scroll) */
+    /* FIXED ACTION BUTTONS */
     .sheet-actions {
       position: fixed;
       bottom: 0;
@@ -364,7 +433,6 @@
       transition: background 0.2s;
     }
     
-    /* when bottom-sheet is open, we ensure actions are visible above */
     .bottom-sheet.open ~ .sheet-actions,
     .sheet-actions {
       transform: translateY(0);
@@ -400,7 +468,6 @@
       transform: none;
     }
     
-    /* extra bottom padding on scrollable area so content doesn't hide behind fixed buttons */
     .sheet-scroll-area {
       padding-bottom: 90px;
     }
@@ -432,7 +499,7 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: #3047a5;
+      background: #07789B;
       border: none;
       color: white;
       z-index: 3100;
@@ -443,7 +510,6 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.3);
     }
     
-    /* No other structural changes */
     @media (max-width: 480px) {
       .sheet-btn {
         padding: 12px 10px;
@@ -458,7 +524,7 @@
 <body>
 
   <header class="app-header">
-    <button class="close-btn" onclick="handleCloseOrBack()"><i data-lucide="arrow-left"></i></button>
+    <button class="close-btn" onclick="goBack()"><i data-lucide="arrow-left"></i></button>
     <h1 class="header-title">Bangla (বাংলা) - Notes</h1>
     <button style="display: none;" class="theme-toggle" id="darkToggle"><i data-lucide="moon"></i></button>
   </header>
@@ -467,7 +533,6 @@
     <div class="subject-list" id="subjectList"></div>
   </main>
 
-  <!-- backdrop & bottom sheet -->
   <div class="sheet-backdrop" id="backdrop" onclick="closeAllSheets()"></div>
   <div class="bottom-sheet" id="bottomSheet">
     <div class="sheet-header">
@@ -475,15 +540,12 @@
       <div style="flex: 1"></div>
       <button class="sheet-close-icon" onclick="closeAllSheets()"><i data-lucide="x"></i></button>
     </div>
-    <!-- scrollable content area -->
     <div class="sheet-scroll-area" id="sheetScrollContent">
       <div id="sheetContentInner">
-        <!-- dynamic content injected here -->
-      </div>
+        </div>
     </div>
   </div>
 
-  <!-- FIXED ACTION BUTTONS - placed outside bottom-sheet but inside body to be fixed -->
   <div class="sheet-actions" id="sheetActions"></div>
 
   <div class="viewer" id="viewer">
@@ -492,8 +554,9 @@
   </div>
 
   <script>
-   
-
+function goBack() {
+            window.history.back();
+        }
     // --- DARK MODE LOGIC ---
     const darkToggle = document.getElementById('darkToggle');
     const body = document.body;
@@ -523,14 +586,48 @@
     // --- COMPLETED TRACKING ---
     let completedLessonNames = JSON.parse(localStorage.getItem('completedLessonNames')) || [];
 
+    // --- SMOOTH LOADING HANDLER ---
+    function displayLoadingState() {
+      const subjectList = document.getElementById('subjectList');
+      if(!subjectList) return;
+
+      let loadingHTML = '';
+      
+      // 1. Generate 3 matching skeleton items
+      for (let i = 0; i < 3; i++) {
+        loadingHTML += `
+          <div class="skeleton-item">
+            <div class="skeleton-circle"></div>
+            <div class="skeleton-text-container">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. Add the smooth 3-dot spinner styled with #07789B
+      loadingHTML += `
+        <div class="dot-loading-container">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
+      `;
+
+      subjectList.innerHTML = loadingHTML;
+    }
+
     function renderList() {
       const subjectList = document.getElementById('subjectList');
       if(!subjectList) return;
       subjectList.innerHTML = '';
+      
       subjects.forEach(sub => {
         const isDone = completedLessonNames.includes(sub.name);
         const item = document.createElement('div');
         item.className = `subject-item ${isDone ? 'completed' : ''}`;
+        item.style.opacity = '0'; // For smooth fade-in
         item.onclick = () => openSheet(sub);
         item.innerHTML = `
           <div class="subject-num">${sub.id}</div>
@@ -539,8 +636,22 @@
           <i data-lucide="sticker" class="subject-arrow"></i>
         `;
         subjectList.appendChild(item);
+        
+        // Trigger subtle staggered layout presentation
+        setTimeout(() => {
+          item.style.opacity = '1';
+        }, 50);
       });
       lucide.createIcons();
+    }
+
+    // Wrap loading & asynchronous initialization sequentially
+    function initializeDataFetch() {
+      displayLoadingState();
+      // Simulating data loading process time (e.g., 1.5 seconds)
+      setTimeout(() => {
+        renderList();
+      }, 1500);
     }
 
     // Global references
@@ -551,7 +662,6 @@
       const c = subject.content;
       const isDone = completedLessonNames.includes(subject.name);
       
-      // Inject content into scrollable area
       const contentContainer = document.getElementById('sheetContentInner');
       if(contentContainer) {
         contentContainer.innerHTML = `
@@ -563,7 +673,6 @@
         `;
       }
       
-      // Update fixed action buttons area (position fixed)
       const actionsDiv = document.getElementById('sheetActions');
       if(actionsDiv) {
         actionsDiv.innerHTML = `
@@ -576,16 +685,13 @@
         lucide.createIcons();
       }
       
-      // Show backdrop and bottom sheet
       document.getElementById('backdrop').classList.add('open');
       document.getElementById('bottomSheet').classList.add('open');
       document.body.style.overflow = 'hidden';
       
-      // reset scroll top inside sheet-scroll-area
       const scrollArea = document.querySelector('.sheet-scroll-area');
       if(scrollArea) scrollArea.scrollTop = 0;
       
-      // push history state for back navigation
       history.pushState({view: 'sheet'}, "");
     }
     
@@ -594,16 +700,13 @@
         completedLessonNames.push(name);
         localStorage.setItem('completedLessonNames', JSON.stringify(completedLessonNames));
         
-        // update button (fixed actions) if present
         const btn = document.getElementById('markDoneBtnFixed');
         if(btn) { 
           btn.innerText = "Completed"; 
           btn.disabled = true;
           btn.style.opacity = "0.7";
         }
-        // also update if we want to refresh list and maybe close sheet later
         renderList();
-        // optional: auto close after short delay
         setTimeout(() => {
           closeAllSheets();
         }, 600);
@@ -616,18 +719,10 @@
       if(backdrop) backdrop.classList.remove('open');
       if(sheet) sheet.classList.remove('open');
       document.body.style.overflow = '';
-      // clear active subject
       currentOpenSubject = null;
-      // optional: reset actions content to avoid showing stale data
-      const actionsDiv = document.getElementById('sheetActions');
-      if(actionsDiv && !document.getElementById('bottomSheet').classList.contains('open')) {
-        // do not erase completely but might clear later, but fine it will be replaced when needed.
-      }
-      // if viewer is open we don't want to conflict, but no need
     }
     
     function handleCloseOrBack() {
-      // If sheet is open, close sheet first, else go back in history
       if(document.getElementById('bottomSheet').classList.contains('open')) {
         closeAllSheets();
         return;
@@ -639,7 +734,7 @@
       history.back();
     }
     
-    // --- VIEWER SYSTEM (zoomable) ---
+    // --- VIEWER SYSTEM ---
     const viewer = document.getElementById('viewer');
     const viewerImg = document.getElementById('viewerImg');
     let scale = 1, lastScale = 1, translateX = 0, translateY = 0, startX = 0, startY = 0, prevDiff = -1, lastTap = 0;
@@ -655,9 +750,7 @@
     
     function closeImageViewer() {
       viewer.style.display = "none";
-      document.body.style.overflow = '';
       if(document.getElementById('bottomSheet').classList.contains('open')) {
-        // if sheet is also open, keep body overflow hidden? but fine.
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
@@ -704,30 +797,17 @@
       prevDiff = -1;
     });
     
-    // Back button handling (popstate)
     window.onpopstate = (event) => {
-      // if viewer is open -> close viewer
       if(viewer.style.display === 'flex') {
         closeImageViewer();
         return;
       }
-      // else close bottom sheet if open
       if(document.getElementById('bottomSheet').classList.contains('open')) {
         closeAllSheets();
         return;
       }
-      // otherwise do nothing
     };
     
-    // Additional helper for closing from backdrop click
-    function closeAllSheetsAndReturn() {
-      closeAllSheets();
-    }
-    
-    // Ensure action buttons are always visible and don't overlap incorrectly.
-    // When sheet closes, actions panel will be hidden? Actually we keep it empty but visible.
-    // But to make sure actions don't appear when sheet closed, we can hide the actions container when sheet closed.
-    // Currently action container is always present but we can manage its display.
     function syncActionsVisibility() {
       const actions = document.getElementById('sheetActions');
       const isSheetOpen = document.getElementById('bottomSheet').classList.contains('open');
@@ -736,28 +816,7 @@
       }
     }
     
-    // Override original open/close to sync visibility
-    const origCloseAll = closeAllSheets;
-    window.closeAllSheets = function() {
-      origCloseAll();
-      syncActionsVisibility();
-    };
-    
-    // Patch openSheet to show actions and sync
-    const origOpenSheet = openSheet;
-    window.openSheet = function(subject) {
-      origOpenSheet(subject);
-      syncActionsVisibility();
-    };
-    
-    // Re-declare to avoid conflicts, but we attach to window.
-    window.markAsComplete = markAsComplete;
-    window.openViewer = openViewer;
-    window.closeImageViewer = closeImageViewer;
-    window.handleCloseOrBack = handleCloseOrBack;
-    window.closeAllSheets = closeAllSheets;
-    
-    // initial call to override openSheet behavior properly
+    // Explicit re-mapping 
     openSheet = function(subject) {
       currentOpenSubject = subject;
       const c = subject.content;
@@ -801,14 +860,17 @@
       currentOpenSubject = null;
     };
     
-    // reassign global references
     window.openSheet = openSheet;
     window.closeAllSheets = closeAllSheets;
+    window.markAsComplete = markAsComplete;
+    window.openViewer = openViewer;
+    window.closeImageViewer = closeImageViewer;
+    window.handleCloseOrBack = handleCloseOrBack;
     
-    // initial sync: actions hidden by default
     document.getElementById('sheetActions').style.display = 'none';
     
-    renderList();
+    // Kickstart layout with loader logic
+    initializeDataFetch();
   </script>
 </body>
 </html>
