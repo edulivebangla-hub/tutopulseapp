@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            text-decoration: none;
+        }
+        
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+
+        :root {
+            --bg-color: #FAF1EB;
+            --header-bg: #2d42a7;
+            --card-bg: #FAF1EB;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-blue: #4472f1;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --skeleton-base: #e2e8f0;
+            --skeleton-shimmer: #f1f5f9;
+        }
+
+        /* Dark Mode Colors */
+        body.dark {
+            --bg-color: #121212;
+            --header-bg: #1a1a1a;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            --skeleton-base: #2d2d2d;
+            --skeleton-shimmer: #3d3d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg-color);
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0; 
+            gap: 15px;
+            width: 100%;
+            color: #ffffff;
+            height: 50px;
+            background: #07789B;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+        }
+
+        .header-content {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        #darkToggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-content {
+            position: fixed;
+            top: 50px;
+            bottom: 0px;
+            width: 100%;
+            max-width: 500px;
+            overflow-y: auto;
+            background: var(--bg-color);
+            transition: background-color 0.3s;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .app-content::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            background: transparent;
+        }
+
+        /* List Styles */
+        .list-container {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            transform: translateY(0);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.99);
+        }
+
+        .badge-num {
+            background-color: var(--accent-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .card-text {
+            flex-grow: 1;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .chevron-icon {
+            color: #ccc;
+            flex-shrink: 0;
+        }
+
+        /* --- LOADING COMPONENT STYLES --- */
+        #loading-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        /* Skeleton Loading UI */
+        .skeleton-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skeleton-badge {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--skeleton-base);
+            flex-shrink: 0;
+        }
+
+        .skeleton-text {
+            flex-grow: 1;
+            height: 18px;
+            background: var(--skeleton-base);
+            border-radius: 4px;
+        }
+
+        .skeleton-chevron {
+            width: 16px;
+            height: 16px;
+            background: var(--skeleton-base);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        /* Shimmer Wave Animation */
+        .skeleton-badge::after,
+        .skeleton-text::after,
+        .skeleton-chevron::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.2) 20%,
+                rgba(255, 255, 255, 0.5) 60%,
+                rgba(255, 255, 255, 0) 100-percent
+            );
+            background: linear-gradient(
+                90deg, 
+                var(--skeleton-base) 25%, 
+                var(--skeleton-shimmer) 50%, 
+                var(--skeleton-base) 75%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* 3-Dot Animated Loading Element */
+        .dot-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 20px 0;
+            margin-top: 10px;
+        }
+
+        .dot-spinner div {
+            width: 12px;
+            height: 12px;
+            background-color: #07789B;
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .dot-spinner .dot1 { animation-delay: -0.32s; }
+        .dot-spinner .dot2 { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+        /* Helper to switch state visibility */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <i data-lucide="x" onclick="goBack()"></i>
+        <div class="header-content">
+           Target Class 9 2026 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!
+        </div>
+        <button style="display: none;" id="darkToggle" title="Toggle Dark Mode">
+            <i data-lucide="moon"></i>
+        </button>
+    </header>
+
+    <main class="app-content">
+        <div id="loading-container">
+            <div class="skeleton-card">
+                <div class="skeleton-badge"></div>
+                <div class="skeleton-text" style="width: 75%;"></div>
+                <div class="skeleton-chevron"></div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-badge"></div>
+                <div class="skeleton-text" style="width: 50%;"></div>
+                <div class="skeleton-chevron"></div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-badge"></div>
+                <div class="skeleton-text" style="width: 60%;"></div>
+                <div class="skeleton-chevron"></div>
+            </div>
+
+            <div class="dot-spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+                <div class="dot3"></div>
+            </div>
+        </div>
+
+        <div id="real-content" class="list-container hidden">
+            <a href="https://wa.me/9339061296" class="card-link">
+                <div class="card">
+                    <div class="badge-num">1</div>
+                    <div class="card-text">🎯 Free বই স্টাডি রিসোর্স + ✅ WhatsApp Group [Special]</div>
+                    <i data-lucide="chevron-right" class="chevron-icon"></i>
+                </div>
+            </a>
+
+          
+        </div>
+    </main>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+    
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Dark Mode Toggle Logic
+    const darkToggle = document.getElementById('darkToggle');
+    const body = document.body;
+
+    // Check Local Storage on Load
+    if(localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark');
+        updateToggleIcon();
+    }
+
+    function updateToggleIcon() {
+        const isDark = body.classList.contains('dark');
+        const iconElem = darkToggle.querySelector('i');
+        if(iconElem) {
+            const iconName = isDark ? 'sun' : 'moon';
+            iconElem.setAttribute('data-lucide', iconName);
+            lucide.createIcons(); 
+        }
+    }
+
+    darkToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        localStorage.setItem('darkMode', body.classList.contains('dark'));
+        updateToggleIcon();
+        if(window.swiperInstance) window.swiperInstance.update();
+    });
+
+    // Handle Mock Processing State Transitions
+    window.addEventListener('DOMContentLoaded', () => {
+        const structuralLoader = document.getElementById('loading-container');
+        const actualUIContent = document.getElementById('real-content');
+
+        // Simulating data pulling timeline (2000 milliseconds)
+        setTimeout(() => {
+            structuralLoader.classList.add('hidden');
+            actualUIContent.classList.remove('hidden');
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>
