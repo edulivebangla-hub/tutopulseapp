@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+ * {
+      
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      transition: background 0.3s, color 0.3s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    a, span, p, h1, h2, h3, h4, h5, h6, div {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+      text-decoration: none;
+    }
+    
+    img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      user-drag: none;
+    }
+
+        :root {
+            --primary-color: #07789B;
+            --accent-color: #07789B;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #FAF1EB;
+            --card-bg: #ffffff;
+            --ribbon-bg: #f1f5f9;
+            --star-color: #cbd5e1; 
+            --border-radius: 10px;
+            --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --shimmer-start: #e2e8f0;
+            --shimmer-mid: #f1f5f9;
+        }
+
+        /* আপনার নতুন লজিক অনুযায়ী body.dark দিয়ে ডার্ক মোড স্টাইল */
+        body.dark {
+            --text-dark: #f1f5f9;
+            --text-muted: #94a3b8;
+            --bg-light: #0f172a;
+            --card-bg: #1e293b;
+            --ribbon-bg: #1e293b;
+            --shimmer-start: #1e293b;
+            --shimmer-mid: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* App container */
+        .app-container {
+            position: fixed;
+            top: 0px;
+            bottom: 60px;
+            width: 100%;
+            overflow-y: auto;
+            background: var(--bg-light);
+            transition: background-color 0.3s;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        /* FIXED HEADER POSITIONING */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: #07789B;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition-smooth);
+            font-size: 20px; /* ইমোজির সাইজ ঠিক রাখার জন্য */
+        }
+
+        .nav-btn svg {
+            width: 25px;
+            height: 25px;
+        }
+
+        .nav-btn:active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Profile & Balance Ribbon Widget */
+        .user-ribbon {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 8px;
+            background: var(--ribbon-bg);
+            margin: 0 0 0px 0; gap: 8px;
+            border-radius: 12px;
+            font-size: 13px;
+            transition: background-color 0.3s;
+        }
+
+        .user-profile-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-profile-info img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+
+        .user-profile-info span {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .coin-balance {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            color: #d97706;
+            background: #fef3c7;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        
+        body.dark .coin-balance {
+            background: #78350f;
+            color: #fef3c7;
+        }
+
+        .coin-balance svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Main Content Scroll wrapper */
+        .content-scroll {
+            padding: 60px 20px 30px 20px; 
+            flex: 1;
+        }
+
+        /* Image Display & Shimmer Frame */
+        .media-frame {
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background-color: var(--shimmer-start);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: background-color 0.3s;
+        }
+
+        .media-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .media-frame.loaded img {
+            opacity: 1;
+        }
+
+        /* Absolute Skeleton Overlay */
+        .skeleton-shimmer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--shimmer-start) 25%, var(--shimmer-mid) 50%, var(--shimmer-start) 75%);
+            background-size: 200% 100%;
+            animation: shimmerLinear 1.6s infinite;
+            z-index: 2;
+        }
+
+        .media-frame.loaded .skeleton-shimmer {
+            display: none;
+        }
+
+        @keyframes shimmerLinear {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Course Identity Typography */
+        .course-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        /* Course Description */
+        .course-description {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        /* Author Metadata Block */
+        .author-section {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-label {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .author-brand { 
+            font-size: 20px; 
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            color: #38bdf8; 
+            margin-left: 5px; 
+            
+        }
+
+        /* Structured Specification list items */
+        .spec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 15px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .spec-item svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+        }
+
+        /* FIXED FOOTER BOTTOM ACTION DOCK */
+        .action-dock {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px; 
+            background: var(--card-bg);
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: 85px 1fr;
+            gap: 12px;
+            align-items: center;
+            border-top: 1px solid var(--shimmer-start);
+            box-sizing: border-box;
+            z-index: 10;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .badge-free {
+            background-color: var(--card-bg);
+            border: 1px solid var(--text-muted);
+            color: #07789B;
+            border-radius: 24px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-action-trigger {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 24px;
+            height: 48px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .btn-action-trigger:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        /* 3-Dot Processing Loading Animation */
+        .loader-dots-element {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            z-index: 3;
+        }
+
+        .loader-dots-element span {
+            width: 8px;
+            height: 8px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: inline-block;
+            animation: dotElasticity 1.4s infinite ease-in-out both;
+        }
+
+        .loader-dots-element span:nth-child(1) { animation-delay: -0.32s; }
+        .loader-dots-element span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes dotElasticity {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+        /* Custom Smart Modals Window */
+        .modal-overlay {
+            position: fixed; 
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-sheet {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 24px 24px 0 0;
+            padding: 24px 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 85%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-sheet {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .btn-modal-close {
+            background: var(--ribbon-bg);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: background-color 0.3s;
+        }
+
+        .btn-modal-close svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Options Selector Card Items */
+        .unlock-option-card {
+            border: 2px solid var(--shimmer-start);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: var(--transition-smooth);
+            background: var(--card-bg);
+        }
+
+        .unlock-option-card:hover, .unlock-option-card.selected {
+            border-color: var(--accent-color);
+        }
+
+        .option-icon-frame {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-icon-frame svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .coin-frame { background: #fef3c7; color: #d97706; }
+        .pass-frame { background: #e0f2fe; color: #0284c7; }
+
+        .option-details {
+            flex: 1;
+        }
+
+        .option-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .option-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Workflow Panes */
+        .workflow-pane {
+            display: none;
+        }
+
+        .workflow-pane.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-control {
+            width: 100%;
+            height: 50px;
+            border: 2px solid var(--shimmer-start);
+            background: var(--card-bg);
+            color: var(--text-dark);
+            border-radius: 12px;
+            padding: 0 16px;
+            font-size: 15px;
+            outline: none;
+            font-family: inherit;
+            transition: var(--transition-smooth);
+        }
+
+        .input-control:focus {
+            border-color: var(--accent-color);
+        }
+
+        .btn-submit-action {
+            width: 100%;
+            height: 48px;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Custom Toast Notification Panel */
+        .toast-notification-hub {
+            position: fixed; 
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 440px;
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .custom-toast {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 8px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .custom-toast.reveal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .custom-toast.toast-error { border-left: 4px solid #ef4444; }
+        .custom-toast.toast-success { border-left: 4px solid #10b981; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="toast-notification-hub" id="toastHub"></div>
+
+        <header class="top-navbar">
+            <button class="nav-btn" onclick="goBack()"><i data-lucide="x"></i></button>
+              <div class="user-ribbon">
+                <div class="user-profile-info">
+                    <img id="profileAvatar" src="" alt="Profile pic">
+                    <span id="displayName"></span>
+                </div>
+                <div class="coin-balance">
+                    <i data-lucide="badge-indian-rupee"></i>
+                    <span id="balanceAmount">0</span>
+                </div>
+            </div>
+ <button class="nav-btn" id="darkToggle" aria-label="Toggle Dark Mode" style="display: none;">🌙</button>
+    
+ </header>
+
+        <main class="content-scroll">
+            
+           
+
+            <div class="media-frame" id="bannerFrame">
+                <div class="skeleton-shimmer"></div>
+                <img src="https://i.ibb.co/CK78V6m7/Class-09.jpg" alt="Class 11 Arts" id="courseImage">
+            </div>
+
+            <h1 class="course-title">Target Class 9 2026 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!</h1>
+            
+            <p class="course-description">
+                নতুন সিস্টেমে পড়ুয়াদের জন্য পড়াশোনা, সাজেশন ও ভিডিও ক্লাস!
+            </p>
+
+            <div class="author-section">
+                <span class="author-label">Created By <a href="https://tupopulse.netlify.app/tutor/aninda.html" class="author-brand"> Aninda Halder </a> <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--bg-light);fill: #FFD036;"></i> </span>
+            </div>
+
+            <div class="spec-list">
+                <div class="spec-item">
+                    <i data-lucide="calendar"></i>
+                    <span>Last Updated: 27 May 2026</span>
+                </div>
+                <div class="spec-item">
+                    <i data-lucide="globe"></i>
+                    <span>Language: বাংলা & English</span>
+                </div>
+                <div class="spec-item">
+                    <i data-lucide="clock"></i>
+                    <span>Duration: 0 Months</span>
+                </div>
+                <div class="spec-item">
+                    <i data-lucide="video"></i>
+                    <span>0 Lessons</span>
+                </div>
+            </div>
+</main>
+
+        <footer class="action-dock">
+            <div class="badge-free">Free</div>
+            <button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()">
+                <span id="buttonTextLabel">Enroll Now</span>
+                <div class="loader-dots-element" id="dockButtonLoader">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </footer>
+
+        <div class="modal-overlay" id="workflowModalOverlay">
+            <div class="modal-sheet">
+                
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modalDisplayTitle">Unlock Course</h3>
+                    <button class="btn-modal-close" onclick="dismissModalSheet()"><i data-lucide="x"></i></button>
+                </div>
+
+                <div class="workflow-pane active" id="paneSelectionHub">
+                    <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">কোর্সটি আনলক করতে নিচের যেকোনো একটি মাধ্যম বেছে নিন:</p>
+                    
+                    <div class="unlock-option-card" onclick="routeToPane('coin')">
+                        <div class="option-icon-frame coin-frame">
+                            <i data-lucide="badge-indian-rupee"></i>
+                        </div>
+                        <div class="option-details">
+                            <div class="option-title">Unlock with Rupee</div>
+                            <div class="option-sub">Requires 50 Reward Rupee</div>
+                        </div>
+                        <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
+                    </div>
+
+                    <div class="unlock-option-card" onclick="routeToPane('password')">
+                        <div class="option-icon-frame pass-frame">
+                            <i data-lucide="key-round"></i>
+                        </div>
+                        <div class="option-details">
+                            <div class="option-title">Unlock with Password</div>
+                            <div class="option-sub">Enter premium authorization key</div>
+                        </div>
+                        <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
+                    </div>
+                </div>
+
+                <div class="workflow-pane" id="paneCoinProcessor">
+                    <div style="text-align:center; padding:10px 0 20px 0;">
+                        <i data-lucide="badge-indian-rupee" style="width:48px; height:48px; color:#d97706; margin: 0 auto 12px auto;"></i>
+                        <p style="font-size:15px; font-weight:600; margin-bottom:4px;">Confirm Coin Deduction</p>
+                        <p style="font-size:13px; color:var(--text-muted);">50 rupee will be deducted from your account balance.</p>
+                    </div>
+                    <button class="btn-submit-action" onclick="executeCoinDeductions()">
+                        <span id="coinActionText">Confirm & Unlock</span>
+                        <div class="loader-dots-element" id="coinPaneLoader">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="workflow-pane" id="panePasswordProcessor">
+                    <div class="input-group">
+                        <input type="password" class="input-control" id="secretPasskeyField" placeholder="Enter Unlock Password">
+                    </div>
+                    <button class="btn-submit-action" onclick="executePasswordVerification()">
+                        <span id="passActionText">Verify Secret Password</span>
+                        <div class="loader-dots-element" id="passPaneLoader">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+function goBack() {
+            window.history.back();
+        }
+
+        const COURSE_ID = "c09_2026-27"; 
+        const REDIRECT_URL = "subject.html";
+        const REQUIRED_COINS_COST = 50; 
+        const SECRET_MASTER_PASSWORD = "EXZQ#@GGDD2026"; 
+
+        let currentBalance = 0;
+
+        function loadBalance() {
+            let stored = localStorage.getItem("reward_coins");
+            if(stored === null || isNaN(parseInt(stored))) { 
+                currentBalance = 0; 
+                localStorage.setItem("reward_coins", "0"); 
+            } else { 
+                currentBalance = parseInt(stored, 10); 
+            }
+            const balanceSpan = document.getElementById("balanceAmount");
+            if(balanceSpan) balanceSpan.innerText = currentBalance;
+        }
+
+        function loadProfileData() {
+            let savedName = localStorage.getItem("student_display_name");
+            if(!savedName || savedName.trim() === "") { 
+                savedName = "TutoPulse"; 
+                localStorage.setItem("student_display_name", savedName); 
+            }
+            const nameEl = document.getElementById("displayName");
+            if(nameEl) nameEl.innerText = savedName;
+
+            let savedPic = localStorage.getItem("profile_image_url");
+            if(!savedPic || savedPic === "") { 
+                savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; 
+                localStorage.setItem("profile_image_url", savedPic); 
+            }
+            const avatar = document.getElementById("profileAvatar");
+            if(avatar) avatar.src = savedPic;
+        }
+
+        function ensureDataIntegrity() {
+            if(localStorage.getItem("reward_coins") === null) localStorage.setItem("reward_coins", "0");
+            if(localStorage.getItem("student_display_name") === null) localStorage.setItem("student_display_name", "TutoPulse");
+            if(localStorage.getItem("profile_image_url") === null) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
+        }
+
+        // Init System Runtime Hooks
+        document.addEventListener("DOMContentLoaded", () => {
+            // আপনার ডার্ক মোড কোড চালুকরণ
+            initDarkModePreference();
+            
+            ensureDataIntegrity();
+            loadBalance();
+            loadProfileData();
+            initializeViewLifecycle();
+            evaluateEnrollmentLockState();
+            
+            lucide.createIcons();
+        });
+
+        // ========== আপনার পাঠানো ডার্ক মোড টগল লজিক (ইন্টিগ্রেটেড) ==========
+        const darkToggle = document.getElementById("darkToggle");
+        const body = document.body;
+        
+        function initDarkModePreference() {
+            // Load saved preference or default to light (false)
+            if (localStorage.getItem("darkMode") === "true") {
+                body.classList.add("dark");
+                darkToggle.textContent = "☀️";
+            } else {
+                body.classList.remove("dark");
+                darkToggle.textContent = "🌙";
+            }
+        }
+        
+        // Toggle event listener
+        darkToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            localStorage.setItem("darkMode", isDark);
+            darkToggle.textContent = isDark ? "☀️" : "🌙";
+        });
+        // ====================================================================
+
+        // Image skeleton loading states setup
+        function initializeViewLifecycle() {
+            const bannerFrame = document.getElementById("bannerFrame");
+            const courseImg = document.getElementById("courseImage");
+            
+            if (courseImg.complete) {
+                bannerFrame.classList.add("loaded");
+            } else {
+                courseImg.addEventListener("load", () => {
+                    bannerFrame.classList.add("loaded");
+                });
+                courseImg.addEventListener("error", () => {
+                    bannerFrame.style.background = "var(--shimmer-mid)";
+                });
+            }
+        }
+
+        // --- Custom App Notifications Engine ---
+        function dispatchToast(textAlert, mode = "error") {
+            const hub = document.getElementById("toastHub");
+            const toast = document.createElement("div");
+            toast.className = `custom-toast toast-${mode}`;
+            
+            const iconName = mode === "success" ? "circle-check" : "triangle-alert";
+            toast.innerHTML = `<i data-lucide="${iconName}"></i> <span>${textAlert}</span>`;
+            
+            hub.appendChild(toast);
+            lucide.createIcons({ attrs: { class: [] } });
+            
+            setTimeout(() => toast.classList.add("reveal"), 50);
+
+            setTimeout(() => {
+                toast.classList.remove("reveal");
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- Enrollment Lock state config ---
+        function evaluateEnrollmentLockState() {
+            const actionBtn = document.getElementById("masterActionButton");
+            const textLabel = document.getElementById("buttonTextLabel");
+            const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`);
+            
+            if (isUnlocked === "true") {
+                actionBtn.classList.add("unlocked-state");
+                textLabel.innerText = "Start Course";
+            } else {
+                actionBtn.classList.remove("unlocked-state");
+                textLabel.innerText = "Enroll Now";
+            }
+        }
+
+        function handleEnrollmentWorkflow() {
+            const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`);
+            const loader = document.getElementById("dockButtonLoader");
+            const textLabel = document.getElementById("buttonTextLabel");
+
+            if (loader.style.display === "flex") return;
+
+            textLabel.style.opacity = "0";
+            loader.style.display = "flex";
+
+            setTimeout(() => {
+                textLabel.style.opacity = "1";
+                loader.style.display = "none";
+
+                if (isUnlocked === "true") {
+                    window.location.href = REDIRECT_URL;
+                } else {
+                    if (REQUIRED_COINS_COST === 0) {
+                        localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
+                        dispatchToast("কোর্সটি সফলভাবে অ্যাক্টিভেট করা হয়েছে!", "success");
+                        evaluateEnrollmentLockState();
+                    } else {
+                        presentModalSheet();
+                    }
+                }
+            }, 1200); 
+        }
+
+        function presentModalSheet() {
+            document.getElementById("workflowModalOverlay").classList.add("active");
+            routeToPane('hub');
+        }
+
+        function dismissModalSheet() {
+            document.getElementById("workflowModalOverlay").classList.remove("active");
+            document.getElementById("secretPasskeyField").value = "";
+        }
+
+        function routeToPane(paneId) {
+            const titleEl = document.getElementById("modalDisplayTitle");
+            
+            document.getElementById("paneSelectionHub").classList.remove("active");
+            document.getElementById("paneCoinProcessor").classList.remove("active");
+            document.getElementById("panePasswordProcessor").classList.remove("active");
+
+            if (paneId === 'hub') {
+                titleEl.innerText = "Unlock Course";
+                document.getElementById("paneSelectionHub").classList.add("active");
+            } else if (paneId === 'coin') {
+                titleEl.innerText = "Unlock via Rupee";
+                document.getElementById("paneCoinProcessor").classList.add("active");
+            } else if (paneId === 'password') {
+                titleEl.innerText = "Unlock via Password";
+                document.getElementById("panePasswordProcessor").classList.add("active");
+            }
+        }
+
+        function executeCoinDeductions() {
+            const textLabel = document.getElementById("coinActionText");
+            const loader = document.getElementById("coinPaneLoader");
+            
+            if(loader.style.display === "flex") return;
+
+            if (currentBalance < REQUIRED_COINS_COST) {
+                dispatchToast("আপনার পর্যাপ্ত কয়েন নেই!", "error");
+                return;
+            }
+
+            textLabel.style.opacity = "0";
+            loader.style.display = "flex";
+
+            setTimeout(() => {
+                currentBalance -= REQUIRED_COINS_COST;
+                localStorage.setItem("reward_coins", currentBalance.toString()); 
+                document.getElementById("balanceAmount").innerText = currentBalance;
+                
+                commitSuccessfulUnlock();
+                
+                textLabel.style.opacity = "1";
+                loader.style.display = "none";
+            }, 1500);
+        }
+
+        function executePasswordVerification() {
+            const inputField = document.getElementById("secretPasskeyField");
+            const textLabel = document.getElementById("passActionText");
+            const loader = document.getElementById("passPaneLoader");
+
+            if(loader.style.display === "flex") return;
+
+            if (inputField.value.trim() !== SECRET_MASTER_PASSWORD) {
+                dispatchToast("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।", "error");
+                return;
+            }
+
+            textLabel.style.opacity = "0";
+            loader.style.display = "flex";
+
+            setTimeout(() => {
+                commitSuccessfulUnlock();
+                
+                textLabel.style.opacity = "1";
+                loader.style.display = "none";
+            }, 1500);
+        }
+
+        function commitSuccessfulUnlock() {
+            localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
+            dispatchToast("কোর্সটি সফলভাবে আনলক করা হয়েছে!", "success");
+            evaluateEnrollmentLockState();
+            dismissModalSheet();
+        }
+    </script>
+</body>
+</html>
