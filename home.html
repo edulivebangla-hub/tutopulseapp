@@ -5,48 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TutoGenius App</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-<style>
-  /* ===== LIGHT MODE VARIABLES (default) ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            transition: background 0.3s, color 0.3s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        a, span, p, h1, h2, h3, h4, h5, h6, div {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            text-decoration: none;
-        }
-        
-        img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-        }
-   :root {  --bg:#ffffff;
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <style>
+        /* ===== GLOBAL CONSTANTS & CSS VARIABLES ===== */
+        :root {
+            --bg: #ffffff;
             --primary-blue: #2c3e8c;
             --bg-light: #f4f6fc;
             --card-border: #e2e7f7;
@@ -56,34 +19,46 @@
             --deadline-text: #c62828;
             --text-main: #212121;
             --text-sub: #616161;
-            --text-muted:#8D94A2;
+            --text-muted: #8D94A2;
+            --skeleton-base: #e2e8f0;
+            --skeleton-shimmer: #f1f5f9;
         }
-body.dark{
-            --bg:#000;
+
+        body.dark {
+            --bg: #000000;
             --primary-blue: #3b82f6;
-            --bg-light: #f4f6fc;
-            --card-border: #e2e7f7;
-            --btn-green: #c8e6c9;
-            --btn-text-green: #2e7d32;
-            --deadline-bg: #ffebee;
-            --deadline-text: #c62828;
-            --text-main: #212121;
-            --text-sub: #616161;
-            --text-muted:#8D94A2;
+            --bg-light: #111827;
+            --card-border: #1f2937;
+            --btn-green: #064e3b;
+            --btn-text-green: #34d399;
+            --deadline-bg: #7f1d1d;
+            --deadline-text: #fca5a5;
+            --text-main: #f9fafb;
+            --text-sub: #9ca3af;
+            --text-muted: #6b7280;
+            --skeleton-base: #1f2937;
+            --skeleton-shimmer: #374151;
+        }
 
-
-
-
-
-
-
-}
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s, border-color 0.3s, opacity 0.3s;
             -webkit-tap-highlight-color: transparent;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            text-decoration: none;
         }
 
         body {
@@ -93,14 +68,19 @@ body.dark{
             align-items: center;
             min-height: 100vh;
         }
-   /* ===== HEADER - UNCHANGED ===== */
+
+        body.dark {
+            background-color: #030712;
+        }
+
+        /* ===== HEADER SECTION ===== */
         .app-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 50px;
-            background:#905AF8;
+            background: #905AF8;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -108,20 +88,24 @@ body.dark{
             z-index: 1000;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
         .header-left {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .logo-img {
             width: 150px;
         }
+
         .header-right {
             display: flex;
             align-items: center;
             gap: 5px;
             color: #fff;
         }
+
         .header-icon {
             padding: 7px;
             cursor: pointer;
@@ -131,46 +115,39 @@ body.dark{
             border-radius: 50px;
             background: transparent;
             color: #fff;
-        }
-  .header-icon:active { transform: scale(0.95); }
-       
-
-        .gift-img {
-            width: 26px;
-            height: 26px;
+            transition: transform 0.1s ease;
         }
 
-        /* Mobile Container Wrapper */
+        .header-icon:active { 
+            transform: scale(0.95); 
+        }
+
+        /* ===== APPLICATION CONTAINER MAIN ===== */
         .app-container {
-             position: fixed;
-            top: 46px;
-            bottom: 60px;
+            position: fixed;
+            top: 50px;
+            bottom: 65px;
             width: 100%;
             overflow-y: auto;
             background: var(--bg);
-            transition: background-color 0.3s;
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
-        .app-content::-webkit-scrollbar {
+
+        .app-container::-webkit-scrollbar {
             display: none;
-            width: 0;
-            background: transparent;
         }
 
-        /* Main Content Body */
         .content {
             padding: 0 16px;
-            flex: 1;
-            padding-bottom: 0px; /* Space for bottom nav */
         }
 
-        /* User Profile Greeting */
-        .user-section { padding: 16px 16px 0 16px;
+        /* ===== PROFILE USER COMPONENT ===== */
+        .user-section { 
+            padding: 16px 16px 0 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            
         }
 
         .user-info {
@@ -189,9 +166,14 @@ body.dark{
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background-color: #e2e8f0;
+            background-color: var(--bg-light);
             border: 2px dashed #2b44b8;
             padding: 2px;
+            object-fit: cover;
+        }
+
+        body.dark .avatar {
+            border-color: #905AF8;
         }
 
         .user-meta p {
@@ -199,45 +181,81 @@ body.dark{
             color: #2b44b8;
             font-weight: 600;
         }
-       body.dark .user-meta p{ color: #905AF8;}
+
+        body.dark .user-meta p { 
+            color: #905AF8;
+        }
 
         .user-meta h3 {
             font-size: 16px;
-            color: #1a1a1a;
+            color: var(--text-main);
             font-weight: 700;
         }
- body.dark .user-meta h3{ color: #ffffff;}
 
-        
-           
-        }
-  .coin-meta p {
+        .coin-meta p {
             font-size: 12px;
-            color: #2b44b8;
+            color: #3b82f6;
             font-weight: 600;
         }
-body.dark .coin-meta h3{ color: #ffffff;}
+
         .coin-meta h3 {
             font-size: 14px;
-            color: #1a1a1a;
+            color: var(--text-main);
             font-weight: 700;
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        /* Promotional Banner */
+
+        /* ===== SWIPER BANNERS STRIP ===== */
+        .swiper {
+            width: 100%;
+            padding-bottom: 32px; 
+            padding-top: 10px; 
+        }
+
+        .swiper-slide {
+            width: 280px; 
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #d1d5db;
+            opacity: 1;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: #ffb703 !important;
+        }
+
+        /* ===== ADVERTISEMENT BANNER MODULES ===== */
         .promo-banner {
             background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
             border-radius: 16px;
-            padding: 10px;
-            position: relative;
+            padding: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            overflow: hidden;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             border: 1px solid rgba(43, 68, 184, 0.05);
+        }
+
+        body.dark .promo-banner {
+            background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
+            border-color: rgba(255, 255, 255, 0.05);
         }
 
         .banner-left {
@@ -246,8 +264,8 @@ body.dark .coin-meta h3{ color: #ffffff;}
         }
 
         .banner-tag {
-            font-size: 14px;
-            color: #64748b;
+            font-size: 12px;
+            color: var(--text-sub);
             text-transform: uppercase;
             font-weight: 600;
             margin-bottom: 4px;
@@ -260,6 +278,10 @@ body.dark .coin-meta h3{ color: #ffffff;}
             margin-bottom: 12px;
         }
 
+        body.dark .banner-title {
+            color: #ffffff;
+        }
+
         .banner-btn {
             background-color: #ff0044;
             color: white;
@@ -267,7 +289,6 @@ body.dark .coin-meta h3{ color: #ffffff;}
             border-radius: 20px;
             font-size: 12px;
             font-weight: 700;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -281,33 +302,32 @@ body.dark .coin-meta h3{ color: #ffffff;}
         }
 
         .emblem-img {
-            width: 80px;
-            height: auto;
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
         }
 
-        .laptop-illustration {
-            width: 60px;
-            height: auto;
-        }
-       .button-img {
+        .button-img {
             width: 45px;
-            height: auto;
+            height: 45px;
+            object-fit: cover;
         }
-    
-        /* Section Title Layout */
+
+        /* ===== UI CONTENT WRAPPERS ===== */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
+            margin-top: 8px;
         }
 
         .section-title {
             font-size: 18px;
-            color: #475569;
+            color: var(--text-main);
             font-weight: 700;
         }
-body.dark .section-title{ color: #ffffff;}
+
         .section-title span {
             color: #3b82f6;
         }
@@ -319,11 +339,10 @@ body.dark .section-title{ color: #ffffff;}
             border-radius: 16px;
             font-size: 13px;
             font-weight: 700;
-            text-decoration: none;
             background: transparent;
         }
 
-        /* Study Courses Grid Grid */
+        /* ===== STUDY DASHBOARD COURSE GRID ===== */
         .course-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -333,12 +352,11 @@ body.dark .section-title{ color: #ffffff;}
 
         .course-card {
             background: var(--bg);
-            border: 2px solid #e0e7ff;
+            border: 2px solid var(--card-border);
             border-radius: 12px;
-            padding: 5px 4px;
+            padding: 4px 4px;
             text-align: center;
-            text-decoration: none;
-            color: #334155;
+            color: var(--text-sub);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -346,7 +364,7 @@ body.dark .section-title{ color: #ffffff;}
             font-size: 12px;
             font-weight: 600;
         }
-body.dark .course-card{ color: #ffffff; }
+
         .course-icon-container {
             width: 45px;
             height: 45px;
@@ -364,16 +382,17 @@ body.dark .course-card{ color: #ffffff; }
             background-color: #ef4444;
             color: white;
             font-size: 9px;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
+            border: 1px solid var(--bg);
         }
 
-        /* Quick Action Feature Split Boxes */
+        /* ===== QUICK ACTION WIDGET ROW ===== */
         .action-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -383,127 +402,71 @@ body.dark .course-card{ color: #ffffff; }
 
         .action-box {
             background-color: var(--bg);
-            border: 2px dashed #e0e7ff;
+            border: 2px dashed var(--card-border);
             border-radius: 12px;
             padding: 5px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-           font-size: 12px;
-            color: #1a1a1a;
+            gap: 8px;
+            color: var(--text-main);
             font-weight: 700;
         }
-body.dark .action-box{ color: #ffffff;}
 
-        .action-icon { display: flex;
+        .action-icon { 
+            display: flex;
             font-size: 24px;
         }
-      
-   
-    
 
-        /* Utility styles for specific items matching screenshot colors */
         .bg-blue-light { background-color: #eff6ff; }
         .bg-indigo-light { background-color: #e0e7ff; }
         .bg-purple-light { background-color: #f5f3ff; }
         .bg-pink-light { background-color: #fdf2f8; }
-   
 
+        body.dark .bg-blue-light { background-color: #1e3a8a; }
+        body.dark .bg-indigo-light { background-color: #312e81; }
+        body.dark .bg-purple-light { background-color: #4c1d95; }
+        body.dark .bg-pink-light { background-color: #831843; }
 
-
-
-   .swiper {
-            width: 100%;
-            padding-bottom: 32px; 
-            padding-top: 10px; 
-        }
-
-        .swiper-slide {
-            position: relative; /* Required for absolute positioning of text */
-            width: 280px; height: 120px;
-            /* Increased height to accommodate text better */
-            border-radius: 12px;
-            
-            transition: 0.5s ease-in-out;
-            overflow: hidden;
-        }
-
-        .swiper-slide-active {
-            opacity: 1;
-        }
-
-      
-
-        .swiper-slide img {
-            display: block;
-            width: 100%; 
-            object-fit: cover;
-            border-top-right-radius: 10px;
-            border-top-left-radius: 10px;
-            background: rgba(0,0,0,0.1);
-        }
-
-      
-
-        /* Pagination Styling */
-        .swiper-pagination-bullet {
-            width: 10px;
-            height: 10px;
-            background: #d1d5db;
-            opacity: 1;
-        }
-        
-        .swiper-pagination-bullet-active {
-            background: #ffb703 !important;
-        }
-    
-
-
-
-
-   /* Top Navigation Bar */
+        /* ===== TAB CONTROLS NAVIGATION STRIP ===== */
         .nav-tabs {
             display: flex;
             background: var(--bg);
-            border-bottom: 2px solid #eef1f8;
+            border-bottom: 2px solid var(--card-border);
             position: sticky;
             top: 0;
             z-index: 100;
             overflow-x: auto;
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            scrollbar-width: none;
         }
         
         .nav-tabs::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Chrome/Safari */
+            display: none;
         }
 
         .tab-item {
-            flex: 1;
-            width: 100%;
+            flex: 0 0 auto;
+            min-width: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px 6px 8px 6px;
+            padding: 10px 12px 8px 12px;
             cursor: pointer;
             position: relative; 
-            transition: all 0.2s ease;
-            text-decoration: none;
-            color: var(--text-sub);
+            color: var(--text-muted);
             text-align: center;
-            margin-right: 10px;
         }
 
         .tab-item img {
             width: 32px;
             height: 32px;
+            border-radius: 50%;
             object-fit: contain;
             margin-bottom: 6px;
         }
 
         .tab-item span {
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             white-space: nowrap;
         }
 
@@ -514,28 +477,26 @@ body.dark .action-box{ color: #ffffff;}
         .tab-item.active::after {
             content: '';
             position: absolute;
-            bottom: -0px;         
+            bottom: 0;         
             width: 80%;
-            height: 5px;
+            height: 4px;
             background-color: var(--primary-blue);
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
         }
 
-        /* Content Area */
+        /* ===== UPDATE ITEMS CORE CONTAINER ===== */
         .content-container {
-            padding: 10px;
-            flex: 1;
+            padding: 14px 0;
             position: relative;
-            min-height: 400px;
+            min-height: 250px;
         }
 
-        /* Card Layout Layouts */
         .cards-list {
             display: flex;
             flex-direction: column;
             gap: 14px;
-            transition: opacity 0.3s ease;
+            opacity: 1;
         }
 
         .card {
@@ -547,52 +508,58 @@ body.dark .action-box{ color: #ffffff;}
             align-items: center;
             position: relative;
             box-shadow: 0 2px 8px rgba(44, 62, 140, 0.02);
+            transform: translateY(0);
+            animation: cardAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card-logo {
             width: 52px;
             height: 52px;
-            object-fit: contain;
+            object-fit: cover;
             margin-right: 14px;
             flex-shrink: 0;
+            border-radius: 50%;
         }
 
         .card-info {
             flex: 1;
-            padding-right: 65px; /* Leave space for absolute elements */
+            padding-right: 70px; 
         }
 
         .card-title {
             font-size: 15px;
             font-weight: 600;
             margin-bottom: 4px;
-            color: #000000;
+            color: var(--text-main);
             line-height: 1.2;
         }
-body.dark .card-title{ color: #ffffff;}
+
         .card-desc {
             font-size: 12px;
             color: var(--text-sub);
             line-height: 1.4;
         }
 
-        /* Action elements inside cards */
         .btn-apply {
             position: absolute;
-            top: 14px;
+            top: 50%;
             right: 14px;
+            transform: translateY(-50%);
             background-color: var(--btn-green);
             color: var(--btn-text-green);
-            text-decoration: none;
             padding: 6px 14px;
             border-radius: 14px;
             font-size: 13px;
-            font-weight: 500;
-            transition: transform 0.1s ease;
+            font-weight: 700;
         }
 
         .btn-apply:active {
-            transform: scale(0.95);
+            transform: translateY(-50%) scale(0.95);
         }
 
         .deadline-tag {
@@ -609,56 +576,91 @@ body.dark .card-title{ color: #ffffff;}
             letter-spacing: 0.5px;
         }
 
-        /* Loading Animation Layer */
-        .loader-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #ffffff;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-body.dark .loader-overlay{ background: #000;}
-        .three-dots {
+        /* ===== PREMIUM CONTENT SKELETON LOADERS ===== */
+        .skeleton-card {
+            background: var(--bg);
+            border: 2px solid var(--card-border);
+            border-radius: 15px;
+            padding: 12px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skeleton-element {
+            background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shimmer) 50%, var(--skeleton-base) 75%);
+            background-size: 200% 100%;
+            animation: shimmerEffect 1.5s infinite linear;
+            border-radius: 4px;
+        }
+
+        @keyframes shimmerEffect {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+
+        .skeleton-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             gap: 8px;
         }
 
-        .three-dots div {
-            width: 12px;
-            height: 12px;
-            background-color: var(--primary-blue);
-            border-radius: 50%;
-            animation: bounce 0.6s infinite alternate;
+        .skeleton-line-title {
+            width: 55%;
+            height: 14px;
         }
 
-        .three-dots div:nth-child(2) {
-            animation-delay: 0.2s;
+        .skeleton-line-desc {
+            width: 85%;
+            height: 11px;
         }
 
-        .three-dots div:nth-child(3) {
-            animation-delay: 0.4s;
+        .skeleton-button {
+            width: 60px;
+            height: 28px;
+            border-radius: 14px;
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
-        @keyframes bounce {
-            to {
-                transform: translateY(-10px);
-                opacity: 0.4;
-            }
+        /* ===== BOTTOM ADS CAROUSEL & STRIPS ===== */
+        .ads-row {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            gap: 10px;
         }
 
+        .ads-row::-webkit-scrollbar {
+            display: none;
+        }
 
+        .ads-card {           
+            flex: 0 0 280px;
+            height: 150px;   
+            border-radius: 10px; 
+            position: relative;
+            background-size: cover;
+            background-position: center;           
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            scroll-snap-align: center;           
+        }
 
-
-
-
-      /* --- Footer Nav Styles --- */
+       /* --- Footer Nav Styles --- */
         .app-footer {
             overflow: hidden;
             position: fixed;
@@ -666,7 +668,7 @@ body.dark .loader-overlay{ background: #000;}
             left: 0;
             width: 100%;
             height: 65px;
-            background-color: var(--bg);
+            background-color: #ffffff;
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -677,7 +679,8 @@ body.dark .loader-overlay{ background: #000;}
 
         body.dark .app-footer {
             box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-        }
+          background: #000;
+}
 
         .nav-item {
             display: flex;
@@ -690,7 +693,7 @@ body.dark .loader-overlay{ background: #000;}
             font-weight: 700;
             width: 65px;
             height: 100%;
-            gap: 4px;
+            gap: 2px;
             position: relative;
             overflow: hidden;
             transition: transform 0.1s ease-in-out;
@@ -709,526 +712,486 @@ body.dark .loader-overlay{ background: #000;}
        
  }
 
-        /* Ripple Effect Elements */
         .ripple {
             position: absolute;
             border-radius: 50%;
             transform: scale(0);
-            animation: ripple-animation 0.5s linear;
-            background-color: rgba(49, 64, 120, 0.15);
+            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+            background-color: rgba(144, 90, 248, 0.15);
             pointer-events: none;
         }
 
         @keyframes ripple-animation {
             to {
-                transform: scale(3.5);
+                transform: scale(3);
                 opacity: 0;
             }
         }
- /* Container for the 1-row layout */
-        .ads-row {
-            display: flex;
-            
-            overflow-x:auto; /* Enables touch scrolling */
-            padding-bottom: 15px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Hide scrollbar for clean look */
-        .ads-row::-webkit-scrollbar {
-            display: none;
-        }
-
-        .ads-card {           
-            flex: 0 0 280px;
-            height: 150px;   
-                              
-            border-radius: 10px; margin-right: 10px;
-            position: relative;
-            background-size: cover;
-            background-position: center;           
-            overflow: hidden;         
-            border-radius: 10px;         
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            scroll-snap-align: center;           
-            transition: transform 0.3s ease, background 0.2s;
-           }
- </style>
+    </style>
 </head>
 <body>
 
-<!-- HEADER - UNCHANGED -->
 <header class="app-header">
     <div class="header-left">
         <img src="https://i.ibb.co/qLBFPN0x/beta.png" alt="BidhyaBari Logo" class="logo-img">
     </div>
     <div class="header-right">
-        <div class="header-icon"><a href="search.html"><i data-lucide="search" width="25" style="color: #ffffff;"></i></a></div>
-        <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell-check" width="25" color="#fff" ></i></a></div>
-        <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><i data-lucide="gift" width="25" color="#fff" ></i></a></div>
-        
+        <div class="header-icon"><a href="search.html"><i data-lucide="search" width="24" style="color: #ffffff;"></i></a></div>
+        <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell-check" width="24" style="color: #ffffff;"></i></a></div>
+        <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><i data-lucide="gift" width="24" style="color: #ffffff;"></i></a></div>
+        <div class="header-icon" style="display: none;" id="darkModeToggleBtn"><i data-lucide="moon" width="24" style="color: #ffffff;"></i></div>
     </div>
 </header>
-    <main class="app-container">
-        
-      
 
-       
-            
-            <div class="user-section">
-                <div class="user-info">
-                    <div class="avatar-wrapper">
-                        <img id="profileAvatar" src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
-                    </div>
-                    <div class="user-meta">
-                        <p id="greet">Try Today's Quiz </p>
-                        <h3 id="displayName">Aninda Halder</h3>
-                    </div>
-                </div>
-                <div class="verified-badge">
-                    <i data-lucide="verified" style="fill: #3b82f6; width: 48px; color: var(--bg);"></i>
-                </div>
+<main class="app-container">
+    <div class="user-section">
+        <div class="user-info">
+            <div class="avatar-wrapper">
+                <img id="profileAvatar" src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
             </div>
-    <div class="swiper">
-            <div class="swiper-wrapper">
-                <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/Jwzqhnrq/Add-Text-05-30-01-53-00.jpg" onerror="this.src='https://placehold.co/100x100?text='" alt="Batch 1">                
-                </a>
-                <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/S4MjgNhH/Add-Text-05-30-02-02-58.jpg" onerror="this.src='https://placehold.co/100x100?text='" alt="Batch 1">                
-                </a>
-                 <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/nNRQ4q41/Add-Text-05-30-02-08-21.jpg" onerror="this.src='https://placehold.co/100x100?text='" alt="Batch 1">                
-                </a>
-                 <a href="hs/sem1/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/1G8WvZWY/Add-Text-05-30-02-13-26.jpg" onerror="this.src='https://placehold.co/100x100?text='" alt="Batch 3">                 
-                </a>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    <div class="content">
-            <div class="promo-banner">
-                <div class="banner-left">
-                    <div class="banner-tag">Ongoing</div>
-                    <div class="banner-title">কলেজের ভর্তির ফর্ম ফিলাপ</div>
-                    <a href="https://wbcap.in/" target="_blank" class="banner-btn">
-                        <i data-lucide="play-circle" style="width:16px; height:16px;"></i> wbcap.in
-                    </a>
-                </div>
-               <div class="banner-right">
-                    <img class="emblem-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Emblem">
-                   </div>
-            </div>
-
-       
-            <div class="section-header">
-                <h2 class="section-title">Top <span>Study Course</span></h2>
-                <a href="#" class="view-all-btn">View all</a>
-            </div>
-
-            <div class="course-grid">
-                <a href="#" class="course-card">
-                    <div class="course-icon-container bg-blue-light">
-                        <img class="button-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;"alt="Emblem">
-                  </div>
-                    <span>Exam Prep</span>
-                </a>
-                <a href="mp/mp.html" class="course-card">
-                    <div class="course-icon-container bg-indigo-light">
-                        <img class="button-img" src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;"alt="Emblem">
-                     <span class="badge-notification">A+</span>
-                     </div>
-                    <span>মাধ্যমিক</span>
-                </a>
-                <a href="hs/hs.html" class="course-card">
-                    <div class="course-icon-container bg-purple-light">
-                        <img class="button-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;"alt="Emblem">
-                    <span class="badge-notification">A+</span>
-                     </div>
-                    <span>HS 11-12</span>
-                </a>
-                <a href="#" class="course-card">
-                    <div class="course-icon-container bg-pink-light">
-                        <img class="button-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;"alt="Emblem">
-                  </div>
-                    <span>Skills +</span>
-                </a>
-            </div>
-
-            <div class="action-row">
-                <a href="https://tutogenius.page.gd/" target="_blank" class="action-box">
-                    <span class="action-icon"><i data-lucide="globe" style="fill: #3b82f6; color: var(--bg); width:35px; height:35px;"></i></span>
-                    <span style="font-size: 16px;">Explore →</span>
-                </a>
-                <a href="gift/coin-eran.html" class="action-box">
-                    <span class="action-icon"> <i data-lucide="badge-indian-rupee" style="fill: #ffb703; color: var(--bg); width:35px; height:35px;"></i></span>
-                     <div class="coin-meta">
-                        <p style="color: #3b82f6;"> Your Balance</p>
-                        <h3 id="balanceAmount">0</h3>
-                    </div>
-   <span style="display: flex;"> <i data-lucide="mouse-pointer-click" style="fill: #ffb703; color: #ffb703; width:20px; "></i></span>
-                     
-                </a>
-            </div>
-
-            <div class="section-header">
-                <h2 class="section-title">Latest <span>Updates</span></h2>
-                <a href="#" class="view-all-btn">View all</a>
-            </div>
-  </div>
-   <div class="nav-tabs">
-            <div class="tab-item active" onclick="switchSection('admission', this)">
-                <img src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Admission">
-                <span>Admission 2026</span>
-            </div>
-            <div class="tab-item" onclick="switchSection('govt-jobs', this)">
-                <img src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Govt Jobs">
-                <span>Govt. Jobs</span>
-            </div>
-            <div class="tab-item" onclick="switchSection('private-scholarship', this)">
-                <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-scholarship-university-flaticons-flat-flat-icons-2.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Private Scholarship">
-                <span>Private Scholarship</span>
-            </div>
-            <div class="tab-item" onclick="switchSection('govt-scholarship', this)">
-                <img src="https://img.icons8.com/color/64/india-circular.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Govt. Scholarship">
-                <span>Govt. Scholarship</span>
+            <div class="user-meta">
+                <p id="greet">Try Today's Quiz</p>
+                <h3 id="displayName">Aninda Halder</h3>
             </div>
         </div>
-
-        <div class="content-container">
-            <div class="loader-overlay" id="loadingOverlay">
-                <div class="three-dots">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-
-            <div class="cards-list" id="cardsWrapper"></div>
+        <div class="verified-badge">
+            <i data-lucide="verified" style="fill: #3b82f6; width: 32px; height: 32px; color: var(--bg);"></i>
         </div>
-
- <div class="ads-row">
-        <!-- Card 1 -->
-        <a href="#" class="ads-card" style="background-image: url('https://i.ibb.co/Tq1zG5gW/Add-Text-05-03-09-51-14.jpg'); margin-left: 10px;">
-           
-        </a>
-
-        <!-- Card 2 -->
-        <a href="#" class="ads-card" style="background-image: url('https://i.ibb.co/PqR751x/Add-Text-05-03-10-11-15.jpg');">          
-        </a>    
     </div>
-    <img src="https://i.ibb.co/R4t9DTb3/Add-Text-05-30-10-44-39.png" style="width: 100%;">
 
-      
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/Jwzqhnrq/Add-Text-05-30-01-53-00.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+1'" alt="Batch 1">        
+            </a>
+            <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/S4MjgNhH/Add-Text-05-30-02-02-58.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+2'" alt="Batch 2">        
+            </a>
+            <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/nNRQ4q41/Add-Text-05-30-02-08-21.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+3'" alt="Batch 3">        
+            </a>
+            <a href="hs/sem1/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/1G8WvZWY/Add-Text-05-30-02-13-26.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+4'" alt="Batch 4">         
+            </a>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
 
-     
-    </main>
-    <!-- FOOTER -->
-    <nav class="app-footer">
-        <a href="#" class="nav-item active">
-            <i data-lucide="home" width="24" height="24"></i>
-            <span>Home</span>
-        </a>
-        <a href="course.html" class="nav-item">
-            <i data-lucide="airplay" width="24" height="24"></i>
-            <span>Courses</span>
-        </a>
-        <a href="study.html" class="nav-item">
-            <i data-lucide="book-open" width="24" height="24"></i>
-            <span>Study</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-            <i data-lucide="user" width="24" height="24"></i>
-            <span>Profile</span>
-        </a>
-    </nav>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-      <script id="portalData" type="application/json">
-    {
-        "admission": [
-            {
-                "title": "WBCAP 2026",
-                "desc": "West Bengal Centralized College Admission",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://wbcap.in/",
-                "date": "JUN 01"
-            },
-            {
-                "title": "Jadavpur University",
-                "desc": "UG 4 Year BA/BSC Admission 2026",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "http://www.jaduniv.edu.in/",
-                "date": "JUN 05"
-            },
-            {
-                "title": "Bidhan Chandra Krishi Viswavidy...",
-                "desc": "Bsc Agriculture Admission 2026",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://www.bckv.edu.in/",
-                "date": "JUN 17"
-            },
-            {
-                "title": "WB ITI Polytechnic 2026",
-                "desc": "10th Pass, Diploma Engineering/ ITI Admission",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://webscte.co.in/",
-                "date": "JUN 12"
-            },
-            {
-                "title": "Presidency University",
-                "desc": "UG BA/BSc Admission 2026 (Ongoing)",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://www.presiuniv.ac.in/web/",
-                "date": "JUN 01"
-            },
-            {
-                "title": "University of Calcutta",
-                "desc": "Home Science, Nutrition & UG Music Admission 2026",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://www.caluniv.ac.in/",
-                "date": "JUN 01"
-            }
-        ],
-        "govt-jobs": [
-            {
-                "title": "WBPSC Miscellaneous",
-                "desc": "West Bengal PSC Vacancy",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://psc.wb.gov.in/",
-                "date": "JUN 09"
-            },
-            {
-                "title": "SSC CGL 2026",
-                "desc": "Graduate Level Group B Recruitment (Central Govt MEA, Income Tax, GST I...",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://ssc.gov.in/",
-                "date": "JUN 22"
-            },
-            {
-                "title": "RRB ALP 2026",
-                "desc": "Railway Assistant Loco Pilot (10th Pass, ITI, Diploma)",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://www.rrbcdg.gov.in/",
-                "date": "JUN 14"
-            },
-            {
-                "title": "Panchyat Recruitment 2026",
-                "desc": "WB Gram Panchyat (10th/12th/Graduate)",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://wbprms.in/",
-                "date": "JUN 30"
-            }
-        ],
-        "private-scholarship": [
-            {
-                "title": "Biswabina Scholarship",
-                "desc": "HS Pass 2026 & UG 4year Admission - 80% Marks",
-                "logo": "https://placehold.co/100x100/000000/FFFFFF?text=Biswabina",
-                "link": "https://google.com/search?q=Biswabina+Scholarship",
-                "date": "JUL 31"
-            },
-            {
-                "title": "GP Birla Scholarship",
-                "desc": "HS Pass - 85% Marks",
-                "logo": "https://placehold.co/100x100/ffffff/c62828?text=BIF",
-                "link": "https://gpbilrafoundation.com/",
-                "date": "JUL 15"
-            },
-            {
-                "title": "Vidyadhan Scholarship",
-                "desc": "10th Pass - 60% Marks",
-                "logo": "https://img.icons8.com/fluency/96/comments.png",
-                "link": "https://www.vidyadhan.org/",
-                "date": "JUL 20"
-            },
-            {
-                "title": "Sitaram Jindal Scholarship",
-                "desc": "10th Pass, 12th Pass, UG PG 75% Marks",
-                "logo": "https://placehold.co/100x100/fbc02d/ffffff?text=SJF",
-                "link": "https://www.sitaramjindalfoundation.org/",
-                "date": "MAY 30"
-            }
-        ],
-        "govt-scholarship": [
-            {
-                "title": "SVMCM Scholarship",
-                "desc": "Swami Vivekananda Scholarship: 10th, HS, UG, PG 60%",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://svmcm.wbhed.gov.in/",
-                "date": "MAY 31"
-            },
-            {
-                "title": "Chief Minister Scholarship",
-                "desc": "Financial aid offered by West Bengal CM Relief Fund.",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://cmrf.wb.gov.in/",
-                "date": "NONE"
-            },
-            {
-                "title": "Oasis Scholarship",
-                "desc": "Scholarship for SC, ST, and OBC students by West Bengal governmen...",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://oasis.gov.in/",
-                "date": "NONE"
-            },
-            {
-                "title": "Aikyashree Scholarship",
-                "desc": "Scholarship for minority students in West Bengal from WBMDFC.",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://wbmdfcscholarship.org/",
-                "date": "MAY 31"
-            },
-            {
-                "title": "National Scholarship Portal",
-                "desc": "Central govt scholarships for SC/ST/OBC and minority students through ...",
-                "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
-                "link": "https://scholarships.gov.in/",
-                "date": "NONE"
-            }
-        ]
+    <div class="content">
+        <div class="promo-banner">
+            <div class="banner-left">
+                <div class="banner-tag">Ongoing</div>
+                <div class="banner-title">কলেজের ভর্তির ফর্ম ফিলাপ</div>
+                <a href="https://wbcap.in/" target="_blank" class="banner-btn">
+                    <i data-lucide="play-circle" style="width:16px; height:16px;"></i> wbcap.in
+                </a>
+            </div>
+            <div class="banner-right">
+                <img class="emblem-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Emblem">
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2 class="section-title">Top <span>Study Course</span></h2>
+            <a href="course.html" class="view-all-btn">View all</a>
+        </div>
+
+        <div class="course-grid">
+            <a href="#" class="course-card">
+                <div class="course-icon-container bg-blue-light">
+                    <img class="button-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
+                </div>
+                <span>Exam Prep</span>
+            </a>
+            <a href="mp/mp.html" class="course-card">
+                <div class="course-icon-container bg-indigo-light">
+                    <img class="button-img" src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
+                    <span class="badge-notification">A+</span>
+                </div>
+                <span>মাধ্যমিক</span>
+            </a>
+            <a href="hs/hs.html" class="course-card">
+                <div class="course-icon-container bg-purple-light">
+                    <img class="button-img" src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
+                    <span class="badge-notification">A+</span>
+                </div>
+                <span>HS 11-12</span>
+            </a>
+            <a href="#" class="course-card">
+                <div class="course-icon-container bg-pink-light">
+                    <img class="button-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
+                </div>
+                <span>Skills +</span>
+            </a>
+        </div>
+
+        <div class="action-row">
+            <a href="https://tutogenius.page.gd/" target="_blank" class="action-box">
+                <span class="action-icon"><i data-lucide="globe" style="fill: #3b82f6; color: var(--bg); width:30px; height:30px;"></i></span>
+                <span style="font-size: 15px;">Explore →</span>
+            </a>
+            <a href="gift/coin-eran.html" class="action-box">
+                <span class="action-icon"><i data-lucide="badge-indian-rupee" style="fill: #ffb703; color: var(--bg); width:32px; height:32px;"></i></span>
+                <div class="coin-meta">
+                    <p>Your Balance</p>
+                    <h3 id="balanceAmount">0</h3>
+                </div>
+                <span style="margin-left: auto; display: flex;"><i data-lucide="mouse-pointer-click" style="fill: #ffb703; color: #ffb703; width:18px;"></i></span>
+            </a>
+        </div>
+
+        <div class="section-header">
+            <h2 class="section-title">Latest <span>Updates</span></h2>
+            <a href="#" class="view-all-btn">View all</a>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="tab-item active" onclick="switchSection('admission', this)">
+            <img src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50'" alt="Admission">
+            <span>Admission 2026</span>
+        </div>
+        <div class="tab-item" onclick="switchSection('govt-jobs', this)">
+            <img src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50'" alt="Govt Jobs">
+            <span>Govt. Jobs</span>
+        </div>
+        <div class="tab-item" onclick="switchSection('private-scholarship', this)">
+            <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-scholarship-university-flaticons-flat-flat-icons-2.png" onerror="this.src='https://placehold.co/50x50'" alt="Private Scholarship">
+            <span>Private Scholarship</span>
+        </div>
+        <div class="tab-item" onclick="switchSection('govt-scholarship', this)">
+            <img src="https://img.icons8.com/color/64/india-circular.png" onerror="this.src='https://placehold.co/50x50'" alt="Govt. Scholarship">
+            <span>Govt. Scholarship</span>
+        </div>
+    </div>
+
+    <div class="content-container" style="padding-left: 16px; padding-right: 16px;">
+        <div class="cards-list" id="cardsWrapper"></div>
+    </div>
+
+    <div class="ads-row" style="padding-left: 16px; padding-right: 16px;">
+        <a href="#" class="ads-card" style="background-image: url('https://i.ibb.co/Tq1zG5gW/Add-Text-05-03-09-51-14.jpg');"></a>
+        <a href="#" class="ads-card" style="background-image: url('https://i.ibb.co/PqR751x/Add-Text-05-03-10-11-15.jpg');"></a>  
+    </div>
+    <img src="https://i.ibb.co/R4t9DTb3/Add-Text-05-30-10-44-39.png" style="width: 100%; display: block;" alt="Bottom Promo Banner">
+</main>
+
+<nav class="app-footer">
+    <a href="#" class="nav-item active">
+        <i data-lucide="home" width="24" height="24"></i>
+        <span>Home</span>
+    </a>
+    <a href="course.html" class="nav-item">
+        <i data-lucide="airplay" width="24" height="24"></i>
+        <span>Courses</span>
+    </a>
+    <a href="study.html" class="nav-item">
+        <i data-lucide="book-open" width="24" height="24"></i>
+        <span>Study</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+        <i data-lucide="user" width="24" height="24"></i>
+        <span>Profile</span>
+    </a>
+</nav>
+
+<script id="portalData" type="application/json">
+{
+    "admission": [
+        {
+            "title": "WBCAP 2026",
+            "desc": "West Bengal Centralized College Admission",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://wbcap.in/",
+            "date": "JUN 01"
+        },
+        {
+            "title": "Jadavpur University",
+            "desc": "UG 4 Year BA/BSC Admission 2026",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "http://www.jaduniv.edu.in/",
+            "date": "JUN 05"
+        },
+        {
+            "title": "Bidhan Chandra Krishi Viswavidy...",
+            "desc": "Bsc Agriculture Admission 2026",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://www.bckv.edu.in/",
+            "date": "JUN 17"
+        },
+        {
+            "title": "WB ITI Polytechnic 2026",
+            "desc": "10th Pass, Diploma Engineering/ ITI Admission",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://webscte.co.in/",
+            "date": "JUN 12"
+        },
+        {
+            "title": "Presidency University",
+            "desc": "UG BA/BSc Admission 2026 (Ongoing)",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://www.presiuniv.ac.in/web/",
+            "date": "JUN 01"
+        },
+        {
+            "title": "University of Calcutta",
+            "desc": "Home Science, Nutrition & UG Music Admission 2026",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://www.caluniv.ac.in/",
+            "date": "JUN 01"
+        }
+    ],
+    "govt-jobs": [
+        {
+            "title": "WBPSC Miscellaneous",
+            "desc": "West Bengal PSC Vacancy",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://psc.wb.gov.in/",
+            "date": "JUN 09"
+        },
+        {
+            "title": "SSC CGL 2026",
+            "desc": "Graduate Level Group B Recruitment (Central Govt MEA, Income Tax, GST I...",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://ssc.gov.in/",
+            "date": "JUN 22"
+        },
+        {
+            "title": "RRB ALP 2026",
+            "desc": "Railway Assistant Loco Pilot (10th Pass, ITI, Diploma)",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://www.rrbcdg.gov.in/",
+            "date": "JUN 14"
+        },
+        {
+            "title": "Panchyat Recruitment 2026",
+            "desc": "WB Gram Panchyat (10th/12th/Graduate)",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://wbprms.in/",
+            "date": "JUN 30"
+        }
+    ],
+    "private-scholarship": [
+        {
+            "title": "Biswabina Scholarship",
+            "desc": "HS Pass 2026 & UG 4year Admission - 80% Marks",
+            "logo": "https://placehold.co/100x100/000000/FFFFFF?text=Biswabina",
+            "link": "https://google.com/search?q=Biswabina+Scholarship",
+            "date": "JUL 31"
+        },
+        {
+            "title": "GP Birla Scholarship",
+            "desc": "HS Pass - 85% Marks",
+            "logo": "https://placehold.co/100x100/ffffff/c62828?text=BIF",
+            "link": "https://gpbilrafoundation.com/",
+            "date": "JUL 15"
+        },
+        {
+            "title": "Vidyadhan Scholarship",
+            "desc": "10th Pass - 60% Marks",
+            "logo": "https://img.icons8.com/fluency/96/comments.png",
+            "link": "https://www.vidyadhan.org/",
+            "date": "JUL 20"
+        },
+        {
+            "title": "Sitaram Jindal Scholarship",
+            "desc": "10th Pass, 12th Pass, UG PG 75% Marks",
+            "logo": "https://placehold.co/100x100/fbc02d/ffffff?text=SJF",
+            "link": "https://www.sitaramjindalfoundation.org/",
+            "date": "MAY 30"
+        }
+    ],
+    "govt-scholarship": [
+        {
+            "title": "SVMCM Scholarship",
+            "desc": "Swami Vivekananda Scholarship: 10th, HS, UG, PG 60%",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://svmcm.wbhed.gov.in/",
+            "date": "MAY 31"
+        },
+        {
+            "title": "Chief Minister Scholarship",
+            "desc": "Financial aid offered by West Bengal CM Relief Fund.",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://cmrf.wb.gov.in/",
+            "date": "NONE"
+        },
+        {
+            "title": "Oasis Scholarship",
+            "desc": "Scholarship for SC, ST, and OBC students by West Bengal governmen...",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://oasis.gov.in/",
+            "date": "NONE"
+        },
+        {
+            "title": "Aikyashree Scholarship",
+            "desc": "Scholarship for minority students in West Bengal from WBMDFC.",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://wbmdfcscholarship.org/",
+            "date": "MAY 31"
+        },
+        {
+            "title": "National Scholarship Portal",
+            "desc": "Central govt scholarships for SC/ST/OBC and minority students through ...",
+            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "link": "https://scholarships.gov.in/",
+            "date": "NONE"
+        }
+    ]
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // Initialize Lucide Icons globally
+    lucide.createIcons();
+
+    // ========== SWIPER LAYOUT CONFIGURATION ==========
+    const swiper = new Swiper('.swiper', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loop: true,
+        coverflowEffect: {
+            rotate: 0,
+            stretch: -30,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+        },
+        autoplay: {
+            delay: 3500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+
+    // ========== REWARD COINS & LOCAL PROFILE DATABASES ==========
+    function loadBalance() {
+        let stored = localStorage.getItem("reward_coins");
+        if (stored === null || isNaN(parseInt(stored))) { 
+            localStorage.setItem("reward_coins", "0"); 
+            stored = "0";
+        }
+        const balanceSpan = document.getElementById("balanceAmount");
+        if (balanceSpan) balanceSpan.innerText = stored;
     }
-    </script>
 
-    <script>
-        lucide.createIcons();
+    function loadProfileData() {
+        let savedName = localStorage.getItem("student_display_name");
+        if (!savedName || savedName.trim() === "") { 
+            savedName = "Aninda Halder"; 
+            localStorage.setItem("student_display_name", savedName); 
+        }
+        const nameEl = document.getElementById("displayName");
+        if (nameEl) nameEl.innerText = savedName;
 
- // ========== SWIPER CONFIGURATION ==========
-        var swiper = new Swiper('.swiper', {
-            effect: 'coverflow',
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: 'auto',
-            loop: true,
-            coverflowEffect: {
-                rotate: 0,
-                stretch: -30,
-                depth: 100,
-                modifier: 1,
-                slideShadows: false,
-            },
-            autoplay: {
-                delay: 3500,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
- 
-   // Coin & Profile
-        let currentBalance = 0;
-        function loadBalance() {
-            let stored = localStorage.getItem("reward_coins");
-            if(stored === null || isNaN(parseInt(stored))) { currentBalance = 0; localStorage.setItem("reward_coins", "0"); }
-            else { currentBalance = parseInt(stored, 10); }
-            const balanceSpan = document.getElementById("balanceAmount");
-            if(balanceSpan) balanceSpan.innerText = currentBalance;
+        let savedPic = localStorage.getItem("profile_image_url");
+        if (!savedPic || savedPic === "") { 
+            savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; 
+            localStorage.setItem("profile_image_url", savedPic); 
         }
-        function loadProfileData() {
-            let savedName = localStorage.getItem("student_display_name");
-            if(!savedName || savedName.trim() === "") { savedName = "TutoPulse"; localStorage.setItem("student_display_name", savedName); }
-            const nameEl = document.getElementById("displayName");
-            if(nameEl) nameEl.innerText = savedName;
-            let savedPic = localStorage.getItem("profile_image_url");
-            if(!savedPic || savedPic === "") { savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; localStorage.setItem("profile_image_url", savedPic); }
-            const avatar = document.getElementById("profileAvatar");
-            if(avatar) avatar.src = savedPic;
+        const avatar = document.getElementById("profileAvatar");
+        if (avatar) avatar.src = savedPic;
+    }
+
+    // ========== LIVE DYNAMIC HEURISTIC GREETINGS SYSTEM ==========
+    function setLiveGreeting() {
+        const hour = new Date().getHours();
+        const GREETINGS_CONFIG = [
+            { upTo: 4,  text: 'Good Night 🌝' },
+            { upTo: 8,  text: 'Good Morning 🌞' },
+            { upTo: 10, text: 'Tea Time ☕' },
+            { upTo: 12, text: 'Try to Solve Quiz' },
+            { upTo: 14, text: 'Good Noon 🤓' },
+            { upTo: 16, text: 'Good Afternoon' },
+            { upTo: 19, text: 'Revision Time' },
+            { upTo: 22, text: 'Keep Learning' },
+            { upTo: 25, text: 'Good Night 🌝' }
+        ];
+        const greeting = GREETINGS_CONFIG.find(slot => hour < slot.upTo).text;
+        document.getElementById('greet').innerText = greeting;
+    }
+
+    // ========== ASYNC SKELETON LAYER RENDERING ENGINE ==========
+    const portalDb = JSON.parse(document.getElementById('portalData').textContent);
+
+    function renderSkeletons(targetWrapper, count = 3) {
+        targetWrapper.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+            const skeletonCard = document.createElement('div');
+            skeletonCard.className = 'skeleton-card';
+            skeletonCard.innerHTML = `
+                <div class="skeleton-element skeleton-avatar"></div>
+                <div class="skeleton-info">
+                    <div class="skeleton-element skeleton-line-title"></div>
+                    <div class="skeleton-element skeleton-line-desc"></div>
+                </div>
+                <div class="skeleton-element skeleton-button"></div>
+            `;
+            targetWrapper.appendChild(skeletonCard);
         }
-        function ensureDataIntegrity() {
-            if(localStorage.getItem("reward_coins") === null) localStorage.setItem("reward_coins", "0");
-            if(localStorage.getItem("student_display_name") === null) localStorage.setItem("student_display_name", "TutoPulse");
-            if(localStorage.getItem("profile_image_url") === null) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
-        }
-        ensureDataIntegrity();
+    }
+
+    function switchSection(sectionKey, element) {
+        // Handle Active states elegantly
+        document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
+        if (element) element.classList.add('active');
+
+        const wrapper = document.getElementById('cardsWrapper');
+        
+        // Step 1: Render structure-aware elegant skeletons immediately
+        renderSkeletons(wrapper, 4);
+
+        // Step 2: Shimmer load delay mimicking asynchronous resource retrieval
+        setTimeout(() => {
+            const currentData = portalDb[sectionKey] || [];
+            wrapper.innerHTML = '';
+
+            if (currentData.length === 0) {
+                wrapper.innerHTML = `<p style="padding: 20px; text-align:center; color: var(--text-muted);">No items available.</p>`;
+                return;
+            }
+
+            currentData.forEach(item => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                
+                const dateHtml = (item.date && item.date !== "NONE") 
+                    ? `<div class="deadline-tag">${item.date}</div>` 
+                    : '';
+
+                cardElement.innerHTML = `
+                    <img class="card-logo" src="${item.logo}" onerror="this.src='https://placehold.co/100x100?text=!'" alt="logo">
+                    <div class="card-info">
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-desc">${item.desc}</div>
+                    </div>
+                    <a class="btn-apply" href="${item.link}" target="_blank">Apply</a>
+                    ${dateHtml}
+                `;
+                wrapper.appendChild(cardElement);
+            });
+        }, 600); // 600ms delivers an explicit premium micro-delay look
+    }
+
+    // ========== EVENT WIRE-UPS & CORE CORE INITIALIZATIONS ==========
+    document.addEventListener('DOMContentLoaded', () => {
         loadBalance();
-        loadProfileData();  const hour = new Date().getHours();
-
-const GREETINGS_CONFIG = [
-  { upTo: 3,  text: 'Good Night 🌝' },
-  { upTo: 7, text: 'Good Morning 🌞' },
- { upTo: 8, text: 'Tea Time ☕' },
-  { upTo: 11, text: 'Try to Solve Quiz' },
-  { upTo: 12, text: 'A Small Break 🤓' },
-  { upTo: 14, text: 'Good Noon' },
-  { upTo: 16, text: 'Good Afternoon' },
-  { upTo: 18, text: 'Revision Time' },
-  { upTo: 20, text: 'Make Your Best' },
-  { upTo: 22, text: 'Keep Learning' },
-  { upTo: 24, text: 'Good Night 🌝' }
-];
-
-// Find the first slot where the current hour is less than the threshold
-const greeting = GREETINGS_CONFIG.find(slot => hour < slot.upTo).text;  document.getElementById('greet').innerText = greeting;
-        lucide.createIcons();
+        loadProfileData();
+        setLiveGreeting();
         
+        // Initializing default active view
+        const defaultTab = document.querySelector('.tab-item');
+        switchSection('admission', defaultTab);
 
-
-
-   // Parse database from script tag element
-        const rawData = document.getElementById('portalData').textContent;
-        const portalDb = JSON.parse(rawData);
-
-        // Core dynamic view controller
-        function switchSection(sectionKey, element) {
-            // Update Active Tab styles
-            document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
-            element.classList.add('active');
-
-            const overlay = document.getElementById('loadingOverlay');
-            const wrapper = document.getElementById('cardsWrapper');
-
-            // Trigger smooth loader
-            overlay.style.display = 'flex';
-            wrapper.style.opacity = '0.2';
-
-            setTimeout(() => {
-                // Fetch target section list data
-                const currentData = portalDb[sectionKey] || [];
-                wrapper.innerHTML = '';
-
-                currentData.forEach(item => {
-                    const cardElement = document.createElement('div');
-                    cardElement.className = 'card';
-                    
-                    // Conditionally check if target date is active or blank
-                    const dateHtml = (item.date && item.date !== "NONE") 
-                        ? `<div class="deadline-tag">${item.date}</div>` 
-                        : '';
-
-                    cardElement.innerHTML = `
-                        <img class="card-logo" src="${item.logo}" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="logo">
-                        <div class="card-info">
-                            <div class="card-title">${item.title}</div>
-                            <div class="card-desc">${item.desc}</div>
-                        </div>
-                        <a class="btn-apply" href="${item.link}" target="_blank">Apply</a>
-                        ${dateHtml}
-                    `;
-                    wrapper.appendChild(cardElement);
-                });
-
-                // Clear loader smoothly
-                overlay.style.display = 'none';
-                wrapper.style.opacity = '1';
-            }, 450); // Balanced animation speed timeline
-        }
-
-        // Initialize portal with default view
-        document.addEventListener('DOMContentLoaded', () => {
-            const defaultTab = document.querySelector('.tab-item');
-            switchSection('admission', defaultTab);
-        });
-
-
-
-       
-        // Footer ripple effect
+        // Footer navigation items organic interaction ripple engine
         const footer = document.querySelector('.app-footer');
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        navItems.forEach(item => {
+        document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function(e) {
                 const targetUrl = this.getAttribute('href');
                 if (!targetUrl || targetUrl === "" || targetUrl === "#") {
@@ -1238,48 +1201,45 @@ const greeting = GREETINGS_CONFIG.find(slot => hour < slot.upTo).text;  document
                 const rect = footer.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
+                
                 const ripple = document.createElement('span');
                 ripple.className = 'ripple';
-                const size = rect.width;
+                const size = Math.max(rect.width, rect.height);
                 ripple.style.width = ripple.style.height = `${size}px`;
                 ripple.style.left = `${x - (size / 2)}px`;
                 ripple.style.top = `${y - (size / 2)}px`;
-                footer.appendChild(ripple);
                 
-                if (targetUrl && targetUrl !== "" && targetUrl !== "#") {
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 200);
-                }
+                this.appendChild(ripple);
                 
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+                setTimeout(() => { ripple.remove(); }, 400);
             });
         });
 
+        // Dark Mode Toggle Switcher logic tied directly to custom header selector button
+        const darkModeToggleBtn = document.getElementById('darkModeToggleBtn');
+        const bodyElement = document.body;
 
-  // Dark Mode Toggle
-        const darkToggle = document.getElementById('darkToggle');
-        const body = document.body;
-        if(localStorage.getItem('darkMode') === 'true') body.classList.add('dark');
-        function updateToggleIcon() {
-            const isDark = body.classList.contains('dark');
-            const iconElem = darkToggle.querySelector('i');
-            if(iconElem) {
-                const iconName = isDark ? 'sun' : 'moon';
-                iconElem.setAttribute('data-lucide', iconName);
-                lucide.createIcons({ icons: { [iconName]: iconElem } });
+        if (localStorage.getItem('darkMode') === 'true') {
+            bodyElement.classList.add('dark');
+            updateToggleIcon(true);
+        }
+
+        function updateToggleIcon(isDark) {
+            const iconElem = darkModeToggleBtn.querySelector('i');
+            if (iconElem) {
+                const targetIcon = isDark ? 'sun' : 'moon';
+                iconElem.setAttribute('data-lucide', targetIcon);
+                lucide.createIcons({ icons: { [targetIcon]: iconElem } });
             }
         }
-        updateToggleIcon();
-        darkToggle.addEventListener('click', () => {
-            body.classList.toggle('dark');
-            localStorage.setItem('darkMode', body.classList.contains('dark'));
-            updateToggleIcon();
-            if(window.swiperInstance) window.swiperInstance.update();
-        });
 
-    </script>
+        darkModeToggleBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('dark');
+            const isDarkActive = bodyElement.classList.contains('dark');
+            localStorage.setItem('darkMode', isDarkActive ? 'true' : 'false');
+            updateToggleIcon(isDarkActive);
+        });
+    });
+</script>
 </body>
 </html>
