@@ -298,6 +298,7 @@
             border: 1px solid #e2e8f0;
             margin-bottom: 10px;
         }
+body.dark .gift-code-box{ background: #000;}
         
         .input-wrap {
             display: flex;
@@ -368,7 +369,7 @@
             padding: 10px;
             margin-bottom: 10px;
         }
-        
+        body.dark .gift-card-box{ background: #000;}
         .upload-area {
             background: #0f172a;
             color: #fff;
@@ -561,8 +562,7 @@
         <div class="header-icon"><a href="search.html"><i data-lucide="search" width="24" style="color: #ffffff;"></i></a></div>
         <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell-check" width="24" style="color: #ffffff;"></i></a></div>
         <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><i data-lucide="gift" width="24" style="color: #ffffff;"></i></a></div>
-        <div class="header-icon" style="display: none;" id="darkModeToggleBtn"><i data-lucide="moon" width="24" style="color: #ffffff;"></i></div>
-    </div>
+       </div>
 </header>
 
 <main class="app-container">
@@ -603,7 +603,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path>
       </svg>
       <img id="preview" alt="Preview Image">
-      <i id="webcamVideo" autoplay playsinline webkit-playsinline muted></i>
+      <video id="webcamVideo" autoplay playsinline webkit-playsinline muted></video>
     </div>
     
     <div class="btn-row">
@@ -611,10 +611,9 @@
       <button class="btn-scan" onclick="toggleLiveScan()">Scan & Camera</button>
     </div>
     <input type="file" id="fileInput" accept="image/*" style="display:none">
-   <p style="padding-top: 10px; font-size: 12px;">**Please keep Gift Card. When Scan Complete then Click on "Scan & Camera" button.</p>
+  <p style="padding-top: 10px; font-size: 12px;">**Please keep Gift Card. When Scan Complete then Click on "Scan & Camera" button.</p>
 
-</div>
-
+  </div>
 </div>
 
 <div class="overlay" id="overlay" onclick="hidePopup()"></div>
@@ -628,23 +627,23 @@
  </main>
 
 <nav class="app-footer">
-    <a href="#" class="nav-item">
+    <a href="home" class="nav-item">
         <i data-lucide="home" width="24" height="24"></i>
         <span>Home</span>
     </a>
-  <a href="coin.html" class="nav-item active">
+  <a href="#" class="nav-item active">
         <i data-lucide="qr-code" width="24" height="24"></i>
         <span>Recharge</span>
     </a>
-    <a href="course.html" class="nav-item">
+    <a href="course" class="nav-item">
         <i data-lucide="airplay" width="24" height="24"></i>
         <span>Courses</span>
     </a>
-    <a href="study.html" class="nav-item">
+    <a href="study" class="nav-item">
         <i data-lucide="book-open" width="24" height="24"></i>
         <span>Study</span>
     </a>
-    <a href="profile.html" class="nav-item">
+    <a href="profile" class="nav-item">
         <i data-lucide="user" width="24" height="24"></i>
         <span>Profile</span>
     </a>
@@ -975,6 +974,41 @@ function hidePopup() {
   document.getElementById('popup').classList.remove('show');
   document.getElementById('overlay').classList.remove('show');
 }
+
+// ========== DARK MODE TOGGLE (Integrated) ==========
+const darkToggle = document.getElementById("darkToggle");
+const body = document.body;
+
+// Apply saved preference
+if (localStorage.getItem("darkMode") === "true") {
+    body.classList.add("dark");
+}
+
+// Update Lucide icon based on mode
+function updateDarkModeIcon() {
+    const isDark = body.classList.contains("dark");
+    // Replace Lucide icons dynamically
+    lucide.createIcons(); // re-render to update icon set? but we'll just change the icon data
+    const moonIcon = darkToggle.querySelector('i');
+    if (moonIcon) {
+        // we need to re-render with new icon name: moon for light, sun for dark
+        const iconName = isDark ? "sun" : "moon";
+        moonIcon.setAttribute('data-lucide', iconName);
+        lucide.createIcons();
+    }
+}
+
+// Initialize icon on load
+setTimeout(() => {
+    updateDarkModeIcon();
+}, 50);
+
+darkToggle.addEventListener("click", () => {
+    body.classList.toggle("dark");
+    const isDark = body.classList.contains("dark");
+    localStorage.setItem("darkMode", isDark);
+    updateDarkModeIcon();
+});
 </script>
 </body>
 </html>
