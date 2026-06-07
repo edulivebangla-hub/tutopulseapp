@@ -591,7 +591,7 @@
 
   <div class="gift-card-box">
     <label>Scan Gift Card/ Recharge Card</label>
-    <div class="upload-area">
+    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
       <div class="upload-header">
         <span>Gift card View</span>
         <span id="uploadStatus" class="status-badge">Upload Image</span>
@@ -603,15 +603,18 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path>
       </svg>
       <img id="preview" alt="Preview Image">
-      <video id="webcamVideo" autoplay playsinline webkit-playsinline muted></video>
+      <i id="webcamVideo" autoplay playsinline webkit-playsinline muted></i>
     </div>
     
     <div class="btn-row">
-      <button class="btn-upload" onclick="triggerFileUpload()">Choose Image</button>
-      <button class="btn-scan" onclick="toggleLiveScan()">Scan</button>
+      <button class="btn-upload" onclick="document.getElementById('fileInput').click()">Choose Image</button>
+      <button class="btn-scan" onclick="toggleLiveScan()">Scan & Camera</button>
     </div>
     <input type="file" id="fileInput" accept="image/*" style="display:none">
-  </div>
+   <p style="padding-top: 10px; font-size: 12px;">**Please keep Gift Card. When Scan Complete then Click on "Scan & Camera" button.</p>
+
+</div>
+
 </div>
 
 <div class="overlay" id="overlay" onclick="hidePopup()"></div>
@@ -904,7 +907,7 @@ function validateCode() {
     localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
     document.getElementById('giftCode').value = '';
   } else {
-    showCustomPopup(false, 'Invalid Promo Code', 'The code you entered does not match our system entries.');
+    showCustomPopup(false, 'Invalid Code', 'The code you entered does not match our system entries.');
   }
 }
 
