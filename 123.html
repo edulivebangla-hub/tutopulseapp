@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutoGenius App</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <style>
+        /* ===== GLOBAL CONSTANTS & CSS VARIABLES ===== */
+        :root {
+            --bg: #ffffff;
+            --primary-blue: #2c3e8c;
+            --bg-light: #f4f6fc;
+            --card-border: #e2e7f7;
+            --btn-green: #c8e6c9;
+            --btn-text-green: #2e7d32;
+            --deadline-bg: #ffebee;
+            --deadline-text: #c62828;
+            --text-main: #212121;
+            --text-sub: #616161;
+            --text-muted: #8D94A2;
+            --skeleton-base: #e2e8f0;
+            --skeleton-shimmer: #f1f5f9;
+        }
+
+        body.dark {
+            --bg: #000000;
+            --primary-blue: #3b82f6;
+            --bg-light: #111827;
+            --card-border: #1f2937;
+            --btn-green: #064e3b;
+            --btn-text-green: #34d399;
+            --deadline-bg: #7f1d1d;
+            --deadline-text: #fca5a5;
+            --text-main: #f9fafb;
+            --text-sub: #9ca3af;
+            --text-muted: #6b7280;
+            --skeleton-base: #1f2937;
+            --skeleton-shimmer: #374151;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background 0.3s, color 0.3s, border-color 0.3s, opacity 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #f6f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        body.dark {
+            background-color: #030712;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: #905AF8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 150px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fff;
+        }
+
+        .header-icon {
+            padding: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50px;
+            background: transparent;
+            color: #fff;
+            transition: transform 0.1s ease;
+        }
+
+        .header-icon:active { 
+            transform: scale(0.95); 
+        }
+
+        /* ===== APPLICATION CONTAINER MAIN ===== */
+        .app-container {
+            position: fixed;
+            top: 50px;
+            bottom: 65px;
+            width: 100%;
+            overflow-y: auto;
+            background: var(--bg);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .app-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .content {
+            padding: 0 16px;
+        }
+
+       /* --- Footer Nav Styles --- */
+        .app-footer {
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 10;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        body.dark .app-footer {
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            background: #000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            width: 65px;
+            height: 100%;
+            gap: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease-in-out;
+        }
+
+        .nav-item.active {
+            color: #905AF8;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 50px;
+            padding: 5px;
+        }
+
+        body.dark .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+            background-color: rgba(144, 90, 248, 0.15);
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            width: 100%;
+            padding: 10px;
+        }
+
+        label { 
+            font-weight: 600; 
+            font-size: 14px; 
+            color: #4a5568; 
+            margin-bottom: 10px; 
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Balance Box Card */
+        .balance-box {
+            display: flex;
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.25);
+        }
+        
+        .balance-left div:first-child { 
+            font-size: 13px; 
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        #balance { 
+            font-size: 38px; 
+            font-weight: 800; 
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        #balance::before {
+            content: "₹";
+            font-size: 28px;
+        }
+        
+        .balance-right { text-align: right; }
+        .balance-right div:first-child { 
+            font-size: 12px; 
+            opacity: 0.85; 
+            margin-bottom: 8px; 
+        }
+        
+        .collect-btn {
+            background: #ffffff;
+            color: green;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .collect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+        }
+        
+        .collect-btn:disabled { 
+            background: rgba(255,255,255,0.3); 
+            color: rgba(255,255,255,0.7);
+            cursor: not-allowed; 
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Gift Code Box */
+        .gift-code-box {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 10px;
+        }
+        
+        .input-wrap {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 4px 6px 4px 16px;
+            transition: border-color 0.2s;
+        }
+        
+        .input-wrap:focus-within {
+            border-color: #0d6efd;
+        }
+        
+        .input-wrap input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 600;
+            outline: none;
+            color: #1e293b;
+        }
+        
+        .input-wrap input::placeholder { color: #94a3b8; font-weight: 400; }
+        
+        .validate-btn {
+            background: #0d6efd;
+            border: none;
+            color: #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+        
+        .validate-btn:hover { background: #0a58ca; }
+
+        .divider {
+            text-align: center;
+            margin: 10px 0;
+            font-weight: 700;
+            font-size: 14px;
+            color: #94a3b8;
+            position: relative;
+            text-transform: uppercase;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #e2e8f0;
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        /* Gift Card QR Box */
+        .gift-card-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .upload-area {
+            background: #0f172a;
+            color: #fff;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+            min-height: 200px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 5;
+        }
+        
+        .status-badge {
+            background: #334155;
+            padding: 2px 8px;
+            border-radius: 20px;
+            color: #94a3b8;
+        }
+        .status-badge.ready { color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
+        .status-badge.scanning { color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
+        .status-badge.scanned { color: #4ade80; background: rgba(74, 222, 128, 0.15); }
+
+        #preview {
+            width: 100%;
+            height: 100%;
+            min-height: 200px;
+            max-height: 240px;
+            object-fit: contain;
+            display: none;
+        }
+
+        #webcamVideo {
+            width: 100%;
+            height: 100%;
+            min-height: 200px;
+            max-height: 240px;
+            object-fit: cover;
+            display: none;
+            background: #000;
+        }
+        
+        .placeholder-svg {
+            opacity: 0.25;
+            margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+
+        /* Interactive scanning laser visual style */
+        .scanner-laser {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: #38bdf8;
+            box-shadow: 0 0 12px #38bdf8;
+            animation: scanAnimation 2s linear infinite;
+            z-index: 4;
+        }
+        @keyframes scanAnimation {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .btn-row button {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-upload {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            color: #4a5568;
+        }
+        .btn-upload:hover { background: #f1f5f9; border-color: #cbd5e1; }
+        
+        .btn-scan {
+            background: #0d6efd;
+            border: none;
+            color: #ffffff;
+        }
+        .btn-scan:hover { background: #0a58ca; }
+
+        /* Premium Responsive Popups */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            background: #ffffff;
+            padding: 28px 24px;
+            border-radius: 10px;
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.15);
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 90%;
+            max-width: 340px;
+        }
+        
+        .popup.show {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .popup-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+        
+        .popup.success-theme .popup-icon { background: #f0fdf4; color: #16a34a; }
+        .popup.success-theme h3 { color: #16a34a; }
+        
+        .popup.error-theme .popup-icon { background: #fef2f2; color: #dc2626; }
+        .popup.error-theme h3 { color: #dc2626; }
+
+        .popup h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .popup p { font-size: 14px; color: #64748b; line-height: 1.5; }
+        
+        .popup-close-btn {
+            margin-top: 20px;
+            background: #f1f5f9;
+            border: none;
+            color: #4a5568;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .popup-close-btn:hover { background: #e2e8f0; }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+        .overlay.show { opacity: 1; pointer-events: all; }
+    </style>
+</head>
+<body>
+
+<header class="app-header">
+    <div class="header-left">
+        <img src="https://i.ibb.co/qLBFPN0x/beta.png" alt="BidhyaBari Logo" class="logo-img">
+    </div>
+    <div class="header-right">
+        <div class="header-icon"><a href="search.html"><i data-lucide="search" width="24" style="color: #ffffff;"></i></a></div>
+        <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell-check" width="24" style="color: #ffffff;"></i></a></div>
+        <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><i data-lucide="gift" width="24" style="color: #ffffff;"></i></a></div>
+        <div class="header-icon" style="display: none;" id="darkModeToggleBtn"><i data-lucide="moon" width="24" style="color: #ffffff;"></i></div>
+    </div>
+</header>
+
+<main class="app-container">
+
+<div class="container">
+  <div class="balance-box">
+    <div class="balance-left">
+      <div>Available Balance</div>
+      <div id="balance">0</div>
+    </div>
+    <div class="balance-right">
+      <div>Daily +5 Coins</div>
+      <button class="collect-btn" id="collectBtn" onclick="collectDaily()">Collect</button>
+    </div>
+  </div>
+
+  <div class="gift-code-box">
+    <label for="giftCode">Recharge/Gift Code</label>
+    <div class="input-wrap">
+      <input type="text" id="giftCode" placeholder="• • • • • • • • •">
+      <button class="validate-btn" onclick="validateCode()">Validate</button>
+    </div>
+  </div>
+
+  <div class="divider">Or</div>
+
+  <div class="gift-card-box">
+    <label>Scan Gift Card/ Recharge Card</label>
+    <div class="upload-area">
+      <div class="upload-header">
+        <span>Gift card View</span>
+        <span id="uploadStatus" class="status-badge">Upload Image</span>
+      </div>
+      
+      <div class="scanner-laser" id="laser"></div>
+      
+      <svg id="placeholderSvg" class="placeholder-svg" width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path>
+      </svg>
+      <img id="preview" alt="Preview Image">
+      <video id="webcamVideo" autoplay playsinline webkit-playsinline muted></video>
+    </div>
+    
+    <div class="btn-row">
+      <button class="btn-upload" onclick="triggerFileUpload()">Choose Image</button>
+      <button class="btn-scan" onclick="toggleLiveScan()">Scan</button>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none">
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="hidePopup()"></div>
+<div class="popup" id="popup">
+  <div class="popup-icon" id="popupIcon">🎉</div>
+  <h3 id="popupTitle">Notification</h3>
+  <p id="popupText">Message description goes here.</p>
+  <button class="popup-close-btn" onclick="hidePopup()">Dismiss</button>
+</div>
+
+ </main>
+
+<nav class="app-footer">
+    <a href="#" class="nav-item">
+        <i data-lucide="home" width="24" height="24"></i>
+        <span>Home</span>
+    </a>
+  <a href="coin.html" class="nav-item active">
+        <i data-lucide="qr-code" width="24" height="24"></i>
+        <span>Recharge</span>
+    </a>
+    <a href="course.html" class="nav-item">
+        <i data-lucide="airplay" width="24" height="24"></i>
+        <span>Courses</span>
+    </a>
+    <a href="study.html" class="nav-item">
+        <i data-lucide="book-open" width="24" height="24"></i>
+        <span>Study</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+        <i data-lucide="user" width="24" height="24"></i>
+        <span>Profile</span>
+    </a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
+<script>
+    // Initialize Lucide Icons globally
+    lucide.createIcons();
+
+    // Footer navigation items organic interaction ripple engine
+    const footer = document.querySelector('.app-footer');
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            const targetUrl = this.getAttribute('href');
+            if (!targetUrl || targetUrl === "" || targetUrl === "#") {
+                e.preventDefault();
+            }
+            
+            const rect = footer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${x - (size / 2)}px`;
+            ripple.style.top = `${y - (size / 2)}px`;
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => { ripple.remove(); }, 400);
+        });
+    });
+
+/* ===== CONFIG DATA ===== */
+const CODE_CONFIG = {
+  "WELCOME100": 100,
+  "BONUS50": 50,
+  "TEST123": 25,
+  "SPECIAL-QR-001": 30,
+  "GIFT-CARD-ABC": 75,
+  "BVFPH9081M": 40
+};
+
+const DAILY_COINS = 5;
+
+let balance = parseInt(localStorage.getItem('coinBalance') || '0');
+let usedCodes = JSON.parse(localStorage.getItem('usedCodes') || '[]');
+let lastCollect = localStorage.getItem('lastCollect') || 0;
+let currentImage = null;
+
+// Camera Stream Control Flags
+let liveStream = null;
+let animationFrameId = null;
+
+// Initialization
+document.getElementById('balance').textContent = balance;
+checkDailyCollect();
+
+// Handle Image Parsing Events
+document.getElementById('fileInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  stopLiveCamera(); // Turn off live camera stream if file upload is triggered
+
+  const img = new Image();
+  img.onload = () => {
+    currentImage = img;
+    document.getElementById('placeholderSvg').style.display = 'none';
+    document.getElementById('webcamVideo').style.display = 'none';
+    
+    const preview = document.getElementById('preview');
+    preview.src = img.src;
+    preview.style.display = 'block';
+    
+    const status = document.getElementById('uploadStatus');
+    status.textContent = 'Ready to Scan';
+    status.className = 'status-badge ready';
+    document.getElementById('laser').style.display = 'block';
+    
+    // Auto-parse image file directly upon manual selection
+    parseStaticUploadedImage();
+  };
+  img.src = URL.createObjectURL(file);
+});
+
+function triggerFileUpload() {
+    document.getElementById('fileInput').click();
+}
+
+/* Updated Live Phone Camera Scanning Core Engine */
+function toggleLiveScan() {
+    const video = document.getElementById('webcamVideo');
+    
+    // Reset any active live processes safely
+    if (liveStream) {
+        stopLiveCamera();
+    }
+
+    document.getElementById('placeholderSvg').style.display = 'none';
+    document.getElementById('preview').style.display = 'none';
+    video.style.display = 'block';
+    document.getElementById('laser').style.display = 'block';
+    
+    const status = document.getElementById('uploadStatus');
+    status.textContent = 'Scanning...';
+    status.className = 'status-badge scanning';
+
+    // Strict back-camera selection configuration setup
+    const constraints = { 
+        video: { 
+            facingMode: { exact: "environment" },
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+        } 
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(function(stream) {
+        connectStreamToVideo(video, stream);
+    })
+    .catch(function(err) {
+        // Fallback for laptops/desktops or browsers lacking strict env tokens
+        console.warn("Strict environment camera missing. Attempting standard fallback mode.");
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(function(fallbackStream) {
+            connectStreamToVideo(video, fallbackStream);
+        })
+        .catch(function(finalErr) {
+            console.error(finalErr);
+            resetCameraViewToDefault();
+            showCustomPopup(false, 'Camera Error', 'Access denied. Please grant camera permissions or select an image file instead.');
+        });
+    });
+}
+
+function connectStreamToVideo(videoElement, stream) {
+    liveStream = stream;
+    videoElement.srcObject = stream;
+    
+    // Explicit runtime triggers required by iOS safari environment architectures
+    videoElement.setAttribute("playsinline", true);
+    videoElement.setAttribute("webkit-playsinline", true);
+    videoElement.muted = true;
+    
+    videoElement.play().then(() => {
+        animationFrameId = requestAnimationFrame(tickCameraFrame);
+    }).catch(err => {
+        console.error("Video play interrupted:", err);
+    });
+}
+
+function resetCameraViewToDefault() {
+    const status = document.getElementById('uploadStatus');
+    status.textContent = 'Upload Image';
+    status.className = 'status-badge';
+    document.getElementById('laser').style.display = 'none';
+    document.getElementById('placeholderSvg').style.display = 'block';
+    document.getElementById('webcamVideo').style.display = 'none';
+}
+
+function tickCameraFrame() {
+    const video = document.getElementById('webcamVideo');
+    if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, canvas.width, canvas.height, {
+            inversionAttempts: "dontInvert",
+        });
+
+        if (code) {
+            const qrValue = code.data.trim();
+            stopLiveCamera();
+            
+            const status = document.getElementById('uploadStatus');
+            status.textContent = 'Scan Successfully';
+            status.className = 'status-badge scanned';
+            
+            processDecodedQR(qrValue);
+            return; 
+        }
+    }
+    if (liveStream) {
+        animationFrameId = requestAnimationFrame(tickCameraFrame);
+    }
+}
+
+function stopLiveCamera() {
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+    if (liveStream) {
+        liveStream.getTracks().forEach(track => track.stop());
+        liveStream = null;
+    }
+    document.getElementById('laser').style.display = 'none';
+}
+
+function parseStaticUploadedImage() {
+  if (!currentImage) return;
+
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = currentImage.width;
+  canvas.height = currentImage.height;
+  ctx.drawImage(currentImage, 0, 0);
+
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+  if (code) {
+    const qrValue = code.data.trim();
+    const status = document.getElementById('uploadStatus');
+    status.textContent = 'Scan Successfully';
+    status.className = 'status-badge scanned';
+    processDecodedQR(qrValue);
+  } else {
+    showCustomPopup(false, 'Scanning Failed', 'Could not locate clear matrix pattern. Make sure the QR is well lit.');
+  }
+}
+
+function processDecodedQR(qrValue) {
+    if (usedCodes.includes(qrValue)) {
+      return showCustomPopup(false, 'QR Code Expired', 'This specific QR voucher balance has already been allocated.');
+    }
+
+    if (CODE_CONFIG[qrValue]) {
+      addCoins(CODE_CONFIG[qrValue], `QR Scan balance acquired.`);
+      usedCodes.push(qrValue);
+      localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
+    } else {
+      showCustomPopup(false, 'Unrecognized Voucher', `Decoded: "${qrValue}". Code is invalid.`);
+    }
+}
+
+/* Original Static Functional Engine Code Routines */
+function validateCode() {
+  const code = document.getElementById('giftCode').value.trim().toUpperCase();
+  if (!code) {
+    return showCustomPopup(false, 'Please Enter Code', 'Please type a valid gift code before validating.');
+  }
+
+  if (usedCodes.includes(code)) {
+    return showCustomPopup(false, 'Already Claimed', 'This specific code has already been added to your profile.');
+  }
+
+  if (CODE_CONFIG[code]) {
+    addCoins(CODE_CONFIG[code], `Code redeemed: ${code}`);
+    usedCodes.push(code);
+    localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
+    document.getElementById('giftCode').value = '';
+  } else {
+    showCustomPopup(false, 'Invalid Promo Code', 'The code you entered does not match our system entries.');
+  }
+}
+
+function addCoins(amount, reason) {
+  balance += amount;
+  localStorage.setItem('coinBalance', balance);
+  document.getElementById('balance').textContent = balance;
+  showCustomPopup(true, `+${amount} Coins Earned!`, reason);
+}
+
+function collectDaily() {
+  const now = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  if (now - lastCollect < oneDay) {
+    const hoursLeft = Math.ceil((oneDay - (now - lastCollect)) / 3600000);
+    return showCustomPopup(false, 'Patience Pays!', `Your daily window is lock. Retry in ${hoursLeft} hour(s).`);
+  }
+
+  addCoins(DAILY_COINS, 'Daily check-in loyalty bonus added.');
+  lastCollect = now;
+  localStorage.setItem('lastCollect', lastCollect);
+  checkDailyCollect();
+}
+
+function checkDailyCollect() {
+  const now = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
+  const btn = document.getElementById('collectBtn');
+
+  if (now - lastCollect < oneDay) {
+    btn.disabled = true;
+    btn.textContent = 'Claimed';
+  } else {
+    btn.disabled = false;
+    btn.textContent = 'Collect';
+  }
+}
+
+/* Modal Popup Engine Setup */
+let autoHideTimer;
+function showCustomPopup(isSuccess, title, text) {
+  clearTimeout(autoHideTimer);
+  const popup = document.getElementById('popup');
+  const icon = document.getElementById('popupIcon');
+  const titleEl = document.getElementById('popupTitle');
+  const textEl = document.getElementById('popupText');
+  
+  titleEl.textContent = title;
+  textEl.textContent = text;
+  
+  if (isSuccess) {
+    popup.className = "popup success-theme show";
+    icon.textContent = "✨";
+  } else {
+    popup.className = "popup error-theme show";
+    icon.textContent = "❌";
+  }
+  
+  document.getElementById('overlay').classList.add('show');
+  autoHideTimer = setTimeout(hidePopup, 4000);
+}
+
+function hidePopup() {
+  document.getElementById('popup').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show');
+}
+</script>
+</body>
+</html>
