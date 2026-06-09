@@ -4,32 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TutoPulse - Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+ <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Cropper.js for professional cropping -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brandBlue: '#07789B',
-                        darkBlue: '#07789B',
-                        brandGray: '#07789B',
-                        greenBtn: '#07789B',
-                        greenText: '#2E7D32',
-                        redBadgeBg: '#FFEBEE',
-                        redBadgeText: '#C62828',
+                        brandBlue: '#3047a5',
+                        appBg: '#f7f9fe',
+                        darkBg: '#0f172a',
+                        darkCard: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'Nunito', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        /* ===== LIGHT MODE VARIABLES (default) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -39,142 +37,166 @@
             -ms-user-select: none;
             user-select: none;
             -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
             -webkit-tap-highlight-color: transparent;
+            font-family: 'Poppins', 'Nunito', sans-serif;
         }
         
-        a, span, p, h1, h2, h3, h4, h5, h6, div {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            text-decoration: none;
-        }
-        
-        img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-        }
-        
-        /* Base Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body { --text:#000;
-            background-color: #ffffff;
-            color: #333;
+        body { 
+            background-color: #f7f9fe;
+            color: #000000;
             overflow: hidden;
-                --text-muted: #8D94A2;  
---footer-bg: #ffffff;
+        }
+        body.dark {
+            background-color: #0f172a;
+            color: #f8fafc;
         }
 
-       /* --- Header Styles --- */
+        /* --- Header Styles --- */
         .app-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 50px;
-            background: #07789B;
+            height: 55px;
+            background: #905AF8;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 16px;
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .logo-img {
-            width: 150px;
-            
+            gap: 12px;
         }
 
         .header-title {
-            font-family: 'Nunito', sans-serif;
             color: #fff;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            font-size: 16px;
+            font-weight: 600;
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #fff;
-        }
-
-        .header-icon {
-            padding: 7px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            color: #ffffff;
-            justify-content: center;
-        }
-
-        .header-icon:hover {
-            background: rgba(0, 0, 0, 0.08);
-            padding: 7px;
-            border-radius: 50px;
-        }
-
-        body.dark .header-icon:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .gift-img {
-            display: flex;
-            width: 25px;
-            height: 25px;
-        }
         /* --- Main Content Area --- */
         .app-content {
             position: fixed;
-            top: 50px;
+            top: 55px;
             bottom: 65px;
             width: 100%;
             overflow-y: auto;
-            background: linear-gradient(to bottom, #FAF1EB 0%, #ffffff 80%);
+            background-color: #ffffff;
         }
-        
-        /* Dark mode adjustment for main content */
         body.dark .app-content {
-            background: #000;
+            background-color: #000;
         }
 
-           /* --- Footer Nav Styles --- */
-        .app-footer {
+      
+        /* Custom Toggle Switch Style */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #b0bec5;
+            transition: .25s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .25s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #49599a;
+        }
+        body.dark input:checked + .slider {
+            background-color: #6366f1;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Modals & Popups styling */
+        #profileModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 60;
+            align-items: flex-end;
+        }
+        #profileModal.active { display: flex; }
+        .modal-content {
+            background: white;
+            width: 100%;
+            border-radius: 24px 24px 0 0;
+            padding: 20px;
+            animation: slideUp 0.3s ease-out;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        body.dark .modal-content {
+            background: #1e293b;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .crop-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .crop-card {
+            background: white;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+        }
+        body.dark .crop-card {
+            background: #1e293b;
+        }
+
+        /* Active click scaling effects */
+        .clickable-row:active {
+            transform: scale(0.99);
+        }
+
+
+       .app-footer {
             overflow: hidden;
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 65px;
-            background-color: var(--footer-bg);
+            background-color: #ffffff;
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -185,9 +207,10 @@
 
         body.dark .app-footer {
             box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            background: #000;
         }
 
-        .nav-item {
+       .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -198,432 +221,245 @@
             font-weight: 700;
             width: 65px;
             height: 100%;
-            gap: 4px;
+            gap: 2px;
             position: relative;
             overflow: hidden;
             transition: transform 0.1s ease-in-out;
         }
 
-        .nav-item.active {
-            color: #07789B;
+       .nav-item.active {
+            color: #905AF8;
             background: rgba(0, 0, 0, 0.02);
             border-radius: 50px;
             padding: 5px;
         }
 
-        body.dark .nav-item.active {
+        body.dark.nav-item.active {
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Ripple Effect Elements */
-        .ripple {
+       .ripple {
             position: absolute;
             border-radius: 50%;
             transform: scale(0);
-            animation: ripple-animation 0.5s linear;
-            background-color: rgba(49, 64, 120, 0.15);
+            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+            background-color: rgba(144, 90, 248, 0.15);
             pointer-events: none;
         }
 
         @keyframes ripple-animation {
             to {
-                transform: scale(3.5);
+                transform: scale(3);
                 opacity: 0;
             }
         }
 
-        /* Dark mode styles for profile components */
-        body.dark {
-           --text:#ffffff;
-            background: #0b1120;
-               --footer-bg: #1e1e1e;  
-               --text-muted: #a0a0a0;
-        }
-        body.dark .glass-card {
-            background: rgba(30, 41, 59, 0.9) !important;
-            backdrop-filter: blur(2px);
-            border-color: rgba(71, 85, 105, 0.5) !important;
-        }
-        body.dark .bg-white {
-            background-color: #1e293b !important;
-        }
-        body.dark .text-gray-800, body.dark .text-gray-700, body.dark .text-gray-600, body.dark .text-gray-500 {
-            color: #e2e8f0 !important;
-        }
-        body.dark .bg-gray-50, body.dark .bg-slate-50 {
-            background-color: #0f172a !important;
-        }
-        body.dark .border-gray-100, body.dark .border-gray-200 {
-            border-color: #334155 !important;
-        }
-        body.dark .modal-content {
-            background: #1e293b !important;
-        }
-        body.dark .crop-card {
-            background: #1e293b !important;
-        }
-        body.dark .crop-img-container {
-            background: #0f172a !important;
-        }
-        body.dark .bg-indigo-100 {
-            background-color: #2d3a5e !important;
-        }
-        body.dark .text-indigo-700 {
-            color: #a5b4fc !important;
-        }
-        body.dark input, body.dark textarea {
-            background-color: #0f172a !important;
-            border-color: #334155 !important;
-            color: #f1f5f9 !important;
-        }
-        body.dark input::placeholder {
-            color: #94a3b8;
-        }
-        body.dark label {
-            color: #cbd5e1 !important;
-        }
-        body.dark .rounded-full.bg-gray-100 {
-            background-color: #334155 !important;
-        }
-        body.dark .from-indigo-50 {
-            background: #0f172a !important;
-        }
-        body.dark .to-sky-50 {
-            background: #0f172a !important;
-        }
-        body.dark .bg-gradient-to-r {
-            background: #1e293b !important;
-        }
-
-        .gradient-primary {
-            background: #6aa0ff;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(226, 232, 240, 0.6);
-        }
-        
-        /* Profile specific styles */
-        .avatar-upload-wrapper {
-            position: relative;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-        .avatar-upload-wrapper:hover .avatar-overlay {
-            opacity: 1;
-            transform: scale(1);
-        }
-        .avatar-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.25s, transform 0.2s;
-            transform: scale(0.92);
-            backdrop-filter: blur(3px);
-            cursor: pointer;
-        }
-        
-        .toast-smooth {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: #1f2937e6;
-            backdrop-filter: blur(16px);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 80px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.3);
-            transition: all 0.2s;
-            opacity: 0;
-            pointer-events: none;
-        }
-        .toast-smooth.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        
-        #hiddenFileInput { display: none; }
-        
-        .crop-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.88);
-            backdrop-filter: blur(12px);
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .crop-card {
-            background: white;
-            border-radius: 32px;
-            max-width: 100%;
-            width: 100%;
-            max-width: 520px;
-            overflow: hidden;
-            animation: fadeUp 0.25s;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.4);
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: scale(0.96); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .crop-img-container {
-            background: #f1f5f9;
-            max-height: 55vh;
-            overflow: hidden;
-        }
-        #cropImageElement {
-            max-width: 100%;
-            display: block;
-            margin: 0 auto;
-        }
-        
-        button:active { transform: scale(0.97); transition: transform 0.05s; }
-        
-        .settings-item {
-            transition: all 0.2s;
-        }
-        
-        body.dark .settings-item:hover {
-            background-color: #334155 !important;
-        }
-        
-        #profileModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            z-index: 60;
-            align-items: flex-end;
-        }
-        #profileModal.active { display: flex; }
-        .modal-content {
-            background: white;
-            width: 100%;
-            border-radius: 20px 20px 0 0;
-            padding: 10px 20px 10px;
-            animation: slideUp 0.35s;
-            max-height: 95vh;
-            overflow-y: auto;
-            z-index: 60000;
-            box-shadow: 0 -20px 40px rgba(0,0,0,9);
-        }
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .main-content-inner {
-            padding: 16px 20px 20px 20px;
-        }
     </style>
 </head>
 <body>
-  <!-- HEADER - UNCHANGED -->
-<header class="app-header">
-    <div class="header-left">
-        <img src="https://tutogenius.page.gd/wp-content/uploads/2026/05/TutoGenius-Logo.png" alt="BidhyaBari Logo" class="logo-img">
-    </div>
-    <div class="header-right">
-        <h2>Profile & Settings</h2>
-     <div class="header-icon hidden" id="darkToggle" style="cursor:pointer;">
-            <i data-lucide="moon" width="24" height="24"></i>
+
+    <header class="app-header">
+        <div class="header-left">
+            <i data-lucide="settings" class="w-6 h-6 text-white"></i>
+            <span class="header-title">Profile & Settings</span>
         </div>
-</div>
-</header>
+        <div class="flex items-center gap-1 text-white text-sm font-medium cursor-pointer">
+            <i data-lucide="languages" class="w-5 h-5"></i>
+            <span>ভাষা</span>
+        </div>
+    </header>
 
-    <!-- MAIN CONTENT AREA (Scrollable) -->
-    <main class="app-content">
-        <div class="main-content-inner">
-            <!-- Enhanced Profile Card with sleek glassmorphism -->
-            <div class="glass-card rounded-3xl p-2 shadow-lg border border-white/40 transition-all hover:shadow-xl mb-5" id="profileCard" style="border: 2px solid #07789B;">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-5">
-                        <div class="avatar-upload-wrapper relative w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-md ring-2 ring-blue-100/60">
-                            <img id="profilePic" src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Avatar" class="w-full h-full object-cover">
-                            <div class="avatar-overlay" onclick="openProfileModalForAvatar()">
-                                <i data-lucide="camera" class="w-6 h-6 text-white drop-shadow"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <h2 id="username" class="font-bold text-gray-800 tracking-tight" style="font-size: 18px;">Loading...</h2>
-                            <div class="flex items-center gap-1.5 mt-1">
-                                <i data-lucide="mail" class="w-3.5 h-3.5 text-gray-500"></i>
-                                <p id="userEmail" class="text-sm text-gray-500 font-medium">user@example.com</p>
-                            </div>
-                        </div>
+    <main class="app-content px-4 py-6">
+        
+        <div class="flex items-center justify-between mb-8 px-1">
+            <div class="flex items-center gap-4">
+                <div class="relative w-16 h-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+                    <img id="profilePic" src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Avatar" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer" onclick="openProfileModalForAvatar()">
+                        <i data-lucide="camera" class="w-5 h-5 text-white"></i>
                     </div>
-                    <button onclick="openProfileModalForAvatar()" class="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl transition-all">
-                        <i data-lucide="pencil" class="w-5 h-5 text-gray-500"></i>
-                    </button>
+                </div>
+                <div>
+                    <h2 id="username" class="text-xl font-bold tracking-wide text-gray-900 dark:text-white">Aninda Halder</h2>
+                    <p id="userEmail" class="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">edulivebangla@gmail.com</p>
                 </div>
             </div>
+            <button onclick="openProfileModalForAvatar()" class="p-2 hover:bg-gray-200/50 dark:hover:bg-gray-700/50 rounded-full transition-all">
+                <i data-lucide="pencil" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i>
+            </button>
+        </div>
 
-            <!-- Storage status with animated dot -->
-            <div class="bg-gradient-to-r from-indigo-50 to-sky-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-3.5 flex items-center justify-between shadow-sm border border-indigo-100 dark:border-gray-700 mb-5">
-                <div class="flex items-center gap-2.5">
-                    <div class="relative">
-                        <i data-lucide="database" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
-                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    </div>
-                    <span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Persistent vault storage</span>
-                </div>
-                <span class="text-red-600  font-semibold text-xs bg-white dark:bg-black px-3 py-1.5 rounded-full" id="storageStatus">✓ Synced</span>
-            </div>
-
+        <div class="bg-white dark:bg-slate-800 rounded-[20px] shadow-[0_2px_12px_rgba(0,0,0,0.015)] p-1.5 mb-5 border border-transparent dark:border-slate-700">
          
-
-            <!-- Settings list -->
-            <div class="space-y-3">
-                <!-- Dark mode toggle -->
-                <div class="bg-white dark:bg-gray-800/80 p-4 rounded-2xl flex items-center justify-between shadow-sm border border-gray-400 dark:border-gray-700 settings-item mb-2">
-                    <div class="flex items-center gap-4">
-                       <div class="bg-red-100 dark:bg-red-900/30 p-2.5 rounded-xl">
-                            <i data-lucide="moon" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
-                        </div>
-                        <span class="font-semibold text-gray-800 dark:text-gray-200">Light & Night Mode</span>
+            <div class="flex items-center justify-between p-3.5 rounded-[16px]">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#f3f0ff] dark:bg-purple-950/40 flex items-center justify-center">
+                        <i data-lucide="bell" class="w-5 h-5 text-[#6c5ce7] dark:text-purple-400"></i>
                     </div>
-                    <button id="darkToggleBtn" class="w-10 h-10 transition flex items-center justify-center text-2xl shadow-sm " style="border-radius: 50px; background: var(--text); ">
-                                                
-                    </button>
+                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Notifications</span>
                 </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="notificationCheckbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
 
-                <a href="#"><div class="bg-white dark:bg-gray-800/80 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/70 transition shadow-sm settings-item mb-2 border border-gray-400">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-amber-100 dark:bg-amber-900/30 p-2.5 rounded-xl">
-                            <i data-lucide="star" class="w-5 h-5 text-amber-600 dark:text-amber-400"></i>
-                        </div>
-                        <span class="font-semibold text-gray-800 dark:text-gray-200">Rate Experience</span>
+            <div class="flex items-center justify-between p-3.5 rounded-[16px]">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#f8f9fa] dark:bg-slate-900 flex items-center justify-center">
+                        <i data-lucide="moon" class="w-5 h-5 text-gray-900 dark:text-slate-300"></i>
                     </div>
-                    <i data-lucide="chevron-right" class="text-gray-400 w-5 h-5"></i>
-                </div></a>
+                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Dark Mode</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkToggleBtn">
+                    <span class="slider"></span>
+                </label>
+            </div>
+   </div>
+   <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-gray-50 dark:bg-slate-700/40 mb-2">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#edf2ff] dark:bg-indigo-950/40 flex items-center justify-center">
+                        <i data-lucide="shopping-cart" class="w-5 h-5 text-[#3047a5] dark:text-indigo-400"></i>
+                    </div>
+                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Order History</span>
+                </div>
+                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+            </a>
 
-                <a href="whatsapp://send?&phone=919339061296"> <div class="bg-white dark:bg-gray-800/80 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/70 transition shadow-sm settings-item mb-2 border border-gray-400">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-emerald-100 dark:bg-emerald-900/30 p-2.5 rounded-xl">
-                            <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"></i>
-                        </div>
-                        <span class="font-semibold text-gray-800 dark:text-gray-200">WhatsApp Support</span>
+            <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-gray-50 dark:bg-slate-700/40 mb-2">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#fff9db] dark:bg-amber-950/30 flex items-center justify-center">
+                        <i data-lucide="star" class="w-5 h-5 text-[#fab005] dark:text-amber-400"></i>
                     </div>
-                    <i data-lucide="chevron-right" class="text-gray-400 w-5 h-5"></i>
-                </div></a>
-                
-                <a href="https://edulivestore.netlify.app/App/about.html"> <div class="bg-white dark:bg-gray-800/80 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/70 transition shadow-sm settings-item mb-2 border border-gray-400">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-red-100 dark:bg-red-900/30 p-2.5 rounded-xl">
-                            <i data-lucide="info" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
-                        </div>
-                        <span class="font-semibold text-gray-800 dark:text-gray-200">About Us</span>
+                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Rate This App</span>
+                </div>
+                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+            </a>
+
+            <a href="mailto:edulivebangla@gmail.com" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-gray-50 dark:bg-slate-700/40">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#ebfbee] dark:bg-emerald-950/30 flex items-center justify-center">
+                        <i data-lucide="mail" class="w-5 h-5 text-[#40c057] dark:text-emerald-400"></i>
                     </div>
-                    <i data-lucide="chevron-right" class="text-gray-400 w-5 h-5"></i>
-                </div></a>
-                
-                <a href="tel:919339061296"> <div class="bg-white dark:bg-gray-800/80 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/70 transition shadow-sm settings-item mb-2 border border-gray-400">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-blue-100 dark:bg-blue-900/30 p-2.5 rounded-xl">
-                            <i data-lucide="phone-forwarded" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
-                        </div>
-                        <span class="font-semibold text-gray-800 dark:text-gray-200">Call Helpline</span>
+                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Contact Us</span>
+                </div>
+                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+            </a>
+     
+
+        <div class="border-t border-gray-200/60 dark:border-slate-700/60 my-5 mx-2"></div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-[20px] shadow-[0_2px_12px_rgba(0,0,0,0.015)] p-1.5 mb-6 border border-transparent dark:border-slate-700">
+            <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-gray-50 dark:bg-slate-700/40 mb-2">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#f1f3f5] dark:bg-slate-900 flex items-center justify-center">
+                        <i data-lucide="lock" class="w-5 h-5 text-gray-700 dark:text-slate-300"></i>
                     </div>
-                    <i data-lucide="chevron-right" class="text-gray-400 w-5 h-5"></i>
-                </div></a>
+                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Privacy Policy</span>
+                </div>
+                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+            </a>
+
+            <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-gray-50 dark:bg-slate-700/40">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#fff5f5] dark:bg-red-950/30 flex items-center justify-center">
+                        <i data-lucide="info" class="w-5 h-5 text-[#ff6b6b]"></i>
+                    </div>
+                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">About</span>
+                </div>
+                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+            </a>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-5 text-center shadow-sm mx-1 mt-8 mb-4">
+            <div class="flex items-center justify-center gap-2 text-gray-800 dark:text-slate-200 font-medium text-[15px]">
+                <span class="text-blue-500">💙</span>
+                <span>Devolopment by Aninda</span>
+                <span class="text-base">🇮🇳</span>
+            </div>
+            <div class="text-xs text-gray-400 dark:text-slate-400 font-medium mt-1.5 flex justify-center gap-1.5">
+                <span>App Version 1.2.4</span>
+                <span>|</span>
+                <span>TutoGenius</span>
             </div>
         </div>
+
     </main>
+<nav class="app-footer">
+    <a href="home" class="nav-item">
+        <i data-lucide="home" width="24" height="24"></i>
+        <span>Home</span>
+    </a>
+  <a href="coin" class="nav-item">
+        <i data-lucide="qr-code" width="24" height="24"></i>
+        <span>Recharge</span>
+    </a>
+    <a href="course" class="nav-item">
+        <i data-lucide="airplay" width="24" height="24"></i>
+        <span>Courses</span>
+    </a>
+    <a href="study" class="nav-item">
+        <i data-lucide="book-open" width="24" height="24"></i>
+        <span>Study</span>
+    </a>
+    <a href="#" class="nav-item active">
+        <i data-lucide="user" width="24" height="24"></i>
+        <span>Profile</span>
+    </a>
+</nav>
 
-     <!-- FOOTER -->
-    <nav class="app-footer">
-        <a href="home.html" class="nav-item">
-            <i data-lucide="home" width="24" height="24"></i>
-            <span>Home</span>
-        </a>
-        <a href="course.html" class="nav-item">
-            <i data-lucide="airplay" width="24" height="24"></i>
-            <span>Courses</span>
-        </a>
-        <a href="study.html" class="nav-item">
-            <i data-lucide="book-open" width="24" height="24"></i>
-            <span>Study</span>
-        </a>
-        <a href="#" class="nav-item active">
-            <i data-lucide="user" width="24" height="24"></i>
-            <span>Profile</span>
-        </a>
-    </nav>
+  
 
 
-    <!-- EDIT PROFILE MODAL -->
     <div id="profileModal" onclick="closeModalOnBg(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-0">
-                <h3 class="text-1xl font-bold text-gray-800 dark:text-white">Edit identity</h3>
-                <button onclick="closeModal()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i data-lucide="x" class="w-6 h-6 text-gray-500"></i></button>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Edit Profile</h3>
+                <button onclick="closeModal()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                    <i data-lucide="x" class="w-5 h-5 text-gray-500 dark:text-slate-400"></i>
+                </button>
             </div>
             
-            <div class="flex flex-col items-center mb-7">
-                <div class="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl cursor-pointer group bg-gray-100" id="modalAvatarTrigger" onclick="triggerUploadFromModal()">
+            <div class="flex flex-col items-center mb-6">
+                <div class="relative w-20 h-20 rounded-full overflow-hidden bg-gray-100 dark:bg-slate-900 cursor-pointer" onclick="triggerUploadFromModal()">
                     <img id="modalAvatarPreview" src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Avatar" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center rounded-full">
-                        <i data-lucide="camera" class="w-8 h-8 text-white"></i>
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <i data-lucide="camera" class="w-6 h-6 text-white"></i>
                     </div>
                 </div>
-                <p class="text-sm text-blue-600 dark:text-blue-400 mt-3 font-medium cursor-pointer" onclick="triggerUploadFromModal()">Change profile photo</p>
+                <p class="text-xs text-blue-600 dark:text-indigo-400 mt-2 font-medium cursor-pointer" onclick="triggerUploadFromModal()">Change profile photo</p>
             </div>
 
-            <div class="space-y-5">
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
-                    <input type="text" id="editNameInput" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 outline-none transition">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Full Name</label>
+                    <input type="text" id="editNameInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl focus:border-brandBlue dark:focus:border-indigo-500 text-gray-900 dark:text-white outline-none text-sm transition">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Email Address</label>
-                    <input type="email" id="editEmailInput" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-xl focus:border-blue-500 outline-none transition">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Phone Number</label>
-                    <input type="tel" id="editPhoneInput" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-xl outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Grade / Class</label>
-                    <input type="text" id="editClassInput" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-xl outline-none">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Email Address</label>
+                    <input type="email" id="editEmailInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl focus:border-brandBlue dark:focus:border-indigo-500 text-gray-900 dark:text-white outline-none text-sm transition">
                 </div>
                 
-                <button id="updateProfileBtn" class="w-full gradient-primary text-white py-4 rounded-xl text-lg font-bold mt-4 shadow-md hover:shadow-xl transition active:scale-98">
-                    Save
+                <button id="updateProfileBtn" onclick="saveUpdatedProfile()" class="w-full bg-[#3047a5] dark:bg-indigo-600 text-white py-3.5 rounded-xl text-base font-semibold mt-4 shadow-md transition active:scale-95">
+                    Save Changes
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Cropper Modal -->
     <div id="cropModalWindow" class="crop-modal">
         <div class="crop-card">
-            <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                <h4 class="text-xl font-bold text-gray-800 dark:text-white">Adjust frame</h4>
-                <button onclick="closeCropModal()" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center">
+                <h4 class="font-bold text-gray-900 dark:text-white">Adjust Framework</h4>
+                <button onclick="closeCropModal()" class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700"><i data-lucide="x" class="w-5 h-5 dark:text-slate-400"></i></button>
             </div>
-            <div class="crop-img-container p-4 bg-slate-50 dark:bg-gray-900">
-                <img id="cropImageElement" alt="crop preview">
+            <div class="p-4 bg-gray-50 dark:bg-slate-900 flex items-center justify-center max-h-[50vh] overflow-hidden">
+                <img id="cropImageElement" alt="Crop Preview" class="max-w-full">
             </div>
-            <div class="p-5 flex gap-3 justify-end">
-                <button onclick="closeCropModal()" class="px-6 py-2.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-medium">Cancel</button>
-                <button onclick="confirmCrop()" class="px-6 py-2.5 rounded-full bg-indigo-700 text-white font-semibold shadow">Apply Crop</button>
+            <div class="p-4 border-t border-gray-100 dark:border-slate-700 flex gap-2 justify-end">
+                <button onclick="closeCropModal()" class="px-5 py-2 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 font-medium text-sm">Cancel</button>
+                <button onclick="confirmCrop()" class="px-5 py-2 rounded-xl bg-[#3047a5] dark:bg-indigo-600 text-white font-medium text-sm">Apply</button>
             </div>
         </div>
     </div>
@@ -631,60 +467,39 @@
     <input type="file" id="hiddenFileInput" accept="image/jpeg,image/png,image/webp,image/jpg" style="display: none;">
 
     <script>
-        // Initialize Lucide Icons
+        // Load Lucide Icons
         if (typeof lucide !== 'undefined') lucide.createIcons();
-        
-        // Footer ripple effect
         const footer = document.querySelector('.app-footer');
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                const targetUrl = this.getAttribute('href');
-                if (!targetUrl || targetUrl === "" || targetUrl === "#") {
-                    e.preventDefault();
-                }
-                
-                const rect = footer.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                const size = rect.width;
-                ripple.style.width = ripple.style.height = `${size}px`;
-                ripple.style.left = `${x - (size / 2)}px`;
-                ripple.style.top = `${y - (size / 2)}px`;
-                footer.appendChild(ripple);
-                
-                if (targetUrl && targetUrl !== "" && targetUrl !== "#") {
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 200);
-                }
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            const targetUrl = this.getAttribute('href');
+            if (!targetUrl || targetUrl === "" || targetUrl === "#") {
+                e.preventDefault();
+            }
+
+            const rect = footer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${x - (size / 2)}px`;
+            ripple.style.top = `${y - (size / 2)}px`;
+
+            this.appendChild(ripple);
+            setTimeout(() => { ripple.remove(); }, 400);
         });
-        
-        // ========== PERSISTENT STORAGE ==========
+    });
+        // --- Storage Management Keys ---
         const STORAGE_KEYS = {
             NAME: 'student_display_name',
             AVATAR: 'profile_image_url',
             EMAIL: 'profile_vault_email',
-            PHONE: 'profile_vault_phone',
-            CLASS: 'profile_vault_class',
             DARK_MODE: 'darkMode'
         };
-        const DEFAULTS = {
-            name: '',
-            email: '',
-            phone: '',
-            class: '',
-            avatar: 'https://i.ibb.co/4pDNDk1/avatar.png'
-        };
-        
+
         let currentCropper = null;
         const mainAvatar = document.getElementById('profilePic');
         const modalAvatarPreview = document.getElementById('modalAvatarPreview');
@@ -692,189 +507,120 @@
         const userEmailSpan = document.getElementById('userEmail');
         const editNameInput = document.getElementById('editNameInput');
         const editEmailInput = document.getElementById('editEmailInput');
-        const editPhoneInput = document.getElementById('editPhoneInput');
-        const editClassInput = document.getElementById('editClassInput');
+        const fileInput = document.getElementById('hiddenFileInput');
         const darkToggleBtn = document.getElementById('darkToggleBtn');
-        const storageStatusSpan = document.getElementById('storageStatus');
-        
-        function saveProfileData(data) {
-            if (data.name !== undefined) localStorage.setItem(STORAGE_KEYS.NAME, data.name);
-            if (data.email !== undefined) localStorage.setItem(STORAGE_KEYS.EMAIL, data.email);
-            if (data.phone !== undefined) localStorage.setItem(STORAGE_KEYS.PHONE, data.phone);
-            if (data.class !== undefined) localStorage.setItem(STORAGE_KEYS.CLASS, data.class);
-            if (data.avatar !== undefined) localStorage.setItem(STORAGE_KEYS.AVATAR, data.avatar);
-            localStorage.setItem('profile_last_updated', new Date().toISOString());
-            updateStorageStatus();
-        }
-        
-        function loadProfileData() {
-            let name = localStorage.getItem(STORAGE_KEYS.NAME) || DEFAULTS.name;
-            let avatar = localStorage.getItem(STORAGE_KEYS.AVATAR) || DEFAULTS.avatar;
-            const email = localStorage.getItem(STORAGE_KEYS.EMAIL) || DEFAULTS.email;
-            const phone = localStorage.getItem(STORAGE_KEYS.PHONE) || DEFAULTS.phone;
-            const classVal = localStorage.getItem(STORAGE_KEYS.CLASS) || DEFAULTS.class;
-            return { name, email, phone, class: classVal, avatar };
-        }
-        
-        function updateUIFromStorage() {
-            const data = loadProfileData();
-            usernameSpan.textContent = data.name;
-            userEmailSpan.textContent = data.email;
-            if (data.avatar && data.avatar.trim()) {
-                mainAvatar.src = data.avatar;
-                if (modalAvatarPreview) modalAvatarPreview.src = data.avatar;
-            }
-            if (editNameInput) editNameInput.value = data.name;
-            if (editEmailInput) editEmailInput.value = data.email;
-            if (editPhoneInput) editPhoneInput.value = data.phone;
-            if (editClassInput) editClassInput.value = data.class;
-        }
-        
-        function updateStorageStatus() {
-            const lastUpdated = localStorage.getItem('profile_last_updated');
-            if (lastUpdated) {
-                const date = new Date(lastUpdated);
-                const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                storageStatusSpan.textContent = `✓ ${timeStr}`;
-                setTimeout(() => {
-                    if (storageStatusSpan.textContent.includes(timeStr)) storageStatusSpan.textContent = '✓ Synced';
-                }, 2800);
+
+        // Initial setup and theme configuration
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedName = localStorage.getItem(STORAGE_KEYS.NAME) || "Upload Details";
+            const savedEmail = localStorage.getItem(STORAGE_KEYS.EMAIL) || "";
+            const savedAvatar = localStorage.getItem(STORAGE_KEYS.AVATAR) || "https://i.ibb.co/4pDNDk1/avatar.png";
+            
+            // Set up profile texts and images
+            usernameSpan.textContent = savedName;
+            userEmailSpan.textContent = savedEmail;
+            mainAvatar.src = savedAvatar;
+            modalAvatarPreview.src = savedAvatar;
+
+            // Manage Dark Theme Settings
+            const isDarkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE) === "true";
+            darkToggleBtn.checked = isDarkMode;
+            if (isDarkMode) {
+                document.body.classList.add('dark');
+                document.documentElement.classList.add('dark');
             } else {
-                storageStatusSpan.textContent = '✓ Synced';
+                document.body.classList.remove('dark');
+                document.documentElement.classList.remove('dark');
             }
-        }
-        
-        const body = document.body;
-        function applyDarkModeFromStorage() {
-            if (localStorage.getItem("darkMode") === "true") {
-                body.classList.add("dark");
-                if (darkToggleBtn) darkToggleBtn.textContent = "";
+        });
+
+        // Theme switch function handler
+        darkToggleBtn.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark');
+                document.documentElement.classList.add('dark');
+                localStorage.setItem(STORAGE_KEYS.DARK_MODE, "true");
             } else {
-                body.classList.remove("dark");
-                if (darkToggleBtn) darkToggleBtn.textContent = "";
+                document.body.classList.remove('dark');
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem(STORAGE_KEYS.DARK_MODE, "false");
             }
+        });
+
+        function openProfileModalForAvatar() {
+            editNameInput.value = usernameSpan.textContent;
+            editEmailInput.value = userEmailSpan.textContent;
+            document.getElementById('profileModal').classList.add('active');
         }
-        
-        if (darkToggleBtn) {
-            darkToggleBtn.addEventListener("click", () => {
-                body.classList.toggle("dark");
-                const isDark = body.classList.contains("dark");
-                localStorage.setItem("darkMode", isDark);
-                darkToggleBtn.textContent = isDark ? "" : "";
-                showToast(isDark ? "Night mode active" : "Light mode active", isDark ? "" : "");
-                if (typeof lucide !== 'undefined') lucide.createIcons();
-            });
+
+        function closeModal() {
+            document.getElementById('profileModal').classList.remove('active');
         }
-        
-        function updateProfileFromModal() {
+
+        function closeModalOnBg(e) {
+            if(e.target.id === 'profileModal') closeModal();
+        }
+
+        function saveUpdatedProfile() {
             const newName = editNameInput.value.trim();
             const newEmail = editEmailInput.value.trim();
-            const newPhone = editPhoneInput.value.trim();
-            const newClass = editClassInput.value.trim();
-            const updates = {};
-            if (newName) updates.name = newName;
-            if (newEmail) updates.email = newEmail;
-            if (newPhone) updates.phone = newPhone;
-            if (newClass) updates.class = newClass;
-            if (Object.keys(updates).length) {
-                saveProfileData(updates);
-                updateUIFromStorage();
-                showToast('Profile vault updated', '✅');
+            
+            if(newName) {
+                localStorage.setItem(STORAGE_KEYS.NAME, newName);
+                usernameSpan.textContent = newName;
+            }
+            if(newEmail) {
+                localStorage.setItem(STORAGE_KEYS.EMAIL, newEmail);
+                userEmailSpan.textContent = newEmail;
             }
             closeModal();
         }
-        
-        function updateAvatar(newAvatarBase64) {
-            saveProfileData({ avatar: newAvatarBase64 });
-            updateUIFromStorage();
-            showToast('Profile picture secured', '📸');
-        }
-        
+
         function triggerUploadFromModal() {
-            document.getElementById('hiddenFileInput').value = '';
-            document.getElementById('hiddenFileInput').click();
+            fileInput.click();
         }
-        
-        document.getElementById('hiddenFileInput').addEventListener('change', (e) => {
+
+        fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
-            if (!file) return;
-            if (!file.type.match('image.*')) { showToast('Select image file', '❌'); return; }
-            if (file.size > 8 * 1024 * 1024) { showToast('Max 8MB allowed', '📦'); return; }
-            const reader = new FileReader();
-            reader.onload = (ev) => openCropModal(ev.target.result);
-            reader.readAsDataURL(file);
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('cropModalWindow').style.display = 'flex';
+                    const cropImg = document.getElementById('cropImageElement');
+                    cropImg.src = event.target.result;
+                    
+                    if (currentCropper) currentCropper.destroy();
+                    
+                    setTimeout(() => {
+                        currentCropper = new Cropper(cropImg, {
+                            aspectRatio: 1,
+                            viewMode: 1,
+                            background: false
+                        });
+                    }, 50);
+                };
+                reader.readAsDataURL(file);
+            }
         });
-        
-        function openCropModal(imageSrc) {
-            const cropModal = document.getElementById('cropModalWindow');
-            const imgElement = document.getElementById('cropImageElement');
-            imgElement.src = imageSrc;
-            cropModal.style.display = 'flex';
-            if (currentCropper) currentCropper.destroy();
-            imgElement.onload = () => {
-                currentCropper = new Cropper(imgElement, { aspectRatio: 1, viewMode: 2, dragMode: 'move', cropBoxMovable: true, cropBoxResizable: true, autoCropArea: 0.9, background: false, guides: true });
-            };
-            if (imgElement.complete) imgElement.onload();
+
+        function closeCropModal() {
+            document.getElementById('cropModalWindow').style.display = 'none';
+            fileInput.value = '';
         }
-        
+
         function confirmCrop() {
-            if (!currentCropper) { closeCropModal(); return; }
-            const croppedCanvas = currentCropper.getCroppedCanvas({ width: 512, height: 512, imageSmoothingQuality: 'high' });
-            const roundedAvatar = croppedCanvas.toDataURL('image/jpeg', 0.92);
-            updateAvatar(roundedAvatar);
+            if (!currentCropper) return;
+            const canvas = currentCropper.getCroppedCanvas({
+                width: 180,
+                height: 180
+            });
+            
+            const croppedDataUrl = canvas.toDataURL('image/jpeg');
+            mainAvatar.src = croppedDataUrl;
+            modalAvatarPreview.src = croppedDataUrl;
+            localStorage.setItem(STORAGE_KEYS.AVATAR, croppedDataUrl);
             closeCropModal();
         }
-        
-        function closeCropModal() {
-            const cropModal = document.getElementById('cropModalWindow');
-            cropModal.style.display = 'none';
-            if (currentCropper) { currentCropper.destroy(); currentCropper = null; }
-        }
-        
-        function openProfileModalForAvatar() {
-            const data = loadProfileData();
-            if (editNameInput) editNameInput.value = data.name;
-            if (editEmailInput) editEmailInput.value = data.email;
-            if (editPhoneInput) editPhoneInput.value = data.phone;
-            if (editClassInput) editClassInput.value = data.class;
-            if (modalAvatarPreview) modalAvatarPreview.src = data.avatar;
-            const modal = document.getElementById('profileModal');
-            modal.style.display = 'flex';
-            modal.classList.add('active');
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        }
-        
-        function closeModal() {
-            const modal = document.getElementById('profileModal');
-            modal.style.display = 'none';
-            modal.classList.remove('active');
-        }
-        
-        function closeModalOnBg(event) { if (event.target.id === 'profileModal') closeModal(); }
-        
-        function showToast(message, icon = '✨') {
-            let existingToast = document.querySelector('.toast-smooth');
-            if (existingToast) existingToast.remove();
-            const toast = document.createElement('div');
-            toast.className = 'toast-smooth';
-            toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 2600);
-        }
-        
-        document.getElementById('updateProfileBtn').addEventListener('click', updateProfileFromModal);
-        
-        applyDarkModeFromStorage();
-        updateUIFromStorage();
-        setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 80);
-        
-        window.openProfileModalForAvatar = openProfileModalForAvatar;
-        window.closeModal = closeModal;
-        window.closeModalOnBg = closeModalOnBg;
-        window.triggerUploadFromModal = triggerUploadFromModal;
-        window.closeCropModal = closeCropModal;
-        window.confirmCrop = confirmCrop;
     </script>
 </body>
 </html>
