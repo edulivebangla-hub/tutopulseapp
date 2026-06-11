@@ -33,7 +33,7 @@
         }
         /* ===== DARK MODE THEME VARIABLES ===== */
         :root {
-            --bg-primary: linear-gradient(to bottom, #FAF1EB 0%, #ffffff 80%);
+            --bg-primary: #ffffff;
             --bg-surface: #ffffff;
             --bg-card: #e9e9ef;
             --text-primary: #333333;
@@ -53,7 +53,7 @@
         }
 
         body.dark {
-            --bg-primary: #121212;
+            --bg-primary: #000;
             --bg-surface: #1e1e1e;
             --bg-card: #2c2c2e;
             --text-primary: #e0e0e0;
@@ -125,7 +125,7 @@
             left: 0;
             width: 100%;
             height: 50px;
-            background: #07789B;
+            background: #905AF8;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -134,57 +134,17 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .header-left {
+      .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .logo-img {
-            width: 150px;
-            
+            gap: 12px;
         }
 
         .header-title {
-            font-family: 'Nunito', sans-serif;
             color: #fff;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            font-size: 16px;
+            font-weight: 600;
         }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #fff;
-        }
-
-        .header-icon {
-            padding: 7px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            color: #ffffff;
-            justify-content: center;
-        }
-
-        .header-icon:hover {
-            background: rgba(0, 0, 0, 0.08);
-            padding: 7px;
-            border-radius: 50px;
-        }
-
-        body.dark .header-icon:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .gift-img {
-            display: flex;
-            width: 25px;
-            height: 25px;
-        }
-
         /* --- Main Content Area --- */
         .app-content {
             position: fixed;
@@ -195,76 +155,7 @@
             background: var(--bg-primary);
         }
 
-        /* --- Footer Nav Styles --- */
-        .app-footer {
-            overflow: hidden;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background-color: var(--footer-bg);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 1000;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        body.dark .app-footer {
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 700;
-            width: 65px;
-            height: 100%;
-            gap: 4px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.1s ease-in-out;
-        }
-
-        .nav-item.active {
-            color: #07789B;
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 50px;
-            padding: 5px;
-        }
-
-        body.dark .nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Ripple Effect */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-animation 0.5s linear;
-            background-color: rgba(49, 64, 120, 0.15);
-            pointer-events: none;
-        }
-
-        body.dark .ripple {
-            background-color: rgba(100, 120, 200, 0.3);
-        }
-
-        @keyframes ripple-animation {
-            to {
-                transform: scale(3.5);
-                opacity: 0;
-            }
-        }
-
+  
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -483,7 +374,7 @@
             border-radius: 10px;         
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             scroll-snap-align: center;
-            border: 2px solid #07789B;
+            border: 2px solid #905AF8;
             transition: transform 0.3s ease, background 0.2s;
         }
 
@@ -565,6 +456,70 @@
         .img-skel-wrapper img.loaded {
             opacity: 1;
         }
+    .app-footer {
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 10;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        body.dark .app-footer {
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            background: #000;
+        }
+
+       .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 11px;
+            font-weight: 700;
+            width: 65px;
+            height: 100%;
+            gap: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease-in-out;
+        }
+
+       .nav-item.active {
+            color: #905AF8;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 50px;
+            padding: 5px;
+        }
+
+        body.dark.nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+       .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+            background-color: rgba(144, 90, 248, 0.15);
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -572,14 +527,13 @@
   <!-- HEADER - UNCHANGED -->
 <header class="app-header">
     <div class="header-left">
-        <img src="https://tutogenius.page.gd/wp-content/uploads/2026/05/TutoGenius-Logo.png" alt="BidhyaBari Logo" class="logo-img">
-    </div>
-    <div class="header-right">
-        <h2>Suggestion & Study</h2>
-     <div class="header-icon hidden" id="darkToggle" style="cursor:pointer;">
-            <i data-lucide="moon" width="24" height="24"></i>
+            <i data-lucide="bot" class="w-6 h-6 text-white"></i>
+            <span class="header-title">Study & Suggestion</span>
         </div>
-</div>
+        <div class="flex items-center gap-1 text-white text-sm font-medium cursor-pointer">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+            
+        </div>
 </header>
 
     <main class="app-content">
@@ -743,25 +697,28 @@
         </div>
     </main>
 
-    <!-- FOOTER  -->
-    <nav class="app-footer">
-        <a href="home.html" class="nav-item">
-            <i data-lucide="home" width="24" height="24"></i>
-            <span>Home</span>
-        </a>
-        <a href="course.html" class="nav-item">
-            <i data-lucide="airplay" width="24" height="24"></i>
-            <span>Courses</span>
-        </a>
-        <a href="#" class="nav-item active">
-            <i data-lucide="book-open" width="24" height="24"></i>
-            <span>Study</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-            <i data-lucide="user" width="24" height="24"></i>
-            <span>Profile</span>
-        </a>
-    </nav>
+  <nav class="app-footer">
+    <a href="home" class="nav-item">
+        <i data-lucide="home" width="24" height="24"></i>
+        <span>Home</span>
+    </a>
+  <a href="coin" class="nav-item">
+        <i data-lucide="qr-code" width="24" height="24"></i>
+        <span>Recharge</span>
+    </a>
+    <a href="course" class="nav-item">
+        <i data-lucide="airplay" width="24" height="24"></i>
+        <span>Courses</span>
+    </a>
+    <a href="#" class="nav-item active">
+        <i data-lucide="book-open" width="24" height="24"></i>
+        <span>Study</span>
+    </a>
+    <a href="profile" class="nav-item">
+        <i data-lucide="user" width="24" height="24"></i>
+        <span>Profile</span>
+    </a>
+</nav>
 
     <script>
         // ========== DARK MODE TOGGLE (Integrated) ==========
@@ -818,38 +775,31 @@
             }
         }
 
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Footer ripple navigation
+     // Load Lucide Icons
+        if (typeof lucide !== 'undefined') lucide.createIcons();
         const footer = document.querySelector('.app-footer');
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                const targetUrl = this.getAttribute('href');
-                if (!targetUrl || targetUrl === "") {
-                    e.preventDefault();
-                }
-                const rect = footer.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                const size = rect.width;
-                ripple.style.width = ripple.style.height = `${size}px`;
-                ripple.style.left = `${x - (size / 2)}px`;
-                ripple.style.top = `${y - (size / 2)}px`;
-                footer.appendChild(ripple);
-                if (targetUrl && targetUrl !== "") {
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 200);
-                }
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            const targetUrl = this.getAttribute('href');
+            if (!targetUrl || targetUrl === "" || targetUrl === "#") {
+                e.preventDefault();
+            }
+
+            const rect = footer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${x - (size / 2)}px`;
+            ripple.style.top = `${y - (size / 2)}px`;
+
+            this.appendChild(ripple);
+            setTimeout(() => { ripple.remove(); }, 400);
         });
+    });
 
         // ========== SKELETON ENGINE FOR LOADING IMAGES & BG IMAGES ==========
         document.addEventListener("DOMContentLoaded", () => {
