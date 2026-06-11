@@ -821,11 +821,11 @@
                 <span class="action-icon"><i data-lucide="globe" style="fill: #3b82f6; color: var(--bg); width:30px; height:30px;"></i></span>
                 <span style="font-size: 15px;">Explore →</span>
             </a>
-            <a href="gift/coin-eran.html" class="action-box">
+            <a href="coin" class="action-box">
                 <span class="action-icon"><i data-lucide="badge-indian-rupee" style="fill: #ffb703; color: var(--bg); width:32px; height:32px;"></i></span>
                 <div class="coin-meta">
                     <p>Your Balance</p>
-                    <h3 id="balanceAmount">0</h3>
+                    <h3 id="balance">0</h3>
                 </div>
                 <span style="margin-left: auto; display: flex;"><i data-lucide="mouse-pointer-click" style="fill: #ffb703; color: #ffb703; width:18px;"></i></span>
             </a>
@@ -1066,7 +1066,16 @@
             clickable: true,
         },
     });
+ // Get and display balance from localStorage
+  let balance = parseInt(localStorage.getItem('coinBalance') || '0');
+  document.getElementById('balance').textContent = balance;
 
+  // Use this function anywhere in your other scripts to add coins
+  function addCoins(amount) {
+    balance += amount;
+    localStorage.setItem('coinBalance', balance);
+    document.getElementById('balance').textContent = balance;
+  }
     // ========== REWARD COINS & LOCAL PROFILE DATABASES ==========
     function loadBalance() {
         let stored = localStorage.getItem("reward_coins");
