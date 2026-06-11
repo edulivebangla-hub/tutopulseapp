@@ -19,7 +19,7 @@
             --deadline-text: #c62828;
             --text-main: #212121;
             --text-sub: #616161;
-            --text-muted: #8D94A2;
+            --text-muted: #000;
             --skeleton-base: #e2e8f0;
             --skeleton-shimmer: #f1f5f9;
         }
@@ -35,7 +35,7 @@
             --deadline-text: #fca5a5;
             --text-main: #f9fafb;
             --text-sub: #9ca3af;
-            --text-muted: #6b7280;
+            --text-muted: #ffffff;
             --skeleton-base: #1f2937;
             --skeleton-shimmer: #374151;
         }
@@ -417,22 +417,13 @@
             font-size: 24px;
         }
 
-        .bg-blue-light { background-color: #eff6ff; }
-        .bg-indigo-light { background-color: #e0e7ff; }
-        .bg-purple-light { background-color: #f5f3ff; }
-        .bg-pink-light { background-color: #fdf2f8; }
-
-        body.dark .bg-blue-light { background-color: #1e3a8a; }
-        body.dark .bg-indigo-light { background-color: #312e81; }
-        body.dark .bg-purple-light { background-color: #4c1d95; }
-        body.dark .bg-pink-light { background-color: #831843; }
-
+      
         /* ===== TAB CONTROLS NAVIGATION STRIP ===== */
         .nav-tabs {
             display: flex;
             background: var(--bg);
             border-bottom: 2px solid var(--card-border);
-            position: sticky;
+            
             top: 0;
             z-index: 100;
             overflow-x: auto;
@@ -747,15 +738,15 @@
     <div class="user-section">
         <div class="user-info">
             <div class="avatar-wrapper">
-                <img id="profileAvatar" src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
+                <img id="profileAvatar" src="https://placehold.co/100x100?text=!" alt="Avatar" class="avatar">
             </div>
             <div class="user-meta">
                 <p id="greet">Try Today's Quiz</p>
-                <h3 id="displayName">Aninda Halder</h3>
+                <h3 id="displayName">Upload Details</h3>
             </div>
         </div>
         <div class="verified-badge">
-            <i data-lucide="verified" style="fill: #3b82f6; width: 32px; height: 32px; color: var(--bg);"></i>
+            <i data-lucide="verified" style="fill: #3b82f6; width: 25px; height: 25px; color: var(--bg);"></i>
         </div>
     </div>
 
@@ -781,7 +772,7 @@
         <div class="promo-banner">
             <div class="banner-left">
                 <div class="banner-tag">Ongoing</div>
-                <div class="banner-title">কলেজের ভর্তির ফর্ম ফিলাপ</div>
+                <div class="banner-title">কলেজের ভর্তির ফ্রিজ পেমেন্ট</div>
                 <a href="https://wbcap.in/" target="_blank" class="banner-btn">
                     <i data-lucide="play-circle" style="width:16px; height:16px;"></i> wbcap.in
                 </a>
@@ -799,7 +790,7 @@
         <div class="course-grid">
             <a href="#" class="course-card">
                 <div class="course-icon-container bg-blue-light">
-                    <img class="button-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
+                    <img class="button-img" src="https://cdn-icons-png.flaticon.com/512/3064/3064644.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
                 </div>
                 <span>Exam Prep</span>
             </a>
@@ -819,7 +810,7 @@
             </a>
             <a href="#" class="course-card">
                 <div class="course-icon-container bg-pink-light">
-                    <img class="button-img" src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
+                    <img class="button-img" src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" onerror="this.src='https://placehold.co/50x50?text=!'" style="border-radius: 50px;" alt="Emblem">
                 </div>
                 <span>Skills +</span>
             </a>
@@ -848,11 +839,11 @@
 
     <div class="nav-tabs">
         <div class="tab-item active" onclick="switchSection('admission', this)">
-            <img src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50'" alt="Admission">
+            <img src="https://cdn-icons-png.flaticon.com/512/2879/2879401.png" onerror="this.src='https://placehold.co/50x50'" alt="Admission">
             <span>Admission 2026</span>
         </div>
         <div class="tab-item" onclick="switchSection('govt-jobs', this)">
-            <img src="https://i.ibb.co/6RWNHnCw/logo.png" onerror="this.src='https://placehold.co/50x50'" alt="Govt Jobs">
+            <img src="https://cdn-icons-png.flaticon.com/512/2879/2879401.png" onerror="this.src='https://placehold.co/50x50'" alt="Govt Jobs">
             <span>Govt. Jobs</span>
         </div>
         <div class="tab-item" onclick="switchSection('private-scholarship', this)">
@@ -873,23 +864,29 @@
         <a href="#" class="ads-card" style="background-image: url('https://i.ibb.co/Tq1zG5gW/Add-Text-05-03-09-51-14.jpg');"></a>
         <a href="#" class="ads-card" style="background-image: url('https://i.ibb.co/PqR751x/Add-Text-05-03-10-11-15.jpg');"></a>  
     </div>
-    <img src="https://i.ibb.co/R4t9DTb3/Add-Text-05-30-10-44-39.png" style="width: 100%; display: block;" alt="Bottom Promo Banner">
-</main>
+<div style="display: flex;">
+    <img src="https://cdn-icons-png.flaticon.com/512/2891/2891324.png" style="width: 50%; height: display: block;" alt="Bottom Promo Banner">
+<img src="https://cdn-icons-png.flaticon.com/512/2910/2910853.png" style="width: 50%; height: display: block;" alt="Bottom Promo Banner">
+</div></main>
 
 <nav class="app-footer">
     <a href="#" class="nav-item active">
         <i data-lucide="home" width="24" height="24"></i>
         <span>Home</span>
     </a>
-    <a href="course.html" class="nav-item">
+<a href="coin" class="nav-item">
+        <i data-lucide="qr-code" width="24" height="24"></i>
+        <span>Recharge</span>
+    </a>
+    <a href="course" class="nav-item">
         <i data-lucide="airplay" width="24" height="24"></i>
         <span>Courses</span>
     </a>
-    <a href="study.html" class="nav-item">
+    <a href="study" class="nav-item">
         <i data-lucide="book-open" width="24" height="24"></i>
         <span>Study</span>
     </a>
-    <a href="profile.html" class="nav-item">
+    <a href="profile" class="nav-item">
         <i data-lucide="user" width="24" height="24"></i>
         <span>Profile</span>
     </a>
@@ -901,42 +898,42 @@
         {
             "title": "WBCAP 2026",
             "desc": "West Bengal Centralized College Admission",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://wbcap.in/",
             "date": "JUN 01"
         },
         {
             "title": "Jadavpur University",
             "desc": "UG 4 Year BA/BSC Admission 2026",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "http://www.jaduniv.edu.in/",
             "date": "JUN 05"
         },
         {
             "title": "Bidhan Chandra Krishi Viswavidy...",
             "desc": "Bsc Agriculture Admission 2026",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://www.bckv.edu.in/",
             "date": "JUN 17"
         },
         {
             "title": "WB ITI Polytechnic 2026",
             "desc": "10th Pass, Diploma Engineering/ ITI Admission",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://webscte.co.in/",
             "date": "JUN 12"
         },
         {
             "title": "Presidency University",
             "desc": "UG BA/BSc Admission 2026 (Ongoing)",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://www.presiuniv.ac.in/web/",
             "date": "JUN 01"
         },
         {
             "title": "University of Calcutta",
             "desc": "Home Science, Nutrition & UG Music Admission 2026",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://www.caluniv.ac.in/",
             "date": "JUN 01"
         }
@@ -945,28 +942,28 @@
         {
             "title": "WBPSC Miscellaneous",
             "desc": "West Bengal PSC Vacancy",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://psc.wb.gov.in/",
             "date": "JUN 09"
         },
         {
             "title": "SSC CGL 2026",
             "desc": "Graduate Level Group B Recruitment (Central Govt MEA, Income Tax, GST I...",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://ssc.gov.in/",
             "date": "JUN 22"
         },
         {
             "title": "RRB ALP 2026",
             "desc": "Railway Assistant Loco Pilot (10th Pass, ITI, Diploma)",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://www.rrbcdg.gov.in/",
             "date": "JUN 14"
         },
         {
             "title": "Panchyat Recruitment 2026",
             "desc": "WB Gram Panchyat (10th/12th/Graduate)",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://wbprms.in/",
             "date": "JUN 30"
         }
@@ -1005,35 +1002,35 @@
         {
             "title": "SVMCM Scholarship",
             "desc": "Swami Vivekananda Scholarship: 10th, HS, UG, PG 60%",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://svmcm.wbhed.gov.in/",
             "date": "MAY 31"
         },
         {
             "title": "Chief Minister Scholarship",
             "desc": "Financial aid offered by West Bengal CM Relief Fund.",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://cmrf.wb.gov.in/",
             "date": "NONE"
         },
         {
             "title": "Oasis Scholarship",
             "desc": "Scholarship for SC, ST, and OBC students by West Bengal governmen...",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://oasis.gov.in/",
             "date": "NONE"
         },
         {
             "title": "Aikyashree Scholarship",
             "desc": "Scholarship for minority students in West Bengal from WBMDFC.",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://wbmdfcscholarship.org/",
             "date": "MAY 31"
         },
         {
             "title": "National Scholarship Portal",
             "desc": "Central govt scholarships for SC/ST/OBC and minority students through ...",
-            "logo": "https://i.ibb.co/6RWNHnCw/logo.png",
+            "logo": "https://cdn-icons-png.flaticon.com/512/2879/2879401.png",
             "link": "https://scholarships.gov.in/",
             "date": "NONE"
         }
@@ -1092,7 +1089,7 @@
 
         let savedPic = localStorage.getItem("profile_image_url");
         if (!savedPic || savedPic === "") { 
-            savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; 
+            savedPic = "https://placehold.co/100x100?text=!"; 
             localStorage.setItem("profile_image_url", savedPic); 
         }
         const avatar = document.getElementById("profileAvatar");
