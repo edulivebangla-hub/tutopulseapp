@@ -1,78 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TutoPulse App - Study</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandBlue: '#4285F4',
-                        darkBlue: '#1A237E',
-                        brandGray: '#757575',
-                        greenBtn: '#C8E6C9',
-                        greenText: '#2E7D32',
-                        redBadgeBg: '#FFEBEE',
-                        redBadgeText: '#C62828',
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        :root {
-            --card-width: 280px;
-            --blue-accent: #0033ad;
-        }
-        /* ===== DARK MODE THEME VARIABLES ===== */
-        :root {
-            --bg-primary: #ffffff;
-            --bg-surface: #ffffff;
-            --bg-card: #e9e9ef;
-            --text-primary: #333333;
-            --text-secondary: #555555;
-            --text-muted: #666666;
-            --border-light: rgba(0,0,0,0.2);
-            --footer-bg: #ffffff;
-            --text-muted: #8D94A2;
-            --shadow-sm: 0 4px 10px rgba(0,0,0,0.1);
-            --icon-bg-hover: rgba(0,0,0,0.08);
-            --card-hover: scale(1.01);
-            --tab-active-bg: #3347a5;
-            --side-border: #eef2ff;
-            --exam-bg: rgba(0,0,0,0.02);
-            --skeleton-bg: #e2e8f0;
-            --skeleton-shimmer: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
-        }
-
-        body.dark {
-            --bg-primary: #000;
-            --bg-surface: #1e1e1e;
-            --bg-card: #2c2c2e;
-            --text-primary: #e0e0e0;
-            --text-secondary: #aaaaaa;
-            --text-muted: #888888;
-            --border-light: rgba(255,255,255,0.15);
-            --footer-bg: #1e1e1e;
-            --text-muted: #a0a0a0;
-            --shadow-sm: 0 4px 10px rgba(0,0,0,0.3);
-            --icon-bg-hover: rgba(255,255,255,0.1);
-            --card-hover: scale(1.01);
-            --tab-active-bg: #5a6acf;
-            --side-border: #333333;
-            --exam-bg: rgba(255,255,255,0.05);
-            --skeleton-bg: #2d2d30;
-            --skeleton-shimmer: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-        }
-
-        /* ===== LIGHT MODE VARIABLES (default) ===== */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TutoPulse - Study</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+       /* ========== GLOBAL RESET & DARK MODE VARIABLES ========== */
         * {
             margin: 0;
             padding: 0;
@@ -111,352 +46,133 @@
             -ms-user-drag: none;
             user-drag: none;
         }
+:root{
+  --bg-primary:#fff; --bg-card:#e9e9ef; --text-primary:#333; --text-secondary:#555;
+  --text-muted:#8D94A2; --border-light:rgba(0,0,0,0.2); --footer-bg:#fff;
+  --tab-active-bg:#3347a5; --side-border:#eef2ff; --exam-bg:rgba(0,0,0,0.02);
+  --skeleton-bg:#e2e8f0; --blue-accent:#2563eb; --card-width:260px;
+}
+body.dark{
+  --bg-primary:#000; --bg-card:#2c2c2e; --text-primary:#e0e0e0; --text-secondary:#aaa;
+  --text-muted:#a0a0a0; --border-light:rgba(255,255,255,0.15); --footer-bg:#1e1e1e;
+  --tab-active-bg:#5a6acf; --side-border:#333; --exam-bg:rgba(255,255,255,0.05); --skeleton-bg:#2d2d30;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:'Nunito',sans-serif;transition:.2s}
+body{background:var(--bg-primary);color:var(--text-primary);overflow:hidden}
+.app-header{position:fixed;top:0;left:0;width:100%;height:50px;background:#905AF8;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:1000;color:#fff}
+.header-left{display:flex;align-items:center;gap:12px;font-weight:600}
+.dark-mode-btn{background:rgba(255,255,255,0.2);border-radius:50%;padding:6px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.app-content{position:fixed;top:50px;bottom:65px;width:100%;overflow-y:auto;background:var(--bg-primary)}
+.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.tabs{display:flex;justify-content:space-around;border-bottom:2px solid var(--border-light);padding:8px 0;position:sticky;top:0;background:var(--bg-primary);z-index:10}
+.tab{font-size:15px;color:var(--text-muted);cursor:pointer;font-weight:700;padding:4px}
+.tab.active{color:var(--tab-active-bg);border-bottom:3px solid var(--tab-active-bg)}
+.container{padding:15px}
+.card{background:var(--bg-card);border-radius:10px;padding:18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.card-text h3{font-size:14px;font-weight:700}.card-text p{margin-top:4px;color:var(--text-secondary);font-size:12px}
+.hidden{display:none!important}
+.main{display:flex;margin:10px 0}
+.side{width:30%;border-right:2px solid var(--side-border)}
+.side button{width:100%;display:flex;align-items:center;border:none;background:none;padding:8px;gap:8px;margin-bottom:8px;border-radius:8px;text-align:left;font-size:12px;cursor:pointer;color:var(--text-primary)}
+.side button.active{color:orange;font-weight:600;border:1px solid orange;background:rgba(255,165,0,0.1)}
+.content{width:70%;padding:10px}
+.exam-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;text-align:center;font-size:12px}
+.exam{background:var(--exam-bg);border-radius:12px;padding:2px}
+.exam img{width:40px;height:40px;margin:0 auto;display:block;border-radius:8px}
 
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            overflow: hidden;
-        }
+/* Container for the 1-row layout */
+.primium-row {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 15px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
 
-         /* --- Header Styles --- */
-        .app-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: #905AF8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
+/* Hide scrollbar for clean look */
+.primium-row::-webkit-scrollbar {
+    display: none;
+}
 
-      .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+.primium-card {           
+    flex: 0 0 var(--card-width);
+    height: 160px;                  
+    border-radius: 10px; 
+    margin-right: 15px;
+    position: relative;
+    background-size: cover;
+    background-position: center;           
+    overflow: hidden;         
+    scroll-snap-align: center;
+    border: 2px solid #905AF8;
+    transition: transform 0.3s ease, background 0.2s;
+}
 
-        .header-title {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-        }
-        /* --- Main Content Area --- */
-        .app-content {
-            position: fixed;
-            top: 50px;
-            bottom: 65px;
-            width: 100%;
-            overflow-y: auto;
-            background: var(--bg-primary);
-        }
+/* Overlay to make text readable */
+.card-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    background: linear-gradient(transparent, rgba(0,0,1,0.8), rgba(0,0,0,0.9));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-  
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.primium-title {
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.3;
+    max-width: 65%;
+}
 
-        /* Top Tabs */
-        .tabs {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-around;
-            border-bottom: 3px solid var(--border-light);
-            padding: 2px 0;
-            position: sticky;
-            top: 0;
-            background-color: var(--bg-primary);
-            z-index: 10;
-        }
+.join-btn {
+    background-color: var(--blue-accent);
+    color: white;
+    text-decoration: none;
+    padding: 4px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s;
+}
 
-        .tab {
-            font-size: 16px;
-            color: var(--text-muted);
-            cursor: pointer;
-            position: relative;
-            padding: 2px 5px;
-            font-weight: bold;
-        }
+.join-btn:active {
+    transform: scale(0.98);
+}
 
-        .tab.active {
-            color: var(--tab-active-bg);
-            
-            border-bottom: 4px solid #3347a5;
-            
-        }
+.chevron-icon {
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+}
 
-        /* Container */
-        .container {
-            padding: 15px;
-        }
+/* ========== SKELETON LOADING FEATURES ========== */
+@keyframes skeletonPulse {
+    0% { background-color: var(--skeleton-bg); opacity: 0.6; }
+    50% { background-color: var(--skeleton-bg); opacity: 1; }
+    100% { background-color: var(--skeleton-bg); opacity: 0.6; }
+}
 
-        /* Card Design */
-        .card {
-            background: var(--bg-card);
-            border-radius: 10px;
-            padding: 18px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-sm);
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: transform 0.2s, background 0.2s;
-        }
+.skeleton {
+    animation: skeletonPulse 1.5s infinite ease-in-out !important;
+    background-image: none !important;
+    border-color: transparent !important;
+}
+.skeleton * {
+    visibility: hidden !important;
+}
 
-        .card:hover {
-            transform: var(--card-hover);
-        }
-
-        .card-text h3 {
-            margin: 0;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .card-text p {
-            margin: 5px 0 0;
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-
-        .arrow {
-            font-size: 20px;
-            color: var(--text-secondary);
-        }
-
-        /* Hide Sections */
-        .hidden {
-            display: none !important;
-        }
-
-        .main {
-            display: flex;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        .side {
-            width: 30hi%;
-            border-radius: 15px;
-            
-            border-right: 3px solid var(--side-border);
-        }
-        .side button {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            border: none;
-            background: none;
-            padding: 5px;
-            gap: 5px; margin-bottom: 10px;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            
-            text-align: left;
-            font-size: 12px;
-            cursor: pointer;
-            color: var(--text-primary);
-            transition: all 0.2s;
-        }
-        .side button.active {
-            color: orange;
-            font-weight: 600;
-            border-top: 1px solid orange;border-right: 1px solid orange;border-bottom: 1px solid orange;
-            background: rgba(255, 165, 0, 0.1);
-        }
-        .content {
-            width: 72%;
-            padding: 10px;
-        }
-        .exam-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            text-align: center;
-            font-size: 12px;
-        }
-        .exam h3 {
-            gap: 10;
-            font-size: 10px;
-            color: var(--text-primary);
-            font-weight: 700;
-        }
-        .exam {
-            background: var(--exam-bg);
-            border-radius: 14px;
-            padding: 4px;
-            text-align: center;
-            transition: transform 0.1s, background 0.2s;
-        }
-        .exam img {
-            width: 50px;
-            height: 50px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 5px;
-            display: flex;
-            text-align: center;
-            justify-content: center;
-        }
-
-        /* Profile/coin icons in dark mode */
-        .flex .bg-white {
-            background-color: var(--bg-surface) !important;
-            border-color: var(--border-light) !important;
-        }
-        .flex span {
-            color: #fff !important;
-        }
-        .flex p {
-            color: var(--text-primary) !important;
-        }
-
-        /* Grid cards gradient boxes */
-        .grid a .bg-gradient-to-r {
-            transition: opacity 0.2s;
-        }
-        body.dark .grid a .bg-gradient-to-r {
-            opacity: 0.9;
-        }
-        
-        /* Dark mode specific overrides for card images & text */
-        body.dark .card {
-            background: var(--bg-card);
-        }
-        
-        /* Dark mode toggle button in header */
-        .dark-mode-btn {
-            background: rgba(255,255,255,0.2);
-            border-radius: 30px;
-            padding: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            transition: all 0.2s;
-        }
-        .dark-mode-btn:hover {
-            background: rgba(255,255,255,0.35);
-            transform: scale(1.05);
-        }
-
-        /* Container for the 1-row layout */
-        .ads-row {
-            display: flex;
-            
-            overflow-x:auto; /* Enables touch scrolling */
-            padding-bottom: 15px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Hide scrollbar for clean look */
-        .ads-row::-webkit-scrollbar {
-            display: none;
-        }
-
-        .ads-card {           
-            flex: 0 0 var(--card-width);
-            height: 150px;   
-            background:var(--exam-bg);                   
-            border-radius: 10px; margin-right: 10px;
-            position: relative;
-            background-size: cover;
-            background-position: center;           
-            overflow: hidden;         
-            border-radius: 10px;         
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            scroll-snap-align: center;
-            border: 2px solid #905AF8;
-            transition: transform 0.3s ease, background 0.2s;
-        }
-
-        /* Overlay to make text readable */
-        .card-content {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            padding: 12px;
-            box-sizing: border-box;
-            background: linear-gradient(transparent, rgba(0,0,1,0.8),rgba(0,0,0,0.8));
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ads-title {
-            color: white;
-            font-size: 14px;
-            font-weight: 800;
-            margin: 0;
-            line-height: 1.3;
-            max-width: 65%;
-        }
-
-        .join-btn {
-            background-color: var(--blue-accent);
-            color: white;
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s;
-        }
-
-        .join-btn:active {
-            transform: scale(0.95);
-        }
-
-        .chevron-icon {
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            display: inline-block;
-            padding: 3px;
-            transform: rotate(-45deg);
-        }
-
-        /* ===== SKELETON LOADING FEATURES ===== */
-        .skeleton {
-            position: relative;
-            overflow: hidden;
-            background-color: var(--skeleton-bg) !important;
-        }
-        .skeleton::after {
-            content: "";
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            transform: translateX(-100%);
-            background: var(--skeleton-shimmer);
-            animation: shimmer-effect 1.6s infinite;
-        }
-        @keyframes shimmer-effect {
-            100% { transform: translateX(100%); }
-        }
-        /* Image containers processing loading states */
-        .img-skel-wrapper {
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-        }
-        .img-skel-wrapper img {
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .img-skel-wrapper img.loaded {
-            opacity: 1;
-        }
-    .app-footer {
+       .app-footer {
             overflow: hidden;
             position: fixed;
             bottom: 0;
@@ -519,263 +235,132 @@
                 transform: scale(3);
                 opacity: 0;
             }
-        }
-    </style>
+        }</style>
 </head>
 <body>
 
-  <!-- HEADER - UNCHANGED -->
 <header class="app-header">
-    <div class="header-left">
-            <i data-lucide="bot" class="w-6 h-6 text-white"></i>
-            <span class="header-title">Study & Suggestion</span>
-        </div>
-        <div class="flex items-center gap-1 text-white text-sm font-medium cursor-pointer">
-            <i data-lucide="book-open" class="w-5 h-5"></i>
-            
-        </div>
+  <div class="header-left">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+    <span>Study & Suggestion</span>
+  </div>
+  <div id="darkToggle" class="dark-mode-btn hidden"><i data-lucide="moon" class="w-5 h-5"></i></div>
 </header>
 
-    <main class="app-content">
-        <!-- PROFILE & COIN -->
-        <div class="flex overflow-x-auto hide-scrollbar gap-5 px-2 py-4 p-5">
-            <a href="#" class="flex flex-col items-center min-w-[80px] text-center space-y-1">
-                <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-gray-50 transition-colors img-skel-wrapper skeleton">
-                    <img src="https://cdn-icons-png.flaticon.com/512/8750/8750754.png" alt="Study" class="w-10 h-10 object-contain">
-                </div>
-                <p class="text-gray-700 whitespace-nowrap text-lg" style="font-size: 14px;">Study নোটস</p>
-            </a>
+<main class="app-content">
+  <div class="flex overflow-x-auto hide-scrollbar gap-5 px-4 py-4">
+    <a href="#" class="flex flex-col items-center min-w-[80px]"><div class="w-14 h-14 bg-white rounded-2xl shadow flex items-center justify-center skeleton"><img src="https://cdn-icons-png.flaticon.com/512/8750/8750754.png" class="w-10 h-10"></div><p class="text-sm mt-1">Study নোটস</p></a>
+    <a href="#" class="flex flex-col items-center min-w-[80px]"><div class="w-14 h-14 bg-white rounded-2xl shadow flex items-center justify-center skeleton"><img src="https://cdn-icons-png.flaticon.com/512/747/747086.png" class="w-10 h-10"></div><p class="text-sm mt-1">HS নোটস</p></a>
+    <a href="#" class="flex flex-col items-center min-w-[80px]"><div class="w-14 h-14 bg-white rounded-2xl shadow flex items-center justify-center skeleton"><img src="https://cdn-icons-png.flaticon.com/512/8750/8750743.png" class="w-10 h-10"></div><p class="text-sm mt-1">Exam প্রস্তুতি</p></a>
+    <a href="#" class="flex flex-col items-center min-w-[80px]"><div class="w-14 h-14 bg-white rounded-2xl shadow flex items-center justify-center skeleton"><img src="https://cdn-icons-png.flaticon.com/512/1081/1081025.png" class="w-10 h-10"></div><p class="text-sm mt-1">সিলেবাস</p></a>
+  </div>
 
-            <a href="#" class="flex flex-col items-center min-w-[80px] text-center space-y-1">
-                <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-gray-50 img-skel-wrapper skeleton">
-                    <img src="https://cdn-icons-png.flaticon.com/512/747/747086.png" alt="Study" class="w-10 h-10 object-contain">
-                </div>
-                <p class="text-gray-700 whitespace-nowrap text-lg" style="font-size: 14px;">HS নোটস</p>
-            </a>
-            <a href="#" class="flex flex-col items-center min-w-[80px] text-center space-y-1">
-                <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-gray-50 img-skel-wrapper skeleton">
-                    <img src="https://cdn-icons-png.flaticon.com/512/8750/8750743.png" alt="Study" class="w-10 h-10 object-contain">
-                </div>
-                <p class="text-gray-700 whitespace-nowrap text-lg" style="font-size: 14px;">Exam প্রস্তুতি</p>
-            </a>
-            <a href="#" class="flex flex-col items-center min-w-[80px] text-center space-y-1">
-                <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-gray-50 img-skel-wrapper skeleton">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1081/1081025.png" alt="Study" class="w-10 h-10 object-contain">
-                </div>
-                <p class="text-gray-700 whitespace-nowrap text-lg" style="font-size: 14px;">সিলেবাস</p>
-            </a>
-            <a href="#" class="flex flex-col items-center min-w-[80px] text-center space-y-1">
-                <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-gray-50 img-skel-wrapper skeleton">
-                    <img src="https://cdn-icons-png.flaticon.com/512/13906/13906210.png" alt="Study" class="w-10 h-10 object-contain">
-                </div>
-                <p class="text-gray-700 whitespace-nowrap text-lg" style="font-size: 14px;">Demo</p>
-            </a>
+  <div class="primium-row">
+      <div class="primium-card skeleton" data-bg="https://i.ibb.co/C52wtc3m/404.jpg">
+       
+      </div>
+
+      <div class="primium-card skeleton" data-bg="https://i.ibb.co/C52wtc3m/404.jpg">
+         
+      </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3 px-3 mt-3">
+    <a href="#" class="bg-gradient-to-r from-[#0052D4] to-[#1565C0] p-3 rounded-2xl text-white shadow"><div class="flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5"></i><span class="font-bold text-sm">Free Library</span></div><p class="text-xs opacity-80 mt-1">Study Resources</p></a>
+    <a href="#" class="bg-gradient-to-r from-[#FF0080] to-[#FF8C00] p-3 rounded-2xl text-white shadow"><div class="flex items-center gap-2"><i data-lucide="lock" class="w-5 h-5"></i><span class="font-bold text-sm">Premium PDF</span></div><p class="text-xs opacity-80 mt-1">Paid & Exclusive</p></a>
+  </div>
+
+  <div class="main">
+    <div class="side">
+      <button class="active" onclick="showCat('entrance',this)"><div class="w-8 h-8 skeleton rounded"><img src="https://cdn-icons-png.flaticon.com/512/1081/1081015.png" class="w-8 h-8"></div>Entrance</button>
+      <button onclick="showCat('jobs',this)"><div class="w-8 h-8 skeleton rounded"><img src="https://cdn-icons-png.flaticon.com/512/3985/3985018.png" class="w-8 h-8"></div>Govt Jobs</button>
+      <button onclick="showCat('career',this)"><div class="w-8 h-8 skeleton rounded"><img src="https://cdn-icons-png.flaticon.com/512/3645/3645444.png" class="w-8 h-8"></div>Career</button>
+    </div>
+    <div class="content">
+      <div id="entrance" class="cat">
+        <div class="exam-grid">
+          <a href="#"><div class="exam"><div class="w-10 h-10 mx-auto mb-1 skeleton rounded"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsHA5meJEeOF_lloB4lisr6iB5z5yD-h313E7ytk1T490ZQffPM5pe2sHO73UhrXZz7HcyV_lq4hIZJBViFz7qbJ5H4kIbZ98bfyMDAbQnLd-qBJeCPaeZBUmKNs7-x_sC1_4Q62HCMuO2jDaF0tL27ossE3NTpS_HNVG-VNzkOoylhQcDzAO1vaHmDBfl/s920/1000138821.jpg"></div><h3>WBJEE</h3></div></a>
+          <a href="#"><div class="exam"><div class="w-10 h-10 mx-auto mb-1 skeleton rounded"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBmUzkAmmjeOoeEt0kMLDxeAcms94UVl4aPryXb-EJbtkWWLtP_5WNpQxHIqtbGdIn2lmBxAYwW5vOE89FsDRyX_OIawyfFKIA9gt6MLbh-cSxmKih7VYisBJ4jY1WFaDPOf5WvDexsWYdRwrnMvE9lsMg4lq5qeqOO12J_CXyRwUPkc3z6oZaFkWF8mZm/s716/1000138822.jpg"></div><h3>NDA</h3></div></a>
+          <a href="#"><div class="exam"><div class="w-10 h-10 mx-auto mb-1 skeleton rounded"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCazhP8e82delOVHkLsxjSCx5W8RUPBvedlqFUj-H3lh9JkYmmh1TBE3mbbuE9QzYKTVLgdEcSPJifwvu-l2JmOeBDaAzvUbQhuHYMNGLZ9uvSJlV-HXQez-xMPaZXGJDvBrs0Vkky69XwLyQzrifAPF3L4OYAUSRwEvcfdrESov9s_QR9Z8sGLE_fffd7/s688/1000138823.jpg"></div><h3>JEE</h3></div></a>
         </div>
+      </div>
+      <div id="jobs" class="cat hidden"><div class="exam-grid">
+        <a href="#"><div class="exam"><div class="w-10 h-10 mx-auto mb-1 skeleton rounded"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi69FmO9MTnABZ6rri4gp1lB7qCb8svnImRtnccx36QHGmb_RZrnuSG6g1aNygbqkrydUTwn6q2wMBiYXd1HctNkwpATLtA8oHSynqOGrH75kRkiksiayUAyOUlAFBnGDznTFL304fmTtQCDee9PQFfm7qm2SmWRPBVtfMrFyUVF-CbXjdkkS3oNNf11eJr/s676/1000138845.jpg"></div><h3>Govt Job</h3></div></a>
+        <a href="#"><div class="exam"><div class="w-10 h-10 mx-auto mb-1 skeleton rounded"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgZSQ5c2PQ-uUu1nfM9l-xydCOYUfkfh_vo3GKdB8hqUebMwZ2Hao_swhp8ky4cD4ATkrnFkMneatCckvbkp9u3BPoy1XgZG5iZj_QsNfZxcz8EQvAEaZIXIpwc7SY9iIX2gqhTgmt0lIAzuS3Dux125RkkjgrQkkD5R4j47nupeJK6eMB5Lw9N4-eMCRmY/s496/1000138846.jpg"></div><h3>UPSC</h3></div></a>
+      </div></div>
+      <div id="career" class="cat hidden"><div class="exam-grid">
+        <a href="#"><div class="exam"><div class="w-10 h-10 mx-auto mb-1 skeleton rounded"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUfxftBo7qMHYeD7RbAPxr1a2E6DaB4Oc7r0PkSD1FyV9KRISc6XB1hzLGZJpMPRvOY9LFf-gfR1htkrAqANuwL2cGaCx3lCoOQGHK5zQffsjZMvQ3NNr7fwc7YTK38f7_uwPgbEpyNUDNnF8vqnJKZ-ZBIe_fARu5uIWcjFMCpxo_WxJUYGuHZJ8vpjkh/s664/1000138869.jpg"></div><h3>Polytechnic</h3></div></a>
+        <a href="#"><div class="exam"><div class="w-10 h-10 mx-auto mb-1 skeleton rounded"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdwFG4OBLFwEn2lDfQYjrmQKOZtCUHmVFm_6e_FKlgnKC2ATnEJS1tCg_S0WoakqpahXfZ4N1vZ9iXSBbq6_dw5rcvboOGD4o6TbJIitIrBHb9t1WY9fjLMrf2lk9urQUHsXE39izO9yrF7Yd1UIGL_dXSkzyD-jp-ml7T7rc8keb10gyHMhkE4t6eodjv/s576/1000138870.jpg"></div><h3>Nursing</h3></div></a>
+      </div></div>
+    </div>
+  </div>
 
-        <div class="ads-row">
-            <!-- Card 1 -->
-            <a href="#" class="ads-card skeleton text-skel" data-bg="https://i.ibb.co/C52wtc3m/404.jpg" style="margin-left: 10px;">
-               
-            </a>
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('hs')">HS Semester</div>
+    <div class="tab" onclick="showTab('madhyamik')">মাধ্যমিক</div>
+  </div>
 
-            <!-- Card 2 -->
-            <a href="#" class="ads-card skeleton text-skel" data-bg="https://i.ibb.co/C52wtc3m/404.jpg">          
-            </a>    
-        </div>
+  <div id="hs" class="container">
+    <a href="https://result-tutopulse.ct.ws/wbchse-semester-4-result-2026-check-now/" target="_blank" class="card"><div class="card-text"><h3>উচ্চমাধ্যমিক চতুর্থ সেমিস্টারের রেজাল্ট 2026</h3><p>Date: <b>14 May 2026</b> & Time: <b>11:00am</b></p></div><div class="text-xl">›</div></a>
+    <a href="#" class="card"><div class="card-text"><h3>চতুর্থ সেমিস্টারের সিলেবাস</h3><p>সিলেবাস <b>এখনই দেখুন</b></p></div><div class="text-xl">›</div></a>
+  </div>
 
-        <div class="grid grid-cols-2 gap-4 ml-3 mr-3">
-            <a href="#" class="relative overflow-hidden bg-gradient-to-r from-[#0052D4] to-[#1565C0] p-3 rounded-2xl shadow-lg active:scale-95 transition-transform">
-                <div class="flex items-center gap-3 text-white mb-1">
-                    <i data-lucide="book-open" class="w-5 h-5"></i>
-                    <span class="text-xl font-bold" style="font-size: 16px;">Free Library</span>
-                </div>
-                <p class="text-blue-100 text-sm opacity-80" style="font-size: 12px;">Study Resources</p>
-            </a>
+  <div id="madhyamik" class="container hidden">
+    <a href="https://result-tutopulse.ct.ws/madhyamik-result-2026-check-now/" target="_blank" class="card"><div class="card-text"><h3>মাধ্যমিক রেজাল্ট 2026</h3><p>Date: <b>8 May 2026</b> & Time: <b>9:45am</b></p></div><div class="text-xl">›</div></a>
+    <a href="#" class="card"><div class="card-text"><h3>মাধ্যমিক সিলেবাস 2026</h3><p>সিলেবাস <b>এখনই দেখুন</b></p></div><div class="text-xl">›</div></a>
+  </div>
+</main>
 
-            <a href="#" class="relative overflow-hidden bg-gradient-to-r from-[#FF0080] to-[#FF8C00] p-3 rounded-2xl shadow-lg active:scale-95 transition-transform">
-                <div class="flex items-center gap-3 text-white mb-1">
-                    <i data-lucide="lock" class="w-5 h-5"></i>
-                    <span class="text-xl font-bold" style="font-size: 16px;">Premium PDF</span>
-                </div>
-                <p class="text-pink-100 text-sm opacity-80" style="font-size: 12px;">Paid & Exclusive</p>
-            </a>
-        </div>
-
-        <div class="main">
-            <div class="side">
-                <button class="active" onclick="showCat('entrance',this)"><div class="w-[30px] h-[30px] flex items-center justify-center img-skel-wrapper skeleton rounded-md"><img src="https://cdn-icons-png.flaticon.com/512/1081/1081015.png" width="30" height="30"></div>Entrance Exams</button>
-                <button onclick="showCat('jobs',this)"><div class="w-[30px] h-[30px] flex items-center justify-center img-skel-wrapper skeleton rounded-md"><img src="https://cdn-icons-png.flaticon.com/512/3985/3985018.png" width="30" height="30"></div>Government Jobs</button>
-                <button onclick="showCat('career',this)"><div class="w-[30px] h-[30px] flex items-center justify-center img-skel-wrapper skeleton rounded-md"><img src="https://cdn-icons-png.flaticon.com/512/3645/3645444.png" width="30" height="30"></div>Career Courses</button>
-            </div>
-            <div class="content">
-                <div id="entrance" class="cat">
-                    <div class="exam-grid">
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsHA5meJEeOF_lloB4lisr6iB5z5yD-h313E7ytk1T490ZQffPM5pe2sHO73UhrXZz7HcyV_lq4hIZJBViFz7qbJ5H4kIbZ98bfyMDAbQnLd-qBJeCPaeZBUmKNs7-x_sC1_4Q62HCMuO2jDaF0tL27ossE3NTpS_HNVG-VNzkOoylhQcDzAO1vaHmDBfl/s920/1000138821.jpg"></div><h3>WBJEE</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBmUzkAmmjeOoeEt0kMLDxeAcms94UVl4aPryXb-EJbtkWWLtP_5WNpQxHIqtbGdIn2lmBxAYwW5vOE89FsDRyX_OIawyfFKIA9gt6MLbh-cSxmKih7VYisBJ4jY1WFaDPOf5WvDexsWYdRwrnMvE9lsMg4lq5qeqOO12J_CXyRwUPkc3z6oZaFkWF8mZm/s716/1000138822.jpg"></div><h3>NDA EXAM</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCazhP8e82delOVHkLsxjSCx5W8RUPBvedlqFUj-H3lh9JkYmmh1TBE3mbbuE9QzYKTVLgdEcSPJifwvu-l2JmOeBDaAzvUbQhuHYMNGLZ9uvSJlV-HXQez-xMPaZXGJDvBrs0Vkky69XwLyQzrifAPF3L4OYAUSRwEvcfdrESov9s_QR9Z8sGLE_fffd7/s688/1000138823.jpg"></div><h3>IIT JEE</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyShszajxpSPYArknvI8S1p7mgX1ewTLWiYod5ZWt51sl2bhgRBwiPshyphenhyphenqXpHMR1QaWH5735rujVUs9RkqUvxC0e4i6sdXGTVCk-iuQ6qtNQHHtRuIOlU9BXqLU7fK04pRx8UqG6fi3N9j-QiAf8BSOLdc27sJgafg1KApJYRZ6E9KLnpHSQWGoXcfN5Ru/s680/1000138824.jpg"></div><h3>ANM-GNM</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhva3xSXw545ycfRzkPEsoxLq0r_2l74rW9shTQtMbpp-7WTMJeMoc0s_MEZwehC-x6blkZJsGpIlxrbdvMlaR15O3aJhSwvSLAZbrtbqU9Hfsr0S7TeRJwjSU-56eP5uCjmbTIt8EY-zPCe0QYSbvvXZaQYjlqMw44JqyfFXvK9JX_W49R__VdBJiy5Dlk/s716/1000138825.jpg"></div><h3>JENPAS UG</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgy_4nn-QFarLOgbYfUxRUQCoS8OVNrEtp6gxe4djIY8O8Z0hWLl8w_M8uz7qstNxfiBRQC6C1xYb-o1Ra04zCGZ-h1rIdZd3dwn1plCBwT2XthfNyPzRSEWQlQiFw2UBL0FFSSIDCgVGL8a6SG3k2zhhC0W2uwCIYa-RwdAkvOQqv1O5r3nQpWqatRPx7k/s716/1000138826.jpg"></div><h3>SMFWB</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi1lftDc4WPkNRSqokx5_CFW17zRnhGtzs7RLb6JCT2evXIbEDx7tdvs0lxc-dNepp3C97foLeFwTYOvU3muPF-sSZSzkUyKTRv4QpyB3sh4pmlNOgODHQoEZcfuc_vowqEHvNm1BSiSNp7tYo3NLhAY_rAodErs6uOZCyWo6_tMcm8T7soYWy3Ap74uux4/s756/1000138827.jpg"></div><h3>MAKAUT CET</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5OM_q5-eaRrs_BY9oFFeYXiI3AXBjBiPhELj-19DIIzTyXbfV91RAIjBE7zOArydbmoJKOYWIcNv9OcL_nDgZsixRax_KoYL7dvktoM8dV1ysb-VhM3SJXqwYKmtn28rP6D2yLXELs-DndijkGPgRlu8OpyP38VJEsaqai1IR6x57BopDUA5m5-73y97t/s716/1000138828.jpg"></div><h3>NEET UG</h3></div></a>
-                    </div>
-                </div>
-                <div id="jobs" class="cat" style="display:none">
-                    <div class="exam-grid">
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi69FmO9MTnABZ6rri4gp1lB7qCb8svnImRtnccx36QHGmb_RZrnuSG6g1aNygbqkrydUTwn6q2wMBiYXd1HctNkwpATLtA8oHSynqOGrH75kRkiksiayUAyOUlAFBnGDznTFL304fmTtQCDee9PQFfm7qm2SmWRPBVtfMrFyUVF-CbXjdkkS3oNNf11eJr/s676/1000138845.jpg"></div><h3>Govt Job</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgZSQ5c2PQ-uUu1nfM9l-xydCOYUfkfh_vo3GKdB8hqUebMwZ2Hao_swhp8ky4cD4ATkrnFkMneatCckvbkp9u3BPoy1XgZG5iZj_QsNfZxcz8EQvAEaZIXIpwc7SY9iIX2gqhTgmt0lIAzuS3Dux125RkkjgrQkkD5R4j47nupeJK6eMB5Lw9N4-eMCRmY/s496/1000138846.jpg"></div><h3>UPSC</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4J4H1K5yseJdKI6d915CbgsODfNRYLSaJ3PBYApNISrKbnBIWLPZacdXT6CVWGnUj57PlrE22rNMFiAcLSN3tsEzjvXc7-FKuMtbYT9xac-Eg3U_9rAbbpPLo9U1Cr74s8jee4vk8dAPlS1b5n9jAJ80nubSNTvN0Omim8D7xbKZCjUdPOCYuK6aBP4UQ/s588/1000138847.jpg"></div><h3>WBPSC</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_EMitjzRh7aS1xM1tF9ucaGgblQL9xEfhkU-49PZFxoADKSj0v1ST8WX3Uprys_UCOiE7LHQUjhgCaFH2UiOJKfs-eNp64RfkwtzW658d64tE3Fb5OAsXC-joefPXBpFmw9XpHaGozGm8_f9SbxBHr38iRcX67OTzJXFlhpArGkFusBmwZr5KSaXhaKtC/s384/1000138848.jpg"></div><h3>SSC</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh7N0MYAMGA689g7I-YwNOoPvDHHv_XSjD513XDEIfwGho1FeHhllmzJkPwnExh_qSuocZJIqgEWzRxe-D13ygA5tCi-VoEGbUWGv25qLmpid7LKGVbgrJI3tiT27JjORfIn27EwJ-8gFhfc_oXY_oZ0sEqGJ6sis3lD99iirNRn5eRy8HWOVSlG4Zt9ga1/s656/1000138849.jpg"></div><h3>Defence</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhx7onx1qJLmSQRqtfMWtmeqrKPSp1y6GEIOm3ywmI8QpNNJ3Yt9IINi9ub9Bv-SD-Ycs2kjh_F9a6OA_X7QKwDxhdu4yIByPGKkWM4rrawu-tKDA3ALdV5Fi8TSLl7LEGqQA-Ieyw7Bqkja-2q7QGKJDcGsRaqvW0qh3mGMxsAEoOFDPv6O_SgYEo5J0B7/s712/1000138850.jpg"></div><h3>Police</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhn91JFfoVdvyhVktbttwFN9_diqSCDSyyXnClw__AFpQQRfz7UB_xqcSDyApyn-4TY3NUc8ss4mMqMDZNmfeQXFEsTi0btUA1n3xDDe_KIUBCxjvRs3agLtOhH8hR88aP2vg2gpilI4fK3weSaMSBnOqrP82RyHJ1iImMdKpl5M45xYf2y1wirk7XRQtxn/s664/1000138851.jpg"></div><h3>Railway</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUeP5qpHHlkJ8cS5tZKMJwuQ0CQvQ5sTGaLdpPX1szUGKFW560BHoWg8Uqui2t1DUWBRXY1QP59lDA-l_ab9T0WSIoN80qbIjfHk0dUYpS6nja9fdtJVSUQ8U7XGHm0zl4kEOfz2Gu21Fnh_GZ0dw3GTQ80Rf8lE1feiSQwXSaAI3LHpWpJbwWoCMcLZWE/s504/1000138852.jpg"></div><h3>Banking</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimNdU2-ZxHYMsdRjvDK0j6bsWOg6a9bgbpCNrz1MAIH-OJmXzzRNh3h4jGAt9s3uoMvwgVkNjFmLBoll-FnSxZV7at3cFfpnnQqeDI6qrRRvpExweVj42qqMnZDjYqBTKjXXf4mEKgFPfumBhE_itxc3mFiDiNU8GZLFWxyfLvmp5ayDBE6yTTUkbx9xaT/s444/1000138853.jpg"></div><h3>Post Office</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkJx1IS4PHC3MmWaL0fGaHn3RxPfg57g5CcRlj6EPyTTqgh36UiF4dr-Rw2vcBeEgFJquTyzy0091lZLYiLzDWhyphenhyphenIxRaioM60I10XMAieXn69LBa_mVK1-YGJqUkCgqhiiZo72CXznYVgptgET91l53zmM33bipUhvI-JMNDU0oXrLXMbFQE5BEFXqJ3UE/s400/1000138854.jpg"></div><h3>Teaching</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5Afn_2E32Zos198mqPGgHIbT4C9-9B0_Y8kD8wgjAqvSl-Yn90RZ-hkxStBbfLfonZw2qxwFHW70ugwF7k5jtEX5MgBX-0IryfJ5ZKT89wfRHFriPUVDkIddn6QDdfLR3L5N48TYtGlsmcDjNqvXPrEMzrB3beTVVYvhCUdRd6nff-RQ5ZtUoDap-hmxV/s652/1000138855.jpg"></div><h3>Panchayat</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnFqR7BAxk_7F6UBjfQNop8hQukHPLzZzbacUged0NkDceBXAUw5e8zzmJlS5oDVaR5i9tz1QqZy4mJLCS0fFXuCfzinmCa1CyAeq_8EtDl-mTbe8veO1GPSGyXsOW6EJclNeg0taZ-A4bRYvoJJHJZJByo-6xBLDpDJl25HeXmunlWug2OsKt_N_w4EHM/s700/1000138856.jpg"></div><h3>Municipality</h3></div></a>
-                    </div>
-                </div>
-                <div id="career" class="cat" style="display:none">
-                    <div class="exam-grid">
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUfxftBo7qMHYeD7RbAPxr1a2E6DaB4Oc7r0PkSD1FyV9KRISc6XB1hzLGZJpMPRvOY9LFf-gfR1htkrAqANuwL2cGaCx3lCoOQGHK5zQffsjZMvQ3NNr7fwc7YTK38f7_uwPgbEpyNUDNnF8vqnJKZ-ZBIe_fARu5uIWcjFMCpxo_WxJUYGuHZJ8vpjkh/s664/1000138869.jpg"></div><h3>Polytechnic</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdwFG4OBLFwEn2lDfQYjrmQKOZtCUHmVFm_6e_FKlgnKC2ATnEJS1tCg_S0WoakqpahXfZ4N1vZ9iXSBbq6_dw5rcvboOGD4o6TbJIitIrBHb9t1WY9fjLMrf2lk9urQUHsXE39izO9yrF7Yd1UIGL_dXSkzyD-jp-ml7T7rc8keb10gyHMhkE4t6eodjv/s576/1000138870.jpg"></div><h3>Nursing</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhLvdFqBSfjniCUVFDLuSjsPV3FpHAKQ5RWM8zSV42-PhuhKbCaydFl07GlHwjeKUxXTjfilr4QWvF73NOR9PPYI5nRTaIYy-HGxQY5QKcsk7Z5ofVPMGryOvQL7ToxgB5Nt7cqQXu5IdY0c6Mu5vb0iJ-UB64ZiDg4NKPgfmX6PeIAJdPlUg4wQO3WZw97/s680/1000138871.jpg"></div><h3>Paramedical</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKcLVNYTRh0Btoz-ijqLv5vRzzCzV0Nln8haBANpcBDFi9QJ_JYArX-cwuyudvfn1ZlfhivixPYit60UFSoC1cK627F_VpAx7oAlWvgGC3iYPRYu815hZDt4mfMDYkT8wfZacrf9b2wkboVeFJJDLceXgaU3-BR04R1CCWGEngTMmNbiSr81Vy87OLjC5C/s632/1000138872.jpg"></div><h3>Medical</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZk6XKmAmaKh1XnHMWX4yEVjN3sQXrPtgqbSCCFeqHNi9cFUXDViKI09BeQiHxWXu5XD9tAV7yxgxyq-SJgcdHjfKPIm6T2FMKWcYMJ2jRz6Yfw-9hvExGqSOaStVQOjqAPKA8cgTXrztOD5j8abCJSWbzq63pRSoHVgY5OFTWPN_SUtUX9P21-7P71Rlv/s644/1000138873.jpg"></div><h3>Engineering</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhbwb1sRys2iI7KAeOm6odewEIh9tCgmQ_Td_vCs0uZu26VLSq0qZfZM-NpYCyj7qwhxdM-U-TuA8jzZWBhiAS5qPeRFV7g-v0jQbrhK_3WbKKLiyVnpliVtfVCiMqWJO6QPPYjfgWGCJ09dGDbsJsK2RaIDr9iUdKE0f4cbs7FBuYNUMhzfkuxSLPBFt4Y/s452/1000138874.jpg"></div><h3>Pharmacy</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDF-InF3risoi-ksAvkje-V2kfUD4OHiwubmI94Me8THDoWXCcZazBu20cSRJOabtvzgjMBKUjpFeGJpXk3jVrASeRTXxCu-q-cAHBZtco9mUx-zcr82EkfAuiIHBRIAU4oXPDLatXBFmaIyFQLbCYCNXDvaXHLlbny3FfaAm3iHdutPyDU4Nu3G6Aj-wS/s592/1000138875.jpg"></div><h3>Law Management</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjp1BWvigmTz3pZPejLax-IMlarKhiuzLmw4IjD-u8Pr2MQlQpiN1iHsY9capOVd-fXfohFQbpgSJZ5r4zAdCFZmdZ37uVhkgK6u7H2VF-mqdetet0HYvz3ft2hp_71r6O61loAcFFTjevzU4DmmJBwZ52GGZdB1MxCRtKsEGZE8zJPqPs38An5V0Hqr952/s716/1000138876.jpg"></div><h3>BCA</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHuSgh1jChiz11iJmptzWZOxXfuvsVIiEms7MMNHnC5h1epbocBNq2zfp27FxA8Zwbc6Pvg35rIgKHi_-LfLvcILTZ1sYER62cR0wP1wh-1GV2BWaR1dXKmDQrda21vTsoWxkre_qRVDIA_Jt__YA8iQ4kIqppaCiEmCGcbjtoGtXoj0F2HSNP6URHE5su/s580/1000138877.jpg"></div><h3>Commerce</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_MsM-TiJqggT2VA0vvpLHBm-LLm83_d2SDWW6pZBDEpN2XyiTHHqaT3Z38TC75N7tB_6NIVq4xiSykSsSS6dF-F2TqLwxWnXigDltxCOdL2RdCO4pDsp5JjNoVmbrM0T3hxxmxy3Hd1bS-UNm4zlB13Zb7bGfyc6KZ6U3NIM-hqeB2-w5KNHAZAApGXOk/s620/1000138878.jpg"></div><h3>Science</h3></div></a>
-                        <a href="#"><div class="exam"><div class="w-[50px] h-[50px] mx-auto mb-[5px] rounded-md overflow-hidden img-skel-wrapper skeleton"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4LEY2fT3BgELnFrxg-P1t_1cq2dkNddV6AFFk8F7hh2mysUrVr4OdYddtHdpXhvHv905dU_w7QeK9CTWe4Gp_C7ny2yXlHBh4EESj64bR8Pvkd7eZDnZdPuLABw5X7d9yOhVe-ZW0kvMs5JIltrvnSeskjijWPEIpleIdn1UTGsRd2XJH9twRlOfY2gzx/s656/1000138879.jpg"></div><h3>Arts</h3></div></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="tabs">
-            <div class="tab active" onclick="showTab('hs')">HS Semester</div>
-            <div class="tab" onclick="showTab('madhyamik')">মাধ্যমিক</div>
-        </div>
-
-        <!-- HS SECTION -->
-        <div id="hs" class="container">
-            <a href="https://result-tutopulse.ct.ws/wbchse-semester-4-result-2026-check-now/" target="_blank" class="card">
-                <div class="card-text">
-                    <h3>উচ্চমাধ্যমিক চতুর্থ সেমিস্টারের রেজাল্ট 2026</h3>
-                    <p>Date: <b>14May 2026</b> & Time: <b>11:00am</b></p>
-                </div>
-                <div class="arrow">›</div>
-            </a>
-            <a href="#" class="card">
-                <div class="card-text">
-                    <h3>উচ্চমাধ্যমিক চতুর্থ সেমিস্টারের সিলেবাস</h3>
-                    <p>চতুর্থ সেমিস্টারের সিলেবাস <b>এখনই দেখুন</b></p>
-                </div>
-                <div class="arrow">›</div>
-            </a>
-        </div>
-
-        <!-- MADHYAMIK SECTION -->
-        <div id="madhyamik" class="container hidden">
-            <a href="https://result-tutopulse.ct.ws/madhyamik-result-2026-check-now/" target="_blank" class="card">
-                <div class="card-text">
-                    <h3>মাধ্যমিক রেজাল্ট 2026</h3>
-                    <p>Date: <b>8May 2026</b> & Time: <b>9:45am</b></p>
-                </div>
-                <div class="arrow">›</div>
-            </a>
-            <a href="#" class="card">
-                <div class="card-text">
-                    <h3>মাধ্যমিক সিলেবাস 2026</h3>
-                    <p>মাধ্যমিক সিলেবাস <b>এখনই দেখুন</b></p>
-                </div>
-                <div class="arrow">›</div>
-            </a>
-        </div>
-    </main>
-
-  <nav class="app-footer">
-    <a href="home" class="nav-item">
-        <i data-lucide="home" width="24" height="24"></i>
-        <span>Home</span>
-    </a>
-  <a href="coin" class="nav-item">
-        <i data-lucide="qr-code" width="24" height="24"></i>
-        <span>Recharge</span>
-    </a>
-    <a href="course" class="nav-item">
-        <i data-lucide="airplay" width="24" height="24"></i>
-        <span>Courses</span>
-    </a>
-    <a href="#" class="nav-item active">
-        <i data-lucide="book-open" width="24" height="24"></i>
-        <span>Study</span>
-    </a>
-    <a href="profile" class="nav-item">
-        <i data-lucide="user" width="24" height="24"></i>
-        <span>Profile</span>
-    </a>
+<nav class="app-footer">
+  <a href="home" class="nav-item"><i data-lucide="home" width="24"></i><span>Home</span></a>
+  <a href="coin" class="nav-item"><i data-lucide="qr-code" width="24"></i><span>Recharge</span></a>
+  <a href="course" class="nav-item"><i data-lucide="airplay" width="24"></i><span>Courses</span></a>
+  <a href="#" class="nav-item active"><i data-lucide="book-open" width="24"></i><span>Study</span></a>
+  <a href="profile" class="nav-item"><i data-lucide="user" width="24"></i><span>Profile</span></a>
 </nav>
 
-    <script>
-        // ========== DARK MODE TOGGLE (Integrated) ==========
-        const darkToggle = document.getElementById("darkToggle");
-        const body = document.body;
+<script>
 
-        // Apply saved preference
-        if (localStorage.getItem("darkMode") === "true") {
-            body.classList.add("dark");
-        }
+const body = document.body;
+const darkToggle = document.getElementById("darkToggle");
 
-        // Update Lucide icon based on mode
-        function updateDarkModeIcon() {
-            const isDark = body.classList.contains("dark");
-            lucide.createIcons();
-            const moonIcon = darkToggle.querySelector('i');
-            if (moonIcon) {
-                const iconName = isDark ? "sun" : "moon";
-                moonIcon.setAttribute('data-lucide', iconName);
-                lucide.createIcons();
-            }
-        }
+if(localStorage.getItem("darkMode") === "true") body.classList.add("dark");
 
-        // Initialize icon on load
-        setTimeout(() => {
-            updateDarkModeIcon();
-        }, 50);
+function updateIcon(){
+  const icon = darkToggle.querySelector('i');
+  if(body.classList.contains("dark")) {
+    icon.setAttribute('data-lucide', 'sun');
+  } else {
+    icon.setAttribute('data-lucide', 'moon');
+  }
+  lucide.createIcons();
+}
+setTimeout(updateIcon, 50);
 
-        darkToggle.addEventListener("click", () => {
-            body.classList.toggle("dark");
-            const isDark = body.classList.contains("dark");
-            localStorage.setItem("darkMode", isDark);
-            updateDarkModeIcon();
-        });
+darkToggle.onclick = () => {
+  body.classList.toggle("dark");
+  localStorage.setItem("darkMode", body.classList.contains("dark"));
+  updateIcon();
+};
 
-        // Existing functions
-        function showCat(id, btn) {
-            document.querySelectorAll('.cat').forEach(c => c.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-            document.querySelectorAll('.side button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
+function showCat(id, btn){
+  document.querySelectorAll('.cat').forEach(c => c.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  document.querySelectorAll('.side button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 
-        function showTab(tab) {
-            document.getElementById("hs").classList.add("hidden");
-            document.getElementById("madhyamik").classList.add("hidden");
-            document.getElementById(tab).classList.remove("hidden");
-            let tabs = document.querySelectorAll(".tab");
-            tabs.forEach(t => t.classList.remove("active"));
-            if (tab === "hs") {
-                tabs[0].classList.add("active");
-            } else {
-                tabs[1].classList.add("active");
-            }
-        }
+function showTab(tab){
+  document.getElementById("hs").classList.add("hidden");
+  document.getElementById("madhyamik").classList.add("hidden");
+  document.getElementById(tab).classList.remove("hidden");
+  document.querySelectorAll(".tab").forEach((t) => {
+     t.classList.remove("active");
+  });
+  event.currentTarget.classList.add("active");
+}
 
-     // Load Lucide Icons
+    // Load Lucide Icons
         if (typeof lucide !== 'undefined') lucide.createIcons();
         const footer = document.querySelector('.app-footer');
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -801,40 +386,26 @@
         });
     });
 
-        // ========== SKELETON ENGINE FOR LOADING IMAGES & BG IMAGES ==========
-        document.addEventListener("DOMContentLoaded", () => {
-            // Processing basic standard dynamic inline <img> elements
-            const standardImages = document.querySelectorAll(".img-skel-wrapper img");
-            standardImages.forEach(img => {
-                // If it is already loaded from cache
-                if (img.complete) {
-                    img.classList.add("loaded");
-                    img.parentElement.classList.remove("skeleton");
-                } else {
-                    img.addEventListener("load", () => {
-                        img.classList.add("loaded");
-                        img.parentElement.classList.remove("skeleton");
-                    });
-                    img.addEventListener("error", () => {
-                        img.parentElement.classList.remove("skeleton");
-                    });
-                }
-            });
+document.addEventListener("DOMContentLoaded", () => {
+  // Clear layout image skeletons when images complete loading
+  document.querySelectorAll(".skeleton img").forEach(img => {
+    if(img.complete) {
+      img.parentElement.classList.remove("skeleton");
+    } else {
+      img.onload = () => img.parentElement.classList.remove("skeleton");
+    }
+  });
 
-            // Processing horizontal scrollable layout background-image .ads-card containers
-            const backgroundCards = document.querySelectorAll(".ads-card[data-bg]");
-            backgroundCards.forEach(card => {
-                const trackingImg = new Image();
-                trackingImg.src = card.getAttribute("data-bg");
-                trackingImg.addEventListener("load", () => {
-                    card.style.backgroundImage = `url('${trackingImg.src}')`;
-                    card.classList.remove("skeleton");
-                });
-                trackingImg.addEventListener("error", () => {
-                    card.classList.remove("skeleton");
-                });
-            });
-        });
-    </script>
+  // Target the fixed `.primium-card` class selector instead of missing `.ads-card`
+  document.querySelectorAll(".primium-card[data-bg]").forEach(card => {
+    const img = new Image();
+    img.src = card.dataset.bg;
+    img.onload = () => {
+      card.style.backgroundImage = `url(${img.src})`;
+      card.classList.remove("skeleton");
+    };
+  });
+});
+</script>
 </body>
 </html>
