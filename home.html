@@ -4,272 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TutoGenius</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     
     <style>
-        :root {
-            --bg-color: #ffffff;
-            --card-bg: #ffffff;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --primary-blue: #1e3a8a;
-            --accent-red: #dc2626;
-            --badge-gold: #f59e0b;
-            --badge-green: #10b981;
-            --border-color: #e2e8f0;
-            --rgb: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
-        }
-
+  /* ===== LIGHT MODE VARIABLES (default) ===== */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 0;
-        }
-
-        .app-container {
-            position: fixed;
-            top: 50px;
-            bottom: 65px;
-            width: 100%;
-            overflow-y: auto;
-            background: var(--bg-color);
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .app-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .content {
-            padding: 0 16px;
-        }
-
-        /* --- HEADER SECTION --- */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: #905AF8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .wallet-balance {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .balance-amount { 
-            font-family: 'Poppins', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: #f59e0b;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .wallet-label {
-            font-size: 12px;
-            color: #fff;
-            font-weight: 500;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .icon-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 1px solid var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;          
-            cursor: pointer;
+        a, span, p, h1, h2, h3, h4, h5, h6, div {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
             text-decoration: none;
         }
 
-        .vip-badge {
-            background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
-            color: white;
-            margin-left: 50px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
-            text-decoration: none;
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
         }
-
-        .notification-btn {
-            position: relative;
+        :root {
+            --bg: #fff; --card: #fff; --text: #1e293b; --muted: #64748b; 
+            --border: #e2e8f0; --header: #905AF8; --icon-bg: #f8fafc; 
+            --icon-hover: #f1f5f9; --footer: #fff; --nav-active: rgba(0,0,0,0.02);
+            --shadow: rgba(0,0,0,0.05);
         }
-
-        .notification-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background-color: var(--accent-red);
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid #fff;
+        body.dark {
+            --bg: #000; --card: #000; --text: #f1f5f9; --muted: #94a3b8; 
+            --border: #334155; --header: #6d28d9; --icon-bg: #334155; 
+            --icon-hover: #475569; --footer: #000; --nav-active: rgba(255,255,255,0.05);
+            --shadow: rgba(0,0,0,0.3);
         }
-
-        /* --- SECTION CARD BLOCK --- */
-        .section-card { 
-            margin: 10px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 10px 16px;
-            position: relative;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-title i {
-            color: #2563eb;
-        }
-
-        .view-more {
-            color: #1d4ed8;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* AEPS Sub-logo inside Banking Section */
-        .aeps-logo {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 10px;
-            font-weight: 800;
-            color: #1e3a8a;
-            font-style: italic;
-            border: 1px solid #94a3b8;
-            padding: 2px 6px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); font-family: 'Poppins', sans-serif; color: var(--text); transition: .3s; }
+        .header { position: fixed; top: 0; left: 0; width: 100%; height: 50px; background: var(--header); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: .3s; }
+        .app-container { position: fixed; top: 50px; bottom: 65px; width: 100%; overflow-y: auto; background: var(--bg); scrollbar-width: none; transition: .3s; }
+        .app-container::-webkit-scrollbar { display: none; }
+        .avatar-wrapper { width: 45px; height: 45px; }
+        .avatar { width: 100%; height: 100%; border-radius: 50%; border: 2px dashed #f59e0b; padding: 2px; object-fit: cover; }
+        .wallet-balance { display: flex; flex-direction: column; }
+        .balance-amount { font-size: 20px; font-weight: 900; color: #f59e0b; display: flex; align-items: center; gap: 2px; }
+        .wallet-label { font-size: 12px; color: #fff; font-weight: 500; }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: center; align-items: center; color: #fff; cursor: pointer; background: transparent; }
+        .vip-badge { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); color: white; margin-left: 50px; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; text-decoration: none; }
+        .notification-btn { position: relative; }
+        .notification-badge { position: absolute; top: -4px; right: -4px; background: #dc2626; color: white; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid #fff; }
+        .user { display: flex; flex-direction: column; }
+        .swiper { width: 100%; padding: 10px 0 32px; }
+        .swiper-slide { width: 280px; height: 120px; border-radius: 12px; overflow: hidden; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .swiper-pagination-bullet { width: 10px; height: 10px; background: #d1d5db; opacity: 1; }
+        .swiper-pagination-bullet-active { background: #ffb703 !important; }
+        .section-card { margin: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; position: relative; transition: .3s; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .section-title { font-size: 18px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 8px; transition: .3s; margin: 0px 10px 0 10px;}
+        .view-more { color: #1d4ed8; font-size: 14px; font-weight: 600; text-decoration: none; }
+        body.dark .view-more { color: #60a5fa; }
+        .aeps-logo { position: absolute; top: 10px; right: 16px; font-size: 10px; background: #ffffff;font-weight: 800; color: #1e3a8a; font-style: italic; border: 1px solid #94a3b8; padding: 2px 6px; border-radius: 4px; }
+        .aeps-logo2 { position: absolute; top: 10px; left: 16px; font-size: 10px; background: #ffffff;font-weight: 800; color: #1e3a8a; font-style: italic; border: 1px solid #94a3b8; padding: 2px 6px; border-radius: 4px; }
+         body.dark .aeps-logo { color: #93c5fd; border-color: #64748b; background: #000;}
+         body.dark .aeps-logo2 { color: #93c5fd; border-color: #64748b; background: #000;}
         .aeps-logo span { color: #ea580c; }
-
-        /* --- GRID SYSTEM FOR ITEMS --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px 8px;
-        }
-
-        .grid-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            text-decoration: none;
-            position: relative;
-            cursor: pointer;
-        }
-
-        /* Icon Container & Custom Vector Mimic via FontAwesome/CSS */
-        .icon-wrapper {
-            width: 54px;
-            height: 54px;
-            background: #f8fafc;
-            border-radius: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 8px;
-            position: relative;
-            border: 1px solid #f1f5f9;
-            transition: background 0.2s;
-        }
-
-        .grid-item:hover .icon-wrapper {
-            background: #f1f5f9;
-        }
-
-        .icon-wrapper i {
-            font-size: 22px;
-            color: #475569;
-        }
-
-        /* Customizing colors based on style matching */
-        .hs-group .icon-wrapper i { color: #f59e0b; } 
-        .mp-group .icon-wrapper i { color: #2563eb; } 
-        .app-group .icon-wrapper i { color: green; } 
-
-        .item-label {
-            font-size: 11px;
-            font-weight: 500;
-            color: #334155;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* --- PROMO BADGES SYSTEM --- */
+         .aeps-logo2 span { color: #ea580c; }
+        .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 8px; }
+        .grid-item { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; position: relative; cursor: pointer; }
+        .icon-wrapper { width: 54px; height: 54px; background: var(--icon-bg); border-radius: 16px; display: flex; justify-content: center; align-items: center; margin-bottom: 8px; border: 1px solid var(--border); transition: .2s; }
+        .grid-item:hover .icon-wrapper { background: var(--icon-hover); }
+        .item-label { font-size: 11px; font-weight: 500; color: var(--text); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: .3s; }
         .promo-badge {
             position: absolute;
             top: -10px;
-            font-size: 9px;
+            font-size: 6px;
             font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 6px;
+            padding: 2px 2px;
+            border-radius: 4px;
             white-space: nowrap;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             z-index: 2;
@@ -285,555 +119,220 @@
             background-color: #d1fae5;
             color: #059669;
             border: 1px solid #a7f3d0;
-        }
-
-        /* --- FIXED BOTTOM AD BANNER --- */
-        .bottom-banner-container {
-            position: fixed;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 448px;
-            z-index: 10;
-        }
-
-        .ad-banner {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 50px;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            text-decoration: none;
-        }
-
-        .ad-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 14px;
-        }
-
-        .ad-logo-pill {
-            background: #2e0854;
-            color: #fff;
-            padding: 2px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- SKELETON LOADING ANIMATION FEATURE --- */
-        .skeleton-loading .icon-wrapper {
-            background: #e2e8f0 !important;
-            border-color: #e2e8f0 !important;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skeleton-loading .icon-wrapper i,
-        .skeleton-loading .promo-badge,
-        .skeleton-loading .item-label {
-            visibility: hidden;
-        }
-
-        .skeleton-loading .item-label::before {
-            content: "";
-            display: block;
-            background: #e2e8f0;
-            height: 12px;
-            width: 50px;
-            margin: 4px auto 0;
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* The Shimmering Overlay Effect */
-        .skeleton-loading .icon-wrapper::after,
-        .skeleton-loading .item-label::before::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-            animation: shimmer 1.5s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* --- Footer Nav Styles --- */
-        .app-footer {
-            overflow: hidden;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 10;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        body.dark .app-footer {
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-            background: #000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 700;
-            width: 65px;
-            height: 100%;
-            gap: 2px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.1s ease-in-out;
-        }
-
-        .nav-item.active {
-            color: #905AF8;
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 50px;
-            padding: 5px;
-        }
-
-        body.dark .nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
-            background-color: rgba(144, 90, 248, 0.15);
-            pointer-events: none;
-        }
-
-        @keyframes ripple-animation {
-            to {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            width: 45px;
-            height: 45px;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px dashed #f59e0b;
-            padding: 2px;
-            object-fit: cover;
-        }
-
-        /* ===== SWIPER BANNERS STRIP ===== */
-        .swiper {
-            width: 100%;
-            padding-bottom: 32px; 
-            padding-top: 10px; 
-        }
-
-        .swiper-slide {
-            width: 280px; 
-            height: 120px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .swiper-slide img {
-            display: block;
-            width: 100%; 
-            height: 100%;
-            object-fit: cover;
-            background: rgba(0,0,0,0.1);
-        }
-
-        .swiper-pagination-bullet {
-            width: 10px;
-            height: 10px;
-            background: #d1d5db;
-            opacity: 1;
-        }
-        
-        .swiper-pagination-bullet-active {
-            background: #ffb703 !important;
-        }
+        }body.dark .badge-gold { background: #78350f; color: #fbbf24; border-color: #92400e; }
+         body.dark .badge-green { background: #064e3b; color: #34d399; border-color: #065f46; }
+        .new { width: 100%; text-align: center; padding: 20px 10px 0; display: flex; flex-direction: column; align-items: center; }
+        .main-heading { font-size: 25px; color: #5c677d; font-weight: 500; margin-bottom: 8px; transition: .3s; }
+        body.dark .main-heading { color: #cbd5e1; }
+        .sub-heading { font-size: 28px; color: #3a4454; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 25px; transition: .3s; }
+        body.dark .sub-heading { color: #f1f5f9; }
+        .divider-new { display: flex; align-items: center; width: 100%; margin-bottom: 20px; }
+        .line { flex: 1; height: 1px; background: var(--border); transition: .3s; }
+        .heart-icon { color: #e53e3e; font-size: 20px; margin: 0 15px; }
+        .follow-text { font-size: 16px; color: #4a5568; font-weight: 600; margin-bottom: 20px; transition: .3s; }
+        body.dark .follow-text { color: #cbd5e1; }
+        .social-icons-new { display: flex; gap: 15px; margin-bottom: 40px; }
+        .social-card { width: 55px; height: 55px; background: var(--card); border-radius: 14px; display: flex; justify-content: center; align-items: center; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid var(--border); transition: .2s; }
+        .fa-youtube { color: #ff0000; font-size: 24px; } .fa-facebook-f { color: #1877f2; font-size: 24px; }
+        .instagram-icon { font-size: 24px; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%,#d6249f 60%,#285AEB 90%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .fa-whatsapp { color: #25d366; font-size: 26px; }
+        .app-footer { position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background: var(--footer); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px var(--shadow); z-index: 10; transition: .3s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: var(--text); font-size: 11px; font-weight: 700; width: 65px; height: 100%; gap: 2px; position: relative; overflow: hidden; transition: .3s; }
+        .nav-item.active { color: #905AF8; background: var(--nav-active); border-radius: 50px; padding: 5px; }
+        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple-animation 0.4s cubic-bezier(0.1,0.8,0.3,1); background: rgba(144,90,248,0.15); pointer-events: none; }
+        @keyframes ripple-animation { to { transform: scale(3); opacity: 0; } }
+        body.dark #greet { color: #4ade80 !important; }
+        body.dark #displayName { color: #fb923c !important; }
     </style>
 </head>
 <body>
-
     <header class="header">
         <div class="avatar-wrapper">
             <img id="profileAvatar" src="https://placehold.co/100x100?text=!" alt="Avatar" class="avatar">
         </div> 
         <div class="wallet-balance">
-            <div class="balance-amount">
-                ₹ <span id="balance">00</span> 
-                <a href="#" class="icon-btn" style="border:none; width:auto; height:auto;"><i class="fa-solid fa-wallet" style="color:#fff;"></i></a>
-            </div>
+            <div class="balance-amount">₹ <span id="balance">00</span><a href="#" class="icon-btn" style="border:none;"><i class="fa-solid fa-wallet" style="color:#fff;"></i></a></div>
             <span class="wallet-label">Wallet Balance</span>
         </div>
         <div class="header-actions">
             <a href="#vip" class="vip-badge">Become VIP</a>
-            <a href="#notifications" class="icon-btn notification-btn">
-                <i class="fa-regular fa-bell"></i>
-                <span class="notification-badge">1</span>
+             <a href="#notifications" class="icon-btn notification-btn">
+                <i class="fa-regular fa-bell"></i><span class="notification-badge">1</span>
             </a>
-        </div>
+    </div>
+ <div class="header-icon" style="display: none;" id="darkModeToggleBtn"><i data-lucide="moon" width="24" style="color: #ffffff;"></i></div>
+   
     </header>
 
     <div class="app-container">
-        <h2 style="padding: 10px; color: #1e3a8a; font-size: 20px;">Hey👋 <span style="color:#ea580c;" id="displayName">Student</span></h2>
-         <h2 id="greet" style="padding: 0px 10px 0 10px; color: green; font-size: 16px;"> </h2>
-      
+        <div class="user">  
+            <div style="padding:10px;color:#1e3a8a;font-size:20px;">Hey👋 <span style="color:#ea580c;" id="displayName">Student</span></div>
+            <div id="greet" style="padding:0 10px;color:green;font-size:16px;"></div>
+        </div>
+        
         <div class="swiper">
             <div class="swiper-wrapper">
-                <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/Jwzqhnrq/Add-Text-05-30-01-53-00.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+1'" alt="Batch 1">        
-                </a>
-                <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/S4MjgNhH/Add-Text-05-30-02-02-58.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+2'" alt="Batch 2">        
-                </a>
-                <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/nNRQ4q41/Add-Text-05-30-02-08-21.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+3'" alt="Batch 3">        
-                </a>
-                <a href="hs/sem1/enroll.html" target="_blank" class="swiper-slide">
-                    <img src="https://i.ibb.co/1G8WvZWY/Add-Text-05-30-02-13-26.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+4'" alt="Batch 4">         
-                </a>
+                <a href="hs/sem3/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/Jwzqhnrq/Add-Text-05-30-01-53-00.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+1'"></a>
+                <a href="hs/sem3/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/S4MjgNhH/Add-Text-05-30-02-02-58.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+2'"></a>
+                <a href="hs/sem3/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/nNRQ4q41/Add-Text-05-30-02-08-21.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+3'"></a>
+                <a href="hs/sem1/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/1G8WvZWY/Add-Text-05-30-02-13-26.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+4'"></a>
             </div>
             <div class="swiper-pagination"></div>
         </div>
 
-        <section class="section-card hs-group">
-            <div class="section-header">
-                <h2 class="section-title">Madhaymik</h2>
+        <section class="section-card">
+  <div class="section-header">
+                  <div class="aeps-logo2"><span>Smart</span> Course</div>
+                <div class="divider-new"><div class="line"></div><h2 class="section-title">Madhaymik</h2><div class="line"></div></div>
                 <div class="aeps-logo">Tuto<span>Genius</span></div>
             </div>
-            
             <div class="services-grid">
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-green">20% Discount</span>
-                         <img src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;">
-            </div>
-                    <span class="item-label">Course</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span>
-                     <img src="https://cdn-icons-png.flaticon.com/512/16754/16754690.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                    <span class="item-label"> Practice Set</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span>
-                       <img src="https://cdn-icons-png.flaticon.com/512/2682/2682065.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                    <span class="item-label">Art's</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper"> <span class="promo-badge badge-gold">Comming Soon</span>
-                      <img src="https://cdn-icons-png.flaticon.com/512/6747/6747083.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                    <span class="item-label">Science</span>
-                </a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-green">20% Discount</span><img src="https://edulivestore.netlify.app/image/wbbse.png" style="width:80%;"></div><span class="item-label">Course</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://cdn-icons-png.flaticon.com/512/16754/16754690.png" style="width:80%;"></div><span class="item-label">Practice Set</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://cdn-icons-png.flaticon.com/512/2682/2682065.png" style="width:80%;"></div><span class="item-label">Art's</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://cdn-icons-png.flaticon.com/512/6747/6747083.png" style="width:80%;"></div><span class="item-label">Science</span></a>
             </div>
         </section>
 
-        <section class="section-card mp-group">
-            <div class="section-header">
-                <h2 class="section-title">HS Semester</h2>
-                <div class="aeps-logo">Tuto<span>Genius</span></div>
-            </div>
+        <section class="section-card">
+ <div class="section-header"> <div class="aeps-logo2">Smart<span> Course</span></div>
+                
+             <div class="divider-new"><div class="line"></div><h2 class="section-title">HS Semester</h2><div class="line"></div></div>
             
+            <div class="aeps-logo">Tuto<span>Genius</span></div>
+            </div>
             <div class="services-grid">
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-green">20% Discount</span>
-                      <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                    <span class="item-label">Smart Course</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                     <img src="https://cdn-icons-png.flaticon.com/512/16754/16754690.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                    <span class="item-label">Practice Set</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                       <img src="https://cdn-icons-png.flaticon.com/512/2682/2682065.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                    <span class="item-label">Art's</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                      <img src="https://cdn-icons-png.flaticon.com/512/6747/6747083.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                    <span class="item-label">Science</span>
-                </a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-green">20% Discount</span><img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" style="width:80%;"></div><span class="item-label">Smart Course</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://cdn-icons-png.flaticon.com/512/16754/16754690.png" style="width:80%;"></div><span class="item-label">Practice Set</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://cdn-icons-png.flaticon.com/512/2682/2682065.png" style="width:80%;"></div><span class="item-label">Art's</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://cdn-icons-png.flaticon.com/512/6747/6747083.png" style="width:80%;"></div><span class="item-label">Science</span></a>
             </div>
         </section>
 
-        <section class="section-card app-group">
+        <section class="section-card"> <div class="aeps-logo2">Tuto<span>Genius</span></div>
+                
+  <div class="divider-new"><div class="line"></div><i class="fa-solid fa-bolt" style="color:#2563eb; margin-left: 10px; margin-right: 10px ;"></i><div class="line"></div></div>
+            
             <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fa-solid fa-bolt" style="color: #2563eb;"></i> Career & Course
-                </h2>
+                <h2 class="section-title"> Career & Course</h2>
                 <a href="#" class="view-more">Explore</a>
             </div>
-
             <div class="services-grid">
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                        <img src="https://i.ibb.co/8Hn0fdT/images-3.jpg" onerror="this.src='https://placehold.co/50x50'" style="width: 100%; border-radius: 100px;"></div>
-                   
-                    <span class="item-label">Govt Job</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                        <img src="https://i.ibb.co/67g99wW7/images-9.jpg" onerror="this.src='https://placehold.co/50x50'" style="width: 100%;"></div>
-                   
-                    <span class="item-label">Private Job</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                        <img src="https://i.ibb.co/0pQbDMbk/images.png" onerror="this.src='https://placehold.co/50x50'" style="width: 80%;"></div>
-                   
-                    <span class="item-label">NTA & Neet</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                         <img src="https://i.ibb.co/1Yk9K6dy/images-8.jpg" onerror="this.src='https://placehold.co/50x50'" style="width: 100%; border-radius: 15px;"></div>
-                   
-                    <span class="item-label">Engeneering </span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                        <img src="https://i.ibb.co/MJv98Zc/images-6.jpg" onerror="this.src='https://placehold.co/50x50'" style="width: 100%;"></div>
-                   
-                    <span class="item-label">Music </span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                        <img src="https://i.ibb.co/NdyzBBX8/Arts2.jpg" onerror="this.src='https://placehold.co/50x50'" style="width: 100%;"></div>
-                   
-                    <span class="item-label">Art's</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                        <img src="https://i.ibb.co/VcqVNS1j/images-5.jpg" onerror="this.src='https://placehold.co/50x50'" style="width: 100%;"></div>
-                   
-                    <span class="item-label">Computer</span>
-                </a>
-
-                <a href="#" class="grid-item data-node">
-                    <div class="icon-wrapper">
-                        <span class="promo-badge badge-gold">Comming Soon</span>
-                         <img src="https://i.ibb.co/SD5Y47xC/images-7.jpg" onerror="this.src='https://placehold.co/50x50'" style="width: 100%; border-radius: 100px ;"></div>
-                   
-                    <span class="item-label">Teaching</span>
-                </a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/8Hn0fdT/images-3.jpg" style="width:100%;border-radius:100px;"></div><span class="item-label">Govt Job</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/67g99wW7/images-9.jpg" style="width:100%;border-radius:100px;"></div><span class="item-label">Private Job</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/0pQbDMbk/images.png" style="width:80%;border-radius:100px;"></div><span class="item-label">NTA & Neet</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/1Yk9K6dy/images-8.jpg" style="width:100%;border-radius:15px;"></div><span class="item-label">Teaching</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/MJv98Zc/images-6.jpg" style="width:100%;border-radius:100px;"></div><span class="item-label">Music</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/NdyzBBX8/Arts2.jpg" style="width:100%;border-radius:100px;"></div><span class="item-label">Art's</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/VcqVNS1j/images-5.jpg" style="width:100%;border-radius:100px;"></div><span class="item-label">Computer</span></a>
+                <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/SD5Y47xC/images-7.jpg" style="width:100%;border-radius:100px;"></div><span class="item-label">Science</span></a>
             </div>
         </section>
+
+        <div class="new">
+            <h1 class="main-heading">Designed for Smart Education</h1>
+            <h2 class="sub-heading">in Smart Bharat <img class="flag-icon" src="https://flagcdn.com/w40/in.png"></h2>
+            <div class="divider-new"><div class="line"></div><i class="fa-solid fa-heart heart-icon"></i><div class="line"></div></div>
+            <p class="follow-text">Follow for latest offers & updates</p>
+            <div class="social-icons-new">
+                <a href="#" class="social-card"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="social-card"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="social-card"><i class="fa-brands fa-instagram instagram-icon"></i></a>
+                <a href="#" class="social-card"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
     </div>
 
     <nav class="app-footer">
-        <a href="#" class="nav-item active">
-            <i data-lucide="home" width="24" height="24"></i>
-            <span>Home</span>
-        </a>
-        <a href="coin" class="nav-item">
-            <i data-lucide="qr-code" width="24" height="24"></i>
-            <span>Recharge</span>
-        </a>
-        <a href="course" class="nav-item">
-            <i data-lucide="airplay" width="24" height="24"></i>
-            <span>Courses</span>
-        </a>
-        <a href="study" class="nav-item">
-            <i data-lucide="book-open" width="24" height="24"></i>
-            <span>Study</span>
-        </a>
-        <a href="profile" class="nav-item">
-            <i data-lucide="user" width="24" height="24"></i>
-            <span>Profile</span>
-        </a>
+        <a href="#" class="nav-item active"><i data-lucide="home" width="24" height="24"></i><span>Home</span></a>
+        <a href="coin" class="nav-item"><i data-lucide="qr-code" width="24" height="24"></i><span>Recharge</span></a>
+        <a href="course" class="nav-item"><i data-lucide="airplay" width="24" height="24"></i><span>Courses</span></a>
+        <a href="study" class="nav-item"><i data-lucide="book-open" width="24" height="24"></i><span>Study</span></a>
+        <a href="profile" class="nav-item"><i data-lucide="user" width="24" height="24"></i><span>Profile</span></a>
     </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
     <script>
-    // ========== SWIPER LAYOUT CONFIGURATION ==========
-    const swiper = new Swiper('.swiper', {
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        loop: true,
-        coverflowEffect: {
-            rotate: 0,
-            stretch: -30,
-            depth: 100,
-            modifier: 1,
-            slideShadows: false,
-        },
-        autoplay: {
-            delay: 3500,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
+     // Dark Mode Toggle Switcher logic tied directly to custom header selector button
+        const darkModeToggleBtn = document.getElementById('darkModeToggleBtn');
+        const bodyElement = document.body;
+
+        if (localStorage.getItem('darkMode') === 'true') {
+            bodyElement.classList.add('dark');
+            updateToggleIcon(true);
+        }
+
+        function updateToggleIcon(isDark) {
+            const iconElem = darkModeToggleBtn.querySelector('i');
+            if (iconElem) {
+                const targetIcon = isDark ? 'sun' : 'moon';
+                iconElem.setAttribute('data-lucide', targetIcon);
+                lucide.createIcons({ icons: { [targetIcon]: iconElem } });
+            }
+        }
+
+        darkModeToggleBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('dark');
+            const isDarkActive = bodyElement.classList.contains('dark');
+            localStorage.setItem('darkMode', isDarkActive ? 'true' : 'false');
+            updateToggleIcon(isDarkActive);
+        });
+   
+
+    // Swiper
+    new Swiper('.swiper', {
+        effect: 'coverflow', grabCursor: true, centeredSlides: true, slidesPerView: 'auto', loop: true,
+        coverflowEffect: { rotate: 0, stretch: -30, depth: 100, modifier: 1, slideShadows: false },
+        autoplay: { delay: 3500, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination', clickable: true }
     });
 
-    // Initialize Lucide Icons globally
     lucide.createIcons();
 
-    // Start elements with skeleton layout style active
-    const nodes = document.querySelectorAll('.data-node');
-    nodes.forEach(node => node.classList.add('skeleton-loading'));
-
-    // Transition to active UI smoothly after short delay
-    window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            nodes.forEach(node => node.classList.remove('skeleton-loading'));
-        }, 100); // Set a real runtime simulation delay
-        
-        // Execute setups on load securely
-        loadBalance();
-        loadProfileData();
-        setLiveGreeting();
-    });
-
-    // Footer navigation items organic interaction ripple engine
-    const footer = document.querySelector('.app-footer');
+    // Ripple Effect
     document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            const targetUrl = this.getAttribute('href');
-            if (!targetUrl || targetUrl === "" || targetUrl === "#") {
-                e.preventDefault();
-            }
-            
-            const rect = footer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
+        item.onclick = function(e) {
+            if(!this.getAttribute('href') || this.getAttribute('href') === "#") e.preventDefault();
+            const rect = this.closest('.app-footer').getBoundingClientRect();
             const ripple = document.createElement('span');
             ripple.className = 'ripple';
             const size = Math.max(rect.width, rect.height);
             ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${x - (size / 2)}px`;
-            ripple.style.top = `${y - (size / 2)}px`;
-            
+            ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+            ripple.style.top = `${e.clientY - rect.top - size/2}px`;
             this.appendChild(ripple);
-            setTimeout(() => { ripple.remove(); }, 400);
-        });
+            setTimeout(() => ripple.remove(), 400);
+        }
     });
 
-    // Unified Coin Storage Systems Engine
+    // Balance & Profile
     let balance = parseInt(localStorage.getItem('coinBalance') || '0');
-
-    function updateBalanceUI(val) {
-        const balEl = document.getElementById('balance');
-        if (balEl) balEl.textContent = val;
-    }
-
-    function addCoins(amount) {
-        balance += amount;
-        localStorage.setItem('coinBalance', balance.toString());
-        updateBalanceUI(balance);
-    }
-
-    function loadBalance() {
+    const updateBalance = val => document.getElementById('balance').textContent = val;
+    const loadBalance = () => {
         let stored = localStorage.getItem("coinBalance");
-        if (stored === null || isNaN(parseInt(stored))) { 
-            localStorage.setItem("coinBalance", "0"); 
-            stored = "0";
-        }
-        balance = parseInt(stored);
-        updateBalanceUI(balance);
-    }
+        if(!stored || isNaN(parseInt(stored))) localStorage.setItem("coinBalance", "0");
+        balance = parseInt(localStorage.getItem("coinBalance"));
+        updateBalance(balance);
+    };
+    const loadProfile = () => {
+        let name = localStorage.getItem("student_display_name") || "Student";
+        if(!localStorage.getItem("student_display_name")) localStorage.setItem("student_display_name", name);
+        document.getElementById("displayName").innerText = name;
+        let pic = localStorage.getItem("profile_image_url") || "https://placehold.co/100x100?text=!";
+        if(!localStorage.getItem("profile_image_url")) localStorage.setItem("profile_image_url", pic);
+        document.getElementById("profileAvatar").src = pic;
+    };
+    
+    // Greeting
+    const setGreeting = () => {
+        const h = new Date().getHours();
+        const greetings = [{t:4,s:'Good Night 🌝'},{t:8,s:'Good Morning 🌞'},{t:10,s:'Tea Time ☕'},{t:12,s:'Try to Solve Quiz'},{t:14,s:'Good Noon 🤓'},{t:16,s:'Good Afternoon'},{t:19,s:'Revision Time'},{t:22,s:'Keep Learning'},{t:25,s:'Good Night 🌝'}];
+        document.getElementById('greet').innerText = greetings.find(g => h < g.t).s;
+    };
 
-    function loadProfileData() {
-        let savedName = localStorage.getItem("student_display_name");
-        if (!savedName || savedName.trim() === "") { 
-            savedName = "Student"; 
-            localStorage.setItem("student_display_name", savedName); 
-        }
-        const nameEl = document.getElementById("displayName");
-        if (nameEl) nameEl.innerText = savedName;
-
-        let savedPic = localStorage.getItem("profile_image_url");
-        if (!savedPic || savedPic === "") { 
-            savedPic = "https://placehold.co/100x100?text=!"; 
-            localStorage.setItem("profile_image_url", savedPic); 
-        }
-        const avatar = document.getElementById("profileAvatar");
-        if (avatar) avatar.src = savedPic;
-    }
-
-    // ========== LIVE DYNAMIC HEURISTIC GREETINGS SYSTEM ==========
-    function setLiveGreeting() {
-        const hour = new Date().getHours();
-        const GREETINGS_CONFIG = [
-            { upTo: 4,  text: 'Good Night 🌝' },
-            { upTo: 8,  text: 'Good Morning 🌞' },
-            { upTo: 10, text: 'Tea Time ☕' },
-            { upTo: 12, text: 'Try to Solve Quiz' },
-            { upTo: 14, text: 'Good Noon 🤓' },
-            { upTo: 16, text: 'Good Afternoon' },
-            { upTo: 19, text: 'Revision Time' },
-            { upTo: 22, text: 'Keep Learning' },
-            { upTo: 25, text: 'Good Night 🌝' }
-        ];
-        const greeting = GREETINGS_CONFIG.find(slot => hour < slot.upTo).text;
-        const greetEl = document.getElementById('greet');
-        if (greetEl) greetEl.innerText = greeting;
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+        loadBalance(); loadProfile(); setGreeting();
+    });
     </script>
 </body>
 </html>
