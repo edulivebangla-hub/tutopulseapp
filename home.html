@@ -3,17 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TutoGenius</title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>TutoGenius App</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    
-    <style>
-  /* ===== LIGHT MODE VARIABLES (default) ===== */
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+ <style>
+        /* ===== GLOBAL CONSTANTS & CSS VARIABLES ===== */
+        :root {
+            --bg: #ffffff;
+            --primary-blue: #2c3e8c;
+            --bg-light: #f4f6fc;
+            --card-border: #e2e7f7;
+            --btn-green: #c8e6c9;
+            --btn-text-green: #2e7d32;
+            --deadline-bg: #ffebee;
+            --deadline-text: #c62828;
+            --text-main: #212121;
+            --text-sub: #616161;
+            --text-muted: #000;
+            --skeleton-base: #e2e8f0;
+            --skeleton-shimmer: #f1f5f9;
+        }
+
+        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -22,33 +42,14 @@
             -moz-user-drag: none;
             -ms-user-drag: none;
             user-drag: none;
-            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: background 0.3s, color 0.3s, border-color 0.3s, opacity 0.3s;
             -webkit-tap-highlight-color: transparent;
         }
 
         a, span, p, h1, h2, h3, h4, h5, h6, div {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
             text-decoration: none;
         }
-
-        img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-        }
-        :root {
+  :root {
             --bg: #fff; --card: #fff; --text: #1e293b; --muted: #64748b; 
             --border: #e2e8f0; --header: #905AF8; --icon-bg: #f8fafc; 
             --icon-hover: #f1f5f9; --footer: #fff; --nav-active: rgba(0,0,0,0.02);
@@ -60,28 +61,437 @@
             --icon-hover: #475569; --footer: #000; --nav-active: rgba(255,255,255,0.05);
             --shadow: rgba(0,0,0,0.3);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); font-family: 'Poppins', sans-serif; color: var(--text); transition: .3s; }
-        .header { position: fixed; top: 0; left: 0; width: 100%; height: 50px; background: var(--header); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: .3s; }
-        .app-container { position: fixed; top: 50px; bottom: 65px; width: 100%; overflow-y: auto; background: var(--bg); scrollbar-width: none; transition: .3s; }
-        .app-container::-webkit-scrollbar { display: none; }
-        .avatar-wrapper { width: 45px; height: 45px; }
-        .avatar { width: 100%; height: 100%; border-radius: 50%; border: 2px dashed #f59e0b; padding: 2px; object-fit: cover; }
-        .wallet-balance { display: flex; flex-direction: column; }
-        .balance-amount { font-size: 20px; font-weight: 900; color: #f59e0b; display: flex; align-items: center; gap: 2px; }
-        .wallet-label { font-size: 12px; color: #fff; font-weight: 500; }
-        .header-actions { display: flex; align-items: center; gap: 12px; }
-        .icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: center; align-items: center; color: #fff; cursor: pointer; background: transparent; }
-        .vip-badge { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); color: white; margin-left: 50px; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; text-decoration: none; }
-        .notification-btn { position: relative; }
-        .notification-badge { position: absolute; top: -4px; right: -4px; background: #dc2626; color: white; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid #fff; }
-        .user { display: flex; flex-direction: column; }
-        .swiper { width: 100%; padding: 10px 0 32px; }
-        .swiper-slide { width: 280px; height: 120px; border-radius: 12px; overflow: hidden; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
-        .swiper-pagination-bullet { width: 10px; height: 10px; background: #d1d5db; opacity: 1; }
-        .swiper-pagination-bullet-active { background: #ffb703 !important; }
-        .section-card { margin: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; position: relative; transition: .3s; }
+        body {
+            background-color: #f6f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        body.dark {
+            background-color: #030712;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 46px;
+            background: #1FA09A;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            z-index: 1000;
+            
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 150px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #000;
+        }
+
+        .header-icon {
+            padding: 2px; padding-top: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #fff;
+            color: #000;
+            transition: transform 0.1s ease;
+        }
+
+        .header-icon:active { 
+            transform: scale(0.95); 
+        }
+   .wallet-balance {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .balance-amount {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            
+        }
+  
+        .wallet-label {
+            font-size: 12px;
+            color: #fff;
+            font-weight: 700;
+        }
+        /* ===== APPLICATION CONTAINER MAIN ===== */
+        .app-container {
+            position: fixed;
+            top: 45px;
+            bottom: 65px;
+            width: 100%;
+            overflow-y: auto;
+            background: var(--bg);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .app-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .content {
+            padding: 0 16px;
+        }
+
+     
+        
+        .teal-section {
+            background: #1FA09A;
+            height: 28%;
+            
+            position: relative;
+            padding: 8px 20px;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+        }
+        
+        .orange-triangle {
+            position: absolute;
+            top: 30px;
+            right: 0;
+            width: 0; transform: skewY(-6deg);
+            height: 0;
+            border-bottom: 500px solid #F27B21;
+            border-left: 550px solid transparent;
+            z-index: 1;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 30px; background: #fff; border-radius: 100px;
+            right: 25px;
+            width: 90px; border: 2px solid #3047a5;
+            height: 90px;
+            z-index: 2;
+        }
+        
+        .logo img {
+            width: 100%; border-radius: 100px;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .greeting {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+        }
+        
+        .greeting h1 {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .greeting h1 span {
+            display: inline-block;
+        }
+        
+        .greeting .name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 2px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .greeting .message {
+            color: #F27B21;
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+        }
+        
+        .qr-code {
+            margin-top: 10px;
+            width: 80px;
+            height: 80px;           
+            padding: 5px;
+        }
+        
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        .tricolor-stripes {
+            position: absolute;
+            top: 28%;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            transform: skewY(-6deg);
+            transform-origin: bottom left;
+            display: flex;
+            flex-direction: column;
+            
+            z-index: 3;
+        }
+        
+        .stripe {
+            height: 20px;
+            width: 100%;
+        }
+        
+        .stripe.orange { background: #F27B21; }
+        .stripe.white { background: #FFFFFF; }
+        .stripe.green { background: #138808; }
+        
+        /* ===== SWIPER BANNERS STRIP ===== */
+        .swiper {
+            width: 100%;
+            padding-bottom: 32px; 
+            padding-top: 10px; 
+        }
+
+        .swiper-slide {
+            width: 280px; 
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #d1d5db;
+            opacity: 1;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: #ffb703 !important;
+        }
+
+
+        /* Top Navigation Bar */
+        .nav-tabs {
+            display: flex;
+            background: var(--bg);
+            border-bottom: 2px solid #eef1f8;
+           
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+        
+        .nav-tabs::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome/Safari */
+        }
+
+        .tab-item {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 6px 8px 6px;
+            cursor: pointer;
+            position: relative; 
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: var(--text-sub);
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .tab-item img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            margin-bottom: 6px;
+        }
+
+        .tab-item span {
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .tab-item.active {
+            color: var(--primary-blue);
+        }
+
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0px;         
+            width: 80%;
+            height: 5px;
+            background-color: var(--primary-blue);
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        /* Content Area */
+        .content-container {
+            padding: 10px;
+            flex: 1;
+            position: relative;
+            min-height: 400px;
+        }
+
+        /* Card Layout Layouts */
+        .cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: opacity 0.3s ease;
+        }
+
+        .card {
+            background: var(--bg);
+            border: 2px solid var(--card-border);
+            border-radius: 15px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(44, 62, 140, 0.02);
+        }
+
+        .card-logo {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+
+        .card-info {
+            flex: 1;
+            padding-right: 65px; /* Leave space for absolute elements */
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+            line-height: 1.4;
+        }
+
+        /* Action elements inside cards */
+        .btn-apply {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background-color: var(--btn-green);
+            color: var(--btn-text-green);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: transform 0.1s ease;
+        }
+
+        .btn-apply:active {
+            transform: scale(0.95);
+        }
+
+        .deadline-tag {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: var(--deadline-bg);
+            color: var(--deadline-text);
+            padding: 2px 8px;
+            border-radius: 15px 0 12px 0;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Loading Animation Layer */
+        .loader-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .three-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .three-dots div {
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .three-dots div:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .three-dots div:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+                opacity: 0.4;
+            }}
+
+
+
+
+  .section-card { margin: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; position: relative; transition: .3s; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .section-title { font-size: 18px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 8px; transition: .3s; margin: 0px 10px 0 10px;}
         .view-more { color: #1d4ed8; font-size: 14px; font-weight: 600; text-decoration: none; }
@@ -143,42 +553,85 @@
         @keyframes ripple-animation { to { transform: scale(3); opacity: 0; } }
         body.dark #greet { color: #4ade80 !important; }
         body.dark #displayName { color: #fb923c !important; }
+    
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="avatar-wrapper">
-            <img id="profileAvatar" src="https://placehold.co/100x100?text=!" alt="Avatar" class="avatar">
-        </div> 
+
+<header class="app-header">
+    <div class="header-left">
         <div class="wallet-balance">
-            <div class="balance-amount">₹ <span id="balance">00</span><a href="#" class="icon-btn" style="border:none;"><i class="fa-solid fa-wallet" style="color:#fff;"></i></a></div>
-            <span class="wallet-label">Wallet Balance</span>
+                <div class="balance-amount">
+                    <i data-lucide="indian-rupee" width="18" stroke-width="3" style="color: #f59e0b;"></i><span style="font-size: 18px; font-weight: 700;" id="balance">00</span> 
+                    
+                   </div>
+                <span class="wallet-label">Wallet Balance</span>
+            </div>  <div class="header-icon"><a href="search.html"><i data-lucide="wallet" width="30" style="color: #000;"></i></a></div>
         </div>
-        <div class="header-actions">
-            <a href="#vip" class="vip-badge">Become VIP</a>
-             <a href="#notifications" class="icon-btn notification-btn">
-                <i class="fa-regular fa-bell"></i><span class="notification-badge">1</span>
-            </a>
+    <div class="header-right">
+        <div class="header-icon"><a href="search.html"><i data-lucide="search" width="30" style="color: #000;"></i></a></div>
+        <div class="header-icon"><a href="http://action_notifications"><i data-lucide="bell-check" width="30" style="color: #000;"></i></a></div>
+        <div class="header-icon"><a href="https://edulivestore.netlify.app/Gift/gifts.html"><i data-lucide="gift" width="30" style="color: #000;"></i></a></div>
+        <div class="header-icon" style="display: none;" id="darkModeToggleBtn"><i data-lucide="moon" width="30" style="color: #000;"></i></div>
     </div>
+</header>
  <div class="header-icon" style="display: none;" id="darkModeToggleBtn"><i data-lucide="moon" width="24" style="color: #ffffff;"></i></div>
    
-    </header>
-
-    <div class="app-container">
-        <div class="user">  
-            <div style="padding:10px;color:#1e3a8a;font-size:20px;">Hey👋 <span style="color:#ea580c;" id="displayName">Student</span></div>
-            <div id="greet" style="padding:0 10px;color:green;font-size:16px;"></div>
+    
+<main class="app-container">
+  
+        <div class="teal-section">
+            <div class="orange-triangle"></div>
+            
+            <div class="logo">
+                <!-- Replace with WBCHSE logo image -->
+                <img id="profileAvatar" src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="West Bengal Council of Higher Secondary Education">
+            </div>
+            
+            <div class="greeting">
+                <h1>Hello <span>👋</span></h1>
+                <div class="name" id="displayName">Aninda Halder</div>
+                <div class="message" id="greet">Good Morning</div>
+                
+                <div class="qr-code">
+                    <!-- Replace with your QR code image -->
+                    <img src="https://cdn-icons-png.flaticon.com/512/3336/3336025.png" alt="QR Code">
+                </div>
+            </div>
         </div>
         
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <a href="hs/sem3/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/Jwzqhnrq/Add-Text-05-30-01-53-00.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+1'"></a>
-                <a href="hs/sem3/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/S4MjgNhH/Add-Text-05-30-02-02-58.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+2'"></a>
-                <a href="hs/sem3/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/nNRQ4q41/Add-Text-05-30-02-08-21.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+3'"></a>
-                <a href="hs/sem1/enroll.html" class="swiper-slide"><img src="https://i.ibb.co/1G8WvZWY/Add-Text-05-30-02-13-26.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+4'"></a>
-            </div>
-            <div class="swiper-pagination"></div>
+        <div class="tricolor-stripes">
+            <div class="stripe orange"></div>
+            <div class="stripe white"><span style="font-size: 6px;display: flex; padding-left: 10px;">TutoGenius E-learning Platform India Pvt. Ltd ♦ Thank You for Choosing Us.♦ App Version 2.0 ♥ 2026-27</span></div>
+            <div class="stripe green"></div>
         </div>
+   <img src="https://i.ibb.co/9MWsC8c/Add-Text-06-25-09-19-06.jpg" style="width: 100%;">
+
+ <div class="swiper">
+        <div class="swiper-wrapper">
+            <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/Jwzqhnrq/Add-Text-05-30-01-53-00.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+1'" alt="Batch 1">        
+            </a>
+            <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/S4MjgNhH/Add-Text-05-30-02-02-58.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+2'" alt="Batch 2">        
+            </a>
+            <a href="hs/sem3/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/nNRQ4q41/Add-Text-05-30-02-08-21.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+3'" alt="Batch 3">        
+            </a>
+            <a href="hs/sem1/enroll.html" target="_blank" class="swiper-slide">
+                <img src="https://i.ibb.co/1G8WvZWY/Add-Text-05-30-02-13-26.jpg" onerror="this.src='https://placehold.co/280x120?text=Batch+4'" alt="Batch 4">         
+            </a>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+
+
+        
+       
+   
+
+
 
         <section class="section-card">
   <div class="section-header">
@@ -228,7 +681,37 @@
                 <a href="#" class="grid-item"><div class="icon-wrapper"><span class="promo-badge badge-gold">Comming Soon</span><img src="https://i.ibb.co/SD5Y47xC/images-7.jpg" style="width:100%;border-radius:100px;"></div><span class="item-label">Science</span></a>
             </div>
         </section>
+ <div class="nav-tabs">
+            <div class="tab-item active" onclick="switchSection('admission', this)">
+                <img src="https://img.icons8.com/external-flat-icons-inmotus-design/64/external-Admission-online-education-flat-icons-inmotus-design.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Admission">
+                <span>Admission 2026</span>
+            </div>
+            <div class="tab-item" onclick="switchSection('govt-jobs', this)">
+                <img src="https://img.icons8.com/color/64/ashoka-chakra.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Govt Jobs">
+                <span>Govt. Jobs</span>
+            </div>
+            <div class="tab-item" onclick="switchSection('private-scholarship', this)">
+                <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-scholarship-university-flaticons-flat-flat-icons-2.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Private Scholarship">
+                <span>Private Scholarship</span>
+            </div>
+            <div class="tab-item" onclick="switchSection('govt-scholarship', this)">
+                <img src="https://img.icons8.com/color/64/india-circular.png" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="Govt. Scholarship">
+                <span>Govt. School</span>
+            </div>
+        </div>
 
+        <div class="content-container">
+            <div class="loader-overlay" id="loadingOverlay">
+                <div class="three-dots">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
+            <div class="cards-list" id="cardsWrapper"></div>
+        </div>
+        
         <div class="new">
             <h1 class="main-heading">Designed for Smart Education</h1>
             <h2 class="sub-heading">in Smart Bharat <img class="flag-icon" src="https://flagcdn.com/w40/in.png"></h2>
@@ -241,7 +724,7 @@
                 <a href="#" class="social-card"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
         </div>
-    </div>
+     </main>
 
     <nav class="app-footer">
         <a href="#" class="nav-item active"><i data-lucide="home" width="24" height="24"></i><span>Home</span></a>
@@ -251,9 +734,101 @@
         <a href="profile" class="nav-item"><i data-lucide="user" width="24" height="24"></i><span>Profile</span></a>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-     // Dark Mode Toggle Switcher logic tied directly to custom header selector button
+  <script id="portalData" type="application/json">
+    {
+        "admission": [
+            {
+                "title": "WBCAP 2026",
+                "desc": "West Bengal Centralized College Admission",
+                "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Emblem_of_West_Bengal.svg",
+                "link": "https://wbcap.in/",
+                "date": "JUN 01"
+            }
+           
+        ],
+        "govt-jobs": [
+           
+            {
+                "title": "Panchyat Recruitment 2026",
+                "desc": "WB Gram Panchyat (10th/12th/Graduate)",
+                "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Emblem_of_West_Bengal.svg",
+                "link": "https://wbprms.in/",
+                "date": "JUN 30"
+            }
+        ],
+        "private-scholarship": [
+            {
+                "title": "Biswabina Scholarship",
+                "desc": "HS Pass 2026 & UG 4year Admission - 80% Marks",
+                "logo": "https://placehold.co/100x100/000000/FFFFFF?text=Biswabina",
+                "link": "https://google.com/search?q=Biswabina+Scholarship",
+                "date": "JUL 31"
+            },
+            {
+                "title": "GP Birla Scholarship",
+                "desc": "HS Pass - 85% Marks",
+                "logo": "https://placehold.co/100x100/ffffff/c62828?text=BIF",
+                "link": "https://gpbilrafoundation.com/",
+                "date": "JUL 15"
+            },
+            {
+                "title": "Vidyadhan Scholarship",
+                "desc": "10th Pass - 60% Marks",
+                "logo": "https://img.icons8.com/fluency/96/comments.png",
+                "link": "https://www.vidyadhan.org/",
+                "date": "JUL 20"
+            },
+            {
+                "title": "Sitaram Jindal Scholarship",
+                "desc": "10th Pass, 12th Pass, UG PG 75% Marks",
+                "logo": "https://placehold.co/100x100/fbc02d/ffffff?text=SJF",
+                "link": "https://www.sitaramjindalfoundation.org/",
+                "date": "MAY 30"
+            }
+        ],
+        "govt-scholarship": [
+            {
+                "title": "SVMCM Scholarship",
+                "desc": "Swami Vivekananda Scholarship: 10th, HS, UG, PG 60%",
+                "logo": "https://svmcm.wbhed.gov.in/images/v_logo.png",
+                "link": "https://svmcm.wbhed.gov.in/",
+                "date": "MAY 31"
+            },
+            {
+                "title": "Chief Minister Scholarship",
+                "desc": "Financial aid offered by West Bengal CM Relief Fund.",
+                "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Emblem_of_West_Bengal.svg",
+                "link": "https://cmrf.wb.gov.in/",
+                "date": "NONE"
+            },
+            {
+                "title": "Oasis Scholarship",
+                "desc": "Scholarship for SC, ST, and OBC students by West Bengal governmen...",
+                "logo": "https://oasis.gov.in/images/logo.png",
+                "link": "https://oasis.gov.in/",
+                "date": "NONE"
+            },
+            {
+                "title": "Aikyashree Scholarship",
+                "desc": "Scholarship for minority students in West Bengal from WBMDFC.",
+                "logo": "https://wbmdfcscholarship.org/images/logo.png",
+                "link": "https://wbmdfcscholarship.org/",
+                "date": "MAY 31"
+            },
+            {
+                "title": "National Scholarship Portal",
+                "desc": "Central govt scholarships for SC/ST/OBC and minority students through ...",
+                "logo": "https://scholarships.gov.in/public/images/NSP_Logo.png",
+                "link": "https://scholarships.gov.in/",
+                "date": "NONE"
+            }
+        ]
+    }
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+ // Dark Mode Toggle Switcher logic tied directly to custom header selector button
         const darkModeToggleBtn = document.getElementById('darkModeToggleBtn');
         const bodyElement = document.body;
 
@@ -278,61 +853,146 @@
             updateToggleIcon(isDarkActive);
         });
    
-
-    // Swiper
-    new Swiper('.swiper', {
-        effect: 'coverflow', grabCursor: true, centeredSlides: true, slidesPerView: 'auto', loop: true,
-        coverflowEffect: { rotate: 0, stretch: -30, depth: 100, modifier: 1, slideShadows: false },
-        autoplay: { delay: 3500, disableOnInteraction: false },
-        pagination: { el: '.swiper-pagination', clickable: true }
-    });
-
+    // Initialize Lucide Icons globally
     lucide.createIcons();
 
-    // Ripple Effect
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.onclick = function(e) {
-            if(!this.getAttribute('href') || this.getAttribute('href') === "#") e.preventDefault();
-            const rect = this.closest('.app-footer').getBoundingClientRect();
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${e.clientX - rect.left - size/2}px`;
-            ripple.style.top = `${e.clientY - rect.top - size/2}px`;
-            this.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 400);
+   // ========== SWIPER LAYOUT CONFIGURATION ==========
+    const swiper = new Swiper('.swiper', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loop: true,
+        coverflowEffect: {
+            rotate: 0,
+            stretch: -30,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+        },
+        autoplay: {
+            delay: 3500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+     // Parse database from script tag element
+        const rawData = document.getElementById('portalData').textContent;
+        const portalDb = JSON.parse(rawData);
+
+        // Core dynamic view controller
+        function switchSection(sectionKey, element) {
+            // Update Active Tab styles
+            document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
+
+            const overlay = document.getElementById('loadingOverlay');
+            const wrapper = document.getElementById('cardsWrapper');
+
+            // Trigger smooth loader
+            overlay.style.display = 'flex';
+            wrapper.style.opacity = '0.2';
+
+            setTimeout(() => {
+                // Fetch target section list data
+                const currentData = portalDb[sectionKey] || [];
+                wrapper.innerHTML = '';
+
+                currentData.forEach(item => {
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'card';
+                    
+                    // Conditionally check if target date is active or blank
+                    const dateHtml = (item.date && item.date !== "NONE") 
+                        ? `<div class="deadline-tag">${item.date}</div>` 
+                        : '';
+
+                    cardElement.innerHTML = `
+                        <img class="card-logo" src="${item.logo}" onerror="this.src='https://placehold.co/100x100?text=!'" style="border-radius: 50px;" alt="logo">
+                        <div class="card-info">
+                            <div class="card-title">${item.title}</div>
+                            <div class="card-desc">${item.desc}</div>
+                        </div>
+                        <a class="btn-apply" href="${item.link}" target="_blank">Apply</a>
+                        ${dateHtml}
+                    `;
+                    wrapper.appendChild(cardElement);
+                });
+
+                // Clear loader smoothly
+                overlay.style.display = 'none';
+                wrapper.style.opacity = '1';
+            }, 450); // Balanced animation speed timeline
         }
-    });
 
-    // Balance & Profile
-    let balance = parseInt(localStorage.getItem('coinBalance') || '0');
-    const updateBalance = val => document.getElementById('balance').textContent = val;
-    const loadBalance = () => {
-        let stored = localStorage.getItem("coinBalance");
-        if(!stored || isNaN(parseInt(stored))) localStorage.setItem("coinBalance", "0");
-        balance = parseInt(localStorage.getItem("coinBalance"));
-        updateBalance(balance);
-    };
-    const loadProfile = () => {
-        let name = localStorage.getItem("student_display_name") || "Student";
-        if(!localStorage.getItem("student_display_name")) localStorage.setItem("student_display_name", name);
-        document.getElementById("displayName").innerText = name;
-        let pic = localStorage.getItem("profile_image_url") || "https://placehold.co/100x100?text=!";
-        if(!localStorage.getItem("profile_image_url")) localStorage.setItem("profile_image_url", pic);
-        document.getElementById("profileAvatar").src = pic;
-    };
-    
-    // Greeting
-    const setGreeting = () => {
-        const h = new Date().getHours();
-        const greetings = [{t:4,s:'Good Night 🌝'},{t:8,s:'Good Morning 🌞'},{t:10,s:'Tea Time ☕'},{t:12,s:'Try to Solve Quiz'},{t:14,s:'Good Noon 🤓'},{t:16,s:'Good Afternoon'},{t:19,s:'Revision Time'},{t:22,s:'Keep Learning'},{t:25,s:'Good Night 🌝'}];
-        document.getElementById('greet').innerText = greetings.find(g => h < g.t).s;
-    };
+        // Initialize portal with default view
+        document.addEventListener('DOMContentLoaded', () => {
+            const defaultTab = document.querySelector('.tab-item');
+            switchSection('admission', defaultTab);
+        });
 
-    window.addEventListener('DOMContentLoaded', () => {
-        loadBalance(); loadProfile(); setGreeting();
-    });
-    </script>
+
+
+  // Get and display balance from localStorage
+  let balance = parseInt(localStorage.getItem('coinBalance') || '0');
+  document.getElementById('balance').textContent = balance;
+
+  // Use this function anywhere in your other scripts to add coins
+  function addCoins(amount) {
+    balance += amount;
+    localStorage.setItem('coinBalance', balance);
+    document.getElementById('balance').textContent = balance;
+  }
+   // Coin & Profile
+        let currentBalance = 0;
+        function loadBalance() {
+            let stored = localStorage.getItem("reward_coins");
+            if(stored === null || isNaN(parseInt(stored))) { currentBalance = 0; localStorage.setItem("reward_coins", "0"); }
+            else { currentBalance = parseInt(stored, 10); }
+            const balanceSpan = document.getElementById("balanceAmount");
+            if(balanceSpan) balanceSpan.innerText = currentBalance;
+        }
+        function loadProfileData() {
+            let savedName = localStorage.getItem("student_display_name");
+            if(!savedName || savedName.trim() === "") { savedName = "TutoPulse"; localStorage.setItem("student_display_name", savedName); }
+            const nameEl = document.getElementById("displayName");
+            if(nameEl) nameEl.innerText = savedName;
+            let savedPic = localStorage.getItem("profile_image_url");
+            if(!savedPic || savedPic === "") { savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; localStorage.setItem("profile_image_url", savedPic); }
+            const avatar = document.getElementById("profileAvatar");
+            if(avatar) avatar.src = savedPic;
+        }
+        function ensureDataIntegrity() {
+            if(localStorage.getItem("reward_coins") === null) localStorage.setItem("reward_coins", "0");
+            if(localStorage.getItem("student_display_name") === null) localStorage.setItem("student_display_name", "TutoPulse");
+            if(localStorage.getItem("profile_image_url") === null) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
+        }
+        ensureDataIntegrity();
+        loadBalance();
+        loadProfileData();  const hour = new Date().getHours();
+
+const GREETINGS_CONFIG = [
+  { upTo: 3,  text: 'Good Night 🌝' },
+  { upTo: 7, text: 'Good Morning 🌞' },
+ { upTo: 8, text: 'Tea Time ☕' },
+  { upTo: 11, text: 'Try to Solve Quiz' },
+  { upTo: 12, text: 'A Small Break 🤓' },
+  { upTo: 14, text: 'Good Noon' },
+  { upTo: 16, text: 'Good Afternoon' },
+  { upTo: 18, text: 'Revision Time' },
+  { upTo: 20, text: 'Make Your Best' },
+  { upTo: 22, text: 'Keep Learning' },
+  { upTo: 24, text: 'Good Night 🌝' }
+];
+
+// Find the first slot where the current hour is less than the threshold
+const greeting = GREETINGS_CONFIG.find(slot => hour < slot.upTo).text;  document.getElementById('greet').innerText = greeting;
+        lucide.createIcons();
+        
+
+</script>
 </body>
 </html>
