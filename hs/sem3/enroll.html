@@ -12,7 +12,6 @@
     
     <style>
  * {
-      
       box-sizing: border-box;
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -64,7 +63,6 @@
             --shimmer-mid: #f1f5f9;
         }
 
-        /* আপনার নতুন লজিক অনুযায়ী body.dark দিয়ে ডার্ক মোড স্টাইল */
         body.dark {
             --text-dark: #f1f5f9;
             --text-muted: #94a3b8;
@@ -93,7 +91,6 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* App container */
         .app-container {
             position: fixed;
             top: 0px;
@@ -106,14 +103,13 @@
             -ms-overflow-style: none;
         }
 
-        /* FIXED HEADER POSITIONING */
         .top-navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 50px;
-            background: #905AF8;
+            background: #07789B;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -134,7 +130,7 @@
             justify-content: center;
             border-radius: 50%;
             transition: var(--transition-smooth);
-            font-size: 20px; /* ইমোজির সাইজ ঠিক রাখার জন্য */
+            font-size: 20px;
         }
 
         .nav-btn svg {
@@ -146,7 +142,6 @@
             background-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* Profile & Balance Ribbon Widget */
         .user-ribbon {
             display: flex;
             justify-content: space-between;
@@ -199,13 +194,11 @@
             height: 14px;
         }
 
-        /* Main Content Scroll wrapper */
         .content-scroll {
             padding: 60px 20px 30px 20px; 
             flex: 1;
         }
 
-        /* Image Display & Shimmer Frame */
         .media-frame {
             width: 100%;
             border-radius: var(--border-radius);
@@ -230,7 +223,6 @@
             opacity: 1;
         }
 
-        /* Absolute Skeleton Overlay */
         .skeleton-shimmer {
             position: absolute;
             top: 0;
@@ -252,7 +244,6 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Course Identity Typography */
         .course-title {
             font-size: 20px;
             font-weight: 700;
@@ -262,7 +253,6 @@
             line-height: 1.4;
         }
 
-        /* Course Description */
         .course-description {
             font-size: 15px;
             color: var(--text-muted);
@@ -270,7 +260,6 @@
             font-weight: 400;
         }
 
-        /* Author Metadata Block */
         .author-section {
             margin-bottom: 20px;
             display: flex;
@@ -292,10 +281,8 @@
             font-weight: 700;
             color: #38bdf8; 
             margin-left: 5px; 
-            
         }
 
-        /* Structured Specification list items */
         .spec-list {
             display: flex;
             flex-direction: column;
@@ -318,7 +305,6 @@
             color: var(--text-muted);
         }
 
-        /* FIXED FOOTER BOTTOM ACTION DOCK */
         .action-dock {
             position: fixed;
             bottom: 0;
@@ -377,7 +363,6 @@
             opacity: 0.9;
         }
 
-        /* 3-Dot Processing Loading Animation */
         .loader-dots-element {
             display: none;
             align-items: center;
@@ -406,7 +391,6 @@
             40% { transform: scale(1.0); }
         }
 
-        /* Custom Smart Modals Window */
         .modal-overlay {
             position: fixed; 
             inset: 0;
@@ -476,7 +460,6 @@
             height: 16px;
         }
 
-        /* Options Selector Card Items */
         .unlock-option-card {
             border: 2px solid var(--shimmer-start);
             border-radius: 14px;
@@ -526,7 +509,6 @@
             color: var(--text-muted);
         }
 
-        /* Workflow Panes */
         .workflow-pane {
             display: none;
         }
@@ -574,7 +556,6 @@
             position: relative;
         }
 
-        /* Custom Toast Notification Panel */
         .toast-notification-hub {
             position: fixed; 
             top: 80px;
@@ -627,7 +608,7 @@
                 </div>
                 <div class="coin-balance">
                     <i data-lucide="badge-indian-rupee"></i>
-                    <span id="balanceAmount">0</span>
+                    <span id="balance">0</span>
                 </div>
             </div>
  <button class="nav-btn" id="darkToggle" aria-label="Toggle Dark Mode" style="display: none;">🌙</button>
@@ -683,7 +664,7 @@
         </main>
 
         <footer class="action-dock">
-            <div class="badge-free">Free</div>
+            <div class="badge-free">₹99</div>
             <button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()">
                 <span id="buttonTextLabel">Enroll Now</span>
                 <div class="loader-dots-element" id="dockButtonLoader">
@@ -709,7 +690,7 @@
                         </div>
                         <div class="option-details">
                             <div class="option-title">Unlock with Rupee</div>
-                            <div class="option-sub">Requires 0 Reward Rupee</div>
+                            <div class="option-sub">Requires 99 Rupee</div>
                         </div>
                         <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
                     </div>
@@ -735,7 +716,7 @@
                     <button class="btn-submit-action" onclick="executeCoinDeductions()">
                         <span id="coinActionText">Confirm & Unlock</span>
                         <div class="loader-dots-element" id="coinPaneLoader">
-                            <span></span><span></span><span></span>
+                            <span></span><span></span>
                         </div>
                     </button>
                 </div>
@@ -747,7 +728,7 @@
                     <button class="btn-submit-action" onclick="executePasswordVerification()">
                         <span id="passActionText">Verify Secret Password</span>
                         <div class="loader-dots-element" id="passPaneLoader">
-                            <span></span><span></span><span></span>
+                            <span></span><span></span>
                         </div>
                     </button>
                 </div>
@@ -758,26 +739,26 @@
     </div>
 
     <script>
-function goBack() {
+        function goBack() {
             window.history.back();
         }
 
-        const COURSE_ID = "c12_sem3"; 
+        const COURSE_ID = "c12_sem378"; 
         const REDIRECT_URL = "subject.html";
-        const REQUIRED_COINS_COST = 0; 
+        const REQUIRED_COINS_COST = 99; 
         const SECRET_MASTER_PASSWORD = "123"; 
 
         let currentBalance = 0;
 
         function loadBalance() {
-            let stored = localStorage.getItem("reward_coins");
+            let stored = localStorage.getItem("coinBalance");
             if(stored === null || isNaN(parseInt(stored))) { 
                 currentBalance = 0; 
-                localStorage.setItem("reward_coins", "0"); 
+                localStorage.setItem("coinBalance", "0"); 
             } else { 
                 currentBalance = parseInt(stored, 10); 
             }
-            const balanceSpan = document.getElementById("balanceAmount");
+            const balanceSpan = document.getElementById("balance");
             if(balanceSpan) balanceSpan.innerText = currentBalance;
         }
 
@@ -800,31 +781,32 @@ function goBack() {
         }
 
         function ensureDataIntegrity() {
-            if(localStorage.getItem("reward_coins") === null) localStorage.setItem("reward_coins", "0");
+            if(localStorage.getItem("coinBalance") === null) localStorage.setItem("coinBalance", "0");
             if(localStorage.getItem("student_display_name") === null) localStorage.setItem("student_display_name", "TutoPulse");
             if(localStorage.getItem("profile_image_url") === null) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
         }
 
-        // Init System Runtime Hooks
+        // Global function to add coins - use this in other scripts
+        function addCoins(amount) {
+            currentBalance += amount;
+            localStorage.setItem('coinBalance', currentBalance);
+            document.getElementById('balance').textContent = currentBalance;
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
-            // আপনার ডার্ক মোড কোড চালুকরণ
             initDarkModePreference();
-            
             ensureDataIntegrity();
             loadBalance();
             loadProfileData();
             initializeViewLifecycle();
             evaluateEnrollmentLockState();
-            
             lucide.createIcons();
         });
 
-        // ========== আপনার পাঠানো ডার্ক মোড টগল লজিক (ইন্টিগ্রেটেড) ==========
         const darkToggle = document.getElementById("darkToggle");
         const body = document.body;
         
         function initDarkModePreference() {
-            // Load saved preference or default to light (false)
             if (localStorage.getItem("darkMode") === "true") {
                 body.classList.add("dark");
                 darkToggle.textContent = "☀️";
@@ -834,16 +816,13 @@ function goBack() {
             }
         }
         
-        // Toggle event listener
         darkToggle.addEventListener("click", () => {
             body.classList.toggle("dark");
             const isDark = body.classList.contains("dark");
             localStorage.setItem("darkMode", isDark);
             darkToggle.textContent = isDark ? "☀️" : "🌙";
         });
-        // ====================================================================
 
-        // Image skeleton loading states setup
         function initializeViewLifecycle() {
             const bannerFrame = document.getElementById("bannerFrame");
             const courseImg = document.getElementById("courseImage");
@@ -860,7 +839,6 @@ function goBack() {
             }
         }
 
-        // --- Custom App Notifications Engine ---
         function dispatchToast(textAlert, mode = "error") {
             const hub = document.getElementById("toastHub");
             const toast = document.createElement("div");
@@ -880,7 +858,6 @@ function goBack() {
             }, 3000);
         }
 
-        // --- Enrollment Lock state config ---
         function evaluateEnrollmentLockState() {
             const actionBtn = document.getElementById("masterActionButton");
             const textLabel = document.getElementById("buttonTextLabel");
@@ -968,8 +945,8 @@ function goBack() {
 
             setTimeout(() => {
                 currentBalance -= REQUIRED_COINS_COST;
-                localStorage.setItem("reward_coins", currentBalance.toString()); 
-                document.getElementById("balanceAmount").innerText = currentBalance;
+                localStorage.setItem("coinBalance", currentBalance.toString()); 
+                document.getElementById("balance").innerText = currentBalance;
                 
                 commitSuccessfulUnlock();
                 
