@@ -10,6 +10,8 @@
     --blue: #3b5bdb;
     --teal: #1f8a7a;
     --cream: #fdfae7;
+    --red: #e03131;
+    --green: #2e7d32;
   }
   body { 
     font-family: system-ui, sans-serif; 
@@ -26,7 +28,7 @@
     width: 100%;
     text-align: center;
   }
-  h1 { color: var(--blue); margin-bottom: 8px; }
+  h1 { color: var(--blue); margin-bottom: 8px; font-size: 24px; }
   p { color: #495057; margin-bottom: 20px; }
   .price { font-size: 32px; font-weight: 700; color: var(--teal); margin-bottom: 20px; }
   .btn {
@@ -39,13 +41,36 @@
     cursor: pointer;
     background: var(--blue);
     color: #fff;
+    transition: 0.2s;
   }
+  .btn:hover { opacity: 0.9; }
   .btn:disabled { background: #adb5bd; cursor: not-allowed; }
-  .btn.go { background: #2e7d32; }
-  .note { font-size: 12px; color: #e03131; margin-top: 12px; }
+  .btn.go { background: var(--green); }
+  .note { font-size: 12px; color: var(--red); margin-top: 12px; }
+
+  /* Toast Popup */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--green);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 200;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.error { background: var(--red); }
 </style>
 </head>
 <body>
+
+<div class="toast" id="toast"></div>
 
 <div class="card">
   <h1>Unlock Premium Course</h1>
@@ -61,6 +86,14 @@
 <script>
 const COURSE_KEY = 'tutoGenius_courseUnlocked_v2';
 const COURSE_LINK = "https://www.tutogenius.com/course/premium"; // <-- change this to your course link
+
+// Toast function
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast ' + type + ' show';
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
 
 // Check if already paid
 window.onload = () => {
@@ -81,7 +114,7 @@ function goToCourse() {
 // Razorpay Payment
 document.getElementById('payBtn').onclick = function(e) {
   var options = {
-      "key": "rzp_live_TB1pPShucn7fJw", // USE TEST KEY HERE. Replace with server-generated order
+      "key": "rzp_live_TB2Tex3fIBoKuX", // 1. Use rzp_test_xxx for testing. 2. For live, get order_id from backend
       "amount": 1000, // 1000 paise = ₹10
       "currency": "INR",
       "name": "TutoGenius",
@@ -89,17 +122,22 @@ document.getElementById('payBtn').onclick = function(e) {
       "image": "https://i.imgur.com/4M34hi2.jpg", // your logo
       "handler": function (response){
           // Payment Success
-          // TODO: Send response.razorpay_payment_id to your server to verify
           localStorage.setItem(COURSE_KEY, 'true'); // Save that user paid
-          alert("Payment Successful! Course Unlocked.");
+          showToast("Payment Successful! Course Unlocked.");
           showGoButton();
       },
       "prefill": {
           "name": "",
-          "email": ""
+          "email": "",
+          "contact": ""
       },
       "theme": {
           "color": "#3b5bdb"
+      },
+      "modal": {
+        "ondismiss": function(){
+            showToast("Payment Cancelled", "error");
+        }
       }
   };
   var rzp = new Razorpay(options);
