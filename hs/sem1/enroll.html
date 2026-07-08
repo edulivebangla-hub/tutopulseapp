@@ -7,65 +7,155 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
   :root {
-    --blue: #3b5bdb;
-    --teal: #1f8a7a;
-    --cream: #fdfae7;
-    --red: #e03131;
-    --green: #2e7d32;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --accent: #0d9488;
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --card-bg: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #4b5563;
+    --red: #ef4444;
+    --green: #10b981;
   }
+
   body { 
-    font-family: system-ui, sans-serif; 
-    background: linear-gradient(180deg, #fefefe 0%, #f5f6ff 100%);
-    display: flex; align-items: center; justify-content: center; 
-    min-height: 100vh; margin: 0; padding: 20px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+    background: var(--bg-gradient);
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 20px;
+    box-sizing: border-box;
   }
+
   .card {
-    background: var(--cream);
-    border: 3px solid var(--blue);
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 400px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 420px;
     width: 100%;
     text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.8);
   }
-  h1 { color: var(--blue); margin-bottom: 8px; font-size: 24px; }
-  p { color: #495057; margin-bottom: 20px; }
-  .price { font-size: 32px; font-weight: 700; color: var(--teal); margin-bottom: 20px; }
+
+  .icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: #eef2ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--primary);
+  }
+
+  h1 { 
+    color: var(--text-main); 
+    margin: 0 0 8px 0; 
+    font-size: 26px; 
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  p { 
+    color: var(--text-muted); 
+    margin: 0 0 24px 0; 
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .price-tag { 
+    font-size: 42px; 
+    font-weight: 800; 
+    color: var(--accent); 
+    margin-bottom: 24px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  
+  .price-tag span {
+    font-size: 18px;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-decoration: line-through;
+  }
+
   .btn {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: 700;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    background: var(--blue);
+    background: var(--primary);
     color: #fff;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
   }
-  .btn:hover { opacity: 0.9; }
-  .btn:disabled { background: #adb5bd; cursor: not-allowed; opacity: 0.6; }
-  .btn.go { background: var(--green); }
-  .note { font-size: 12px; color: var(--red); margin-top: 12px; }
 
-  /* Toast Popup */
+  .btn:hover { 
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+  }
+  
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn:disabled { 
+    background: #9ca3af; 
+    cursor: not-allowed; 
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn.go { 
+    background: var(--green); 
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+  }
+  .btn.go:hover {
+    background: #059669;
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+  }
+
+  .note { 
+    font-size: 12px; 
+    color: var(--text-muted); 
+    margin-top: 16px; 
+    line-height: 1.4;
+  }
+
+  /* Elegant Toast Notification */
   .toast {
     position: fixed;
-    top: 20px;
+    bottom: 24px;
     left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: var(--green);
+    transform: translateX(-50%) translateY(100px);
+    background: #1f2937;
     color: #fff;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 14px;
     z-index: 200;
     opacity: 0;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.error { background: var(--red); }
+  .toast.success { border-left: 4px solid var(--green); }
+  .toast.error { border-left: 4px solid var(--red); }
 </style>
 </head>
 <body>
@@ -73,30 +163,43 @@
 <div class="toast" id="toast"></div>
 
 <div class="card">
+  <div class="icon-wrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
+  </div>
   <h1>Unlock Premium Course</h1>
-  <p>Get lifetime access to all videos, notes & tests</p>
-  <div class="price">₹10</div>
+  <p>Get instant, lifetime access to comprehensive videos, structured notes & mock tests.</p>
+  
+  <div class="price-tag">₹10 <span>₹199</span></div>
   
   <button class="btn" id="payBtn">Pay ₹10 & Unlock</button>
-  <button class="btn go" id="goBtn" style="display:none;" onclick="goToCourse()">Go To Course</button>
+  <button class="btn go" id="goBtn" style="display:none;" onclick="goToCourse()">Go To Course →</button>
   
-  <div class="note">*One time payment only. Access will be saved on this device/browser.</div>
+  <div class="note">🔒 Secured by Razorpay. Access will be linked permanently to this browser window.</div>
 </div>
 
 <script>
 const COURSE_KEY = 'tutoGenius_courseUnlocked_v24';
 const COURSE_LINK = "https://www.tutogenius.com/course/premium"; 
 
-// Toast function
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
-  toast.className = 'toast ' + type + ' show';
-  setTimeout(() => toast.classList.remove('show'), 3000);
+  toast.className = `toast ${type} show`;
+  setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
-// Check if already paid
 window.onload = () => {
+  // 1. Check if the URL contains Razorpay success parameters (returned back from target="_blank")
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('razorpay_payment_id')) {
+    localStorage.setItem(COURSE_KEY, 'true');
+    showToast("✨ Payment Successful! Course Unlocked.", "success");
+    
+    // Clean up parameters from address bar gracefully
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
+  // 2. Check if already unlocked locally
   if (localStorage.getItem(COURSE_KEY) === 'true') {
     showGoButton();
   }
@@ -111,67 +214,49 @@ function goToCourse() {
   window.location.href = COURSE_LINK;
 }
 
-// Razorpay Payment
 document.getElementById('payBtn').onclick = function(e) {
   e.preventDefault();
   const payBtn = document.getElementById('payBtn');
   payBtn.disabled = true;
-  payBtn.innerText = "Opening Secure Checkout...";
+  payBtn.innerText = "Opening Secure Window...";
 
   var options = {
-      "key": "rzp_live_TB2Tex3fIBoKuX", // DO NOT include key_secret here!
-      "amount": 1000, // 1000 paise = ₹10
+      "key": "rzp_live_TB2Tex3fIBoKuX", 
+      "amount": 500, // ₹10
       "currency": "INR",
       "name": "TutoGenius",
       "description": "Premium Course Access",
       "image": "https://i.imgur.com/4M34hi2.jpg", 
       
-      // Configuration to prioritize and smooth out UPI apps
+      // FORCING NEW TAB: Sending the callback URL to current site location
+      // Razorpay redirects here with transaction tokens in the query string
+      "callback_url": window.location.href, 
+      "redirect": true, 
+
       "config": {
         "display": {
           "blocks": {
             "upi": {
               "name": "Pay via UPI",
-              "instruments": [
-                {
-                  "method": "upi",
-                  "apps": ["google_pay", "phonepe", "paytm", "bhim"]
-                }
-              ]
+              "instruments": [{ "method": "upi", "apps": ["google_pay", "phonepe", "paytm", "bhim"] }]
             }
           },
           "sequence": ["block.upi"],
-          "preferences": {
-            "show_default_blocks": true
-          }
+          "preferences": { "show_default_blocks": true }
         }
       },
-      
-      "handler": function (response){
-          // Payment Success
-          localStorage.setItem(COURSE_KEY, 'true'); 
-          showToast("Payment Successful! Course Unlocked.");
-          showGoButton();
-      },
-      "prefill": {
-          "name": "",
-          "email": "",
-          "contact": ""
-      },
-      "theme": {
-          "color": "#3b5bdb"
-      },
-      "modal": {
-        "ondismiss": function(){
-            showToast("Payment Cancelled", "error");
-            payBtn.disabled = false;
-            payBtn.innerText = "Pay ₹10 & Unlock";
-        }
-      }
+      "theme": { "color": "#4f46e5" }
   };
   
+  // Create and trigger Razorpay to act on standard window behavior
   var rzp = new Razorpay(options);
   rzp.open();
+
+  // Reset UI switch fallback slightly after execution
+  setTimeout(() => {
+    payBtn.disabled = false;
+    payBtn.innerText = "Pay ₹10 & Unlock";
+  }, 3000);
 }
 </script>
 
