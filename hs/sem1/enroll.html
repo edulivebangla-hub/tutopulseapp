@@ -60,7 +60,7 @@
 
 <script>
 const COURSE_KEY = 'tutoGenius_courseUnlocked_v1';
-const COURSE_LINK = "subject.html"; // <-- change this to your course link
+const COURSE_LINK = "https://www.tutogenius.com/course/premium"; // <-- change this to your course link
 
 // Check if already paid
 window.onload = () => {
@@ -82,7 +82,7 @@ function goToCourse() {
 document.getElementById('payBtn').onclick = function(e) {
   var options = {
       "key": "rzp_live_TB1pPShucn7fJw", // USE TEST KEY HERE. Replace with server-generated order
-      "amount": 500, // 1000 paise = ₹10
+      "amount": 1000, // 1000 paise = ₹10
       "currency": "INR",
       "name": "TutoGenius",
       "description": "Premium Course Access",
