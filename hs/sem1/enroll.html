@@ -7,155 +7,81 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
   :root {
-    --primary: #4f46e5;
-    --primary-hover: #4338ca;
-    --accent: #0d9488;
-    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    --card-bg: #ffffff;
-    --text-main: #1f2937;
-    --text-muted: #4b5563;
-    --red: #ef4444;
-    --green: #10b981;
+    --blue: #4f46e5;
+    --blue-dark: #4338ca;
+    --teal: #0d9488;
+    --cream: #ffffff;
+    --red: #dc2626;
+    --green: #16a34a;
+    --gray: #6b7280;
   }
-
   body { 
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-    background: var(--bg-gradient);
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    min-height: 100vh; 
-    margin: 0; 
-    padding: 20px;
-    box-sizing: border-box;
+    font-family: system-ui, sans-serif; 
+    background: linear-gradient(135deg, #e0e7ff 0%, #d1fae5 100%);
+    display: flex; align-items: center; justify-content: center; 
+    min-height: 100vh; margin: 0; padding: 20px;
   }
-
   .card {
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 32px;
-    max-width: 420px;
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 30px 24px;
+    max-width: 400px;
     width: 100%;
     text-align: center;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
   }
-
-  .icon-wrapper {
-    width: 64px;
-    height: 64px;
-    background: #eef2ff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    color: var(--primary);
-  }
-
-  h1 { 
-    color: var(--text-main); 
-    margin: 0 0 8px 0; 
-    font-size: 26px; 
-    font-weight: 800;
-    letter-spacing: -0.5px;
-  }
-
-  p { 
-    color: var(--text-muted); 
-    margin: 0 0 24px 0; 
-    font-size: 15px;
-    line-height: 1.5;
-  }
-
-  .price-tag { 
-    font-size: 42px; 
-    font-weight: 800; 
-    color: var(--accent); 
-    margin-bottom: 24px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-  }
+  h1 { color: #111827; margin: 0 0 8px; font-size: 24px; font-weight: 800; }
+  p { color: var(--gray); margin-bottom: 20px; font-size: 14px; }
+  .price { font-size: 42px; font-weight: 900; color: var(--teal); margin-bottom: 20px; }
+  .price span { font-size: 14px; color: var(--gray); }
   
-  .price-tag span {
-    font-size: 18px;
-    color: var(--text-muted);
-    font-weight: 400;
-    text-decoration: line-through;
+  .upi-apps {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .upi-apps img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    padding: 6px;
   }
 
   .btn {
     width: 100%;
-    padding: 16px;
+    padding: 15px;
     border: none;
     border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 800;
     cursor: pointer;
-    background: var(--primary);
+    background: var(--blue);
     color: #fff;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+    transition: 0.2s;
   }
+  .btn:hover { background: var(--blue-dark); }
+  .btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .btn.go { background: var(--green); }
+  .note { font-size: 12px; color: var(--gray); margin-top: 12px; }
 
-  .btn:hover { 
-    background: var(--primary-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-  }
-  
-  .btn:active {
-    transform: translateY(1px);
-  }
-
-  .btn:disabled { 
-    background: #9ca3af; 
-    cursor: not-allowed; 
-    transform: none;
-    box-shadow: none;
-  }
-
-  .btn.go { 
-    background: var(--green); 
-    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
-  }
-  .btn.go:hover {
-    background: #059669;
-    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
-  }
-
-  .note { 
-    font-size: 12px; 
-    color: var(--text-muted); 
-    margin-top: 16px; 
-    line-height: 1.4;
-  }
-
-  /* Elegant Toast Notification */
   .toast {
     position: fixed;
-    bottom: 24px;
+    top: 20px;
     left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: #1f2937;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--green);
     color: #fff;
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-weight: 500;
-    font-size: 14px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 700;
     z-index: 200;
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    transition: all 0.3s ease;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.success { border-left: 4px solid var(--green); }
-  .toast.error { border-left: 4px solid var(--red); }
+  .toast.error { background: var(--red); }
 </style>
 </head>
 <body>
@@ -163,43 +89,31 @@
 <div class="toast" id="toast"></div>
 
 <div class="card">
-  <div class="icon-wrapper">
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
-  </div>
   <h1>Unlock Premium Course</h1>
-  <p>Get instant, lifetime access to comprehensive videos, structured notes & mock tests.</p>
+  <p>Get lifetime access to all videos, notes & tests</p>
+  <div class="price">₹10 <span>one time</span></div>
   
-  <div class="price-tag">₹10 <span>₹199</span></div>
+
   
   <button class="btn" id="payBtn">Pay ₹10 & Unlock</button>
-  <button class="btn go" id="goBtn" style="display:none;" onclick="goToCourse()">Go To Course →</button>
+  <button class="btn go" id="goBtn" style="display:none;" onclick="goToCourse()">Go To Course</button>
   
-  <div class="note">🔒 Secured by Razorpay. Access will be linked permanently to this browser window.</div>
+  <div class="note">*Secure payment by Razorpay</div>
 </div>
 
 <script>
-const COURSE_KEY = 'tutoGenius_courseUnlocked_v24';
+const COURSE_KEY = 'tutoGenius_courseUnlocked_v26';
 const COURSE_LINK = "https://www.tutogenius.com/course/premium"; 
+const RAZORPAY_KEY = "rzp_live_TB2Tex3fIBoKuX"; // Use rzp_test_xxx for testing
 
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
-  toast.className = `toast ${type} show`;
-  setTimeout(() => toast.classList.remove('show'), 4000);
+  toast.className = 'toast ' + type + ' show';
+  setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 window.onload = () => {
-  // 1. Check if the URL contains Razorpay success parameters (returned back from target="_blank")
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('razorpay_payment_id')) {
-    localStorage.setItem(COURSE_KEY, 'true');
-    showToast("✨ Payment Successful! Course Unlocked.", "success");
-    
-    // Clean up parameters from address bar gracefully
-    window.history.replaceState({}, document.title, window.location.pathname);
-  }
-
-  // 2. Check if already unlocked locally
   if (localStorage.getItem(COURSE_KEY) === 'true') {
     showGoButton();
   }
@@ -216,47 +130,54 @@ function goToCourse() {
 
 document.getElementById('payBtn').onclick = function(e) {
   e.preventDefault();
-  const payBtn = document.getElementById('payBtn');
-  payBtn.disabled = true;
-  payBtn.innerText = "Opening Secure Window...";
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.innerText = "Loading...";
 
   var options = {
-      "key": "rzp_live_TB2Tex3fIBoKuX", 
-      "amount": 500, // ₹10
+      "key": RAZORPAY_KEY,
+      "amount": 1000, // 1000 paise = ₹10
       "currency": "INR",
       "name": "TutoGenius",
       "description": "Premium Course Access",
       "image": "https://i.imgur.com/4M34hi2.jpg", 
       
-      // FORCING NEW TAB: Sending the callback URL to current site location
-      // Razorpay redirects here with transaction tokens in the query string
-      "callback_url": window.location.href, 
-      "redirect": true, 
-
-      "config": {
-        "display": {
-          "blocks": {
-            "upi": {
-              "name": "Pay via UPI",
-              "instruments": [{ "method": "upi", "apps": ["google_pay", "phonepe", "paytm", "bhim"] }]
-            }
-          },
-          "sequence": ["block.upi"],
-          "preferences": { "show_default_blocks": true }
-        }
+      // THIS IS THE FIX: Force UPI first and enable intent flow
+      "method": "upi",
+      
+      "handler": function (response){
+          localStorage.setItem(COURSE_KEY, 'true'); 
+          showToast("Payment Successful! Course Unlocked.");
+          showGoButton();
+          btn.disabled = false;
+          btn.innerText = "Pay ₹10 & Unlock";
       },
-      "theme": { "color": "#4f46e5" }
+      "prefill": {
+          "name": "",
+          "email": "",
+          "contact": ""
+      },
+      "theme": {
+          "color": "#4f46e5"
+      },
+      "modal": {
+        "ondismiss": function(){
+            showToast("Payment Cancelled", "error");
+            btn.disabled = false;
+            btn.innerText = "Pay ₹10 & Unlock";
+        }
+      }
   };
   
-  // Create and trigger Razorpay to act on standard window behavior
   var rzp = new Razorpay(options);
+  
+  rzp.on('payment.failed', function (response){
+        showToast("Payment Failed: " + response.error.description, "error");
+        btn.disabled = false;
+        btn.innerText = "Pay ₹10 & Unlock";
+  });
+  
   rzp.open();
-
-  // Reset UI switch fallback slightly after execution
-  setTimeout(() => {
-    payBtn.disabled = false;
-    payBtn.innerText = "Pay ₹10 & Unlock";
-  }, 3000);
 }
 </script>
 
