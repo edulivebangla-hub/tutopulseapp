@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+   <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', sans-serif}
+body{background:#fff;color:#111;}
+   :root {
+            --card-width: 250px;
+            --blue-accent: #0033ad;
+        }
+
+/* SEARCH BAR */
+.search-btn{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:10px 18px;border:1.5px solid #C9CDFF;
+  border-radius:30px;background:#fff;text-decoration:none;color:#6b7280;
+  font:500 15px 'Segoe UI';margin-bottom:16px
+}
+.search-btn i{width:20px;height:20px;color:#111}
+
+/* CHIPS */
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.chip{
+  padding:9px 16px;border:1.5px solid #C9CDFF;border-radius:20px;
+  background:#fff;font:600 13px 'Segoe UI';color:#111;text-decoration:none;white-space:nowrap
+}
+.chip:active{background:#f3f4f6}
+
+/* HEADING */
+.heading{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.bar{width:4px;height:20px;background:#fbbf24;border-radius:4px}
+.heading h2{font:800 17px 'Segoe UI'}
+.heading h2 span{color:#2563eb}
+
+/* HORIZONTAL CARDS */
+.card-wrap{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.card-wrap::-webkit-scrollbar{display:none}
+.card{
+  min-width:320px;border-radius:18px;overflow:hidden;position:relative;
+  background:#0b1a3a;color:#fff;text-decoration:none;scroll-snap-align:start
+}
+.card img.bg{width:100%;height:200px;object-fit:cover;display:block}
+.card-logo{position:absolute;top:12px;left:12px;width:40px;height:40px;border-radius:50%;background:#fff;padding:4px}
+.card-tag{
+  position:absolute;top:12px;right:12px;background:#fff;color:#111;
+  display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:20px;
+  font:700 11px 'Segoe UI'
+}
+.card-tag img{width:16px;height:16px}
+.card-text{position:absolute;bottom:50px;left:12px;right:12px}
+.card-text .bn{font:700 14px 'Segoe UI';margin-bottom:4px}
+.card-text .en{font:600 16px 'Segoe UI'}
+.card-text .sub{font:400 12px 'Segoe UI';opacity:.9;margin-top:4px}
+.join-btn{
+  position:absolute;bottom:12px;right:12px;background:#2563eb;color:#fff;
+  padding:8px 14px;border-radius:20px;font:700 13px 'Segoe UI';
+  display:flex;align-items:center;gap:4px
+}
+.join-btn i{width:14px;height:14px}
+
+/* LIST ITEMS */
+.list{margin-top:8px}
+.list-item{
+  display:flex;align-items:center;gap:12px;padding:14px 0;
+  border-bottom:1px solid #C9CDFF;text-decoration:none;color:#111
+}
+.list-item:last-child{border:none}
+.list-item .icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.list-item .icon img{width:40px;height:40px;border-radius:50%}
+.list-item .icon.a{background:#fef3c7}
+.list-item span{flex:1;font:600 15px 'Segoe UI'}
+.list-item i{width:18px;height:18px;color:#9ca3af}
+
+
+/* HEADER */
+.header{
+    position: fixed; top: 0; left: 0; width: 100%; height: 50px; background: #0555E8;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+    z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* APPLICATION CONTAINER MAIN */
+.app-container {
+    position: fixed; top: 50px; bottom: 65px; width: 100%; overflow-y: auto;
+    background: var(--bg); scrollbar-width: none; -ms-overflow-style: none;
+    will-change: scroll-position;
+}
+.app-container::-webkit-scrollbar { display: none; }
+     /* Container for the 1-row layout */
+        .ads-row {
+            display: flex;
+            gap: 1px; 
+            overflow-x:auto; /* Enables touch scrolling */
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Hide scrollbar for clean look */
+        .ads-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ads-card {           
+            flex: 0 0 var(--card-width);
+            height: 230px;                      
+            border-radius: 15px; margin-right: 15px;
+            position: relative;
+            background-size: cover;
+            background-position: center;           
+            overflow: hidden;                
+            box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.2);
+            scroll-snap-align: center;
+            transition: transform 0.3s ease, background 0.2s;
+           }
+
+        /* Overlay to make text readable */
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background: linear-gradient(transparent, rgba(0,0,1,0.8),rgba(0,0,1,0.8));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ads-title {
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.3;
+            max-width: 65%;
+        }
+
+        .join-btn {
+            background-color: var(--blue-accent);
+            color: white;
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: transform 0.2s;
+        }
+
+        .join-btn:active {
+            transform: scale(0.95);
+        }
+
+      
+       .swiper {
+            width: 100%;
+            padding-bottom: 32px; 
+        }
+
+        .swiper-slide {
+            position: relative; /* Required for absolute positioning of text */
+            width: 280px; height: 200px;
+            /* Increased height to accommodate text better */
+            border-radius: 12px;
+            border: 1px solid #905AF8;
+            transition: 0.5s ease-in-out;
+            overflow: hidden;
+        }
+
+        .swiper-slide-active {
+            opacity: 1;
+        }
+
+        @media (min-width: 768px) {
+            .swiper-slide {
+                width: 700px;
+                height: 350px;
+            }
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%; 
+            object-fit: cover;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        /* --- NEW TEXT OVERLAY STYLES --- */
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%; color: black;
+            padding: 5px;
+            box-sizing: border-box;
+            background: #ffffff;
+            display: flex;
+            font-size: 14px;
+            justify-content: space-between;
+            align-items: center;
+        }
+      body.dark .slide-content{background: #000;color: white; }
+        /* Pagination Styling */
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #d1d5db;
+            opacity: 1;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: #ffcc00 !important;
+        }
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:65px;background:#fff;
+  display:flex;justify-content:space-around;align-items:center;
+  border-top:1px solid #e5e7eb;box-shadow:0 -2px 10px rgba(0,0,0,.05);z-index:9
+}
+.nav-item{
+  flex:1;text-align:center;text-decoration:none;color:#888;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font:500 11px Segoe UI;
+  transition: color 0.2s;
+}
+.nav-item i{width:24px;height:24px;stroke:#888;stroke-width:2;transition: stroke 0.2s;}
+.nav-item.active{color:#3b49df}
+.nav-item.active i{stroke:#3b49df}
+.nav-item .icon-bg{padding:4px 10px;border-radius:12px;transition: background 0.2s;}
+.nav-item.active .icon-bg{background:#eef2ff}
+</style>
+</head>
+<body>
+<div class="header">
+ <h3 style="color: #fff; display: flex;"> My Study</h3><i data-lucide="book-open-check" style="width: 20px; height: 20px; color: #fff;"></i>
+</div>
+<main class="app-container">
+<div style="padding: 10px;">
+<!-- 1. SEARCH COURSE BUTTON -->
+<a href="search.html" class="search-btn">
+  Search Course
+  <i data-lucide="search"></i>
+</a>
+
+<!-- 2. CHIPS -->
+<div class="chips">
+  <a href="#" class="chip">WBJEE</a>
+  <a href="#" class="chip">Madhyamik</a>
+  <a href="#" class="chip">WB Class 11</a>
+  <a href="#" class="chip">HS উচ্চমাধ্যমিক</a>
+</div>
+
+<!-- 3. PREMIUM HEADING -->
+<div class="heading">
+  <div class="bar"></div>
+  <h2>Premium <span>Courses & Mock Tests</span></h2>
+</div>
+</div>
+  <div class="ads-row">
+        <!-- Card 1 -->
+        <div class="ads-card" style="background-image: url('https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg'); margin-left: 10px;">
+            <div class="card-content">
+                <p class="ads-title">Class 12 3rd Semester Science Practice Sugg...</p>
+                <a href="#" class="join-btn">Join  <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i></a>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="ads-card" style="background-image: url('https://i.ibb.co/JwyTKhzm/Add-Text-04-17-08-38-15.jpg');">
+            <div class="card-content">
+                <p class="ads-title">Class 11 1st Semester Science Practice Sugg...</p>
+                <a href="#" class="join-btn">Join  <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i></a>
+            </div>
+        </div>
+
+     
+        </div>
+    </div>
+
+   
+<div style="padding: 10px;">
+<!-- 5. LIST -->
+<div class="list">
+  <a href="examprep.html" class="list-item">
+    <div class="icon a"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064644.png"></div>
+    <span>Exam Prep</span>
+    <i data-lucide="chevron-right"></i>
+  </a>
+
+  <a href="madhyamik-page.html" class="list-item">
+    <div class="icon a"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064644.png"></div>
+    <span>মাধ্যমিক</span>
+    <i data-lucide="chevron-right"></i>
+  </a>
+  <a href="madhyamik-page.html" class="list-item">
+    <div class="icon a"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064644.png"></div>
+    <span>মাধ্যমিক</span>
+    <i data-lucide="chevron-right"></i>
+  </a>
+  <a href="madhyamik-page.html" class="list-item">
+    <div class="icon a"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064644.png"></div>
+    <span>মাধ্যমিক</span>
+    <i data-lucide="chevron-right"></i>
+  </a>
+</div>
+</div>
+   <div class="swiper">
+            <div class="swiper-wrapper">
+                <a href="hs/sem3/enroll.html" class="swiper-slide skeleton">
+                    <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Batch 1">
+                    <div class="slide-content">
+                        <h3>Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h3>
+                    </div>
+                </a>
+                <a href="hs/sem1/enroll.html" class="swiper-slide skeleton">
+                    <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Batch 3">
+                    <div class="slide-content">
+                        <h3>Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</h3>
+                    </div>
+                </a>
+                <a href="mp/27/enroll.html" class="swiper-slide skeleton">
+                    <img src="https://i.ibb.co/mrh003kQ/class-10.jpg" alt="Batch 3">
+                    <div class="slide-content">
+                        <h3>Target মাধ্যমিক 2027 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!</h3>
+                    </div>
+                </a>
+                <a href="mp/9/enroll.html" class="swiper-slide skeleton">
+                    <img src="https://i.ibb.co/CK78V6m7/Class-09.jpg" alt="Batch 3">
+                    <div class="slide-content">
+                        <h3>Target Class 9 2026 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+</main>
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="home.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="home"></i></div>
+    <span>Home</span>
+  </a>
+
+  <a href="courses.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
+    <span>Courses</span>
+  </a>
+
+  <a href="library.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="book-open-check"></i></div>
+    <span>Library</span>
+  </a>
+
+  <a href="mystudy.html" class="nav-item active">
+    <div class="icon-bg"><i data-lucide="book-open"></i></div>
+    <span>My Study</span>
+  </a>
+
+  <a href="profile.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="user"></i></div>
+    <span>Profile</span>
+  </a>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+<script>
+  lucide.createIcons();
+   // ========== SWIPER CONFIGURATION ==========
+        var swiper = new Swiper('.swiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            loop: true,
+            coverflowEffect: {
+                rotate: 0,
+                stretch: -30,
+                depth: 100,
+                modifier: 1,
+                slideShadows: false,
+            },
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Re-run lucide icons after any dynamic content
+        setTimeout(() => {
+            lucide.createIcons();
+        }, 100);
+</script>
+</body>
+</html>
