@@ -126,122 +126,201 @@ body{background:#fff;color:#111}
 .nav-item .icon-bg{padding:4px 10px;border-radius:12px;transition: background 0.2s;}
 .nav-item.active .icon-bg{background:#eef2ff}
 
+/* ========================================================
+   SKELETON SHIMMER LOADING SYSTEM
+   ======================================================== */
+.skeleton-container {
+  display: block;
+  padding: 0;
+  transition: opacity 0.3s ease-out;
+}
 
+/* Base Skeleton Pulse Style */
+.sk-item {
+  background: #e2e8f0;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite ease-in-out;
+}
 
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Visibility Control Classes */
+.skeleton-active #main-content {
+  display: none !important;
+}
+.skeleton-active #skeleton-view {
+  display: block !important;
+}
+#skeleton-view {
+  display: none;
+}
+
+/* Specific Layout Mimics */
+.sk-icon-round { width: 50px; height: 50px; border-radius: 15px; margin: 0 auto 6px; }
+.sk-text-line-sm { width: 45px; height: 10px; border-radius: 4px; margin: 0 auto; }
+.sk-card { height: 54px; border-radius: 16px; }
+.sk-tab { height: 37px; border-radius: 12px; flex: 1; }
+.sk-notice { height: 59px; border-radius: 14px; width: 100%; margin-bottom: 12px; }
+.sk-banner { width: 100%; height: 150px; border-radius: 14px; margin-top: 10px; }
 
 </style>
 </head>
-<body>
+<!-- Managed via skeleton-active layout state -->
+<body class="skeleton-active">
 <div class="header">
  <h3 style="color: #fff; display: flex;">Library</h3><i data-lucide="sparkles" style="width: 20px; height: 20px; color: #fff;"></i>
 </div>
+
 <main class="app-container">
-<!-- 1. TOP HORIZONTAL IMAGE BUTTONS -->
-<div class="top-scroll">
-  <a href="syllabus.html" class="top-btn">
-    <div class="top-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/19015/19015304.png" alt="Syllabus">
+  
+  <!-- ==================== SKELETON PLACEHOLDER STAGE ==================== -->
+  <div id="skeleton-view" class="skeleton-container">
+    <!-- Top Row Scroll Loading -->
+    <div class="top-scroll">
+      <div class="top-btn"><div class="sk-item sk-icon-round"></div><div class="sk-item sk-text-line-sm"></div></div>
+      <div class="top-btn"><div class="sk-item sk-icon-round"></div><div class="sk-item sk-text-line-sm"></div></div>
+      <div class="top-btn"><div class="sk-item sk-icon-round"></div><div class="sk-item sk-text-line-sm"></div></div>
+      <div class="top-btn"><div class="sk-item sk-icon-round"></div><div class="sk-item sk-text-line-sm"></div></div>
+      <div class="top-btn"><div class="sk-item sk-icon-round"></div><div class="sk-item sk-text-line-sm"></div></div>
+      <div class="top-btn"><div class="sk-item sk-icon-round"></div><div class="sk-item sk-text-line-sm"></div></div>
     </div>
-    <span>সিলেবাস</span>
-  </a>
-  <a href="pyq.html" class="top-btn">
-    <div class="top-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/16766/16766969.png" alt="PYQ">
-    </div>
-    <span>PYQ Paper</span>
-  </a>
-  <a href="scholarship.html" class="top-btn">
-    <div class="top-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/19015/19015306.png" alt="Scholarship">
-    </div>
-    <span>Scholarship</span>
-  </a>
-  <a href="library.html" class="top-btn">
-    <div class="top-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/17905/17905205.png" alt="Library">
-    </div>
-    <span>Library</span>
-  </a>
-<a href="scholarship.html" class="top-btn">
-    <div class="top-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/19015/19015306.png" alt="Scholarship">
-    </div>
-    <span>Demo 1</span>
-  </a>
-  <a href="library.html" class="top-btn">
-    <div class="top-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/17905/17905205.png" alt="Library">
-    </div>
-    <span>Demo 2</span>
-  </a>
-</div>
-<div style="padding: 10px;">
-<!-- 2. FREE + PREMIUM LIBRARY -->
-<div class="lib-grid">
-  <a href="free-library.html" class="lib-card">
-    <div class="lib-icon"><i data-lucide="award"></i></div>
-    <div class="lib-text">
-      <h3>Free Library</h3>
-      <p>All Free Notes & Suggestions are here</p>
-    </div>
-  </a>
-  <a href="premium-library.html" class="lib-card">
-    <div class="lib-icon"><i data-lucide="award"></i></div>
-    <div class="lib-text">
-      <h3>Premium Library</h3>
-      <p>All Premium Notes & Suggestions are here</p>
-    </div>
-  </a>
-</div>
-
-<!-- 3. TABS: HS Semester & Madhyamik -->
-<div class="tabs">
-  <div class="tab active" onclick="showTab('hs')">HS Semester</div>
-  <div class="tab" onclick="showTab('madhyamik')">Madhyamik</div>
-</div>
-
-<!-- TAB CONTENT -->
-<div id="hs" class="tab-content active">
-  <div class="notice-list">
-    <a href="hs-notice1.html" class="notice">
-      <div class="notice-left">
-        <div class="bn">উচ্চ মাধ্যমিক পরীক্ষা আগামী দিন হবে।</div>
-        <div class="date">23-07-2027</div>
+    
+    <div style="padding: 10px;">
+      <!-- Grid Card Loading -->
+      <div class="lib-grid">
+        <div class="sk-item sk-card"></div>
+        <div class="sk-item sk-card"></div>
       </div>
-      <i data-lucide="chevron-right"></i>
-    </a>
-    <a href="hs-notice2.html" class="notice">
-      <div class="notice-left">
-        <div class="bn">উচ্চ মাধ্যমিক পরীক্ষা আগামী দিন হবে।</div>
-        <div class="date">04-07-2026</div>
+      
+      <!-- Tab Bar Loading -->
+      <div class="tabs">
+        <div class="sk-item sk-tab"></div>
+        <div class="sk-item sk-tab"></div>
       </div>
-      <i data-lucide="chevron-right"></i>
-    </a>
+      
+      <!-- List Items Loading -->
+      <div class="sk-item sk-notice"></div>
+      <div class="sk-item sk-notice"></div>
+      
+      <!-- Banner Image Loading -->
+      <div class="sk-item sk-banner"></div>
+    </div>
   </div>
-</div>
 
-<div id="madhyamik" class="tab-content">
-  <div class="notice-list">
-    <a href="madhyamik-notice1.html" class="notice">
-      <div class="notice-left">
-        <div class="bn">মাধ্যমিক পরীক্ষার রুটিন প্রকাশিত হয়েছে।</div>
-        <div class="date">15-02-2026</div>
-      </div>
-      <i data-lucide="chevron-right"></i>
-    </a>
-    <a href="madhyamik-notice2.html" class="notice">
-      <div class="notice-left">
-        <div class="bn">মাধ্যমিক সাজেশন 2026 আপডেট করা হয়েছে।</div>
-        <div class="date">10-01-2026</div>
-      </div>
-      <i data-lucide="chevron-right"></i>
-    </a>
+  <!-- ==================== REAL DATA APP CONTENT STAGE ==================== -->
+  <div id="main-content">
+    <!-- 1. TOP HORIZONTAL IMAGE BUTTONS -->
+    <div class="top-scroll">
+      <a href="syllabus.html" class="top-btn">
+        <div class="top-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/19015/19015304.png" alt="Syllabus">
+        </div>
+        <span>সিলেবাস</span>
+      </a>
+      <a href="pyq.html" class="top-btn">
+        <div class="top-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/16766/16766969.png" alt="PYQ">
+        </div>
+        <span>PYQ Paper</span>
+      </a>
+      <a href="scholarship.html" class="top-btn">
+        <div class="top-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/19015/19015306.png" alt="Scholarship">
+        </div>
+        <span>Scholarship</span>
+      </a>
+      <a href="library.html" class="top-btn">
+        <div class="top-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/17905/17905205.png" alt="Library">
+        </div>
+        <span>Library</span>
+      </a>
+    <a href="scholarship.html" class="top-btn">
+        <div class="top-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/19015/19015306.png" alt="Scholarship">
+        </div>
+        <span>Demo 1</span>
+      </a>
+      <a href="library.html" class="top-btn">
+        <div class="top-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/17905/17905205.png" alt="Library">
+        </div>
+        <span>Demo 2</span>
+      </a>
+    </div>
+    <div style="padding: 10px;">
+    <!-- 2. FREE + PREMIUM LIBRARY -->
+    <div class="lib-grid">
+      <a href="free-library.html" class="lib-card">
+        <div class="lib-icon"><i data-lucide="award"></i></div>
+        <div class="lib-text">
+          <h3>Free Library</h3>
+          <p>All Free Notes & Suggestions are here</p>
+        </div>
+      </a>
+      <a href="premium-library.html" class="lib-card">
+        <div class="lib-icon"><i data-lucide="award"></i></div>
+        <div class="lib-text">
+          <h3>Premium Library</h3>
+          <p>All Premium Notes & Suggestions are here</p>
+        </div>
+      </a>
+    </div>
 
+    <!-- 3. TABS: HS Semester & Madhyamik -->
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('hs')">HS Semester</div>
+      <div class="tab" onclick="showTab('madhyamik')">Madhyamik</div>
+    </div>
+
+    <!-- TAB CONTENT -->
+    <div id="hs" class="tab-content active">
+      <div class="notice-list">
+        <a href="hs-notice1.html" class="notice">
+          <div class="notice-left">
+            <div class="bn">উচ্চ মাধ্যমিক পরীক্ষা আগামী দিন হবে।</div>
+            <div class="date">23-07-2027</div>
+          </div>
+          <i data-lucide="chevron-right"></i>
+        </a>
+        <a href="hs-notice2.html" class="notice">
+          <div class="notice-left">
+            <div class="bn">উচ্চ মাধ্যমিক পরীক্ষা আগামী দিন হবে।</div>
+            <div class="date">04-07-2026</div>
+          </div>
+          <i data-lucide="chevron-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div id="madhyamik" class="tab-content">
+      <div class="notice-list">
+        <a href="madhyamik-notice1.html" class="notice">
+          <div class="notice-left">
+            <div class="bn">মাধ্যমিক পরীক্ষার রুটিন প্রকাশিত হয়েছে।</div>
+            <div class="date">15-02-2026</div>
+          </div>
+          <i data-lucide="chevron-right"></i>
+        </a>
+        <a href="madhyamik-notice2.html" class="notice">
+          <div class="notice-left">
+            <div class="bn">মাধ্যমিক সাজেশন 2026 আপডেট করা হয়েছে।</div>
+            <div class="date">10-01-2026</div>
+          </div>
+          <i data-lucide="chevron-right"></i>
+        </a>
+
+      </div>
+    </div>
+    <img src="https://i.ibb.co/HLT3k8bx/17771116.gif" style="width: 100%;">
+    </div>
   </div>
-</div>
-<img src="https://i.ibb.co/HLT3k8bx/17771116.gif" style="width: 100%;">
-</div>
 </main>
+
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <a href="home.html" class="nav-item">
@@ -269,18 +348,37 @@ body{background:#fff;color:#111}
     <span>Profile</span>
   </a>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
 <script>
   lucide.createIcons();
-   // TAB SWITCH FUNCTION
-function showTab(tab){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  
-  document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
-  document.getElementById(tab).classList.add('active');
-}
+
+  // TAB SWITCH FUNCTION
+  function showTab(tab){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    
+    document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
+    document.getElementById(tab).classList.add('active');
+  }
+
+  // SIMULATE DATA LOADING COMPLETION
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const skeletonView = document.getElementById('skeleton-view');
+      
+      // Smooth fade transition handler
+      skeletonView.style.opacity = '0';
+      
+      setTimeout(() => {
+        document.body.classList.remove('skeleton-active');
+        // Refresh icons if content structure shifted 
+        lucide.createIcons(); 
+      }, 300); // matches the CSS transition opacity time
+      
+    }, 1500); // 1.5 seconds layout load delay simulation
+  });
 </script>
 </body>
 </html>
