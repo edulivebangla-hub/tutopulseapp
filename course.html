@@ -1,883 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TutoPulse App - Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandBlue: '#4285F4',
-                        darkBlue: '#1A237E',
-                        brandGray: '#757575',
-                        greenBtn: '#C8E6C9',
-                        greenText: '#2E7D32',
-                        redBadgeBg: '#FFEBEE',
-                        redBadgeText: '#C62828',
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -ms-user-drag: none;
+        user-drag: none;
+        -webkit-tap-highlight-color: transparent;
+    }
 
-    <!-- Theme and meta tags -->
-    <meta name="theme-color" content="#905AF8">
-    <meta name="msapplication-navbutton-color" content="#905AF8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ECINET">
-    <meta name="mobile-web-app-capable" content="yes">
-    <!-- Android Chrome / Edge / Opera -->
-    <meta name="theme-color" content="#905AF8">
+    a, span, p, h1, h2, h3, h4, h5, h6, div {
+        text-decoration: none;
+    }
 
-    <!-- Windows Phone / Microsoft Edge -->
-    <meta name="msapplication-navbutton-color" content="#905AF8">
+    :root {
+        --primary: #0555E8; 
+        --border: #a5b4fc; 
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --text: #0f172a;
+        --text-secondary: #64748b;
+        --nav-inactive: #94a3b8;
+        --shimmer-bg: #e2e8f0;
+        --shimmer-glow: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    }
 
-    <!-- iOS Safari - Web App Mode -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ECINET">
+    body {
+        background: var(--bg);
+        color: var(--text);
+        overflow: hidden;
+    }
 
-    <!-- General -->
-    <meta name="mobile-web-app-capable" content="yes">
+    /* HEADER */
+    .header {
+        position: fixed; top: 0; left: 0; width: 100%; height: 56px; background: var(--primary);
+        display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+        z-index: 1000; box-shadow: 0 4px 12px rgba(5, 85, 232, 0.15);
+    }
 
-    <style>
-        /* ========== GLOBAL RESET & DARK MODE VARIABLES ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
+    /* APPLICATION CONTAINER MAIN */
+    .app-container {
+        position: fixed; top: 56px; bottom: 65px; width: 100%; overflow-y: auto;
+        background: var(--bg); scrollbar-width: none; -ms-overflow-style: none;
+        will-change: scroll-position;
+    }
+    .app-container::-webkit-scrollbar { display: none; }
 
-        a, span, p, h1, h2, h3, h4, h5, h6, div {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            text-decoration: none;
-        }
+    /* CONTENT WRAPPER FOR TRANSITIONS */
+    .content-wrapper {
+        padding: 16px 14px;
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+    }
+    body:not(.skeleton-active) .content-wrapper {
+        opacity: 1;
+    }
 
-        img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-        }
-        :root {
-            --card-width: 230px;
-            --blue-accent: #905AF8;
-        }
-        /* ----- LIGHT MODE (default) ----- */
-        body {
-            background-color: #f8f9fb;
-            color: #333;
-            overflow: hidden;
-            --footer-bg: #ffffff; 
-            --text-muted: #8D94A2; --tp:#ffffff;
-        }
+    /* TOP 3 IMAGES */
+    .top-images { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
+    .img-box {
+        width: 100px; height: 100px; border: 2px solid var(--border);
+        border-radius: 20px; padding: 4px; background: var(--surface);
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .img-box:active { transform: scale(0.92); }
+    .img-box img { width: 100%; height: 100%; border-radius: 14px; object-fit: cover; }
 
-        /* --- Header Styles --- */
-        .app-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: #905AF8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
+    /* NOTICE SECTION */
+    .notice {
+        border: 2px solid var(--border); border-radius: 16px; padding: 12px; margin-bottom: 24px;
+        background: var(--surface); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    .notice .title { color: #dc2626; font: 800 14px 'Segoe UI'; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .notice .bn { font: 700 15px 'Segoe UI'; color: var(--text); line-height: 1.5; }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    /* COURSE CARD */
+    .course-card {
+        display: flex; gap: 12px; margin-bottom: 16px; height: 130px;
+        transition: transform 0.2s ease;
+    }
+    .card-left {
+        flex: 1; border: 2px solid var(--border); border-radius: 20px;
+        background: var(--surface); display: flex; align-items: center; justify-content: center;
+        overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    .card-left img { border-radius: 16px; width: 100%; height: 100%; object-fit: cover; }
 
-        .logo-img {
-            width: 150px;
-        }
+    .card-right {
+        width: 110px; background: var(--primary); border-radius: 20px;
+        padding: 12px; display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center;
+        box-shadow: 0 4px 12px rgba(5, 85, 232, 0.2);
+    }
+    .price {
+        background: var(--surface); color: var(--text); font: 800 18px 'Segoe UI';
+        padding: 6px 0; width: 100%; border-radius: 12px; text-align: center;
+    }
+    .enroll {
+        background: var(--surface); color: var(--primary); font: 800 14px 'Segoe UI';
+        padding: 10px 0; width: 100%; border-radius: 12px; text-align: center;
+        transition: background 0.2s, transform 0.1s;
+    }
+    .enroll:active { transform: scale(0.95); background: #f1f5f9; }
 
-        .header-title {
-            font-family: 'Nunito', sans-serif;
-            color: #fff;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
+    /* EXTRA BUTTONS SECTION */
+    .extra-title { font: 800 16px 'Segoe UI'; margin: 24px 0 14px; color: var(--text); letter-spacing: -0.3px; }
+    .extra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .extra-btn {
+        background: var(--primary); border-radius: 20px; padding: 14px 8px;
+        text-align: center; color: #fff; display: flex;
+        flex-direction: column; align-items: center; gap: 10px; 
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+        box-shadow: 0 4px 10px rgba(5, 85, 232, 0.15);
+    }
+    .extra-btn:active { transform: scale(0.92); box-shadow: 0 2px 4px rgba(5, 85, 232, 0.1); }
+    .extra-btn img { width: 44px; height: 44px; border-radius: 12px; background: var(--surface); padding: 6px; }
+    .extra-btn span { font: 700 12px 'Segoe UI'; white-space: nowrap; }
+    .extra-btn i { width: 18px; height: 18px; opacity: 0.9; }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #fff;
-        }
+    /* BOTTOM NAV */
+    .bottom-nav {
+        position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--surface);
+        display: flex; justify-content: space-around; align-items: center;
+        border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 12px rgba(0,0,0,0.03); z-index: 1000;
+    }
+    .nav-item {
+        flex: 1; text-align: center; color: var(--nav-inactive);
+        display: flex; flex-direction: column; align-items: center; gap: 4px; font: 700 11px 'Segoe UI';
+        transition: color 0.2s ease;
+    }
+    .nav-item i { width: 22px; height: 22px; stroke: var(--nav-inactive); stroke-width: 2.2; transition: stroke 0.2s ease, transform 0.2s; }
+    .nav-item.active { color: var(--primary); }
+    .nav-item.active i { stroke: var(--primary); transform: translateY(-1px); }
+    .nav-item .icon-bg { padding: 6px 14px; border-radius: 14px; transition: background 0.2s; }
+    .nav-item.active .icon-bg { background: #eef2ff; }
 
-        /* Dark mode toggle button style */
-        .dark-mode-toggle-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            border-radius: 50px;
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 22px;
-            transition: all 0.2s;
-            backdrop-filter: blur(2px);
-        }
-        .dark-mode-toggle-btn:hover {
-            background: rgba(255,255,255,0.35);
-            transform: scale(1.02);
-        }
+    /* ==========================================================================
+       SKELETON SYSTEM (Modern Shimmer Design)
+       ========================================================================== */
+    .skeleton-container {
+        position: absolute; top: 0; left: 0; width: 100%; padding: 16px 14px;
+        transition: opacity 0.4s ease, visibility 0.4s;
+        z-index: 10; visibility: hidden; opacity: 0; pointer-events: none;
+    }
+    body.skeleton-active .skeleton-container {
+        visibility: visible; opacity: 1;
+    }
 
-        .search-inner {
-            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
-            width: 180px;
-            background-color: #ffffff;
-            border: 1px solid #c8d1db;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            padding: 5px 12px;
-            transition: box-shadow 0.3s ease;
-            gap: 6px;
-        }
-        .search-inner p {
-            color: gray;
-            font-size: 14px;
-            flex: 1;
-        }
-        .search-icon {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        .search-icon svg {
-            width: 20px;
-            height: 20px;
-            stroke: #905AF8;
-        }
+    .sk-element {
+        background: var(--shimmer-bg);
+        background: var(--shimmer-glow);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite linear;
+    }
 
-        .app-content {
-            position: fixed;
-            top: 46px;
-            bottom: 65px;
-            width: 100%;
-            overflow-y: auto;
-            background: #ffffff;
-            transition: background-color 0.3s;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .app-content::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            background: transparent;
-        }
-body.dark .app-content {
-            background: #000;
-        }
-     
+    @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
 
-        .swiper {
-            width: 100%;
-            padding-bottom: 32px; 
-        }
+    .sk-top-images { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
+    .sk-img-box { width: 100px; height: 100px; border-radius: 20px; }
 
-        .swiper-slide {
-            position: relative; /* Required for absolute positioning of text */
-            width: 280px; height: 200px;
-            /* Increased height to accommodate text better */
-            border-radius: 12px;
-            border: 1px solid #905AF8;
-            transition: 0.5s ease-in-out;
-            overflow: hidden;
-        }
+    .sk-notice { height: 74px; border-radius: 16px; margin-bottom: 24px; }
 
-        .swiper-slide-active {
-            opacity: 1;
-        }
+    .sk-card { display: flex; gap: 12px; margin-bottom: 16px; height: 130px; }
+    .sk-card-left { flex: 1; border-radius: 20px; }
+    .sk-card-right { width: 110px; border-radius: 20px; }
 
-        @media (min-width: 768px) {
-            .swiper-slide {
-                width: 700px;
-                height: 350px;
-            }
-        }
+    .sk-title { height: 20px; width: 120px; border-radius: 6px; margin: 24px 0 14px; }
+    .sk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .sk-btn { height: 112px; border-radius: 20px; }
 
-        .swiper-slide img {
-            display: block;
-            width: 100%; 
-            object-fit: cover;
-            border-top-right-radius: 10px;
-            border-top-left-radius: 10px;
-            background: rgba(0,0,0,0.1);
-        }
-
-        /* --- NEW TEXT OVERLAY STYLES --- */
-        .slide-content {
-            position: absolute;
-            bottom: 0;
-            width: 100%; color: black;
-            padding: 5px;
-            box-sizing: border-box;
-            background: #ffffff;
-            display: flex;
-            font-size: 14px;
-            justify-content: space-between;
-            align-items: center;
-        }
-      body.dark .slide-content{background: #000;color: white; }
-        /* Pagination Styling */
-        .swiper-pagination-bullet {
-            width: 10px;
-            height: 10px;
-            background: #d1d5db;
-            opacity: 1;
-        }
-        
-        .swiper-pagination-bullet-active {
-            background: #ffcc00 !important;
-        }
-
-        /* pills & cards */
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 10px;
-            padding: 10px;
-        }
-        .pill-button {
-            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
-            display: inline-block;
-            text-decoration: none;
-            color: #1a1a1a;
-            background-color: #ffffff;
-            border: 2px solid #e0e0e0;
-            border-radius: 50px;
-            padding: 5px 12px;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.2s ease-in-out;
-        }
-        .course-card {
-            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
-            display: flex;
-            gap: 15px;
-            padding: 5px 0;
-            border-bottom: 1px solid #eee;
-            text-decoration: none;
-            color: inherit;
-        }
-        .course-img {
-            width: 100px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: rgba(0,0,0,0.1);
-        }
-        .course-title {
-            font-weight: bold;
-            font-size: 14px;
-            margin: 0 0 8px 0;
-            line-height: 1.4;
-        }
-        .tutor-card {
-            flex: 0 0 200px;
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 10px;
-              scroll-snap-align: center;
-            text-align: center;
-            transition: transform 0.3s ease, background 0.2s;
-            border: 2px solid rgba(0, 0, 0, 0.05);
-        }
-        .tutor-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #e2e8f0;
-        }
-        .btn-profile {
-            background: orange;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-        }
-        .view-all {
-            -webkit-tap-highlight-color: rgba(0,0,0,0.05);
-            border: 1px solid #333;
-            border-radius: 20px;
-            padding: 5px 15px;
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-        }
-
-        /* ========== DARK MODE OVERRIDES ========== */
-        body.dark {
-            background-color: #121212;
-            color: #e0e0e0;
-            --text-muted: #a0a0a0;
-            --footer-bg: #1e1e1e;
-            --tp:#121212;
-        }
-        
-        
-       
-        body.dark .search-inner {
-            background-color: #2c2c3a;
-            border-color: #444;
-        }
-        body.dark .search-inner p {
-            color: #bbbbbb;
-        }
-        body.dark .search-icon svg {
-            stroke: #ffcc66;
-        }
-        body.dark .pill-button {
-            background-color: #2a2a2e;
-            border-color: #444;
-            color: #f0f0f0;
-        }
-        body.dark .course-card {
-            border-bottom-color: #F7F1EE;
-        }
-        body.dark .course-title {
-            color: #f5f5f5;
-        }
-        body.dark .tutor-card {
-            background: #1e1e2a;
-            border-color: #333;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-        }
-        body.dark .tutor-name {
-            color: #ffdd99;
-        }
-        body.dark .tutor-subject {
-            color: #bbbbbb;
-        }
-        body.dark .view-all {
-            border-color: #aaa;
-            color: #ddd;
-        }
-        
-        
-        
-        body.dark .container .header h1 span {
-            color: #ffaa66;
-        }
-        body.dark .rating-num {
-            color: #ccc;
-        }
-        body.dark .flex.items-center.text-xl.font-bold {
-            color: #f0f0f0;
-        }
-        
-        body.dark .w-1.5.h-6.bg-yellow-400 {
-            background-color: #ffaa33 !important;
-        }
-
-        /* Container for the 1-row layout */
-        .primium-row {
-            display: flex;
-            overflow-x:auto; /* Enables touch scrolling */
-            padding-bottom: 10px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Hide scrollbar for clean look */
-        .primium-row::-webkit-scrollbar {
-            display: none;
-        }
-
-        .primium-card {           
-            flex: 0 0 var(--card-width);
-            height: 210px;                      
-            border-radius: 10px; margin-right: 15px;
-            position: relative;
-            background-size: cover;
-            background-position: center;           
-            overflow: hidden;         
-            border-radius: 10px;         
-            scroll-snap-align: center;
-            border: 2px solid #905AF8;
-            transition: transform 0.3s ease, background 0.2s;
-        }
-
-        /* Overlay to make text readable */
-        .card-content {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            padding: 12px;
-            box-sizing: border-box;
-            background: linear-gradient(transparent, rgba(0,0,1,0.8),rgba(0,0,0,0.8));
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .primium-title {
-            color: white;
-            font-size: 13px;
-            font-weight: 800;
-            margin: 0;
-            line-height: 1.3;
-            max-width: 65%;
-        }
-
-        .join-btn {
-            background-color: var(--blue-accent);
-            color: white;
-            text-decoration: none;
-            padding: 4px 14px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s;
-        }
-
-        .join-btn:active {
-            transform: scale(0.98);
-        }
-
-        .chevron-icon {
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            display: inline-block;
-            padding: 3px;
-            transform: rotate(-45deg);
-        }
-
-        /* ========== SKELETON LOADING FEATURES ========== */
-        @keyframes skeletonPulse {
-            0% { background-color: #e5e7eb; }
-            50% { background-color: #f3f4f6; }
-            100% { background-color: #e5e7eb; }
-        }
-        body.dark @keyframes skeletonPulse {
-            0% { background-color: #2a2a35; }
-            50% { background-color: #374151; }
-            100% { background-color: #2a2a35; }
-        }
-
-        .skeleton {
-            animation: skeletonPulse 1.5s infinite ease-in-out !important;
-            background-image: none !important;
-            border-color: transparent !important;
-        }
-        .skeleton * {
-            visibility: hidden !important;
-        }
-       .app-footer {
-            overflow: hidden;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 10;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        body.dark .app-footer {
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-            background: #000;
-        }
-
-       .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 11px;
-            font-weight: 700;
-            width: 65px;
-            height: 100%;
-            gap: 2px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.1s ease-in-out;
-        }
-
-       .nav-item.active {
-            color: #905AF8;
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 50px;
-            padding: 5px;
-        }
-
-        body.dark.nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-       .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
-            background-color: rgba(144, 90, 248, 0.15);
-            pointer-events: none;
-        }
-
-        @keyframes ripple-animation {
-            to {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
-
-    </style>
+</style>
 </head>
-<body>
+<body class="skeleton-active">
 
-    <!-- HEADER with Dark Mode Toggle Button -->
-    <header class="app-header">
-        <div class="header-left">
-            <img src="https://i.ibb.co/rGrQCvmJ/logo.png" alt="TutoPulse Logo" class="logo-img">
+<!-- HEADER -->
+<div class="header">
+    <h3 style="color: #fff; font-weight: 800; font-size: 18px;">Courses</h3>
+    <i data-lucide="monitor-play" style="width: 22px; height: 22px; color: #fff;"></i>
+</div>
+
+<main class="app-container">
+    
+    <!-- SKELETON LOADING FRAMEWORK -->
+    <div class="skeleton-container">
+        <div class="sk-top-images">
+            <div class="sk-element sk-img-box"></div>
+            <div class="sk-element sk-img-box"></div>
+            <div class="sk-element sk-img-box"></div>
         </div>
-        <div class="header-right">
-            <a href="search.html" class="search-inner">
-                <p style="color: gray;">Search Course</p>
-                <button class="search-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
+        <div class="sk-element sk-notice"></div>
+        <div class="sk-card">
+            <div class="sk-element sk-card-left"></div>
+            <div class="sk-element sk-card-right"></div>
+        </div>
+        <div class="sk-card">
+            <div class="sk-element sk-card-left"></div>
+            <div class="sk-element sk-card-right"></div>
+        </div>
+        <div class="sk-element sk-title"></div>
+        <div class="sk-grid">
+            <div class="sk-element sk-btn"></div>
+            <div class="sk-element sk-btn"></div>
+            <div class="sk-element sk-btn"></div>
+        </div>
+    </div>
+
+    <!-- ACTUAL APP CONTENT -->
+    <div class="content-wrapper">
+        <!-- 1. TOP 3 IMAGES -->
+        <div class="top-images">
+            <a href="#" class="img-box">
+                <img src="https://i.ibb.co/SDB7wsy6/16678168.gif" alt="User 1">
             </a>
-            <!-- DARK MODE TOGGLE BUTTON (placed in header-right) -->
-            <button id="darkToggle" class="hidden dark-mode-toggle-btn" aria-label="Dark mode toggle">🌙</button>
-        </div>
-    </header>
-
-    <main class="app-content">
-        <div class="button-container">
-            <a href="hs/hs.html?id=course8" class="pill-button">Nursing</a>
-            <a href="hs/hs.html?id=course8" class="pill-button">WBJEE</a>
-            <a href="mp/mp.html" class="pill-button">Madhyamik</a>
-            <a href="hs/hs.html?id=course2" class="pill-button">HS Class 11</a>
-            <a href="hs/hs.html?id=course8" class="pill-button">ICDS</a>
-            <a href="hs/hs.html?id=course1" class="pill-button">HS উচ্চমাধ্যমিক</a>
-        </div>
-        
-        <div class="primium-row">
-            <!-- Card 1 -->
-            <div class="primium-card skeleton" data-bg="https://i.ibb.co/C52wtc3m/404.jpg" style="margin-left: 15px;">
-                <div class="card-content">
-                    <p class="primium-title">Class 12 3rd Semester Science Practice Sugg...</p>
-                    <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="primium-card skeleton" data-bg="https://i.ibb.co/C52wtc3m/404.jpg">
-                <div class="card-content">
-                    <p class="primium-title">Class 11 1st Semester Science Practice Sugg...</p>
-                    <a href="#" class="join-btn">Join <i class="chevron-icon"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- TOP COURSES -->
-        <div class="flex items-center text-xl font-bold m-3">
-            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
-            Top<span class="text-brandBlue ml-2">Courses</span>
-        </div>
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <a href="hs/sem3/enroll.html" class="swiper-slide skeleton">
-                    <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Batch 1">
-                    <div class="slide-content">
-                        <h3>Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h3>
-                    </div>
-                </a>
-                <a href="hs/sem1/enroll.html" class="swiper-slide skeleton">
-                    <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Batch 3">
-                    <div class="slide-content">
-                        <h3>Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</h3>
-                    </div>
-                </a>
-                <a href="mp/27/enroll.html" class="swiper-slide skeleton">
-                    <img src="https://i.ibb.co/mrh003kQ/class-10.jpg" alt="Batch 3">
-                    <div class="slide-content">
-                        <h3>Target মাধ্যমিক 2027 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!</h3>
-                    </div>
-                </a>
-                <a href="mp/9/enroll.html" class="swiper-slide skeleton">
-                    <img src="https://i.ibb.co/CK78V6m7/Class-09.jpg" alt="Batch 3">
-                    <div class="slide-content">
-                        <h3>Target Class 9 2026 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-
-        <!-- LATEST COURSES -->
-        <div class="container px-3">
-            <div class="header flex justify-between items-center mb-2">
-                <div class="flex items-center text-xl font-bold">
-                    <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
-                    Latest<span class="text-brandBlue ml-2">Courses</span>
-                </div>
-                <a href="home.html" class="view-all">View all</a>
-            </div>
-
-            <a href="hs/sem3/enroll.html" class="course-card">
-                <div class="course-img skeleton" style="width: 120px; height:40px; border-radius:8px;">
-                    <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Starter Batch" class=" object-cover rounded-[2px] hidden">
-                </div>
-                <div class="course-info">
-                    <h2 class="course-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</h2>
-                </div>
+            <a href="#" class="img-box">
+                <img src="https://i.ibb.co/RKbF1Cn/19005422.gif" alt="User 2">
             </a>
-            <a href="hs/sem1/enroll.html" class="course-card">
-                <div class="course-img skeleton" style="width: 110px; height:40px; border-radius:8px;">
-                    <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Class 11" class=" object-cover rounded-[2px] hidden">
-                </div>
-                <div class="course-info">
-                    <h2 class="course-title">Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার</h2>
-                </div>
-            </a>
-            <a href="mp/27/enroll.html" class="course-card">
-                <div class="course-img skeleton" style="width: 105px; height:40px; border-radius:8px;">
-                    <img src="https://i.ibb.co/mrh003kQ/class-10.jpg" alt="Class 11" class=" object-cover rounded-[2px] hidden">
-                </div>
-                <div class="course-info">
-                    <h2 class="course-title">Target মাধ্যমিক 2027 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!</h2>
-                </div>
-            </a>
-            <a href="mp/9/enroll.html" class="course-card">
-                <div class="course-img skeleton" style="width: 102px; height:40px; border-radius:8px;">
-                    <img src="https://i.ibb.co/CK78V6m7/Class-09.jpg" alt="Class 11" class=" object-cover rounded-[2px] hidden">
-                </div>
-                <div class="course-info">
-                    <h2 class="course-title">Target Class 9 2026 (প্র্যাকটিস A+ সাজেশন) বিনামূল্যে ব্যাচ!</h2>
-                </div>
+            <a href="#" class="img-box">
+                <img src="https://i.ibb.co/m5dmTZgb/education-research-loading-animation-gif-download-11863010.gif" alt="User 3">
             </a>
         </div>
 
-        <!-- TUTORS SECTION -->
-        <div class="flex items-center text-xl font-bold m-3 mt-6">
-            <div class="w-1.5 h-6 bg-yellow-400 rounded-full mr-2.5"></div>
-            Top<span class="text-brandBlue ml-2">Tutors</span>
+        <!-- 2. NOTICE SECTION -->
+        <div class="notice">
+            <div class="title"><i data-lucide="megaphone" style="width:16px; height:16px;"></i> Notice Section :</div>
+            <div class="bn">খুব তাড়াতাড়ি শুরু হতে চলেছে।</div>
         </div>
-        <div class="slider-container" style="display: flex; gap: 20px; overflow-x: auto; padding: 10px; scroll-snap-type: x mandatory;">
-            
 
-
-         <div class="tutor-card">
-                <div class="image-container flex justify-center">
-                    <div class="tutor-img skeleton" style="width:80px; height:80px; border-radius:50%;">
-                        <img src="https://i.ibb.co/4g9L1cBr/aninda.jpg" alt="Tutor" class="w-full h-full object-cover rounded-full hidden">
-                    </div>
-                </div>
-                <div class="tutor-name flex items-center justify-center gap-1 mt-2">
-                    Aninda Halder <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--tp);fill: #905AF8;"></i>
-                </div>
-                <div class="tutor-subject">Founder & CEO</div>
-                <a href="tutor/aninda.html"><button class="btn-profile">View Profile</button></a>
+        <!-- 3. COURSE CARDS -->
+        <div class="course-card">
+            <div class="card-left">
+                <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Coming Soon">
             </div>
-            
-            
+            <div class="card-right">
+                <div class="price">₹99</div>
+                <a href="#" class="enroll">Coming Soon</a>
+            </div>
         </div>
-        <div class="h-4"></div>
-    </main>
 
-      <!-- FOOTER -->
-   <nav class="app-footer">
-    <a href="home" class="nav-item">
-        <i data-lucide="home" width="24" height="24"></i>
+        <div class="course-card">
+            <div class="card-left">
+                <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Coming Soon">
+            </div>
+            <div class="card-right">
+                <div class="price">₹99</div>
+                <a href="#" class="enroll">Coming Soon</a>
+            </div>
+        </div>
+
+        <!-- 4. EXTRA FEATURES -->
+        <div class="extra-title">Course Features</div>
+        <div class="extra-grid">
+            <a href="live-class.html" class="extra-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1048/1048945.png" alt="Live">
+                <i data-lucide="radio"></i>
+                <span>Live Class</span>
+            </a>
+            <a href="video-class.html" class="extra-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1179/1179120.png" alt="Video">
+                <i data-lucide="play-circle"></i>
+                <span>Video Class</span>
+            </a>
+            <a href="question-paper.html" class="extra-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" alt="Question">
+                <i data-lucide="file-text"></i>
+                <span>Question Paper</span>
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+    <a href="home.html" class="nav-item">
+        <div class="icon-bg"><i data-lucide="home"></i></div>
         <span>Home</span>
     </a>
-<a href="coin" class="nav-item">
-        <i data-lucide="qr-code" width="24" height="24"></i>
-        <span>Recharge</span>
-    </a>
-    <a href="#" class="nav-item active">
-        <i data-lucide="airplay" width="24" height="24"></i>
+    <a href="courses.html" class="nav-item active">
+        <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
         <span>Courses</span>
     </a>
-    <a href="study" class="nav-item">
-        <i data-lucide="book-open" width="24" height="24"></i>
-        <span>Study</span>
+    <a href="library.html" class="nav-item">
+        <div class="icon-bg"><i data-lucide="sparkles"></i></div>
+        <span>Library</span>
     </a>
-    <a href="profile" class="nav-item">
-        <i data-lucide="user" width="24" height="24"></i>
+    <a href="mystudy.html" class="nav-item">
+        <div class="icon-bg"><i data-lucide="book-open"></i></div>
+        <span>My Study</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+        <div class="icon-bg"><i data-lucide="user"></i></div>
         <span>Profile</span>
     </a>
-</nav>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        // Load Lucide Icons
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-        const footer = document.querySelector('.app-footer');
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            const targetUrl = this.getAttribute('href');
-            if (!targetUrl || targetUrl === "" || targetUrl === "#") {
-                e.preventDefault();
-            }
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // Render Icons
+    lucide.createIcons();
 
-            const rect = footer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${x - (size / 2)}px`;
-            ripple.style.top = `${y - (size / 2)}px`;
-
-            this.appendChild(ripple);
-            setTimeout(() => { ripple.remove(); }, 400);
-        });
-    });
-        // ========== SKELETON IMAGE LOADING MANAGER ==========
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. Manage standard image tags nested inside containers
-            const skeletonContainers = document.querySelectorAll(".skeleton");
-            
-            skeletonContainers.forEach(container => {
-                const img = container.querySelector("img");
-                if (img) {
-                    const handleLoad = () => {
-                        container.classList.remove("skeleton");
-                        img.classList.remove("hidden");
-                    };
-                    if (img.complete) {
-                        handleLoad();
-                    } else {
-                        img.addEventListener("load", handleLoad);
-                    }
-                }
-            });
-
-            // 2. Manage CSS inline background images (Premium row cards)
-            const premiumCards = document.querySelectorAll(".primium-card[data-bg]");
-            premiumCards.forEach(card => {
-                const imgUrl = card.getAttribute("data-bg");
-                const tempImg = new Image();
-                tempImg.src = imgUrl;
-                tempImg.onload = () => {
-                    card.style.backgroundImage = `url('${imgUrl}')`;
-                    card.classList.remove("skeleton");
-                };
-            });
-        });
-
-        // ========== DARK MODE TOGGLE (FULLY INTEGRATED) ==========
-        const darkToggle = document.getElementById("darkToggle");
-        const body = document.body;
-        
-        // Load saved preference or default to light (false)
-        if (localStorage.getItem("darkMode") === "true") {
-            body.classList.add("dark");
-            darkToggle.textContent = "☀️";
-        } else {
-            body.classList.remove("dark");
-            darkToggle.textContent = "🌙";
-        }
-        
-        // Toggle event listener
-        darkToggle.addEventListener("click", () => {
-            body.classList.toggle("dark");
-            const isDark = body.classList.contains("dark");
-            localStorage.setItem("darkMode", isDark);
-            darkToggle.textContent = isDark ? "☀️" : "🌙";
-        });
-
-      
-
-
-
-
-
-
-
-
-
-        // ========== SWIPER CONFIGURATION ==========
-        var swiper = new Swiper('.swiper', {
-            effect: 'coverflow',
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: 'auto',
-            loop: true,
-            coverflowEffect: {
-                rotate: 0,
-                stretch: -30,
-                depth: 100,
-                modifier: 1,
-                slideShadows: false,
-            },
-            autoplay: {
-                delay: 3500,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
-
-        // Re-run lucide icons after any dynamic content
+    // Smooth Simulator: Turning off the skeleton layout seamlessly after assets drop
+    window.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
-            lucide.createIcons();
-        }, 100);
-    </script>
+            document.body.classList.remove('skeleton-active');
+        }, 2200); // 2.2 seconds clean load state simulation
+    });
+</script>
 </body>
-</html>                                                                                                
+</html>
+                                                                                                
