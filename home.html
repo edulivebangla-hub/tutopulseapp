@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TutoGenius</title>
+
+<meta name="theme-color" content="#0b1a3a">
+<link rel="manifest" href="manifest.json"><title>TutoGenius</title>
 <script src="https://unpkg.com/lucide@latest"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -360,12 +362,10 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
 <!-- HEADER -->
 <div class="header">
   <div class="left">
-    <div class="bal" id="bal">₹ ***</div>
+    <div class="bal">₹ <span id="balance">0</span></div>
     <div class="sub">Wallet Balance</div>
   </div>  
-  <div class="icon-btn" id="toggleBal" title="Show/Hide">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-  </div>
+
   <div class="head-btns">
     <a href="" class="icon-btn" title="Add Balance">
       <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg>
@@ -471,8 +471,6 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
       </div>
   </div>
 </div>
-
-
 
 <!-- 1-LINE MARQUEE TICKER -->
 <div class="ticker-wrap">
@@ -681,6 +679,7 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
     </button>
   </div>
 </div>
+
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <a href="home.html" class="nav-item active">
@@ -708,6 +707,7 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
     <span>Profile</span>
   </a>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 // SWITCH VIEW DATA WITH SIMULATED SKELETON TIMEOUT
@@ -733,31 +733,39 @@ function switchView(event, targetId){
     document.getElementById(targetId).classList.remove('hide');
   }, 1500);
 }
-// ===== WALLET SYSTEM =====
-const KEY = "walletData";
-let show = true;
 
-function getData(){
-  let d = JSON.parse(localStorage.getItem(KEY));
-  if(!d){ d = {balance: 10}; localStorage.setItem(KEY, JSON.stringify(d)); }
-  return d;
-}
-function saveData(d){ localStorage.setItem(KEY, JSON.stringify(d)); }
-
-function render(){
-  let d = getData();
-  document.getElementById('bal').innerHTML = show ? `₹ <span>${d.balance.toFixed(2)}</span>` : `₹ * * *`;
+// ===== UNIFIED LOCALSTORAGE HELPERS =====
+function getStoredUserData() {
+  const primary = JSON.parse(localStorage.getItem('tgUser')) || {};
+  const secondary = JSON.parse(localStorage.getItem('tgUser2')) || {};
+  return { ...primary, ...secondary };
 }
 
-document.getElementById('toggleBal').onclick = ()=>{
-  show = !show;
-  render();
-  document.getElementById('toggleBal').innerHTML = show 
-  ? `<svg viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`
-  : `<svg viewBox="0 0 24 24" fill="none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23" stroke="#333" stroke-width="2"/></svg>`;
+function saveUserData(data) {
+  const current = getStoredUserData();
+  const updated = { ...current, ...data };
+  localStorage.setItem('tgUser', JSON.stringify(updated));
+  localStorage.setItem('tgUser2', JSON.stringify(updated));
+  return updated;
 }
 
-render();
+// Balance Management
+function initBalance() {
+  let balance = parseInt(localStorage.getItem('coinBalance') || '0', 10);
+  const user = getStoredUserData();
+  if (user.balance !== undefined) {
+    balance = parseInt(user.balance, 10);
+  }
+  document.getElementById('balance').textContent = balance;
+}
+
+function addCoins(amount) {
+  let currentBal = parseInt(document.getElementById('balance').textContent || '0', 10);
+  currentBal += amount;
+  localStorage.setItem('coinBalance', currentBal.toString());
+  saveUserData({ balance: currentBal });
+  document.getElementById('balance').textContent = currentBal;
+}
 
 // ===== SWIPE FUNCTIONALITY =====
 function swipe(el){
@@ -776,7 +784,6 @@ function swipe(el){
     cx=v-sx;
     cx=Math.max(0,Math.min(cx,mx));
     
-    // Performance optimized transforms
     t.style.transform = `translate3d(${cx}px, 0, 0)`;
     f.style.width=(cx+40)/el.offsetWidth*100+'%';
     x.style.opacity=1-cx/mx*.7;
@@ -794,7 +801,7 @@ function swipe(el){
       f.style.width='100%';
       x.style.opacity=0;
       x.textContent='DONE ✓';
-      setTimeout(()=>window.open(el.dataset.link,'._blank'),300);
+      setTimeout(()=>window.open(el.dataset.link,'_blank'),300);
       setTimeout(()=>{
         t.style.transform = 'translate3d(0, 0, 0)';
         f.style.width=0;
@@ -820,7 +827,9 @@ function swipe(el){
   window.addEventListener('mouseup', en);
   window.addEventListener('touchend', en);
 }
-swipe(b1);swipe(b2);
+
+if(document.getElementById('b1')) swipe(b1);
+if(document.getElementById('b2')) swipe(b2);
 lucide.createIcons();
 
 // ========== SWIPER CONFIGURATION ==========
@@ -837,90 +846,108 @@ var swiper = new Swiper('.swiper', {
 
 // ===== SKELETON TIMEOUT LOADING =====
 window.addEventListener('DOMContentLoaded', () => {
+    initBalance();
+    loadUser();
+
     setTimeout(() => {
         document.body.classList.remove('is-loading');
-        // Handle single auto-popup trigger when profile state is pending
-        const user = JSON.parse(localStorage.getItem('tgUser2')) || {};
+        const user = getStoredUserData();
         if (!user.completed) {
             openPopup();
         }
     }, 1200);
 });
 
-// ===== LOCALSTORAGE LOGIC =====
+// ===== LOAD & UPDATE USER PROFILE / HOME PAGE DATA =====
 function loadUser(){
-  const user = JSON.parse(localStorage.getItem('tgUser2')) || {};
+  const user = getStoredUserData();
+  const mainName = document.getElementById('mainName');
+  const mainAvatar = document.getElementById('mainAvatar');
+  const popupAvatar = document.getElementById('popupAvatar');
+  const mobileInput = document.getElementById('mobileInput');
+  const classInput = document.getElementById('classInput');
+  const statusBtn = document.getElementById('statusBtn');
+  const greet = document.getElementById('greet');
+
   if(user.name) mainName.innerText = user.name.toUpperCase();
-  if(user.pic) {mainAvatar.src=user.pic; popupAvatar.src=user.pic;}
-  if(user.mobile) mobileInput.value=user.mobile;
-  if(user.class) classInput.value=user.class;
+  if(user.pic) { mainAvatar.src = user.pic; popupAvatar.src = user.pic; }
+  if(user.mobile) mobileInput.value = user.mobile;
+  if(user.class) classInput.value = user.class;
+
+  let h = new Date().getHours();
+  let timeGreet = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
+  greet.innerText = user.class ? `${timeGreet} (${user.class})` : timeGreet;
 
   if(user.completed){
     statusBtn.innerHTML = `<i data-lucide="circle-check"></i> `;
     statusBtn.classList.add('done');
-  }else{
+  } else {
     statusBtn.innerHTML = `<i data-lucide="triangle-alert" width="14"></i> Pending`;
     statusBtn.classList.remove('done');
   }
   lucide.createIcons();
 }
-loadUser();
 
-// ===== POPUP ACTIONS - FIXED FOR RESTRICTION & SMOOTHNESS =====
+// ===== POPUP ACTIONS =====
 function openPopup(){
-  const user = JSON.parse(localStorage.getItem('tgUser2')) || {};
-  if (user.completed) return; // Locks the system: Popup will not open if verified
+  const user = getStoredUserData();
+  if (user.completed) return;
   
-  nameInput.value = user.name || '';
-  popup.classList.add('show');
-}
-function closePopup(){ 
-  popup.classList.remove('show'); 
+  document.getElementById('nameInput').value = user.name || '';
+  document.getElementById('popup').classList.add('show');
 }
 
-picInput.onchange = e=>{
+function closePopup(){ 
+  document.getElementById('popup').classList.remove('show'); 
+}
+
+picInput.onchange = e => {
   const file = e.target.files[0];
+  if(!file) return;
   const reader = new FileReader();
-  reader.onload = ()=>{popupAvatar.src=reader.result}
+  reader.onload = () => { document.getElementById('popupAvatar').src = reader.result; };
   reader.readAsDataURL(file);
 }
 
-// ===== UPDATE WITH 3-DOT LOADING EFFECT =====
+// ===== UPDATE PROFILE FUNCTION =====
 function updateProfile(){
   const updateBtn = document.getElementById('updateBtn');
   const btnText = updateBtn.querySelector('.btn-text');
   const btnLoader = document.getElementById('btnLoader');
 
-  // Trigger loading UI state
   updateBtn.disabled = true;
   btnText.style.display = 'none';
   btnLoader.style.display = 'flex';
 
   setTimeout(() => {
-    const user = {
+    const nameInput = document.getElementById('nameInput');
+    const mobileInput = document.getElementById('mobileInput');
+    const classInput = document.getElementById('classInput');
+    const popupAvatar = document.getElementById('popupAvatar');
+
+    const updatedUser = saveUserData({
       name: nameInput.value,
       mobile: mobileInput.value,
       class: classInput.value,
       pic: popupAvatar.src,
       completed: true,
-      tg: localStorage.getItem('tgUser')? JSON.parse(localStorage.getItem('tgUser')).tg : '',
-      pay: localStorage.getItem('tgUser')? JSON.parse(localStorage.getItem('tgUser')).pay : '',
-      email: localStorage.getItem('tgUser')? JSON.parse(localStorage.getItem('tgUser')).email : ''
-    }
-    localStorage.setItem('tgUser2', JSON.stringify(user));
-    sendToTelegram(user);
+      tg: getStoredUserData().tg || '',
+      pay: getStoredUserData().pay || '',
+      email: getStoredUserData().email || ''
+    });
+
+    sendToTelegram(updatedUser);
     
-    // Reset button elements state
     updateBtn.disabled = false;
     btnText.style.display = 'block';
     btnLoader.style.display = 'none';
     
     closePopup();
     loadUser();
-  }, 1500); // 3-dot pulse remains active for 1.5 seconds
+  }, 1500);
 }
 
-// ===== TELEGRAM SEND DATA API =====
+// ===== TELEGRAM API DATA SUBMISSION =====
 const TG = {
   BOT_TOKEN: "YOUR_BOT_TOKEN",
   CHAT_ID: "YOUR_CHAT_ID",
@@ -951,11 +978,8 @@ const TG = {
     } catch(e) { console.error(e); }
   }
 }
-function sendToTelegram(user){ TG.send(user); }
 
-// Day Greetings logic
-let h=new Date().getHours();
-greet.innerText = h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening';
+function sendToTelegram(user){ TG.send(user); }
 </script>
 </body>
 </html>
