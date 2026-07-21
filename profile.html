@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Profile & Settings</title>
- <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <title>Profile & Settings - TutoGenius</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
@@ -33,36 +32,12 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
-            -webkit-user-drag: none;
-            transition: background 0.25s, color 0.25s, border-color 0.25s;
             -webkit-tap-highlight-color: transparent;
             font-family: 'Poppins', 'Nunito', sans-serif;
-        }
-            a, span, p, h1, h2, h3, h4, h5, h6, div {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            text-decoration: none;
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
         }
 
-        img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-        }
         body { 
             background-color: #f7f9fe;
             color: #000000;
@@ -82,24 +57,12 @@
             left: 0;
             width: 100%;
             height: 50px;
-            background: #905AF8;
+            background: #0555E8;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 16px;
             z-index: 1000;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .header-title {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
         }
 
         /* --- Main Content Area --- */
@@ -115,7 +78,6 @@
             background-color: #000;
         }
 
-      
         /* Custom Toggle Switch Style */
         .toggle-switch {
             position: relative;
@@ -206,128 +168,67 @@
             background: #1e293b;
         }
 
-        /* Active click scaling effects */
         .clickable-row:active {
             transform: scale(0.99);
         }
 
-
-       .app-footer {
-            overflow: hidden;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 10;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        body.dark .app-footer {
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-            background: #000;
-        }
-
-       .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 11px;
-            font-weight: 700;
-            width: 65px;
-            height: 100%;
-            gap: 2px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.1s ease-in-out;
-        }
-
-       .nav-item.active {
-            color: #905AF8;
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 50px;
-            padding: 5px;
-        }
-
-        body.dark.nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-       .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
-            background-color: rgba(144, 90, 248, 0.15);
-            pointer-events: none;
-        }
-
-        @keyframes ripple-animation {
-            to {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
+     /* BOTTOM NAV */
+.bottom-nav{ border-top-left-radius:20px;border-top-right-radius: 20px ;
+  position:fixed;bottom:0;left:0;right:0;height:65px;background:#fff;
+  display:flex;justify-content:space-around;align-items:center;
+  border-top:1px solid #e5e7eb;box-shadow:0 -2px 10px rgba(0,0,0,.05);z-index:50
+}
+.nav-item{
+  flex:1;text-align:center;text-decoration:none;color:#888;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font:500 11px Segoe UI
+}
+.nav-item i{width:24px;height:24px;stroke:#888;stroke-width:2}
+.nav-item.active{color:#3b49df}
+.nav-item.active i{stroke:#3b49df}
+.nav-item .icon-bg{padding:4px 10px;border-radius:12px}
+.nav-item.active .icon-bg{background:#eef2ff}
 
     </style>
 </head>
 <body>
 
     <header class="app-header">
-        <div class="header-left">
+        <div class="flex items-center gap-3">
             <i data-lucide="bot" class="w-6 h-6 text-white"></i>
-            <span class="header-title">Profile & Settings</span>
+            <span class="text-white text-base font-semibold">Profile & Settings</span>
         </div>
         <div class="flex items-center gap-1 text-white text-sm font-medium cursor-pointer">
             <i data-lucide="settings" class="w-5 h-5"></i>
-            
         </div>
     </header>
 
     <main class="app-content px-4 py-6">
         
+        <!-- USER INFO HEADER -->
         <div class="flex items-center justify-between mb-8 px-1">
             <div class="flex items-center gap-4">
                 <div class="relative w-16 h-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <img id="profilePic" src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Avatar" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer" onclick="openProfileModalForAvatar()">
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer" onclick="openProfileModal()">
                         <i data-lucide="camera" class="w-5 h-5 text-white"></i>
                     </div>
                 </div>
                 <div>
                     <h2 id="username" class="text-xl font-bold tracking-wide text-gray-900 dark:text-white">Aninda Halder</h2>
                     <p id="userEmail" class="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">edulivebangla@gmail.com</p>
+                    <span id="userClassBadge" class="text-[10px] bg-blue-100 text-blue-700 dark:bg-slate-800 dark:text-blue-400 font-bold px-2 py-0.5 rounded-md inline-block mt-1">Class 12</span>
                 </div>
             </div>
-            <button onclick="openProfileModalForAvatar()" class="p-2 hover:bg-gray-200/50 dark:hover:bg-gray-700/50 rounded-full transition-all">
+            <button onclick="openProfileModal()" class="p-2 hover:bg-gray-200/50 dark:hover:bg-gray-700/50 rounded-full transition-all">
                 <i data-lucide="pencil" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i>
             </button>
         </div>
 
-        <div class=" rounded-[20px] shadow-[0_2px_12px_rgba(0,0,0,0.015)] p-1.5 mb-5 border border-transparent dark:border-slate-700">
-         
-            <div class="flex items-center bg-blue-50 dark:bg-slate-800 justify-between p-3.5 rounded-[16px] mb-2">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-[#f3f0ff] dark:bg-purple-950/40 flex items-center justify-center">
-                        <i data-lucide="bell" class="w-5 h-5 text-[#6c5ce7] dark:text-purple-400"></i>
-                    </div>
-                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Notifications</span>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="notificationCheckbox" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
+        <!-- SETTINGS TOGGLES -->
+        <div class="rounded-[20px] p-1.5 mb-5 border border-transparent dark:border-slate-700">
+          
 
-            <div class="flex items-center justify-between bg-blue-50 dark:bg-slate-800 p-3.5 rounded-[16px]">
+            <div class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-full bg-[#f8f9fa] dark:bg-slate-900 flex items-center justify-center">
                         <i data-lucide="moon" class="w-5 h-5 text-gray-900 dark:text-slate-300"></i>
@@ -339,42 +240,43 @@
                     <span class="slider"></span>
                 </label>
             </div>
-   </div>
-   <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-blue-50 dark:bg-slate-700/40 mb-2">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-[#edf2ff] dark:bg-indigo-950/40 flex items-center justify-center">
-                        <i data-lucide="shopping-cart" class="w-5 h-5 text-[#3047a5] dark:text-indigo-400"></i>
-                    </div>
-                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Order History</span>
-                </div>
-                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-            </a>
+        </div>
 
-            <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-blue-50 dark:bg-slate-700/40 mb-2">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-[#fff9db] dark:bg-amber-950/30 flex items-center justify-center">
-                        <i data-lucide="star" class="w-5 h-5 text-[#fab005] dark:text-amber-400"></i>
-                    </div>
-                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Rate This App</span>
+        <!-- QUICK LINKS -->
+        <a href="https://edulive.ooulet.com/account" target="_blank" class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-[#edf2ff] dark:bg-indigo-950/40 flex items-center justify-center">
+                    <i data-lucide="shopping-cart" class="w-5 h-5 text-[#3047a5] dark:text-indigo-400"></i>
                 </div>
-                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-            </a>
+                <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Order History</span>
+            </div>
+            <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+        </a>
 
-            <a href="mailto:edulivebangla@gmail.com" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-blue-50 dark:bg-slate-700/40">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-[#ebfbee] dark:bg-emerald-950/30 flex items-center justify-center">
-                        <i data-lucide="mail" class="w-5 h-5 text-[#40c057] dark:text-emerald-400"></i>
-                    </div>
-                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Contact Us</span>
+        <a href="https://search.google.com/local/writereview?placeid=ChIJC7tiZ6eItw4RGutOrlxl4sA&source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-[#fff9db] dark:bg-amber-950/30 flex items-center justify-center">
+                    <i data-lucide="star" class="w-5 h-5 text-[#fab005] dark:text-amber-400"></i>
                 </div>
-                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-            </a>
-     
+                <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Rate This App</span>
+            </div>
+            <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+        </a>
+
+        <a href="mailto:admin.tutogenius@gmail.com" class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-[#ebfbee] dark:bg-emerald-950/30 flex items-center justify-center">
+                    <i data-lucide="mail" class="w-5 h-5 text-[#40c057] dark:text-emerald-400"></i>
+                </div>
+                <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Contact Us</span>
+            </div>
+            <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
+        </a>
 
         <div class="border-t border-gray-200/60 dark:border-slate-700/60 my-5 mx-2"></div>
 
-        <div class="bg-blue-50 dark:bg-black rounded-[20px] shadow-[0_2px_12px_rgba(0,0,0,0.015)] p-1.5 mb-6 border border-transparent dark:border-slate-700">
-            <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-gray-50 dark:bg-slate-700/40 mb-2">
+        <div class="bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-800 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
+            <a href="policy" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] bg-gray-50 dark:bg-slate-700/40 mb-2">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-full bg-[#f1f3f5] dark:bg-slate-900 flex items-center justify-center">
                         <i data-lucide="lock" class="w-5 h-5 text-gray-700 dark:text-slate-300"></i>
@@ -384,7 +286,7 @@
                 <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
             </a>
 
-            <a href="#" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] transition-all duration-150 bg-gray-50 dark:bg-slate-700/40">
+            <a href="about" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] bg-gray-50 dark:bg-slate-700/40">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-full bg-[#fff5f5] dark:bg-red-950/30 flex items-center justify-center">
                         <i data-lucide="info" class="w-5 h-5 text-[#ff6b6b]"></i>
@@ -395,51 +297,50 @@
             </a>
         </div>
 
+        <!-- FOOTER BRANDING CARD -->
         <div class="bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-5 text-center shadow-sm mx-1 mt-8 mb-4">
             <div class="flex items-center justify-center gap-2 text-gray-800 dark:text-slate-200 font-medium text-[15px]">
                 <span class="text-blue-500">💙</span>
-                <span>Devolopment by Aninda</span>
+                <span>Founder: Aninda Halder</span>
                 <span class="text-base">🇮🇳</span>
             </div>
             <div class="text-xs text-gray-400 dark:text-slate-400 font-medium mt-1.5 flex justify-center gap-1.5">
-                <span>App Version 2.0</span>
+                <span>App Version 1.1</span>
                 <span>|</span>
                 <span>TutoGenius</span>
             </div>
         </div>
-
     </main>
-<nav class="app-footer">
-    <a href="home" class="nav-item">
-        <i data-lucide="home" width="24" height="24"></i>
-        <span>Home</span>
-    </a>
-  <a href="coin" class="nav-item">
-        <i data-lucide="qr-code" width="24" height="24"></i>
-        <span>Recharge</span>
-    </a>
-    <a href="course" class="nav-item">
-        <i data-lucide="airplay" width="24" height="24"></i>
-        <span>Courses</span>
-    </a>
-    <a href="study" class="nav-item">
-        <i data-lucide="book-open" width="24" height="24"></i>
-        <span>Study</span>
-    </a>
-    <a href="#" class="nav-item active">
-        <i data-lucide="user" width="24" height="24"></i>
-        <span>Profile</span>
-    </a>
-</nav>
 
-  
+   <!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="index.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="home"></i></div>
+    <span>Home</span>
+  </a>
 
+  <a href="courses.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
+    <span>Courses</span>
+  </a>
 
+  <a href="library.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="book-open-check"></i></div>
+    <span>Library</span>
+  </a>
+
+  <a href="profile.html" class="nav-item active">
+    <div class="icon-bg"><i data-lucide="user"></i></div>
+    <span>Profile</span>
+  </a>
+</div>
+
+    <!-- EDIT PROFILE MODAL -->
     <div id="profileModal" onclick="closeModalOnBg(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white">Edit Profile</h3>
-                <button onclick="closeModal()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                <button onclick="closeModal()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700">
                     <i data-lucide="x" class="w-5 h-5 text-gray-500 dark:text-slate-400"></i>
                 </button>
             </div>
@@ -457,25 +358,42 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Full Name</label>
-                    <input type="text" id="editNameInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl focus:border-brandBlue dark:focus:border-indigo-500 text-gray-900 dark:text-white outline-none text-sm transition">
+                    <input type="text" id="editNameInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Email Address</label>
-                    <input type="email" id="editEmailInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl focus:border-brandBlue dark:focus:border-indigo-500 text-gray-900 dark:text-white outline-none text-sm transition">
+                    <input type="email" id="editEmailInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Mobile Number</label>
+                    <input type="text" id="editMobileInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Select Class</label>
+                    <select id="editClassInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
+                        <option>Class 9</option>
+                        <option>Class 10</option>
+                        <option>Class 11</option>
+                        <option>Class 12</option>
+                        <option>College</option>
+                    </select>
                 </div>
                 
-                <button id="updateProfileBtn" onclick="saveUpdatedProfile()" class="w-full bg-[#3047a5] dark:bg-indigo-600 text-white py-3.5 rounded-xl text-base font-semibold mt-4 shadow-md transition active:scale-95">
+                <button id="updateProfileBtn" onclick="saveUpdatedProfile()" class="w-full bg-[#3047a5] dark:bg-indigo-600 text-white py-3.5 rounded-xl text-base font-semibold mt-4 shadow-md active:scale-95">
                     Save Changes
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- IMAGE CROPPER MODAL -->
     <div id="cropModalWindow" class="crop-modal">
         <div class="crop-card">
             <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center">
                 <h4 class="font-bold text-gray-900 dark:text-white">Adjust Framework</h4>
-                <button onclick="closeCropModal()" class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700"><i data-lucide="x" class="w-5 h-5 dark:text-slate-400"></i></button>
+                <button onclick="closeCropModal()" class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700">
+                    <i data-lucide="x" class="w-5 h-5 dark:text-slate-400"></i>
+                </button>
             </div>
             <div class="p-4 bg-gray-50 dark:bg-slate-900 flex items-center justify-center max-h-[50vh] overflow-hidden">
                 <img id="cropImageElement" alt="Crop Preview" class="max-w-full">
@@ -487,92 +405,108 @@
         </div>
     </div>
   
-    <input type="file" id="hiddenFileInput" accept="image/jpeg,image/png,image/webp,image/jpg" style="display: none;">
+    <input type="file" id="hiddenFileInput" accept="image/*" style="display: none;">
 
     <script>
-        // Load Lucide Icons
         if (typeof lucide !== 'undefined') lucide.createIcons();
-        const footer = document.querySelector('.app-footer');
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            const targetUrl = this.getAttribute('href');
-            if (!targetUrl || targetUrl === "" || targetUrl === "#") {
-                e.preventDefault();
-            }
 
-            const rect = footer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+        // ===== UNIFIED LOCALSTORAGE HELPERS =====
+        function getStoredUserData() {
+            const primary = JSON.parse(localStorage.getItem('tgUser')) || {};
+            const secondary = JSON.parse(localStorage.getItem('tgUser2')) || {};
+            
+            // Legacy fallbacks
+            const legacyName = localStorage.getItem('student_display_name');
+            const legacyEmail = localStorage.getItem('profile_vault_email');
+            const legacyAvatar = localStorage.getItem('profile_image_url');
 
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${x - (size / 2)}px`;
-            ripple.style.top = `${y - (size / 2)}px`;
+            return {
+                name: primary.name || secondary.name || legacyName || "Update Profile",
+                email: primary.email || secondary.email || legacyEmail || "sample@gmail.com",
+                pic: primary.pic || secondary.pic || legacyAvatar || "https://i.ibb.co/4pDNDk1/avatar.png",
+                mobile: primary.mobile || secondary.mobile || "",
+                class: primary.class || secondary.class || "",
+                completed: primary.completed || secondary.completed || false
+            };
+        }
 
-            this.appendChild(ripple);
-            setTimeout(() => { ripple.remove(); }, 400);
-        });
-    });
-        // --- Storage Management Keys ---
-        const STORAGE_KEYS = {
-            NAME: 'student_display_name',
-            AVATAR: 'profile_image_url',
-            EMAIL: 'profile_vault_email',
-            DARK_MODE: 'darkMode'
-        };
+        function saveUserData(data) {
+            const current = getStoredUserData();
+            const updated = { ...current, ...data };
+            
+            // Sync to all profile storage keys
+            localStorage.setItem('tgUser', JSON.stringify(updated));
+            localStorage.setItem('tgUser2', JSON.stringify(updated));
+            
+            // Legacy Keys sync
+            localStorage.setItem('student_display_name', updated.name);
+            localStorage.setItem('profile_vault_email', updated.email);
+            localStorage.setItem('profile_image_url', updated.pic);
+
+            return updated;
+        }
 
         let currentCropper = null;
         const mainAvatar = document.getElementById('profilePic');
         const modalAvatarPreview = document.getElementById('modalAvatarPreview');
         const usernameSpan = document.getElementById('username');
         const userEmailSpan = document.getElementById('userEmail');
+        const userClassBadge = document.getElementById('userClassBadge');
+        
         const editNameInput = document.getElementById('editNameInput');
         const editEmailInput = document.getElementById('editEmailInput');
+        const editMobileInput = document.getElementById('editMobileInput');
+        const editClassInput = document.getElementById('editClassInput');
+        
         const fileInput = document.getElementById('hiddenFileInput');
         const darkToggleBtn = document.getElementById('darkToggleBtn');
 
-        // Initial setup and theme configuration
+        // Initial Data Load
         window.addEventListener('DOMContentLoaded', () => {
-            const savedName = localStorage.getItem(STORAGE_KEYS.NAME) || "Upload Details";
-            const savedEmail = localStorage.getItem(STORAGE_KEYS.EMAIL) || "";
-            const savedAvatar = localStorage.getItem(STORAGE_KEYS.AVATAR) || "https://i.ibb.co/4pDNDk1/avatar.png";
-            
-            // Set up profile texts and images
-            usernameSpan.textContent = savedName;
-            userEmailSpan.textContent = savedEmail;
-            mainAvatar.src = savedAvatar;
-            modalAvatarPreview.src = savedAvatar;
+            loadUserProfileData();
 
-            // Manage Dark Theme Settings
-            const isDarkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE) === "true";
+            // Dark Mode setup
+            const isDarkMode = localStorage.getItem('darkMode') === "true";
             darkToggleBtn.checked = isDarkMode;
-            if (isDarkMode) {
-                document.body.classList.add('dark');
-                document.documentElement.classList.add('dark');
-            } else {
-                document.body.classList.remove('dark');
-                document.documentElement.classList.remove('dark');
-            }
+            toggleDarkModeClass(isDarkMode);
         });
 
-        // Theme switch function handler
+        function loadUserProfileData() {
+            const data = getStoredUserData();
+            
+            usernameSpan.textContent = data.name;
+            userEmailSpan.textContent = data.email;
+            userClassBadge.textContent = data.class;
+            
+            mainAvatar.src = data.pic;
+            modalAvatarPreview.src = data.pic;
+        }
+
+        // Dark Mode Logic
         darkToggleBtn.addEventListener('change', function() {
-            if (this.checked) {
+            const isDark = this.checked;
+            localStorage.setItem("darkMode", isDark ? "true" : "false");
+            toggleDarkModeClass(isDark);
+        });
+
+        function toggleDarkModeClass(isDark) {
+            if (isDark) {
                 document.body.classList.add('dark');
                 document.documentElement.classList.add('dark');
-                localStorage.setItem(STORAGE_KEYS.DARK_MODE, "true");
             } else {
                 document.body.classList.remove('dark');
                 document.documentElement.classList.remove('dark');
-                localStorage.setItem(STORAGE_KEYS.DARK_MODE, "false");
             }
-        });
+        }
 
-        function openProfileModalForAvatar() {
-            editNameInput.value = usernameSpan.textContent;
-            editEmailInput.value = userEmailSpan.textContent;
+        // Modal Handling
+        function openProfileModal() {
+            const data = getStoredUserData();
+            editNameInput.value = data.name;
+            editEmailInput.value = data.email;
+            editMobileInput.value = data.mobile;
+            editClassInput.value = data.class;
+            
             document.getElementById('profileModal').classList.add('active');
         }
 
@@ -585,17 +519,16 @@
         }
 
         function saveUpdatedProfile() {
-            const newName = editNameInput.value.trim();
-            const newEmail = editEmailInput.value.trim();
+            saveUserData({
+                name: editNameInput.value.trim(),
+                email: editEmailInput.value.trim(),
+                mobile: editMobileInput.value.trim(),
+                class: editClassInput.value,
+                pic: modalAvatarPreview.src,
+                completed: true
+            });
             
-            if(newName) {
-                localStorage.setItem(STORAGE_KEYS.NAME, newName);
-                usernameSpan.textContent = newName;
-            }
-            if(newEmail) {
-                localStorage.setItem(STORAGE_KEYS.EMAIL, newEmail);
-                userEmailSpan.textContent = newEmail;
-            }
+            loadUserProfileData();
             closeModal();
         }
 
@@ -641,7 +574,8 @@
             const croppedDataUrl = canvas.toDataURL('image/jpeg');
             mainAvatar.src = croppedDataUrl;
             modalAvatarPreview.src = croppedDataUrl;
-            localStorage.setItem(STORAGE_KEYS.AVATAR, croppedDataUrl);
+            
+            saveUserData({ pic: croppedDataUrl });
             closeCropModal();
         }
     </script>
