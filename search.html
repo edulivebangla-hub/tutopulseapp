@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Search Course</title>
-<script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
             -webkit-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-              }
+        }
 
         :root {
             --bg-color: #ffffff;
@@ -89,7 +89,8 @@
             position: relative;
         }
 
-        .search-input { padding-left: 8px;
+        .search-input { 
+            padding-left: 8px;
             width: 100%;
             border: none;
             outline: none;
@@ -249,6 +250,7 @@
             width: 180px;
             height: 180px;
             margin-bottom: 24px;
+            object-fit: contain;
         }
 
         .empty-title {
@@ -498,24 +500,11 @@
         ];
 
         // State & DOM Elements
-        let recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
+        let recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
         const searchInput = document.getElementById('searchInput');
         const clearBtn = document.getElementById('clearBtn');
         const mainContent = document.getElementById('mainContent');
         const modalOverlay = document.getElementById('modalOverlay');
-
-        // SVG Empty State Illustration
-        const emptyDocSVG = `
-            <svg class="empty-illustration" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M60 40H120L150 70V160C150 165.523 145.523 170 140 170H60C54.4772 170 50 165.523 50 160V50C50 44.4772 54.4772 40 60 40Z" fill="#EEF2FF" stroke="#6366F1" stroke-width="4" stroke-linejoin="round"/>
-                <path d="M120 40V70H150" stroke="#6366F1" stroke-width="4" stroke-linejoin="round"/>
-                <line x1="70" y1="100" x2="110" y2="100" stroke="#93C5FD" stroke-width="4" stroke-linecap="round"/>
-                <line x1="70" y1="120" x2="100" y2="120" stroke="#93C5FD" stroke-width="4" stroke-linecap="round"/>
-                <circle cx="125" cy="125" r="25" fill="white" stroke="#6366F1" stroke-width="4"/>
-                <line x1="143" y1="143" x2="160" y2="160" stroke="#6366F1" stroke-width="4" stroke-linecap="round"/>
-                <path d="M117 117L133 133M133 117L117 133" stroke="#6366F1" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-        `;
 
         // Initialize Page
         window.addEventListener('DOMContentLoaded', () => {
@@ -620,11 +609,11 @@
             mainContent.innerHTML = html;
         }
 
-        // Render "No courses found" Graphic State
+        // Render "No courses found" Graphic State with GIF Image
         function renderEmptyState() {
             mainContent.innerHTML = `
                 <div class="empty-state">
-                    ${emptyDocSVG}
+                    <img src="https://tupopulse.netlify.app/Data%20not%20found.gif" alt="Data Not Found" class="empty-illustration">
                     <div class="empty-title">No courses found</div>
                 </div>
             `;
@@ -688,3 +677,4 @@
     </script>
 </body>
 </html>
+
