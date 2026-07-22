@@ -109,17 +109,17 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 .phonepe-bg { background: #5f259f; color: #fff; }
 .gpay-bg { background: #ea4335; color: #fff; }
 .whatsapp-bg { background: #25d366; color: #fff; }
-.icon-bg { background: #e2e8f0; color: var(--text-main); }
 
 .option-title{font-size: 15px; font-weight: 600; color: var(--text-main);}
 .option-desc{font-size: 12px; font-weight: 500; color: #16a34a; margin-top:2px;}
 .chevron { width: 18px; height: 18px; color: var(--text-muted); }
 
-/* ADD MONEY SLIDE-UP PAGE */
+/* ADD MONEY MODAL */
 .addmoney-page{
   display:none;position:fixed;inset:0;background:#fff;z-index:100;
   flex-direction:column; max-width: 480px; margin: 0 auto;
   animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
 }
 .addmoney-page.show{display:flex;}
 @keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
@@ -128,39 +128,53 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 .addmoney-header i{width:22px;height:22px;cursor:pointer;}
 .addmoney-header h2{font-size: 18px; font-weight: 700;}
 .addmoney-content{padding:24px 20px;flex:1;}
-.addmoney-note{
-  font-size: 13px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5;
-  background: #f8fafc; padding: 12px 16px; border-radius: 12px; border-left: 4px solid var(--accent);
+
+.step-card {
+  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;
+  padding: 16px; margin-bottom: 20px;
 }
-.input-wrapper { position: relative; margin-bottom: 24px; }
-.currency-symbol { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 28px; font-weight: 700; color: var(--text-main); }
+.step-title {
+  font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+
+.input-wrapper { position: relative; margin-bottom: 14px; }
+.currency-symbol { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 22px; font-weight: 700; color: var(--text-main); }
 .amount-input{
-  width:100%; padding: 16px 16px 16px 45px; border: 2px solid #e2e8f0; border-radius: 14px;
-  font-size: 28px; font-weight: 800; color: var(--text-main); outline: none;
+  width:100%; padding: 12px 12px 12px 40px; border: 2px solid #e2e8f0; border-radius: 12px;
+  font-size: 22px; font-weight: 800; color: var(--text-main); outline: none;
 }
 .amount-input:focus { border-color: var(--accent); }
 
-.amount-btns{display:flex;gap:10px;justify-content:center;margin-bottom:20px;}
+.amount-btns{display:flex;gap:8px;justify-content:center;margin-bottom:10px;}
 .amount-btn{
-  flex: 1; border: 1px solid #e2e8f0; padding: 12px 0; border-radius: 12px;
-  font-size: 14px; font-weight: 700; cursor: pointer; background: #fff; text-align: center;
+  flex: 1; border: 1px solid #e2e8f0; padding: 10px 0; border-radius: 10px;
+  font-size: 13px; font-weight: 700; cursor: pointer; background: #fff; text-align: center;
 }
 .amount-btn.active { border-color: var(--primary); background: var(--primary); color: #000; }
 
-.external-toggle {
-  display: flex; align-items: center; justify-content: space-between;
-  background: #f1f5f9; padding: 12px 16px; border-radius: 12px; margin-bottom: 10px;
+.pay-external-btn {
+  width: 100%; background: #0f172a; color: #fff; border: none; padding: 14px;
+  border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.external-toggle span { font-size: 13px; font-weight: 600; color: var(--text-main); }
+.pay-external-btn:active { opacity: 0.9; }
 
-.add-btn-bottom{
-  margin: 16px 20px 24px; background: var(--primary); border: none; padding: 16px; border-radius: 14px;
-  font-size: 16px; font-weight: 700; color: #000; display: flex; align-items: center; justify-content: center; gap: 8px;
-  cursor: pointer; box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
+.payment-id-input {
+  width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px;
+  font-size: 16px; font-weight: 600; outline: none; margin-bottom: 12px; text-transform: uppercase;
 }
-.add-btn-bottom i{width:20px;height:20px;}
+.payment-id-input:focus { border-color: var(--accent); }
 
-/* HELP POPUP MODAL */
+.verify-btn {
+  width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
+  border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
+}
+.verify-btn:active { background: var(--primary-dark); }
+
+/* HELP MODAL */
 .help-modal{position:fixed;inset:0;background:rgba(15, 23, 42, 0.5);backdrop-filter: blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:200;}
 .help-modal.show{display:flex;}
 .help-box{
@@ -182,7 +196,7 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 <body>
 
 <div class="app-wrapper">
-  <!-- MAIN PAYMENTS PAGE -->
+  <!-- MAIN PAGE -->
   <div id="mainPage">
     <header class="header">
       <div class="left">
@@ -212,50 +226,39 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
         </button>
       </div>
 
-      <h2 class="section-title">Pay via External App</h2>
+      <h2 class="section-title">Pay via Any UPI App</h2>
       <div class="card">
-        <div class="option-row" onclick="payViaExternalUPI('Paytm')">
+        <div class="option-row" onclick="openAddMoney()">
           <div class="option-left">
             <div class="brand-icon paytm-bg">Paytm</div>
             <div>
               <div class="option-title">Paytm</div>
-              <div class="option-desc">Direct UPI Payment</div>
+              <div class="option-desc">Pay & Enter Payment ID</div>
             </div>
           </div>
-          <i data-lucide="external-link" class="chevron"></i>
+          <i data-lucide="chevron-right" class="chevron"></i>
         </div>
         
-        <div class="option-row" onclick="payViaExternalUPI('PhonePe')">
+        <div class="option-row" onclick="openAddMoney()">
           <div class="option-left">
             <div class="brand-icon phonepe-bg">Pe</div>
             <div class="option-title">PhonePe</div>
           </div>
-          <i data-lucide="external-link" class="chevron"></i>
+          <i data-lucide="chevron-right" class="chevron"></i>
         </div>
 
-        <div class="option-row" onclick="payViaExternalUPI('Google Pay')">
+        <div class="option-row" onclick="openAddMoney()">
           <div class="option-left">
             <div class="brand-icon gpay-bg">GPay</div>
             <div class="option-title">Google Pay</div>
           </div>
-          <i data-lucide="external-link" class="chevron"></i>
+          <i data-lucide="chevron-right" class="chevron"></i>
         </div>
 
-        <div class="option-row" onclick="payViaExternalUPI('WhatsApp')">
+        <div class="option-row" onclick="openAddMoney()">
           <div class="option-left">
             <div class="brand-icon whatsapp-bg">WA</div>
             <div class="option-title">WhatsApp Pay</div>
-          </div>
-          <i data-lucide="external-link" class="chevron"></i>
-        </div>
-      </div>
-
-      <h2 class="section-title">Help & Support</h2>
-      <div class="card">
-        <div class="option-row" onclick="openHelp()">
-          <div class="option-left">
-            <div class="brand-icon icon-bg"><i data-lucide="life-buoy"></i></div>
-            <div class="option-title">Contact Customer Support</div>
           </div>
           <i data-lucide="chevron-right" class="chevron"></i>
         </div>
@@ -263,41 +266,55 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
     </div>
   </div>
 
-  <!-- ADD MONEY SLIDE-UP PAGE -->
+  <!-- ADD MONEY PAGE -->
   <div class="addmoney-page" id="addMoneyPage">
     <div class="addmoney-header">
       <i data-lucide="arrow-left" onclick="closeAddMoney()"></i>
-      <h2>Add Money</h2>
+      <h2>Add Money to Wallet</h2>
     </div>
+    
     <div class="addmoney-content">
-      <div class="addmoney-note">
-        Enter the amount to top-up your wallet. You will be redirected to complete the payment safely.
-      </div>
-      <div class="input-wrapper">
-        <span class="currency-symbol">₹</span>
-        <input type="number" id="amountInput" class="amount-input" placeholder="0" value="100">
-      </div>
-      <div class="amount-btns">
-        <div class="amount-btn active" onclick="setAmount(100, this)">+ ₹100</div>
-        <div class="amount-btn" onclick="setAmount(200, this)">+ ₹200</div>
-        <div class="amount-btn" onclick="setAmount(500, this)">+ ₹500</div>
+      
+      <!-- STEP 1: PAYMENT SELECTION -->
+      <div class="step-card">
+        <div class="step-title">
+          <i data-lucide="1-circle"></i> Step 1: Select Amount & Pay
+        </div>
+        <div class="input-wrapper">
+          <span class="currency-symbol">₹</span>
+          <input type="number" id="amountInput" class="amount-input" placeholder="100" value="100">
+        </div>
+        <div class="amount-btns">
+          <div class="amount-btn active" onclick="setAmount(100, this)">+ ₹100</div>
+          <div class="amount-btn" onclick="setAmount(200, this)">+ ₹200</div>
+          <div class="amount-btn" onclick="setAmount(500, this)">+ ₹500</div>
+        </div>
+        <button class="pay-external-btn" onclick="openRazorpayPayment()">
+          <i data-lucide="external-link"></i> Pay with Razorpay
+        </button>
       </div>
 
-      <div class="external-toggle">
-        <span>Force External Browser/App</span>
-        <input type="checkbox" id="useExternalLink" checked>
+      <!-- STEP 2: VERIFICATION -->
+      <div class="step-card">
+        <div class="step-title">
+          <i data-lucide="2-circle"></i> Step 2: Enter Razorpay Payment ID
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+          After finishing the payment, copy the <strong>Payment ID</strong> (starts with <code>pay_</code>) from Razorpay and paste it below:
+        </p>
+        <input type="text" id="paymentIdInput" class="payment-id-input" placeholder="e.g. pay_P1x2y3z4a5b6">
+        <button class="verify-btn" onclick="verifyAndAddMoney()">
+          <i data-lucide="check-circle"></i> Verify & Add Money
+        </button>
       </div>
+
     </div>
-
-    <button class="add-btn-bottom" onclick="executePayment()">
-      <i data-lucide="external-link"></i> Pay Now
-    </button>
   </div>
 
-  <!-- HELP POPUP -->
+  <!-- HELP MODAL -->
   <div class="help-modal" id="helpModal" onclick="closeHelp(event)">
     <div class="help-box" onclick="event.stopPropagation()">
-      <h3>Need Help?</h3>
+      <h3>Need Support?</h3>
       <a href="https://wa.me/919332466756" target="_blank" class="help-option">
         <i data-lucide="message-circle"></i>
         <div class="text">
@@ -320,9 +337,10 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 lucide.createIcons();
 
 // --- CONFIGURATION ---
-const MERCHANT_UPI_ID = "tutogenius@upi"; // Replace with your real UPI ID
-const MERCHANT_NAME = "TutoGenius";
-const RAZORPAY_KEY_ID = "rzp_live_TB2Tex3fIBoKuX"; // Replace with live Razorpay key
+const RAZORPAY_KEY = "rzp_live_TB2Tex3fIBoKuX"; // Your Razorpay Key
+
+// Storage for processed payment IDs to prevent reuse
+let usedPaymentIds = JSON.parse(localStorage.getItem('usedPaymentIds') || '[]');
 
 // --- BALANCE SYSTEM ---
 let balance = parseInt(localStorage.getItem('coinBalance') || '0');
@@ -347,7 +365,7 @@ function addCoins(amount) {
   updateBalanceUI();
 }
 
-// --- ADD MONEY MODAL ---
+// --- ADD MONEY UI ---
 function openAddMoney(){
   document.getElementById('addMoneyPage').classList.add('show');
 }
@@ -360,72 +378,32 @@ function setAmount(amt, el){
   if(el) el.classList.add('active');
 }
 
-// --- MAIN PAYMENT CONTROLLER ---
-function executePayment() {
+// --- STEP 1: OPEN RAZORPAY ---
+function openRazorpayPayment(){
   const amount = parseInt(document.getElementById('amountInput').value);
   if(!amount || amount < 1){
     alert("Please enter a valid amount");
     return;
   }
 
-  const forceExternal = document.getElementById('useExternalLink').checked;
-
-  if (forceExternal) {
-    openExternalUPILink(amount);
-  } else {
-    openRazorpayStandard(amount);
-  }
-}
-
-// 1. EXTERNAL LINK METHOD (Fixes Android APK WebView Blocking)
-function openExternalUPILink(amount) {
-  // Option A: Direct UPI Intent URL (Triggers installed UPI apps in APK)
-  const upiUrl = `upi://pay?pa=${encodeURIComponent(MERCHANT_UPI_ID)}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent("Wallet Topup")}`;
-
-  // Option B: Hosted External Payment Page (Replace with your server gateway endpoint if applicable)
-  const paymentGatewayUrl = `https://api.razorpay.com/v1/checkout/embedded`;
-
-  try {
-    // Try opening external UPI app directly
-    window.location.href = upiUrl;
-
-    // Provide immediate option for manual confirmation/credit
-    setTimeout(() => {
-      if (confirm(`Did you complete the payment of ₹${amount}?`)) {
-        addCoins(amount);
-        closeAddMoney();
-      }
-    }, 2500);
-
-  } catch (err) {
-    // Fallback: Open System External Browser
-    window.open(paymentGatewayUrl, '_system');
-  }
-}
-
-// 2. DIRECT UPI QUICK LINK
-function payViaExternalUPI(appName) {
-  const defaultAmount = 100;
-  openExternalUPILink(defaultAmount);
-}
-
-// 3. RAZORPAY IN-APP POPUP METHOD (Standard Browser Mode)
-function openRazorpayStandard(amount) {
+  // 1. First attempt native Razorpay Popup
   var options = {
-    "key": RAZORPAY_KEY_ID,
+    "key": RAZORPAY_KEY,
     "amount": amount * 100,
     "currency": "INR",
-    "name": MERCHANT_NAME,
-    "description": "Add Money to Wallet",
+    "name": "TutoGenius",
+    "description": "Wallet Add Money",
     "image": "https://i.ibb.co/3RwZ0kM/class11-arts.jpg",
     "handler": function (response){
-        addCoins(amount);
-        alert(`Successfully added ₹${amount}!`);
-        closeAddMoney();
+        // Auto-fill the Payment ID if handler works inside browser
+        if(response.razorpay_payment_id) {
+          document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
+          alert("Payment successful! Your Payment ID has been filled automatically. Now click 'Verify & Add Money'.");
+        }
     },
     "prefill": {
-        "name": "TutoGenius Student",
-        "email": "student@tutogenius.com"
+        "name": "TutoGenius User",
+        "email": "user@tutogenius.com"
     },
     "theme": { "color": "#FFD60A" }
   };
@@ -434,9 +412,44 @@ function openRazorpayStandard(amount) {
     var rzp1 = new Razorpay(options);
     rzp1.open();
   } catch(e) {
-    console.warn("SDK blocked in WebView, falling back to External link...");
-    openExternalUPILink(amount);
+    // 2. Fallback for WebViews / APKs: Open standard external checkout link
+    window.open(`https://razorpay.com/pay/`, '_system');
   }
+}
+
+// --- STEP 2: VERIFY PAYMENT ID ---
+function verifyAndAddMoney(){
+  const paymentId = document.getElementById('paymentIdInput').value.trim();
+  const amount = parseInt(document.getElementById('amountInput').value) || 100;
+
+  // Validation rules
+  if(!paymentId) {
+    alert("Please enter your Razorpay Payment ID");
+    return;
+  }
+
+  // Check valid Payment ID format (e.g. pay_XXXXXX or minimum 10 characters)
+  if(paymentId.length < 10) {
+    alert("Invalid Payment ID format. Please check and try again.");
+    return;
+  }
+
+  // Prevent duplicate usage of the same payment ID
+  if(usedPaymentIds.includes(paymentId)) {
+    alert("This Payment ID has already been redeemed!");
+    return;
+  }
+
+  // Successfully Add Money
+  usedPaymentIds.push(paymentId);
+  localStorage.setItem('usedPaymentIds', JSON.stringify(usedPaymentIds));
+
+  addCoins(amount);
+  alert(`Success! Payment ID verified. ₹${amount} added to your wallet.`);
+  
+  // Reset Form & Close Modal
+  document.getElementById('paymentIdInput').value = '';
+  closeAddMoney();
 }
 
 // --- HELP MODAL ---
@@ -451,5 +464,6 @@ function closeHelp(e){
 </script>
 </body>
 </html>
+
 
 
