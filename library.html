@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Payments - TutoGenius</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family: 'Segoe UI', Roboto, sans-serif;-webkit-tap-highlight-color: transparent;}
+body{background:#f7f8fa;color:#111;}
+
+.header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;background:#fff;position:sticky;top:0;z-index:10;
+  border-bottom:1px solid #eee;
+}
+.header .left{display:flex;align-items:center;gap:12px;}
+.header .left i{width:22px;height:22px;cursor:pointer;}
+.header h1{font:700 18px 'Segoe UI';}
+.help-btn{
+  display:flex;align-items:center;gap:6px;border:1px solid #ddd;
+  padding:6px 12px;border-radius:20px;font:500 13px 'Segoe UI';cursor:pointer;background:#fff;
+}
+.help-btn i{width:16px;height:16px;}
+
+.container{padding:16px;}
+.section-title{font:700 15px 'Segoe UI';margin:16px 0 10px;color:#333;}
+
+.card{
+  background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+.wallet-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.wallet-header i{width:24px;height:24px;}
+.wallet-title{font:700 16px 'Segoe UI';}
+.low-balance{font:500 12px 'Segoe UI';color:#e63946;margin-top:2px;}
+.balance{font:700 22px 'Segoe UI';margin:8px 0;}
+
+.add-money-btn{
+  border:1px solid #ddd;padding:8px 16px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:6px;font:600 14px 'Segoe UI';
+  cursor:pointer;background:#fff;
+}
+.add-money-btn i{width:16px;height:16px;}
+
+.option-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;border-bottom:1px solid #f1f1f1;cursor:pointer;
+}
+.option-row:last-child{border:none;}
+.option-left{display:flex;align-items:center;gap:12px;}
+.option-left img{width:28px;height:28px;border-radius:6px;}
+.option-title{font:600 15px 'Segoe UI';}
+.option-desc{font:400 12px 'Segoe UI';color:#666;margin-top:3px;}
+.link-btn{color:#1e40af;font:600 14px 'Segoe UI';}
+
+/* ADD MONEY PAGE */
+.addmoney-page{display:none;position:fixed;inset:0;background:#fff;z-index:100;flex-direction:column;}
+.addmoney-page.show{display:flex;}
+.addmoney-header{padding:14px 16px;border-bottom:1px solid #eee;display:flex;align-items:center;gap:12px;}
+.addmoney-header i{width:22px;height:22px;cursor:pointer;}
+.addmoney-header h2{font:700 18px 'Segoe UI';}
+.addmoney-content{padding:20px;flex:1;}
+.addmoney-note{font:500 13px 'Segoe UI';color:#555;margin-bottom:20px;line-height:1.5;}
+.amount-input{
+  width:100%;padding:16px;border:none;border-bottom:2px solid #eee;
+  font:700 24px 'Segoe UI';text-align:center;outline:none;margin-bottom:20px;
+}
+.amount-btns{display:flex;gap:10px;justify-content:center;margin-bottom:30px;}
+.amount-btn{
+  border:1px solid #ddd;padding:10px 20px;border-radius:20px;
+  font:600 14px 'Segoe UI';cursor:pointer;background:#fff;
+}
+.amount-btn.active{border-color:#FFD60A;background:#FFD60A;}
+.add-btn-bottom{
+  position:fixed;bottom:20px;left:16px;right:16px;
+  background:#FFD60A;border:none;padding:16px;border-radius:12px;
+  font:700 16px 'Segoe UI';display:flex;align-items:center;justify-content:center;gap:8px;
+  cursor:pointer;
+}
+.add-btn-bottom i{width:18px;height:18px;}
+
+/* HELP POPUP */
+.help-modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:flex-end;z-index:200;}
+.help-modal.show{display:flex;}
+.help-box{background:#fff;width:100%;border-radius:20px 20px 0 0;padding:20px;animation:slideUp 0.3s;}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.help-box h3{font:700 16px 'Segoe UI';margin-bottom:16px;text-align:center;}
+.help-option{display:flex;align-items:center;gap:12px;padding:14px;border-radius:10px;background:#f8f9fa;margin-bottom:10px;cursor:pointer;text-decoration:none;color:#111;}
+.help-option i{width:20px;height:20px;}
+.help-option .text h4{font:600 14px 'Segoe UI';}
+.help-option .text p{font:400 12px 'Segoe UI';color:#666;}
+
+.hidden{display:none;}
+</style>
+</head>
+<body>
+
+<!-- MAIN PAYMENTS PAGE -->
+<div id="mainPage">
+  <header class="header">
+    <div class="left">
+      <i data-lucide="arrow-left" onclick="history.back()"></i>
+      <h1>Payments</h1>
+    </div>
+    <div class="help-btn" onclick="openHelp()">
+      <i data-lucide="help-circle"></i> Help
+    </div>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">Wallets</h2>
+    <div class="card">
+      <div class="wallet-header">
+        <i data-lucide="wallet"></i>
+        <div>
+          <div class="wallet-title">TutoGenius Wallet</div>
+          <div class="low-balance" id="lowBalanceText">Low Balance: ₹0</div>
+        </div>
+      </div>
+      <div class="balance">₹<span id="balance">0</span></div>
+      <div class="add-money-btn" onclick="openAddMoney()">
+        <i data-lucide="plus"></i> Add Money
+      </div>
+    </div>
+
+    
+
+    <h2 class="section-title">Pay by any UPI app</h2>
+    <div class="card">
+      <div class="option-row">
+        <div class="option-left">
+          <img src="https://i.ibb.co/w0y5kB5/paytm.png" alt="Paytm">
+          <div>
+            <div class="option-title">Paytm</div>
+            <div class="option-desc">Flat ₹30 Cashback | Min. payment ₹35</div>
+          </div>
+        </div>
+      </div>
+      <div class="option-row">
+        <div class="option-left">
+          <img src="https://i.ibb.co/2qQwM1G/phonepe.png" alt="PhonePe">
+          <div class="option-title">PhonePe</div>
+        </div>
+      </div>
+      <div class="option-row">
+        <div class="option-left">
+          <img src="https://i.ibb.co/vD6tR6V/whatsapp.png" alt="WhatsApp">
+          <div class="option-title">WhatsApp</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Pay Later</h2>
+    <div class="card">
+      <div class="option-row">
+        <div class="option-left">
+          <i data-lucide="qr-code"></i>
+          <div>
+            <div class="option-title">Pay at drop</div>
+            <div class="option-desc">Go cashless, after ride pay by scanning QR code</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Others</h2>
+    <div class="card">
+      <div class="option-row">
+        <div class="option-left">
+          <i data-lucide="banknote"></i>
+          <div class="option-title">Cash</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD MONEY PAGE -->
+<div class="addmoney-page" id="addMoneyPage">
+  <div class="addmoney-header">
+    <i data-lucide="arrow-left" onclick="closeAddMoney()"></i>
+    <h2>Add Money</h2>
+  </div>
+  <div class="addmoney-content">
+    <div class="addmoney-note">
+      TutoGenius wallet can only be used to pay for Courses and Study Materials on TutoGenius
+    </div>
+    <input type="number" id="amountInput" class="amount-input" placeholder="₹50" value="50">
+    <div class="amount-btns">
+      <div class="amount-btn" onclick="setAmount(100)">₹100</div>
+      <div class="amount-btn" onclick="setAmount(200)">₹200</div>
+      <div class="amount-btn" onclick="setAmount(500)">₹500</div>
+    </div>
+  </div>
+  <button class="add-btn-bottom" onclick="payWithRazorpay()">
+    <i data-lucide="plus"></i> Add Money
+  </button>
+</div>
+
+<!-- HELP POPUP -->
+<div class="help-modal" id="helpModal" onclick="closeHelp(event)">
+  <div class="help-box" onclick="event.stopPropagation()">
+    <h3>Need Help?</h3>
+    <a href="https://wa.me/919332466756" target="_blank" class="help-option">
+      <i data-lucide="message-circle"></i>
+      <div class="text">
+        <h4>WhatsApp Support</h4>
+        <p>9332466756</p>
+      </div>
+    </a>
+    <a href="mailto:admin.tutogenius@gmail.com" target="_blank" class="help-option">
+      <i data-lucide="mail"></i>
+      <div class="text">
+        <h4>Email Support</h4>
+        <p>admin.tutogenius@gmail.com</p>
+      </div>
+    </a>
+  </div>
+</div>
+
+
+<script>
+lucide.createIcons();
+
+// --- BALANCE SYSTEM ---
+let balance = parseInt(localStorage.getItem('coinBalance') || '0');
+const balanceEl = document.getElementById('balance');
+const lowBalanceEl = document.getElementById('lowBalanceText');
+
+function updateBalanceUI(){
+  balanceEl.textContent = balance;
+  lowBalanceEl.textContent = `Low Balance: ₹${balance}`;
+}
+updateBalanceUI();
+
+// Use this function anywhere in your other scripts to add coins
+function addCoins(amount) {
+  balance += amount;
+  localStorage.setItem('coinBalance', balance);
+  updateBalanceUI();
+}
+
+// --- ADD MONEY PAGE ---
+function openAddMoney(){document.getElementById('addMoneyPage').classList.add('show');}
+function closeAddMoney(){document.getElementById('addMoneyPage').classList.remove('show');}
+function setAmount(amt){
+  document.getElementById('amountInput').value = amt;
+  document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// --- RAZORPAY PAYMENT ---
+function payWithRazorpay(){
+  const amount = parseInt(document.getElementById('amountInput').value);
+  if(!amount || amount < 1){alert("Enter valid amount");return;}
+
+  var options = {
+    "key": "rzp_live_TB2Tex3fIBoKuX", // <-- Replace this
+    "amount": amount * 100, // Amount in paise
+    "currency": "INR",
+    "name": "TutoGenius",
+    "description": "Add Money to Wallet",
+    "image": "https://i.ibb.co/3RwZ0kM/class11-arts.jpg",
+    "handler": function (response){
+        // Payment Success
+        addCoins(amount);
+        alert(`₹${amount} added successfully!`);
+        closeAddMoney();
+    },
+    "prefill": {
+        "name": "TutoGenius User",
+        "email": "user@example.com"
+    },
+    "theme": {
+        "color": "#FFD60A"
+    }
+  };
+  var rzp1 = new Razorpay(options);
+  rzp1.open();
+}
+
+// --- HELP POPUP ---
+function openHelp(){document.getElementById('helpModal').classList.add('show');}
+function closeHelp(e){
+  if(!e || e.target.id === 'helpModal'){
+    document.getElementById('helpModal').classList.remove('show');
+  }
+}
+</script>
+</body>
+</html>
