@@ -15,7 +15,6 @@
   --card-bg: #ffffff;
   --text-main: #0f172a;
   --text-muted: #64748b;
-  --danger: #ef4444;
   --radius: 16px;
   --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
@@ -89,15 +88,14 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
   border:none; padding:10px 18px; border-radius:30px;
   display:inline-flex; align-items:center; gap:8px; font-size: 14px; font-weight: 700;
   cursor:pointer; background: var(--primary); color: #000;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease;
 }
-.add-money-btn:active { transform: scale(0.96); background: var(--primary-dark); }
+.add-money-btn:active { transform: scale(0.96); }
 .add-money-btn i{width:18px;height:18px;}
 
 .option-row{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 0;border-bottom:1px solid #f1f5f9;cursor:pointer;
-  transition: opacity 0.2s ease;
 }
 .option-row:last-child{border:none; padding-bottom: 0;}
 .option-row:first-child{padding-top: 0;}
@@ -138,24 +136,28 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 .currency-symbol { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 28px; font-weight: 700; color: var(--text-main); }
 .amount-input{
   width:100%; padding: 16px 16px 16px 45px; border: 2px solid #e2e8f0; border-radius: 14px;
-  font-size: 28px; font-weight: 800; color: var(--text-main); outline: none; transition: border-color 0.2s ease;
+  font-size: 28px; font-weight: 800; color: var(--text-main); outline: none;
 }
 .amount-input:focus { border-color: var(--accent); }
 
-.amount-btns{display:flex;gap:10px;justify-content:center;margin-bottom:30px;}
+.amount-btns{display:flex;gap:10px;justify-content:center;margin-bottom:20px;}
 .amount-btn{
   flex: 1; border: 1px solid #e2e8f0; padding: 12px 0; border-radius: 12px;
   font-size: 14px; font-weight: 700; cursor: pointer; background: #fff; text-align: center;
-  transition: all 0.2s ease;
 }
-.amount-btn.active, .amount-btn:active { border-color: var(--primary); background: var(--primary); color: #000; }
+.amount-btn.active { border-color: var(--primary); background: var(--primary); color: #000; }
+
+.external-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #f1f5f9; padding: 12px 16px; border-radius: 12px; margin-bottom: 10px;
+}
+.external-toggle span { font-size: 13px; font-weight: 600; color: var(--text-main); }
 
 .add-btn-bottom{
-  margin: 20px; background: var(--primary); border: none; padding: 16px; border-radius: 14px;
+  margin: 16px 20px 24px; background: var(--primary); border: none; padding: 16px; border-radius: 14px;
   font-size: 16px; font-weight: 700; color: #000; display: flex; align-items: center; justify-content: center; gap: 8px;
-  cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
+  cursor: pointer; box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
 }
-.add-btn-bottom:active { transform: scale(0.98); background: var(--primary-dark); }
 .add-btn-bottom i{width:20px;height:20px;}
 
 /* HELP POPUP MODAL */
@@ -170,9 +172,8 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 .help-option{
   display:flex; align-items:center; gap:14px; padding:16px; border-radius:14px;
   background:#f8fafc; margin-bottom:12px; cursor:pointer; text-decoration:none; color:var(--text-main);
-  border: 1px solid #f1f5f9; transition: background 0.2s ease;
+  border: 1px solid #f1f5f9;
 }
-.help-option:active { background: #f1f5f9; }
 .help-option i{width:22px;height:22px;color: var(--accent);}
 .help-option .text h4{font-size: 15px; font-weight: 600;}
 .help-option .text p{font-size: 13px; color: var(--text-muted); margin-top:2px;}
@@ -211,64 +212,50 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
         </button>
       </div>
 
-      <h2 class="section-title">Pay by any UPI app</h2>
+      <h2 class="section-title">Pay via External App</h2>
       <div class="card">
-        <div class="option-row" onclick="triggerDirectUPI('Paytm')">
+        <div class="option-row" onclick="payViaExternalUPI('Paytm')">
           <div class="option-left">
             <div class="brand-icon paytm-bg">Paytm</div>
             <div>
               <div class="option-title">Paytm</div>
-              <div class="option-desc">Flat ₹30 Cashback | Min. payment ₹35</div>
+              <div class="option-desc">Direct UPI Payment</div>
             </div>
           </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
+          <i data-lucide="external-link" class="chevron"></i>
         </div>
         
-        <div class="option-row" onclick="triggerDirectUPI('PhonePe')">
+        <div class="option-row" onclick="payViaExternalUPI('PhonePe')">
           <div class="option-left">
             <div class="brand-icon phonepe-bg">Pe</div>
             <div class="option-title">PhonePe</div>
           </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
+          <i data-lucide="external-link" class="chevron"></i>
         </div>
 
-        <div class="option-row" onclick="triggerDirectUPI('Google Pay')">
+        <div class="option-row" onclick="payViaExternalUPI('Google Pay')">
           <div class="option-left">
             <div class="brand-icon gpay-bg">GPay</div>
             <div class="option-title">Google Pay</div>
           </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
+          <i data-lucide="external-link" class="chevron"></i>
         </div>
 
-        <div class="option-row" onclick="triggerDirectUPI('WhatsApp')">
+        <div class="option-row" onclick="payViaExternalUPI('WhatsApp')">
           <div class="option-left">
             <div class="brand-icon whatsapp-bg">WA</div>
-            <div class="option-title">WhatsApp</div>
+            <div class="option-title">WhatsApp Pay</div>
           </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
+          <i data-lucide="external-link" class="chevron"></i>
         </div>
       </div>
 
-      <h2 class="section-title">Pay Later</h2>
+      <h2 class="section-title">Help & Support</h2>
       <div class="card">
-        <div class="option-row" onclick="alert('Scan QR feature will be available at checkout.')">
+        <div class="option-row" onclick="openHelp()">
           <div class="option-left">
-            <div class="brand-icon icon-bg"><i data-lucide="qr-code"></i></div>
-            <div>
-              <div class="option-title">Pay at drop / Class</div>
-              <div class="option-desc" style="color: var(--text-muted);">Go cashless, pay by scanning QR code</div>
-            </div>
-          </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
-        </div>
-      </div>
-
-      <h2 class="section-title">Others</h2>
-      <div class="card">
-        <div class="option-row" onclick="alert('Cash option selected for offline counter payment.')">
-          <div class="option-left">
-            <div class="brand-icon icon-bg"><i data-lucide="banknote"></i></div>
-            <div class="option-title">Cash</div>
+            <div class="brand-icon icon-bg"><i data-lucide="life-buoy"></i></div>
+            <div class="option-title">Contact Customer Support</div>
           </div>
           <i data-lucide="chevron-right" class="chevron"></i>
         </div>
@@ -284,7 +271,7 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
     </div>
     <div class="addmoney-content">
       <div class="addmoney-note">
-        TutoGenius wallet balance can be used to instantly purchase Courses, Test Series, and Study Materials.
+        Enter the amount to top-up your wallet. You will be redirected to complete the payment safely.
       </div>
       <div class="input-wrapper">
         <span class="currency-symbol">₹</span>
@@ -295,9 +282,15 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
         <div class="amount-btn" onclick="setAmount(200, this)">+ ₹200</div>
         <div class="amount-btn" onclick="setAmount(500, this)">+ ₹500</div>
       </div>
+
+      <div class="external-toggle">
+        <span>Force External Browser/App</span>
+        <input type="checkbox" id="useExternalLink" checked>
+      </div>
     </div>
-    <button class="add-btn-bottom" onclick="payWithRazorpay()">
-      <i data-lucide="external-link"></i> Proceed to Pay
+
+    <button class="add-btn-bottom" onclick="executePayment()">
+      <i data-lucide="external-link"></i> Pay Now
     </button>
   </div>
 
@@ -324,8 +317,12 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 </div>
 
 <script>
-// Initialize Icons
 lucide.createIcons();
+
+// --- CONFIGURATION ---
+const MERCHANT_UPI_ID = "tutogenius@upi"; // Replace with your real UPI ID
+const MERCHANT_NAME = "TutoGenius";
+const RAZORPAY_KEY_ID = "rzp_live_TB2Tex3fIBoKuX"; // Replace with live Razorpay key
 
 // --- BALANCE SYSTEM ---
 let balance = parseInt(localStorage.getItem('coinBalance') || '0');
@@ -350,7 +347,7 @@ function addCoins(amount) {
   updateBalanceUI();
 }
 
-// --- ADD MONEY PAGE NAVIGATION ---
+// --- ADD MONEY MODAL ---
 function openAddMoney(){
   document.getElementById('addMoneyPage').classList.add('show');
 }
@@ -363,55 +360,83 @@ function setAmount(amt, el){
   if(el) el.classList.add('active');
 }
 
-// --- PAYMENT INTEGRATION (RAZORPAY EXTERNAL SYSTEM) ---
-function payWithRazorpay(){
+// --- MAIN PAYMENT CONTROLLER ---
+function executePayment() {
   const amount = parseInt(document.getElementById('amountInput').value);
   if(!amount || amount < 1){
     alert("Please enter a valid amount");
     return;
   }
 
-  // Configuration for Razorpay Checkout
+  const forceExternal = document.getElementById('useExternalLink').checked;
+
+  if (forceExternal) {
+    openExternalUPILink(amount);
+  } else {
+    openRazorpayStandard(amount);
+  }
+}
+
+// 1. EXTERNAL LINK METHOD (Fixes Android APK WebView Blocking)
+function openExternalUPILink(amount) {
+  // Option A: Direct UPI Intent URL (Triggers installed UPI apps in APK)
+  const upiUrl = `upi://pay?pa=${encodeURIComponent(MERCHANT_UPI_ID)}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent("Wallet Topup")}`;
+
+  // Option B: Hosted External Payment Page (Replace with your server gateway endpoint if applicable)
+  const paymentGatewayUrl = `https://api.razorpay.com/v1/checkout/embedded`;
+
+  try {
+    // Try opening external UPI app directly
+    window.location.href = upiUrl;
+
+    // Provide immediate option for manual confirmation/credit
+    setTimeout(() => {
+      if (confirm(`Did you complete the payment of ₹${amount}?`)) {
+        addCoins(amount);
+        closeAddMoney();
+      }
+    }, 2500);
+
+  } catch (err) {
+    // Fallback: Open System External Browser
+    window.open(paymentGatewayUrl, '_system');
+  }
+}
+
+// 2. DIRECT UPI QUICK LINK
+function payViaExternalUPI(appName) {
+  const defaultAmount = 100;
+  openExternalUPILink(defaultAmount);
+}
+
+// 3. RAZORPAY IN-APP POPUP METHOD (Standard Browser Mode)
+function openRazorpayStandard(amount) {
   var options = {
-    "key": "rzp_live_TB2Tex3fIBoKuX", // Replace with your live Razorpay Key
-    "amount": amount * 100, // Convert INR to Paise
+    "key": RAZORPAY_KEY_ID,
+    "amount": amount * 100,
     "currency": "INR",
-    "name": "TutoGenius",
-    "description": "Wallet Top-up",
+    "name": MERCHANT_NAME,
+    "description": "Add Money to Wallet",
     "image": "https://i.ibb.co/3RwZ0kM/class11-arts.jpg",
     "handler": function (response){
-        // Callback on Successful Payment
         addCoins(amount);
-        alert(`Success! ₹${amount} added to your wallet.`);
+        alert(`Successfully added ₹${amount}!`);
         closeAddMoney();
     },
     "prefill": {
-        "name": "Student User",
-        "email": "user@tutogenius.com"
+        "name": "TutoGenius Student",
+        "email": "student@tutogenius.com"
     },
-    "theme": {
-        "color": "#FFD60A"
-    }
+    "theme": { "color": "#FFD60A" }
   };
 
   try {
     var rzp1 = new Razorpay(options);
-    rzp1.on('payment.failed', function (response){
-        alert("Payment failed. Reason: " + response.error.description);
-    });
     rzp1.open();
   } catch(e) {
-    // External Gateway Fallback Mode
-    console.error("Razorpay SDK Error:", e);
-    alert("Opening External Payment Link...");
-    window.open(`https://razorpay.com/pay/` + amount, '_blank');
+    console.warn("SDK blocked in WebView, falling back to External link...");
+    openExternalUPILink(amount);
   }
-}
-
-// Quick Payment Trigger for UPI Apps
-function triggerDirectUPI(appName) {
-  setAmount(100, null);
-  openAddMoney();
 }
 
 // --- HELP MODAL ---
@@ -426,4 +451,5 @@ function closeHelp(e){
 </script>
 </body>
 </html>
+
 
