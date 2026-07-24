@@ -1,1143 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TutoGenius App</title>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <style>
-        :root {
-            --bg: #f8fafc;
-            --primary-purple: #7c3aed;
-            --primary-purple-hover: #6d28d9;
-            --bg-light: #ffffff;
-            --card-bg: #ffffff;
-            --card-border: #e2e8f0;
-            --btn-green: #10b981;
-            --btn-text-green: #ffffff;
-            --deadline-bg: #fee2e2;
-            --deadline-text: #ef4444;
-            --text-main: #0f172a;
-            --text-sub: #64748b;
-            --text-muted: #94a3b8;
-            --skeleton-base: #e2e8f0;
-            --skeleton-shimmer: #f1f5f9;
-        }
-
-        body.dark {
-            --bg: #09090b;
-            --primary-purple: #a78bfa;
-            --primary-purple-hover: #c084fc;
-            --bg-light: #18181b;
-            --card-bg: #18181b;
-            --card-border: #27272a;
-            --btn-green: #059669;
-            --btn-text-green: #ffffff;
-            --deadline-bg: #451a03;
-            --deadline-text: #f97316;
-            --text-main: #f4f4f5;
-            --text-sub: #a1a1aa;
-            --text-muted: #52525b;
-            --skeleton-base: #27272a;
-            --skeleton-shimmer: #3f3f46;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        a, span, p, h1, h2, h3, h4, h5, h6, div {
-            text-decoration: none;
-        }
-
-        body {
-            background-color: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: var(--text-main);
-        }
-
-        .app-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: #905AF8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px; color:#fff
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(144, 90, 248, 0.15);
-        }
-
-        .header-left{display:flex;align-items:center;gap:12px;font-weight:600}
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #fff;
-        }
-
-        .header-icon {
-            padding: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            transition: transform 0.1s ease, background 0.2s;
-        }
-
-        .header-icon:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .header-icon:active {
-            transform: scale(0.92);
-        }
-
-        .app-container {
-            position: fixed;
-            top: 50px;
-            bottom: 70px;
-            width: 100%;
-            overflow-y: auto;
-            background: var(--bg);
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .app-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .content-wrapper {
-            padding: 20px 16px;
-            max-width: 500px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* Skeleton Loading Styles */
-        .skeleton-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .skeleton {
-            background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shimmer) 50%, var(--skeleton-base) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite linear;
-            border-radius: 16px;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .skeleton-card-lg { height: 120px; width: 100%; }
-        .skeleton-card-md { height: 105px; width: 100%; }
-        .skeleton-card-xl { height: 320px; width: 100%; }
-
-        /* Actual Content States */
-        .main-content {
-            opacity: 0;
-            display: none;
-            transition: opacity 0.4s ease-in-out;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .main-content.loaded {
-            display: flex;
-            opacity: 1;
-        }
-
-        /* Redesigned Modern Cards */
-        .modern-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-        }
-
-        body.dark .modern-card {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .balance-box {
-            background: linear-gradient(135deg, #7c3aed, #5b21b6);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .balance-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .balance-left .balance-title {
-            font-size: 12px;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        #balance {
-            font-size: 36px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            letter-spacing: -0.5px;
-        }
-
-        #balance::before {
-            content: "₹";
-            font-size: 26px;
-            font-weight: 600;
-        }
-
-        .balance-right {
-            text-align: right;
-            z-index: 2;
-        }
-
-        .balance-right .bonus-text {
-            font-size: 11px;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: inline-block;
-        }
-
-        .collect-btn {
-            background: #ffffff;
-            color: #7c3aed;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .collect-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-        }
-
-        .collect-btn:disabled {
-            background: rgba(255, 255, 255, 0.25);
-            color: rgba(255, 255, 255, 0.6);
-            cursor: not-allowed;
-        }
-
-        label {
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--text-sub);
-            margin-bottom: 12px;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 0.75px;
-        }
-
-        .input-wrap {
-            display: flex;
-            align-items: center;
-            background: var(--bg);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 6px 8px 6px 16px;
-            transition: all 0.2s;
-        }
-
-        .input-wrap:focus-within {
-            border-color: var(--primary-purple);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
-        }
-
-        .input-wrap input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 10px 0;
-            font-size: 16px;
-            font-weight: 600;
-            outline: none;
-            color: var(--text-main);
-        }
-
-        .input-wrap input::placeholder {
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        .validate-btn {
-            background: var(--primary-purple);
-            border: none;
-            color: #ffffff;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 13px;
-            padding: 10px 18px;
-            border-radius: 10px;
-            transition: background 0.2s;
-        }
-
-        .validate-btn:hover {
-            background: var(--primary-purple-hover);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 8px 0;
-            font-weight: 800;
-            font-size: 12px;
-            color: var(--text-muted);
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .divider::before, .divider::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: 42%;
-            height: 1px;
-            background: var(--card-border);
-        }
-        .divider::before { left: 0; }
-        .divider::after { right: 0; }
-
-        /* Modern Scanning Interface */
-        .upload-area {
-            background: #09090b;
-            color: #fff;
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
-            margin-top: 4px;
-            min-height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-        }
-
-        .upload-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 18px;
-            font-size: 12px;
-            font-weight: 600;
-            background: rgba(15, 15, 20, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 5;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .status-badge {
-            background: #27272a;
-            padding: 4px 10px;
-            border-radius: 20px;
-            color: #a1a1aa;
-            font-weight: 700;
-            font-size: 11px;
-        }
-
-        .status-badge.ready { color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
-        .status-badge.scanning { color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
-        .status-badge.scanned { color: #34d399; background: rgba(52, 211, 153, 0.15); }
-
-        #preview, #webcamVideo {
-            width: 100%;
-            height: 100%;
-            min-height: 220px;
-            max-height: 260px;
-            object-fit: cover;
-            display: none;
-            background: #000;
-        }
-
-        .placeholder-svg {
-            opacity: 0.4;
-            color: #a1a1aa;
-            margin-top: 24px;
-            transition: transform 0.2s;
-        }
-
-        .upload-area:hover .placeholder-svg {
-            transform: scale(1.08);
-            color: #fff;
-        }
-
-        .scanner-laser {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: #a78bfa;
-            box-shadow: 0 0 14px #a78bfa, 0 0 4px #a78bfa;
-            animation: scanAnimation 2.2s linear infinite;
-            z-index: 4;
-        }
-
-        @keyframes scanAnimation {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
-        }
-
-        .light-toggle-btn {
-            position: absolute;
-            bottom: 14px;
-            right: 14px;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 6;
-            color: #000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .light-toggle-btn.active {
-            background: #fbbf24;
-            box-shadow: 0 4px 14px rgba(251, 191, 36, 0.4);
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 18px;
-        }
-
-        .btn-row button {
-            flex: 1;
-            padding: 14px;
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-upload {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-        }
-        .btn-upload:hover {
-            background: var(--bg);
-        }
-
-        .btn-scan {
-            background: var(--primary-purple);
-            border: none;
-            color: #ffffff;
-        }
-        .btn-scan:hover {
-            background: var(--primary-purple-hover);
-        }
-
-        .info-hint {
-            margin-top: 12px;
-            font-size: 11px;
-            color: var(--text-sub);
-            line-height: 1.4;
-            font-weight: 500;
-        }
-
-    /* --- Footer Nav Styles --- */
-        .app-footer {
-            overflow: hidden;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 10;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        body.dark .app-footer {
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-          background: #000;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Payments - TutoGenius</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #FFD60A;
+  --primary-dark: #e5be00;
+  --accent: #1e40af;
+  --bg: #f4f6f9;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --radius: 16px;
+  --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --danger: #ef4444;
+  --success: #22c55e;
 }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 11px;
-            font-weight: 700;
-            width: 65px;
-            height: 100%;
-            gap: 2px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.1s ease-in-out;
-        }
+*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;-webkit-tap-highlight-color: transparent;}
+body{background:var(--bg);color:var(--text-main);display:flex;justify-content:center;min-height:100vh;}
 
-        .nav-item.active {
-            color: #905AF8;
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 50px;
-            padding: 5px;
-            
-        }
+.app-wrapper {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0,0,0,0.08);
+  padding-bottom: 20px;
+}
 
-        body.dark .nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
-       
- }
+.header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:5px 20px;background:#0555E8;position:sticky;top:0;z-index:10;
+  border-bottom:1px solid #f1f5f9;
+}
+.header .left{display:flex;align-items:center;gap:14px;color: #fff;}
+.header .left i{width:22px;height:22px;cursor:pointer;color:#fff;}
+.header h1{font-size: 19px; font-weight: 700; color: #fff;}
+.help-btn{
+  display:flex;align-items:center;gap:6px;border:1px solid #e2e8f0;
+  padding:7px 14px;border-radius:20px;font-size: 13px; font-weight: 600; cursor:pointer;background:#fff;
+  transition: all 0.2s ease;
+}
+.help-btn:active { background: #f8fafc; transform: scale(0.96); }
+.help-btn i{width:16px;height:16px;color: var(--accent);}
 
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-animation 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
-            background-color: rgba(144, 90, 248, 0.15);
-            pointer-events: none;
-        }
+.container{padding:18px;}
+.section-title{font-size: 14px; font-weight: 700; margin: 20px 0 10px 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-        @keyframes ripple-animation {
-            to {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
+.card{
+  background:var(--card-bg);border-radius:var(--radius);padding:18px;margin-bottom:14px;
+  box-shadow:var(--shadow); border: 1px solid #f1f5f9;
+}
+.wallet-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.wallet-card::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 214, 10, 0.1);
+  border-radius: 50%;
+}
+.wallet-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.wallet-icon-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wallet-header i{width:22px;height:22px;color: var(--primary);}
+.wallet-title{font-size: 15px; font-weight: 600; opacity: 0.9;}
+.low-balance{font-size: 12px; font-weight: 500; color: #fca5a5; margin-top: 2px;}
+.balance{font-size: 32px; font-weight: 800; margin: 12px 0 16px; color: #fff;}
 
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 30px 24px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            text-align: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 88%;
-            max-width: 330px;
-        }
+.add-money-btn{
+  border:none; padding:10px 18px; border-radius:30px;
+  display:inline-flex; align-items:center; gap:8px; font-size: 14px; font-weight: 700;
+  cursor:pointer; background: var(--primary); color: #000;
+  transition: transform 0.2s ease;
+}
+.add-money-btn:active { transform: scale(0.96); }
+.add-money-btn i{width:18px;height:18px;}
 
-        .popup.show {
-            opacity: 1;
-            pointer-events: all;
-            transform: translate(-50%, -50%) scale(1);
-        }
+/* ADD MONEY MODAL */
+.addmoney-page{
+  display:none;position:fixed;inset:0;background:#fff;z-index:100;
+  flex-direction:column; max-width: 480px; margin: 0 auto;
+  animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+.addmoney-page.show{display:flex;}
+@keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .popup-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin: 0 auto 16px;
-        }
+.addmoney-header{background: #0555E8;padding:16px 20px;color: #fff;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:14px;}
+.addmoney-header i{width:22px;height:22px;cursor:pointer;}
+.addmoney-header h2{font-size: 18px; font-weight: 700;color: #fff;}
+.addmoney-content{padding:24px 20px;flex:1;}
 
-        .popup.success-theme .popup-icon { background: rgba(52, 211, 153, 0.15); color: #34d399; }
-        .popup.success-theme h3 { color: #34d399; }
-        .popup.error-theme .popup-icon { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .popup.error-theme h3 { color: #ef4444; }
+.step-card {
+  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;
+  padding: 18px; margin-bottom: 20px;
+}
+.step-title {
+  font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+}
 
-        .popup h3 { font-size: 19px; font-weight: 800; margin-bottom: 8px; }
-        .popup p { font-size: 14px; color: var(--text-sub); line-height: 1.5; }
+.payment-id-input {
+  width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px;
+  font-size: 15px; font-weight: 700; outline: none; margin-bottom: 12px; text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.payment-id-input:focus { border-color: var(--accent); }
 
-        .popup-close-btn {
-            margin-top: 20px;
-            background: var(--bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 10px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 13px;
-            width: 100%;
-        }
-        .popup-close-btn:hover { background: var(--card-border); }
+.verify-btn {
+  width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
+  border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
+  transition: all 0.2s ease;
+}
+.verify-btn:active { background: var(--primary-dark); transform: scale(0.98); }
 
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(9, 9, 11, 0.6);
-            backdrop-filter: blur(6px);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.25s;
-        }
-        .overlay.show { opacity: 1; pointer-events: all; }
-    </style>
+/* HELP MODAL */
+.help-modal{position:fixed;inset:0;background:rgba(15, 23, 42, 0.5);backdrop-filter: blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:200;}
+.help-modal.show{display:flex;}
+.help-box{
+  background:#fff; width:100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px 20px 32px;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.help-box h3{font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center;}
+.help-option{
+  display:flex; align-items:center; gap:14px; padding:16px; border-radius:14px;
+  background:#f8fafc; margin-bottom:12px; cursor:pointer; text-decoration:none; color:var(--text-main);
+  border: 1px solid #f1f5f9;
+}
+.help-option i{width:22px;height:22px;color: var(--accent);}
+.help-option .text h4{font-size: 15px; font-weight: 600;}
+.help-option .text p{font-size: 13px; color: var(--text-muted); margin-top:2px;}
+
+/* CUSTOM ALERT POPUP */
+.custom-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  width: calc(100% - 40px);
+  max-width: 440px;
+  background: #0f172a;
+  color: #fff;
+  padding: 16px 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 300;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.custom-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.custom-toast.success i { color: #4ade80; }
+.custom-toast.error i { color: #f87171; }
+.custom-toast.warning i { color: #facc15; }
+.custom-toast .toast-msg { font-size: 14px; font-weight: 600; flex: 1; line-height: 1.4; }
+</style>
 </head>
 <body>
 
-<header class="app-header">
-    <div class="header-left">
-        <i data-lucide="bot" class="w-6 h-6" style="color:#fff;"></i>
-    <span style="color:#fff;">Recharge & Coin</span>
-  
-    </div>
-    <div class="header-right">
-       
-        <div class="header-icon" id="darkToggle"style="display: none;"><i data-lucide="moon" width="22" style="color: #ffffff;"></i></div>
-    </div>
-</header>
+<div class="app-wrapper">
+  <!-- MAIN PAGE -->
+  <div id="mainPage">
+    <header class="header">
+      <div class="left">
+        <i data-lucide="arrow-left" onclick="window.history.back()"></i>
+        <h1>Payments</h1>
+      </div>
+      <div class="help-btn" onclick="openHelp()">
+        <i data-lucide="help-circle"></i> Help
+      </div>
+    </header>
 
-<main class="app-container">
-    <div class="content-wrapper">
-        
-        <div class="skeleton-container" id="skeletonContainer">
-            <div class="skeleton skeleton-card-lg"></div>
-            <div class="skeleton skeleton-card-md"></div>
-            <div class="skeleton skeleton-card-xl"></div>
+    <div class="container">
+      <h2 class="section-title">Wallets</h2>
+      <div class="card wallet-card">
+        <div class="wallet-header">
+          <div class="wallet-icon-box">
+            <i data-lucide="wallet"></i>
+          </div>
+          <div>
+            <div class="wallet-title">TutoGenius Wallet</div>
+            <div class="low-balance" id="lowBalanceText">Low Balance: ₹0</div>
+          </div>
         </div>
+        <div class="balance">₹<span id="balance">0</span></div>
+        <button class="add-money-btn" onclick="openAddMoney()">
+          <i data-lucide="plus"></i> Add Money
+        </button>
+      </div>
+    </div>
+  </div>
 
-        <div class="main-content" id="mainContent">
-            
-            <div class="modern-card balance-box">
-                <div class="balance-left">
-                    <div class="balance-title">Available Balance</div>
-                    <div id="balance">0</div>
-                </div>
-                <div class="balance-right">
-                    <div class="bonus-text">Daily +5 Coins</div>
-                    <div>
-                        <button class="collect-btn" id="collectBtn" onclick="collectDaily()">Collect</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modern-card">
-                <label for="giftCode">Recharge / Gift Code</label>
-                <div class="input-wrap">
-                    <input type="text" id="giftCode" placeholder="Enter voucher code">
-                    <button class="validate-btn" onclick="validateCode()">Validate</button>
-                </div>
-            </div>
-
-            <div class="divider">Or</div>
-
-            <div class="modern-card">
-                <label>Scan Gift Card / Recharge Card</label>
-                <div class="upload-area" onclick="triggerFileUpload()">
-                    <div class="upload-header">
-                        <span>Gift card View</span>
-                        <span id="uploadStatus" class="status-badge">Upload Image</span>
-                    </div>
-
-                    <div class="scanner-laser" id="laser"></div>
-
-                    <svg id="placeholderSvg" class="placeholder-svg" width="44" height="44" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    <img id="preview" alt="Preview Image">
-                    <video id="webcamVideo" autoplay playsinline webkit-playsinline muted></video>
-
-                    <button class="light-toggle-btn" id="lightToggleBtn" onclick="event.stopPropagation(); toggleTorch()">
-                        <i data-lucide="zap" width="18" height="18"></i>
-                    </button>
-                </div>
-
-                <div class="btn-row">
-                    <button class="btn-upload" onclick="triggerFileUpload()">Choose Image</button>
-                    <button class="btn-scan" onclick="toggleLiveScan()">Scan & Camera</button>
-                </div>
-                <input type="file" id="fileInput" accept="image/*" style="display:none">
-                <p class="info-hint">**Please keep your Gift Card straight. When ready, click on the "Scan & Camera" button to parse instantly.</p>
-            </div>
-
+  <!-- ADD MONEY PAGE -->
+  <div class="addmoney-page" id="addMoneyPage">
+    <div class="addmoney-header">
+      <i data-lucide="arrow-left" onclick="closeAddMoney()"></i>
+      <h2>Redeem Transaction Code</h2>
+    </div>
+    
+    <div class="addmoney-content">
+      <div class="step-card">
+        <div class="step-title">
+          <i data-lucide="key-round"></i> Enter TXN ID
         </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+          Please enter your transaction ID starting with <strong>TGCOIN_</strong> to verify and top up your wallet.
+        </p>
+        <input type="text" id="paymentIdInput" class="payment-id-input" placeholder="TGCOIN_XXXXXXXXXX">
+        <button class="verify-btn" onclick="verifyAndAddMoney()">
+          <i data-lucide="check-circle"></i> Verify & Add Money
+        </button>
+      </div>
     </div>
+  </div>
 
-    <div class="overlay" id="overlay" onclick="hidePopup()"></div>
-    <div class="popup" id="popup">
-        <div class="popup-icon" id="popupIcon">🎉</div>
-        <h3 id="popupTitle">Notification</h3>
-        <p id="popupText">Message description goes here.</p>
-        <button class="popup-close-btn" onclick="hidePopup()">Dismiss</button>
+  <!-- HELP MODAL -->
+  <div class="help-modal" id="helpModal" onclick="closeHelp(event)">
+    <div class="help-box" onclick="event.stopPropagation()">
+      <h3>Need Support?</h3>
+      <a href="https://wa.me/919332466756" target="_blank" class="help-option">
+        <i data-lucide="message-circle"></i>
+        <div class="text">
+          <h4>WhatsApp Support</h4>
+          <p>+91 9332466756</p>
+        </div>
+      </a>
+      <a href="mailto:admin.tutogenius@gmail.com" target="_blank" class="help-option">
+        <i data-lucide="mail"></i>
+        <div class="text">
+          <h4>Email Support</h4>
+          <p>admin.tutogenius@gmail.com</p>
+        </div>
+      </a>
     </div>
-</main>
+  </div>
 
-<nav class="app-footer">
-    <a href="home" class="nav-item">
-        <i data-lucide="home" width="24" height="24"></i>
-        <span>Home</span>
-    </a>
-    <a href="#" class="nav-item active">
-        <i data-lucide="qr-code" width="24" height="24"></i>
-        <span>Recharge</span>
-    </a>
-    <a href="course" class="nav-item">
-        <i data-lucide="airplay" width="24" height="24"></i>
-        <span>Courses</span>
-    </a>
-    <a href="study" class="nav-item">
-        <i data-lucide="book-open" width="24" height="24"></i>
-        <span>Study</span>
-    </a>
-    <a href="profile" class="nav-item">
-        <i data-lucide="user" width="24" height="24"></i>
-        <span>Profile</span>
-    </a>
-</nav>
-
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <!-- CUSTOM ALERT TOAST UI -->
+  <div class="custom-toast" id="customToast">
+    <i data-lucide="info" id="toastIcon"></i>
+    <div class="toast-msg" id="toastMsg">Notification message</div>
+  </div>
+</div>
 
 <script>
-    lucide.createIcons();
+lucide.createIcons();
 
-    // Simulated skeleton initialization effect
-    window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            document.getElementById('skeletonContainer').style.display = 'none';
-            const mainContent = document.getElementById('mainContent');
-            mainContent.classList.add('loaded');
-        }, 1200); // 1.2s realistic loading time display
-    });
+// --- VALID TXN CODES DATABASE ---
+const validTxnCodes = {
+  "TGCOIN_426527257": 100,
+  "TGCOIN_425275678": 50,
+  "TGCOIN_100000001": 200,
+  "TGCOIN_500000002": 500
+};
 
-    const footer = document.querySelector('.app-footer');
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            const targetUrl = this.getAttribute('href');
-            if (!targetUrl || targetUrl === "" || targetUrl === "#") {
-                e.preventDefault();
-            }
+// Storage for processed payment IDs to prevent reuse
+let usedPaymentIds = JSON.parse(localStorage.getItem('usedPaymentIds') || '[]');
 
-            const rect = footer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+// --- BALANCE SYSTEM ---
+let balance = parseInt(localStorage.getItem('coinBalance') || '0');
+const balanceEl = document.getElementById('balance');
+const lowBalanceEl = document.getElementById('lowBalanceText');
 
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${x - (size / 2)}px`;
-            ripple.style.top = `${y - (size / 2)}px`;
+function updateBalanceUI(){
+  balanceEl.textContent = balance;
+  if(balance < 100) {
+    lowBalanceEl.textContent = `Low Balance: ₹${balance}`;
+    lowBalanceEl.style.color = '#fca5a5';
+  } else {
+    lowBalanceEl.textContent = `Active Balance: ₹${balance}`;
+    lowBalanceEl.style.color = '#86efac';
+  }
+}
+updateBalanceUI();
 
-            this.appendChild(ripple);
-            setTimeout(() => { ripple.remove(); }, 400);
-        });
-    });
+function addCoins(amount) {
+  balance += parseInt(amount);
+  localStorage.setItem('coinBalance', balance);
+  updateBalanceUI();
+}
 
-    const CODE_CONFIG = {
-        "WELCOME100": 100,
-        "BONUS50": 50,
-        "TEST123": 25,
-        "SPECIAL-QR-001": 30,
-        "GIFT-CARD-ABC": 75,
-        "BVFPH9081M": 40
-    };
+// --- CUSTOM ALERT TOAST SYSTEM ---
+let toastTimeout;
+function showCustomAlert(msg, type = 'info') {
+  const toast = document.getElementById('customToast');
+  const toastMsg = document.getElementById('toastMsg');
+  const toastIcon = document.getElementById('toastIcon');
 
-    const DAILY_COINS = 5;
+  toast.className = `custom-toast ${type} show`;
+  toastMsg.textContent = msg;
 
-    let balance = parseInt(localStorage.getItem('coinBalance') || '0');
-    let usedCodes = JSON.parse(localStorage.getItem('usedCodes') || '[]');
-    let lastCollect = localStorage.getItem('lastCollect') || 0;
-    let currentImage = null;
+  if (type === 'success') {
+    toastIcon.setAttribute('data-lucide', 'check-circle-2');
+  } else if (type === 'error') {
+    toastIcon.setAttribute('data-lucide', 'alert-circle');
+  } else if (type === 'warning') {
+    toastIcon.setAttribute('data-lucide', 'alert-triangle');
+  } else {
+    toastIcon.setAttribute('data-lucide', 'info');
+  }
+  lucide.createIcons();
 
-    let liveStream = null;
-    let animationFrameId = null;
-    let videoTrack = null;
-    let torchOn = false;
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3500);
+}
 
-    document.getElementById('balance').textContent = balance;
-    checkDailyCollect();
+// --- ADD MONEY UI ---
+function openAddMoney(){
+  document.getElementById('addMoneyPage').classList.add('show');
+}
+function closeAddMoney(){
+  document.getElementById('addMoneyPage').classList.remove('show');
+}
 
-    document.getElementById('fileInput').addEventListener('change', e => {
-        const file = e.target.files[0];
-        if (!file) return;
+// --- VERIFY TXN CODE & ADD MONEY ---
+function verifyAndAddMoney(){
+  const paymentId = document.getElementById('paymentIdInput').value.trim().toUpperCase();
 
-        stopLiveCamera();
+  if(!paymentId){
+    showCustomAlert("Please enter a valid TXN ID.", "warning");
+    return;
+  }
 
-        const img = new Image();
-        img.onload = () => {
-            currentImage = img;
-            document.getElementById('placeholderSvg').style.display = 'none';
-            document.getElementById('webcamVideo').style.display = 'none';
+  if(!paymentId.startsWith("TGCOIN_")){
+    showCustomAlert("Invalid format! TXN ID must start with TGCOIN_", "error");
+    return;
+  }
 
-            const preview = document.getElementById('preview');
-            preview.src = img.src;
-            preview.style.display = 'block';
+  if(usedPaymentIds.includes(paymentId)){
+    showCustomAlert("This TXN ID has already been redeemed!", "error");
+    return;
+  }
 
-            const status = document.getElementById('uploadStatus');
-            status.textContent = 'Ready to Scan';
-            status.className = 'status-badge ready';
-            document.getElementById('laser').style.display = 'block';
+  if(validTxnCodes.hasOwnProperty(paymentId)){
+    const amount = validTxnCodes[paymentId];
 
-            parseStaticUploadedImage();
-        };
-        img.src = URL.createObjectURL(file);
-    });
+    usedPaymentIds.push(paymentId);
+    localStorage.setItem('usedPaymentIds', JSON.stringify(usedPaymentIds));
 
-    function triggerFileUpload() {
-        document.getElementById('fileInput').click();
-    }
+    addCoins(amount);
+    showCustomAlert(`Success! Verified ₹${amount} added to your wallet.`, "success");
+    
+    document.getElementById('paymentIdInput').value = '';
+    closeAddMoney();
+  } else {
+    showCustomAlert("Invalid or expired TXN ID. Please check and try again.", "error");
+  }
+}
 
-    function toggleLiveScan() {
-        const video = document.getElementById('webcamVideo');
-
-        if (liveStream) {
-            stopLiveCamera();
-            resetCameraViewToDefault();
-            return;
-        }
-
-        document.getElementById('placeholderSvg').style.display = 'none';
-        document.getElementById('preview').style.display = 'none';
-        video.style.display = 'block';
-        document.getElementById('laser').style.display = 'block';
-
-        const status = document.getElementById('uploadStatus');
-        status.textContent = 'Scanning...';
-        status.className = 'status-badge scanning';
-
-        const constraints = {
-            video: {
-                facingMode: { exact: "environment" },
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
-            }
-        };
-
-        navigator.mediaDevices.getUserMedia(constraints)
-        .then(function(stream) {
-            connectStreamToVideo(video, stream);
-        })
-        .catch(function(err) {
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-            .then(function(fallbackStream) {
-                connectStreamToVideo(video, fallbackStream);
-            })
-            .catch(function(finalErr) {
-                console.error(finalErr);
-                resetCameraViewToDefault();
-                showCustomPopup(false, 'Camera Error', 'Access denied. Please grant camera permissions or select an image file instead.');
-            });
-        });
-    }
-
-    function connectStreamToVideo(videoElement, stream) {
-        liveStream = stream;
-        videoElement.srcObject = stream;
-        videoElement.setAttribute("playsinline", true);
-        videoElement.setAttribute("webkit-playsinline", true);
-        videoElement.muted = true;
-
-        videoTrack = stream.getVideoTracks()[0];
-        checkTorchSupport();
-
-        videoElement.play().then(() => {
-            animationFrameId = requestAnimationFrame(tickCameraFrame);
-        }).catch(err => {
-            console.error("Video play interrupted:", err);
-        });
-    }
-
-    function checkTorchSupport() {
-        const lightBtn = document.getElementById('lightToggleBtn');
-        if (videoTrack && videoTrack.getCapabilities) {
-            const capabilities = videoTrack.getCapabilities();
-            if (capabilities.torch) {
-                lightBtn.style.display = 'flex';
-                lucide.createIcons();
-            }
-        }
-    }
-
-    function toggleTorch() {
-        if (!videoTrack) return;
-
-        torchOn = !torchOn;
-        const lightBtn = document.getElementById('lightToggleBtn');
-
-        videoTrack.applyConstraints({
-            advanced: [{torch: torchOn}]
-        }).then(() => {
-            lightBtn.classList.toggle('active', torchOn);
-        }).catch(err => {
-            console.error('Torch failed:', err);
-            showCustomPopup(false, 'Light Error', 'Torch not supported on this device');
-            torchOn = false;
-        });
-    }
-
-    function resetCameraViewToDefault() {
-        const status = document.getElementById('uploadStatus');
-        status.textContent = 'Upload Image';
-        status.className = 'status-badge';
-        document.getElementById('laser').style.display = 'none';
-        document.getElementById('placeholderSvg').style.display = 'block';
-        document.getElementById('webcamVideo').style.display = 'none';
-        document.getElementById('lightToggleBtn').style.display = 'none';
-        torchOn = false;
-    }
-
-    function tickCameraFrame() {
-        const video = document.getElementById('webcamVideo');
-        if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, canvas.width, canvas.height, {
-                inversionAttempts: "dontInvert",
-            });
-
-            if (code) {
-                const qrValue = code.data.trim();
-                stopLiveCamera();
-
-                const status = document.getElementById('uploadStatus');
-                status.textContent = 'Scan Successfully';
-                status.className = 'status-badge scanned';
-
-                processDecodedQR(qrValue);
-                return;
-            }
-        }
-        if (liveStream) {
-            animationFrameId = requestAnimationFrame(tickCameraFrame);
-        }
-    }
-
-    function stopLiveCamera() {
-        if (animationFrameId) {
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = null;
-        }
-        if (liveStream) {
-            liveStream.getTracks().forEach(track => track.stop());
-            liveStream = null;
-            videoTrack = null;
-        }
-        document.getElementById('laser').style.display = 'none';
-        document.getElementById('lightToggleBtn').style.display = 'none';
-        torchOn = false;
-    }
-
-    function parseStaticUploadedImage() {
-        if (!currentImage) return;
-
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = currentImage.width;
-        canvas.height = currentImage.height;
-        ctx.drawImage(currentImage, 0, 0);
-
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const code = jsQR(imageData.data, canvas.width, canvas.height);
-
-        if (code) {
-            const qrValue = code.data.trim();
-            const status = document.getElementById('uploadStatus');
-            status.textContent = 'Scan Successfully';
-            status.className = 'status-badge scanned';
-            processDecodedQR(qrValue);
-        } else {
-            showCustomPopup(false, 'Scanning Failed', 'Could not locate clear matrix pattern. Make sure the QR is well lit.');
-        }
-    }
-
-    function processDecodedQR(qrValue) {
-        if (usedCodes.includes(qrValue)) {
-            return showCustomPopup(false, 'QR Code Expired', 'This specific QR voucher balance has already been allocated.');
-        }
-
-        if (CODE_CONFIG[qrValue]) {
-            addCoins(CODE_CONFIG[qrValue], `QR Scan balance acquired.`);
-            usedCodes.push(qrValue);
-            localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
-        } else {
-            showCustomPopup(false, 'Unrecognized Voucher', `Decoded: "${qrValue}". Code is invalid.`);
-        }
-    }
-
-    function validateCode() {
-        const code = document.getElementById('giftCode').value.trim().toUpperCase();
-        if (!code) {
-            return showCustomPopup(false, 'Please Enter Code', 'Please type a valid gift code before validating.');
-        }
-
-        if (usedCodes.includes(code)) {
-            return showCustomPopup(false, 'Already Claimed', 'This specific code has already been added to your profile.');
-        }
-
-        if (CODE_CONFIG[code]) {
-            addCoins(CODE_CONFIG[code], `Code redeemed: ${code}`);
-            usedCodes.push(code);
-            localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
-            document.getElementById('giftCode').value = '';
-        } else {
-            showCustomPopup(false, 'Invalid Code', 'The code you entered does not match our system entries.');
-        }
-    }
-
-    function addCoins(amount, reason) {
-        balance += amount;
-        localStorage.setItem('coinBalance', balance);
-        document.getElementById('balance').textContent = balance;
-        showCustomPopup(true, `+${amount} Coins Earned!`, reason);
-    }
-
-    function collectDaily() {
-        const now = Date.now();
-        const oneDay = 24 * 60 * 60 * 1000;
-
-        if (now - lastCollect < oneDay) {
-            const hoursLeft = Math.ceil((oneDay - (now - lastCollect)) / 3600000);
-            return showCustomPopup(false, 'Patience Pays!', `Your daily window is lock. Retry in ${hoursLeft} hour(s).`);
-        }
-
-        addCoins(DAILY_COINS, 'Daily check-in loyalty bonus added.');
-        lastCollect = now;
-        localStorage.setItem('lastCollect', lastCollect);
-        checkDailyCollect();
-    }
-
-    function checkDailyCollect() {
-        const now = Date.now();
-        const oneDay = 24 * 60 * 60 * 1000;
-        const btn = document.getElementById('collectBtn');
-
-        if (now - lastCollect < oneDay) {
-            btn.disabled = true;
-            btn.textContent = 'Claimed';
-        } else {
-            btn.disabled = false;
-            btn.textContent = 'Collect';
-        }
-    }
-
-    let autoHideTimer;
-    function showCustomPopup(isSuccess, title, text) {
-        clearTimeout(autoHideTimer);
-        const popup = document.getElementById('popup');
-        const icon = document.getElementById('popupIcon');
-        const titleEl = document.getElementById('popupTitle');
-        const textEl = document.getElementById('popupText');
-
-        titleEl.textContent = title;
-        textEl.textContent = text;
-
-        if (isSuccess) {
-            popup.className = "popup success-theme show";
-            icon.textContent = "✨";
-        } else {
-            popup.className = "popup error-theme show";
-            icon.textContent = "❌";
-        }
-
-        document.getElementById('overlay').classList.add('show');
-        autoHideTimer = setTimeout(hidePopup, 4000);
-    }
-
-    function hidePopup() {
-        document.getElementById('popup').classList.remove('show');
-        document.getElementById('overlay').classList.remove('show');
-    }
-
-    const darkToggle = document.getElementById("darkToggle");
-    const body = document.body;
-
-    if (localStorage.getItem("darkMode") === "true") {
-        body.classList.add("dark");
-    }
-
-    function updateDarkModeIcon() {
-        const isDark = body.classList.contains("dark");
-        const moonIcon = darkToggle.querySelector('i');
-        if (moonIcon) {
-            const iconName = isDark ? "sun" : "moon";
-            moonIcon.setAttribute('data-lucide', iconName);
-            lucide.createIcons();
-        }
-    }
-
-    setTimeout(() => {
-        updateDarkModeIcon();
-    }, 50);
-
-    darkToggle.addEventListener("click", () => {
-        body.classList.toggle("dark");
-        const isDark = body.classList.contains("dark");
-        localStorage.setItem("darkMode", isDark);
-        updateDarkModeIcon();
-    });
+// --- HELP MODAL ---
+function openHelp(){
+  document.getElementById('helpModal').classList.add('show');
+}
+function closeHelp(e){
+  if(!e || e.target.id === 'helpModal'){
+    document.getElementById('helpModal').classList.remove('show');
+  }
+}
 </script>
 </body>
 </html>
