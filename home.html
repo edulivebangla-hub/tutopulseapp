@@ -3,110 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta name="theme-color" content="#0b1a3a">
-<link rel="manifest" href="manifest.json"><title>TutoGenius</title>
+<link rel="manifest" href="manifest.json">
+<title>TutoGenius</title>
 <script src="https://unpkg.com/lucide@latest"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
   * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-        a, span, p, h1, h2, h3, h4, h5, h6, div {
-            text-decoration: none;
-        }
+  a, span, p, h1, h2, h3, h4, h5, h6, div {
+    text-decoration: none;
+  }
 
-:root{--bg:#fff;--text:#000;--sub:#64748b;--primary:#2563eb;--danger:#ef4444;--ok:#22c55e;--card:#fff;--border:#C9CDFF}
-body.dark{--bg:#0b1220;--text:#fff;--sub:#94a3b8;--card:#111827;--border:#1f2937}
-body{background:var(--bg);color:var(--text);align-items:center;justify-content:center;}
-.app{padding-top:10px}
+  :root {
+    --bg: #fff;
+    --text: #000;
+    --sub: #64748b;
+    --primary: #2563eb;
+    --danger: #ef4444;
+    --ok: #22c55e;
+    --card: #fff;
+    --border: #C9CDFF;
+  }
 
-/* TOP BAR */
-.topbar{display:flex;align-items:center;justify-content:space-between; padding: 10px;}
-.user{display:flex;gap:12px;align-items:center}
-.avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--border)}
-.user-text p{font-size:12px;color:#3b82f6;font-weight:600}
-.user-text h3{font-size:16px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+  body.dark {
+    --bg: #0b1220;
+    --text: #fff;
+    --sub: #94a3b8;
+    --card: #111827;
+    --border: #1f2937;
+  }
 
-/* PROFILE SKELETON COMPONENT */
-.profile-skeleton-avatar { width: 56px; height: 56px; border-radius: 50%; background: #e2e8f0; }
-.profile-skeleton-info { display: flex; flex-direction: column; gap: 6px; }
-.profile-skeleton-line { background: #e2e8f0; border-radius: 4px; }
-.profile-skeleton-line.greet { width: 90px; height: 12px; }
-.profile-skeleton-line.name { width: 120px; height: 16px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
 
-/* PENDING / TICK BUTTON */
-.status-btn{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:12px;font-size:14px;font-weight:700;border:1.5px solid;border-color:#fecaca;background:#fef2f2;color:#dc2626;cursor:pointer;transition:background 0.2s, border-color 0.2s, color 0.2s;}
-.status-btn.done{background:none;border-color:#fff;color:var(--ok)}
-.status-btn i{width:10px;height:10px}
+  /* HEADER */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 52px;
+    background: #0555E8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
 
-/* SWIPER */
-.swiper {  width: 100%; padding-bottom: 32px; margin-top: 10px;        }
-.swiper-slide {
+  .left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bal {
+    font: 800 17px 'Segoe UI', sans-serif;
+    color: #FFA500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .bal span {
+    font-size: 19px;
+    letter-spacing: 0.5px;
+  }
+
+  .sub {
+    font: 500 10.5px 'Segoe UI', sans-serif;
+    color: #e0e7ff;
+    margin-top: -2px;
+  }
+
+  .head-btns {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .add-money-btn {
+    background: #22c55e;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, background 0.15s ease;
+    cursor: pointer;
+  }
+
+  .add-money-btn:active {
+    transform: scale(0.95);
+    background: #16a34a;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+
+  .icon-btn:active {
+    transform: scale(0.92);
+  }
+
+  .icon-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: #333;
+  }
+
+  .vip {
+    background: linear-gradient(135deg,#FFD700,#FFA500);
+    padding: 3px 8px;
+    border-radius: 10px;
+    font: 800 9px 'Segoe UI', sans-serif;
+    color: #000;
+    text-align: center;
+    line-height: 1.1;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  }
+
+  .vip b {
+    font-size: 13px;
+  }
+
+  /* APPLICATION CONTAINER MAIN */
+  .app-container {
+    position: fixed;
+    top: 52px;
+    bottom: 65px;
+    width: 100%;
+    overflow-y: auto;
+    background: var(--bg);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    will-change: scroll-position;
+  }
+
+  .app-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app {
+    padding-top: 10px;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+  }
+
+  .user {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+  }
+
+  .user-text p {
+    font-size: 12px;
+    color: #3b82f6;
+    font-weight: 600;
+  }
+
+  .user-text h3 {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+
+  /* PROFILE SKELETON COMPONENT */
+  .profile-skeleton-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #e2e8f0;
+  }
+
+  .profile-skeleton-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .profile-skeleton-line {
+    background: #e2e8f0;
+    border-radius: 4px;
+  }
+
+  .profile-skeleton-line.greet {
+    width: 90px;
+    height: 12px;
+  }
+
+  .profile-skeleton-line.name {
+    width: 120px;
+    height: 16px;
+  }
+
+  /* PENDING / TICK BUTTON */
+  .status-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1.5px solid #fecaca;
+    background: #fef2f2;
+    color: #dc2626;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .status-btn.done {
+    background: none;
+    border-color: #fff;
+    color: var(--ok);
+  }
+
+  /* SWIPER */
+  .swiper {
+    width: 100%;
+    padding-bottom: 28px;
+    margin-top: 10px;
+  }
+
+  .swiper-slide {
     position: relative;
-    width: 280px; height: 130px;
+    width: 280px;
+    height: 130px;
     border-radius: 12px;
     border: 1px solid #905AF8;
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-in-out;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-in-out;
     overflow: hidden;
     will-change: transform, opacity;
-}
-.swiper-slide-active { opacity: 1; }
-@media (min-width: 768px) { .swiper-slide { width: 700px; height: 350px; } }
-.swiper-slide img {
+  }
+
+  @media (min-width: 768px) {
+    .swiper-slide {
+      width: 700px;
+      height: 350px;
+    }
+  }
+
+  .swiper-slide img {
     display: block;
-    width: 100%; 
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    border-radius: 10px;
     background: rgba(0,0,0,0.1);
-}
+  }
 
-/* Pagination Styling */
-.swiper-pagination-bullet { width: 10px; height: 10px; background: #d1d5db; opacity: 1; }
-.swiper-pagination-bullet-active { background: #ffcc00 !important; }
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    background: #d1d5db;
+    opacity: 1;
+  }
 
-/* SECTION */
-.section{padding: 10px;margin-top:22px;display:flex;justify-content:space-between;align-items:center}
-.section h2{font-size:18px;font-weight:800}.section h2 span{color:#3b82f6}
-.viewall{border:1.5px solid var(--primary);color:var(--primary);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:transparent}
+  .swiper-pagination-bullet-active {
+    background: #ffcc00 !important;
+  }
 
-/* ===== STUDY DASHBOARD COURSE GRID ===== */
-.course-grid { padding: 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.course-card {
+  /* SECTION */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+  }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 800;
+  }
+
+  .section-title span {
+    color: #3b82f6;
+  }
+
+  .view-all-btn {
+    border: 1.5px solid var(--primary);
+    color: var(--primary);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    background: transparent;
+  }
+
+  /* COURSE GRID */
+  .course-grid {
+    padding: 10px 14px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .course-card {
     background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 15px;
-    padding: 4px 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 8px 4px;
     text-align: center;
-    color: var(--text-sub);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.course-card:active {
-    transform: scale(0.96);
-}
-.course-icon-container { width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative; }
-.badge-notification {
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .course-card:active {
+    transform: scale(0.94);
+  }
+
+  .course-icon-container {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .badge-notification {
     position: absolute;
     top: -2px;
     right: -2px;
@@ -121,258 +388,569 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
     align-items: center;
     font-weight: bold;
     border: 1px solid var(--card);
-}
+  }
 
-/* ACTION ROW */
-.action-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-.action-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;display:flex;align-items:center;gap:10px;font-weight:700}
+  /* POPUP CONFIGURATION */
+  .popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    visibility: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 10000;
+    transition: background .25s ease, visibility .25s ease;
+    will-change: background, visibility;
+  }
 
-/* POPUP CONFIGURATION - SMOOTH WORKING FIXED */
-.popup{position:fixed;inset:0;background:rgba(0,0,0,0);visibility:hidden;display:flex;align-items:flex-end;justify-content:center;z-index:999;transition:background .3s ease, visibility .3s ease;will-change: background, visibility;}
-.popup.show{visibility:visible;background:rgba(0,0,0,.4)}
-.popup-box{width:100%;background:var(--bg);border-radius:20px 20px 0 0;padding:20px;transform:translateY(100%);transition:transform .3s cubic-bezier(0.25, 1, 0.5, 1);will-change: transform;}
-.popup.show .popup-box{transform:translateY(0)}
+  .popup.show {
+    visibility: visible;
+    background: rgba(0,0,0,.5);
+  }
 
-.popup-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.popup-head h3{font-size:16px;font-weight:700}
-.popup-avatar{position:relative;width:90px;height:90px;margin:0 auto 20px}
-.popup-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
-.cam-btn{position:absolute;bottom:0;right:0;background:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff}
-.input{margin-bottom:14px}
-.input label{font-size:12px;font-weight:700;margin-bottom:6px;display:block}
-.input-box{display:flex;align-items:center;gap:8px;background:var(--card);padding:10px 12px;border-radius:12px}
-.input-box input,.input-box select{border:none;background:transparent;width:100%;outline:none;color:var(--text)}
+  .popup-box {
+    width: 100%;
+    max-width: 500px;
+    background: var(--bg);
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform .25s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+  }
 
-/* UPDATE BUTTON WITH LOADING EFFECT */
-.btn-update{position:relative;width:100%;background:var(--primary);color:#fff;border:none;padding:14px;border-radius:14px;font-weight:800;font-size:15px;margin-top:10px;cursor:pointer;display:flex;justify-content:center;align-items:center;transition: opacity 0.2s;}
-.btn-update:disabled{opacity:0.8;cursor:not-allowed}
-.dot-loader{display:none;align-items:center;gap:4px}
-.dot-loader div{width:8px;height:8px;background:#fff;border-radius:50%;animation:dotPulse 1.2s infinite ease-in-outBoth}
-.dot-loader div:nth-child(2){animation-delay:0.2s}
-.dot-loader div:nth-child(3){animation-delay:0.4s}
-@keyframes dotPulse{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+  .popup.show .popup-box {
+    transform: translateY(0);
+  }
 
-/* SKELETON ANIMATIONS */
-.is-loading .skeleton-media{background:#e2e8f0;position:relative;overflow:hidden}
-.is-loading .skeleton-media::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);animation:shimmer 1.5s infinite}
-.is-loading .course-card span, .is-loading .course-card .badge-notification, .is-loading .swiper-slide img{display:none}
-.is-loading .course-icon-container{background:#e2e8f0;border-radius:50%;animation:shimmer 1.5s infinite;position:relative;overflow:hidden}
-.is-loading .course-icon-container img{opacity:0}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+  .popup-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
 
-/* SWIPE BUTTON */
-.swipe-row{display:flex;align-items:center;justify-content:center;gap:70px;padding:10px}
-.btn{width:130px;height:40px;background:#fff;border:2px solid var(--border);border-radius:50px;position:relative;overflow:hidden;touch-action:none;cursor:grab}
-.btn:active{cursor:grabbing}
-.txt{position:absolute;width:100%;text-align:center;line-height:42px;font:800 10.5px/40px Segoe UI;letter-spacing:.6px;color:#3047a5;z-index:2;pointer-events:none}
-.arrow{position:absolute;right:14px;top:50%;transform:translateY(-50%);animation:a 1s infinite}
-.arrow svg{width:14px;height:14px}.arrow path{stroke:#000;stroke-width:2.5;fill:none}
-@keyframes a{0%,100%{transform:translateY(-50%) translate3d(0,0,0)}50%{transform:translateY(-50%) translate3d(5px,0,0)}}
-.thumb{position:absolute;left:3px;top:3px;width:40px;height:40px;border-radius:50%;z-index:1}
-.fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--ok);border-radius:50px}
-.btn.ok .txt{color:#fff}.btn.ok .arrow path{stroke:#fff}
+  .popup-head h3 {
+    font-size: 16px;
+    font-weight: 700;
+  }
 
-/* HEADER */
-.header{
-    position: fixed; top: 0; left: 0; width: 100%; height: 50px; background: #0555E8;
-    display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
-    z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.left{display:flex;flex-direction:column}
-.bal{font:800 18px Segoe UI;color:#FFA500}
-.bal span{font-size:20px;letter-spacing:2px}
-.sub{font:400 12px Segoe UI;color:#fff;margin-top:2px}
-.head-btns{display:flex;gap:10px;align-items:center}
-.icon-btn{
-    width:30px;height:30px;border:1.5px solid #e5e7eb;border-radius:10px;
-    background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer
-}
-.icon-btn svg{width:20px;height:20px;stroke:#333}
-.vip{background:linear-gradient(135deg,#FFD700,#FFA500);padding:2px 10px;border-radius:10px;
-    font:800 10px Segoe UI;color:#000;text-align:center;line-height:1.2;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.vip b{font-size:14px}
+  .popup-avatar {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 16px;
+  }
 
-/* APPLICATION CONTAINER MAIN */
-.app-container {
-    position: fixed; top: 50px; bottom: 65px; width: 100%; overflow-y: auto;
-    background: var(--bg); scrollbar-width: none; -ms-overflow-style: none;
-    will-change: scroll-position;
-}
-.app-container::-webkit-scrollbar { display: none; }
-.content { padding: 0 16px; }
+  .popup-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-/* 1-LINE TICKER MARQUEE */
-.ticker-wrap {
-  width: 100%;
-  overflow: hidden;
-  background: #3b49df;
-  color: #fff;
-  padding: 8px 0;
-  font: 600 13px 'Segoe UI';
-}
-.ticker {
-  display: flex;
-  white-space: nowrap;
-  animation: marquee 25s linear infinite;
-}
-.ticker-item {
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-@keyframes marquee {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
-}
+  .cam-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--primary);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+  }
 
-/* TOP TABS MENU */
-.tabs{
-  display:flex;justify-content:space-around;background:#fff;
-  border-bottom:1px solid #e5e7eb;top:0;z-index:10;
-}
-.tab{
-  flex:1;text-align:center;padding:12px 4px;font:500 13px Segoe UI;color:#666;cursor:pointer;
-  display: flex;flex-direction: column;align-items: center;gap: 4px;
-  transition: color 0.2s;
-}
-.tab.active{color:#3b49df;font-weight:700;position:relative}
-.tab.active::after{content:'';position:absolute;bottom:0;left:20%;width:60%;height:3px;background:#3b49df;border-radius:3px}
-.tab-icon{width:22px;height:22px;fill:#666;transition: fill 0.2s;}
-.tab.active .tab-icon{fill:#3b49df}
+  .input {
+    margin-bottom: 12px;
+  }
 
-/* MAIN VIEW CONTAINER */
-.view-container{padding:10px}
-.card{
-  background:#fff;border:1.5px solid #e0e7ff;border-radius:14px;padding:12px;
-  display:flex;gap:12px;align-items:center;margin-bottom:6px;position:relative
-}
-.card img{width:46px;height:46px;border-radius:50%;object-fit:cover}
-.card h3{font:700 14px Segoe UI;margin-bottom:3px}
-.card p{font:400 12px Segoe UI;color:#555}
-.apply{
-  margin-left:auto;background:#d9f99d;color:#365314;font:600 13px Segoe UI;
-  padding:6px 16px;border-radius:20px;border:none;cursor:pointer;white-space:nowrap;
-  transition: opacity 0.2s;
-}
-.apply:active { opacity: 0.8; }
-.date{
-  position:absolute;right:0px;bottom:0px;background:#fee2e2;color:#b91c1c;
-  font:700 10px Segoe UI;padding:2px 8px;border-radius:10px 0px 10px 0px;
-}
+  .input label {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: block;
+  }
 
-/* SKELETON LOADING FEATURE */
-.skeleton-container { display: none; padding: 10px; }
-.skeleton-card {
-  background: #fff; border: 1.5px solid #e0e7ff; border-radius: 14px; padding: 12px;
-  display: flex; gap: 12px; align-items: center; margin-bottom: 6px;
-}
-.skeleton-img { width: 46px; height: 46px; border-radius: 50%; background: #e2e8f0; }
-.skeleton-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-.skeleton-line { height: 12px; background: #e2e8f0; border-radius: 4px; }
-.skeleton-line.title { width: 40%; height: 14px; }
-.skeleton-line.sub { width: 75%; }
-.skeleton-btn { width: 70px; height: 28px; background: #e2e8f0; border-radius: 20px; margin-left: auto; }
-.shimmer {
-  position: relative; overflow: hidden;
-}
-.shimmer::after {
-  position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-  transform: translate3d(-100%, 0, 0);
-  background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.6) 60%, rgba(255,255,255,0) 100%);
-  animation: loading 1.5s infinite; content: '';
-}
-@keyframes loading { 100% { transform: translate3d(100%, 0, 0); } }
+  .input-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
 
-/* CAROUSEL IMAGES SECTION */
-.showcase-wrapper{ 
-  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:10px;margin:10px;-webkit-overflow-scrolling:touch;
-  scrollbar-width: none;
-}
-.showcase-wrapper::-webkit-scrollbar{display:none}
-.showcase-item{
-  min-width:calc(100% - 40px);border-radius:10px;overflow:hidden;scroll-snap-align:start
-}
-.showcase-item img{width:100%;display:block}
+  .input-box input, .input-box select {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    color: var(--text);
+    font-size: 14px;
+  }
 
-/* SOCIALS */
-.social{text-align:center;padding:20px 0}
-.social p{color:#666;font:500 14px Segoe UI;margin-bottom:12px}
-.social-icons{display:flex;justify-content:center;gap:14px}
-.social-icons a{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition: transform 0.2s;}
-.social-icons a:active { transform: scale(0.9); }
-.fb{background:#1877f2}.ig{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)}.tg{background:#2aabee}
-.wa{background:#25d366}.yt{background:#ff0000}
-.social-icons svg{width:20px;height:20px;fill:#fff}
+  /* BUTTON WITH LOADING EFFECT */
+  .btn-update {
+    position: relative;
+    width: 100%;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s;
+  }
 
-.hide{display:none}
-     /* BOTTOM NAV */
-.bottom-nav{ border-top-left-radius:20px;border-top-right-radius: 20px ;
-  position:fixed;bottom:0;left:0;right:0;height:65px;background:#fff;
-  display:flex;justify-content:space-around;align-items:center;
-  border-top:1px solid #e5e7eb;box-shadow:0 -2px 10px rgba(0,0,0,.05);z-index:50
-}
-.nav-item{
-  flex:1;text-align:center;text-decoration:none;color:#888;
-  display:flex;flex-direction:column;align-items:center;gap:3px;font:500 11px Segoe UI
-}
-.nav-item i{width:24px;height:24px;stroke:#888;stroke-width:2}
-.nav-item.active{color:#3b49df}
-.nav-item.active i{stroke:#3b49df}
-.nav-item .icon-bg{padding:4px 10px;border-radius:12px}
-.nav-item.active .icon-bg{background:#eef2ff}
-/* ===== UI CONTENT WRAPPERS ===== */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-             padding: 6px;
-        }
+  .btn-update:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
 
-        .section-title {
-            font-size: 18px;
-            color: var(--text-main);
-            font-weight: 700;
-        }
+  .dot-loader {
+    display: none;
+    align-items: center;
+    gap: 4px;
+  }
 
-        .section-title span {
-            color: #3b82f6;
-        }
+  .dot-loader div {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    animation: dotPulse 1.2s infinite ease-in-out both;
+  }
 
-        .view-all-btn {
-            border: 2px solid var(--border);
-            color: #3b82f6;
-            padding: 4px 16px;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: 700;
-            background: transparent;
-        }
+  .dot-loader div:nth-child(2) { animation-delay: 0.2s; }
+  .dot-loader div:nth-child(3) { animation-delay: 0.4s; }
 
-/* PROFILE DYNAMIC LOAD HANDLING LAYOUT */
-.is-loading #profileContent { display: none; }
-.profile-skeleton { display: none; align-items: center; gap: 12px; }
-.is-loading .profile-skeleton { display: flex; }
+  @keyframes dotPulse {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+  }
+
+  /* SKELETON ANIMATIONS */
+  .is-loading .skeleton-media {
+    background: #e2e8f0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .is-loading .skeleton-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);
+    animation: shimmer 1.2s infinite;
+  }
+
+  .is-loading .course-card span, 
+  .is-loading .course-card .badge-notification, 
+  .is-loading .swiper-slide img {
+    display: none;
+  }
+
+  .is-loading .course-icon-container {
+    background: #e2e8f0;
+    border-radius: 50%;
+    animation: shimmer 1.2s infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .is-loading .course-icon-container img {
+    opacity: 0;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* 1-LINE TICKER MARQUEE */
+  .ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: #3b49df;
+    color: #fff;
+    padding: 8px 0;
+    font: 600 13px 'Segoe UI', sans-serif;
+  }
+
+  .ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+    will-change: transform;
+  }
+
+  .ticker-item {
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @keyframes marquee {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+  }
+
+  /* TOP TABS MENU */
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 4px;
+    font: 600 12px 'Segoe UI', sans-serif;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+  }
+
+  .tab.active {
+    color: #3b49df;
+    font-weight: 700;
+    position: relative;
+  }
+
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 60%;
+    height: 3px;
+    background: #3b49df;
+    border-radius: 3px;
+  }
+
+  .tab-icon {
+    width: 20px;
+    height: 20px;
+    fill: #666;
+    transition: fill 0.15s;
+  }
+
+  .tab.active .tab-icon {
+    fill: #3b49df;
+  }
+
+  /* MAIN VIEW CONTAINER */
+  .view-container {
+    padding: 12px 14px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1.5px solid #e0e7ff;
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .card img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .card h3 {
+    font: 700 14px 'Segoe UI', sans-serif;
+    margin-bottom: 2px;
+  }
+
+  .card p {
+    font: 400 12px 'Segoe UI', sans-serif;
+    color: #555;
+  }
+
+  .apply {
+    margin-left: auto;
+    background: #d9f99d;
+    color: #365314;
+    font: 700 12px 'Segoe UI', sans-serif;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.1s ease;
+  }
+
+  .apply:active {
+    transform: scale(0.95);
+  }
+
+  .date {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    background: #fee2e2;
+    color: #b91c1c;
+    font: 700 9px 'Segoe UI', sans-serif;
+    padding: 2px 8px;
+    border-radius: 10px 0px 10px 0px;
+  }
+
+  /* SKELETON LOADING FEATURE */
+  .skeleton-container {
+    display: none;
+    padding: 12px 14px;
+  }
+
+  .skeleton-card {
+    background: #fff;
+    border: 1.5px solid #e0e7ff;
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .skeleton-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #e2e8f0;
+  }
+
+  .skeleton-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .skeleton-line {
+    height: 12px;
+    background: #e2e8f0;
+    border-radius: 4px;
+  }
+
+  .skeleton-line.title {
+    width: 40%;
+    height: 14px;
+  }
+
+  .skeleton-line.sub {
+    width: 75%;
+  }
+
+  .skeleton-btn {
+    width: 65px;
+    height: 26px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    margin-left: auto;
+  }
+
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translate3d(-100%, 0, 0);
+    background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.6) 60%, rgba(255,255,255,0) 100%);
+    animation: loading 1.2s infinite;
+    content: '';
+  }
+
+  @keyframes loading {
+    100% { transform: translate3d(100%, 0, 0); }
+  }
+
+  /* CAROUSEL IMAGES SECTION */
+  .showcase-wrapper { 
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 10px 14px;
+    scrollbar-width: none;
+  }
+
+  .showcase-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .showcase-item {
+    min-width: calc(100% - 30px);
+    border-radius: 12px;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+
+  .showcase-item img {
+    width: 100%;
+    display: block;
+  }
+
+  /* SOCIALS */
+  .social {
+    text-align: center;
+    padding: 20px 0 10px;
+  }
+
+  .social p {
+    color: #666;
+    font: 600 13px 'Segoe UI', sans-serif;
+    margin-bottom: 10px;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .social-icons a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+  }
+
+  .social-icons a:active {
+    transform: scale(0.9);
+  }
+
+  .fb { background: #1877f2; }
+  .ig { background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af); }
+  .tg { background: #2aabee; }
+  .wa { background: #25d366; }
+  .yt { background: #ff0000; }
+
+  .social-icons svg {
+    width: 18px;
+    height: 18px;
+    fill: #fff;
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.05);
+    z-index: 50;
+  }
+
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font: 600 11px 'Segoe UI', sans-serif;
+  }
+
+  .nav-item i {
+    width: 22px;
+    height: 22px;
+    stroke: #888;
+    stroke-width: 2;
+  }
+
+  .nav-item.active {
+    color: #3b49df;
+  }
+
+  .nav-item.active i {
+    stroke: #3b49df;
+  }
+
+  .nav-item .icon-bg {
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+
+  .nav-item.active .icon-bg {
+    background: #eef2ff;
+  }
+
+  .is-loading #profileContent { display: none; }
+  .profile-skeleton { display: none; align-items: center; gap: 12px; }
+  .is-loading .profile-skeleton { display: flex; }
 </style>
 </head>
+
 <body class="is-loading">
 
 <!-- HEADER -->
 <div class="header">
   <div class="left">
-    <div class="bal">₹ <span id="balance">0</span></div>
+    <div class="bal">
+     
+      ₹ <span id="balance">0</span>
+    </div>
     <div class="sub">Wallet Balance</div>
   </div>  
 
   <div class="head-btns">
-    <a href="" class="icon-btn" title="Add Balance">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg>
+    <!-- ADD MONEY BUTTON LINK TO COIN MODAL -->
+    <a href="coin" class="add-money-btn" title="Add Coins">
+      <i data-lucide="plus-circle" style="width:16px;height:16px"></i> Add Money
     </a>
     <a href="#vip" class="vip">BECOME<br><b>VIP</b></a>
-    <div class="icon-btn">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-    </div>
+    <a href="notification" class="icon-btn">
+      <i data-lucide="bell" style="width:20px;height:20px;"></i> </a>
   </div>
 </div>
 
@@ -381,7 +959,6 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
 
   <!-- TOP BAR -->
   <div class="topbar">
-    <!-- PROFILE SKELETON LAYER -->
     <div class="profile-skeleton">
       <div class="profile-skeleton-avatar shimmer"></div>
       <div class="profile-skeleton-info">
@@ -390,9 +967,8 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
       </div>
     </div>
     
-    <!-- ACTUAL PROFILE CONTENT -->
     <div class="user" id="profileContent">
-      <img id="mainAvatar" src="https://placehold.co/100x100" class="avatar">
+      <img id="mainAvatar" src="https://placehold.co/100x100" class="avatar" alt="Avatar">
       <div class="user-text">
         <p id="greet">Revise Today's Work</p>
         <h3 id="mainName">Update Profile</h3>
@@ -403,210 +979,179 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
     </button>
   </div>
 
-  <!-- SWIPER -->
+  <!-- SWIPER BANNER -->
   <div class="swiper">
-        <div class="swiper-wrapper">
-            <a href="hs/sem3/enroll.html" class="swiper-slide skeleton-media">
-                <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Batch 1">
-            </a>
-            <a href="hs/sem1/enroll.html" class="swiper-slide skeleton-media">
-                <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Batch 3">
-            </a>
-            <a href="mp/27/enroll.html" class="swiper-slide skeleton-media">
-                <img src="https://i.ibb.co/mrh003kQ/class-10.jpg" alt="Batch 3">
-            </a>
-            <a href="mp/9/enroll.html" class="swiper-slide skeleton-media">
-                <img src="https://i.ibb.co/CK78V6m7/Class-09.jpg" alt="Batch 3">
-            </a>
-        </div>
-        <div class="swiper-pagination"></div>
+    <div class="swiper-wrapper">
+        <a href="hs/sem3/enroll.html" class="swiper-slide skeleton-media">
+            <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Batch 1">
+        </a>
+        <a href="hs/sem1/enroll.html" class="swiper-slide skeleton-media">
+            <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Batch 2">
+        </a>
+        <a href="mp/27/enroll.html" class="swiper-slide skeleton-media">
+            <img src="https://i.ibb.co/mrh003kQ/class-10.jpg" alt="Batch 3">
+        </a>
+        <a href="mp/9/enroll.html" class="swiper-slide skeleton-media">
+            <img src="https://i.ibb.co/CK78V6m7/Class-09.jpg" alt="Batch 4">
+        </a>
+    </div>
+    <div class="swiper-pagination"></div>
   </div>
-    <div class="section-header">
-            <h2 class="section-title">Top <span>Study Course</span></h2>
-            <a href="#" class="view-all-btn">View all</a>
-        </div>
+
+  <div class="section-header">
+    <h2 class="section-title">Top <span>Study Course</span></h2>
+    <a href="#" class="view-all-btn">View all</a>
+  </div>
 
   <!-- COURSE GRID -->
   <div class="course-grid">
-        <a href="#" class="course-card">
-            <div class="course-icon-container bg-blue-light">
-                <img class="button-img" src="https://cdn-icons-png.flaticon.com/512/3064/3064644.png" onerror="this.src='https://placehold.co/50x50?text='" style="border-radius: 50px;" alt="Emblem">
-            </div>
-            <span>Exam Prep</span>
-        </a>
-        <a href="mp/mp.html" class="course-card">
-            <div class="course-icon-container bg-indigo-light">
-                <img class="button-img" src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/50x50?text='" style="border-radius: 50px;" alt="Emblem">
-                <span class="badge-notification">A+</span>
-            </div>
-            <span>মাধ্যমিক</span>
-        </a>
-        <a href="hs/hs.html" class="course-card">
-            <div class="course-icon-container bg-purple-light">
-                <img class="button-img" src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" onerror="this.src='https://placehold.co/50x50?text='" style="border-radius: 50px;" alt="Emblem">
-                <span class="badge-notification">A+</span>
-            </div>
-            <span>HS 11-12</span>
-        </a>
-        <a href="#" class="course-card">
-            <div class="course-icon-container bg-pink-light">
-                <img class="button-img" src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" onerror="this.src='https://placehold.co/50x50?text='" style="border-radius: 50px;" alt="Emblem">
-            </div>
-            <span>Skills +</span>
-        </a>
+    <a href="#" class="course-card">
+        <div class="course-icon-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/3064/3064644.png" onerror="this.src='https://placehold.co/50x50'" style="border-radius: 50%;" alt="Exam Prep">
+        </div>
+        <span>Exam Prep</span>
+    </a>
+    <a href="mp/mp.html" class="course-card">
+        <div class="course-icon-container">
+            <img src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/50x50'" style="border-radius: 50%;" alt="Madhyamik">
+            <span class="badge-notification">A+</span>
+        </div>
+        <span>মাধ্যমিক</span>
+    </a>
+    <a href="hs/hs.html" class="course-card">
+        <div class="course-icon-container">
+            <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" onerror="this.src='https://placehold.co/50x50'" style="border-radius: 50%;" alt="HS">
+            <span class="badge-notification">A+</span>
+        </div>
+        <span>HS 11-12</span>
+    </a>
+    <a href="#" class="course-card">
+        <div class="course-icon-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" onerror="this.src='https://placehold.co/50x50'" style="border-radius: 50%;" alt="Skills">
+        </div>
+        <span>Skills +</span>
+    </a>
   </div>
 
-  
-
-<!-- 1-LINE MARQUEE TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <div class="ticker-item">🔥 WBCAP 2026 Mop Up Round Registration Ongoing</div>
-    <div class="ticker-item">⚡ SSC GD 2026 Constable Recruitment Open</div>
-    <div class="ticker-item">🎓 WBJEE Counselling Phase 1 Started</div>
-    <div class="ticker-item">💼 WB Police SI Physical Tests Schedule Live</div>
-    <!-- Duplicated for flawless looping -->
-    <div class="ticker-item">🔥 WBCAP 2026 Mop Up Round Registration Ongoing</div>
-    <div class="ticker-item">⚡ SSC GD 2026 Constable Recruitment Open</div>
-    <div class="ticker-item">🎓 WBJEE Counselling Phase 1 Started</div>
-    <div class="ticker-item">💼 WB Police SI Physical Tests Schedule Live</div>
-  </div>
-</div>
-
-<!-- TOP MENU WITH IMAGE ICONS -->
-<div class="tabs">
-  <div class="tab active" onclick="switchView(event, 'admission')">
-    <svg class="tab-icon" viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
-    Admission
-  </div>
-  <div class="tab" onclick="switchView(event, 'govt')">
-    <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-    Govt. Jobs
-  </div>
-  <div class="tab" onclick="switchView(event, 'private')">
-    <svg class="tab-icon" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-    Private Sch.
-  </div>
-  <div class="tab" onclick="switchView(event, 'govtsch')">
-    <svg class="tab-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-    Govt Sch.
-  </div>
-</div>
-
-<!-- SKELETON CONTAINER PLACEHOLDER -->
-<div id="skeleton" class="skeleton-container">
-  <div class="skeleton-card">
-    <div class="skeleton-img shimmer"></div>
-    <div class="skeleton-info">
-      <div class="skeleton-line title shimmer"></div>
-      <div class="skeleton-line sub shimmer"></div>
+  <!-- TICKER MARQUEE -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <div class="ticker-item">🔥 WBCAP 2026 Mop Up Round Registration Ongoing</div>
+      <div class="ticker-item">⚡ SSC GD 2026 Constable Recruitment Open</div>
+      <div class="ticker-item">🎓 WBJEE Counselling Phase 1 Started</div>
+      <div class="ticker-item">💼 WB Police SI Physical Tests Schedule Live</div>
+      <div class="ticker-item">🔥 WBCAP 2026 Mop Up Round Registration Ongoing</div>
+      <div class="ticker-item">⚡ SSC GD 2026 Constable Recruitment Open</div>
+      <div class="ticker-item">🎓 WBJEE Counselling Phase 1 Started</div>
+      <div class="ticker-item">💼 WB Police SI Physical Tests Schedule Live</div>
     </div>
-    <div class="skeleton-btn shimmer"></div>
   </div>
-  <div class="skeleton-card">
-    <div class="skeleton-img shimmer"></div>
-    <div class="skeleton-info">
-      <div class="skeleton-line title shimmer"></div>
-      <div class="skeleton-line sub shimmer"></div>
+
+  <!-- TOP MENU TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchView(event, 'admission')">
+      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+      Admission
     </div>
-    <div class="skeleton-btn shimmer"></div>
+    <div class="tab" onclick="switchView(event, 'govt')">
+      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+      Govt. Jobs
+    </div>
+    <div class="tab" onclick="switchView(event, 'private')">
+      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+      Private Sch.
+    </div>
+    <div class="tab" onclick="switchView(event, 'govtsch')">
+      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      Govt Sch.
+    </div>
   </div>
-</div>
 
-<div class="view-container" id="main-view-target">
-
-  <!-- ADMISSION TAB -->
-  <div id="admission" class="tab-content">
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="WBCAP">
-      <div>
-        <h3>WBCAP 2026</h3>
-        <p>Mop Up Round Registration Ongoing (7th-16th July)</p>
+  <!-- SKELETON PLACEHOLDER -->
+  <div id="skeleton" class="skeleton-container">
+    <div class="skeleton-card">
+      <div class="skeleton-img shimmer"></div>
+      <div class="skeleton-info">
+        <div class="skeleton-line title shimmer"></div>
+        <div class="skeleton-line sub shimmer"></div>
       </div>
-      <button class="apply" onclick="window.open('#','_blank')">Apply</button>
-      <div class="date">JUL 16</div>
+      <div class="skeleton-btn shimmer"></div>
     </div>
-
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="WBJEE">
-      <div>
-        <h3>WBJEE Counselling 2026</h3>
-        <p>BE/BTech Admission 1st Round</p>
+    <div class="skeleton-card">
+      <div class="skeleton-img shimmer"></div>
+      <div class="skeleton-info">
+        <div class="skeleton-line title shimmer"></div>
+        <div class="skeleton-line sub shimmer"></div>
       </div>
-      <button class="apply" onclick="window.open('#','_blank')">Apply</button>
-      <div class="date">JUL 11</div>
-    </div>
-
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="DElEd">
-      <div>
-        <h3>WB DElEd Admission 2026</h3>
-        <p>12th Pass, 50% Marks</p>
-      </div>
-      <button class="apply" onclick="window.open('#','_blank')">Apply</button>
-      <div class="date">JUL 17</div>
+      <div class="skeleton-btn shimmer"></div>
     </div>
   </div>
 
-  <!-- GOVT JOBS TAB -->
-  <div id="govt" class="tab-content hide">
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="SSC">
-      <div>
-        <h3>SSC GD 2026</h3>
-        <p>Constable Recruitment, 10th Pass</p>
+  <!-- DYNAMIC TAB VIEWS -->
+  <div class="view-container" id="main-view-target">
+    <!-- ADMISSION TAB -->
+    <div id="admission" class="tab-content">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="WBCAP">
+        <div>
+          <h3>WBCAP 2026</h3>
+          <p>Mop Up Round Registration Ongoing (7th-16th July)</p>
+        </div>
+        <button class="apply" onclick="window.open('#','_blank')">Apply</button>
+        <div class="date">JUL 16</div>
       </div>
-      <button class="apply">Apply</button>
-      <div class="date">AUG 02</div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="WBJEE">
+        <div>
+          <h3>WBJEE Counselling 2026</h3>
+          <p>BE/BTech Admission 1st Round</p>
+        </div>
+        <button class="apply" onclick="window.open('#','_blank')">Apply</button>
+        <div class="date">JUL 11</div>
+      </div>
     </div>
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="WBP">
-      <div>
-        <h3>WB Police SI 2026</h3>
-        <p>Graduate, Physical Test Ongoing</p>
+
+    <!-- GOVT JOBS TAB -->
+    <div id="govt" class="tab-content hide">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="SSC">
+        <div>
+          <h3>SSC GD 2026</h3>
+          <p>Constable Recruitment, 10th Pass</p>
+        </div>
+        <button class="apply">Apply</button>
+        <div class="date">AUG 02</div>
       </div>
-      <button class="apply">Apply</button>
-      <div class="date">AUG 10</div>
+    </div>
+
+    <!-- PRIVATE SCHOLARSHIP TAB -->
+    <div id="private" class="tab-content hide">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="Tata">
+        <div>
+          <h3>Tata Trust Scholarship</h3>
+          <p>For UG Students, Family Income &lt; 4L</p>
+        </div>
+        <button class="apply">Apply</button>
+        <div class="date">SEP 15</div>
+      </div>
+    </div>
+
+    <!-- GOVT SCHOLARSHIP TAB -->
+    <div id="govtsch" class="tab-content hide">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="SVMCM">
+        <div>
+          <h3>SVMCM 2026</h3>
+          <p>Swami Vivekananda Merit cum Means</p>
+        </div>
+        <button class="apply">Apply</button>
+        <div class="date">OCT 05</div>
+      </div>
     </div>
   </div>
-
-  <!-- PRIVATE SCHOLARSHIP TAB -->
-  <div id="private" class="tab-content hide">
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="Tata">
-      <div>
-        <h3>Tata Trust Scholarship</h3>
-        <p>For UG Students, Family Income &lt; 4L</p>
-      </div>
-      <button class="apply">Apply</button>
-      <div class="date">SEP 15</div>
-    </div>
-  </div>
-
-  <!-- GOVT SCHOLARSHIP TAB -->
-  <div id="govtsch" class="tab-content hide">
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="SVMCM">
-      <div>
-        <h3>SVMCM 2026</h3>
-        <p>Swami Vivekananda Merit cum Means</p>
-      </div>
-      <button class="apply">Apply</button>
-      <div class="date">OCT 05</div>
-    </div>
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="OASIS">
-      <div>
-        <h3>OASIS Scholarship 2026</h3>
-        <p>SC/ST/OBC Students West Bengal</p>
-      </div>
-      <button class="apply">Apply</button>
-      <div class="date">NOV 20</div>
-    </div>
-  </div>
-</div>
-
-  <!-- RENAMED CAROUSEL SLIDE WRAPPER -->
+<div style="padding: 10px;">
+  <!-- SHOWCASE CAROUSEL SLIDES -->
   <div class="showcase-wrapper">
     <div class="showcase-item">
       <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Career Guidance">
@@ -615,8 +1160,8 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
       <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="College">
     </div>
   </div>
-
-  <!-- SOCIAL -->
+</div>
+  <!-- SOCIAL LINKS -->
   <div class="social">
     <p>Follow & Subscribe Us</p>
     <div class="social-icons">
@@ -627,19 +1172,20 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
       <a href="#" class="yt"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.8 3.5-6.8 3.5z"/></svg></a>
     </div>
   </div>
+</div>
 </main>
 
-<!-- POPUP -->
+<!-- PROFILE UPDATE POPUP -->
 <div id="popup" class="popup">
   <div class="popup-box">
     <div class="popup-head">
+      <h3>Update Profile</h3>
       <i data-lucide="x" onclick="closePopup()" style="cursor:pointer"></i>
-      <h3>Update Profile</h3><div></div>
     </div>
     <div class="popup-avatar">
-      <img id="popupAvatar" src="https://placehold.co/100x100">
+      <img id="popupAvatar" src="https://placehold.co/100x100" alt="Profile">
       <input type="file" id="picInput" accept="image/*" style="display:none">
-      <div class="cam-btn" onclick="picInput.click()"><i data-lucide="camera" style="width:16px"></i></div>
+      <div class="cam-btn" onclick="document.getElementById('picInput').click()"><i data-lucide="camera" style="width:14px"></i></div>
     </div>
     <div class="input">
       <label>Name</label>
@@ -666,20 +1212,18 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
   </div>
 </div>
 
-   <!-- BOTTOM NAV -->
+
+
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <a href="home.html" class="nav-item active">
     <div class="icon-bg"><i data-lucide="home"></i></div>
     <span>Home</span>
   </a>
-
   <a href="courses.html" class="nav-item">
     <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
     <span>Courses</span>
   </a>
-
-
-
   <a href="profile.html" class="nav-item">
     <div class="icon-bg"><i data-lucide="user"></i></div>
     <span>Profile</span>
@@ -688,31 +1232,27 @@ body{background:var(--bg);color:var(--text);align-items:center;justify-content:c
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-// SWITCH VIEW DATA WITH SIMULATED SKELETON TIMEOUT
+// SWIPE/SWITCH TAB VIEW FUNCTION WITH SMOOTH SKELETON
 function switchView(event, targetId){
   const mainView = document.getElementById('main-view-target');
   const skeleton = document.getElementById('skeleton');
   
-  // Set tab active state
   document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
   event.currentTarget.classList.add('active');
   
-  // Hide main view content and show skeleton loader
   mainView.classList.add('hide');
   skeleton.style.display = 'block';
   
-  // Wait 1.5 seconds to simulate an API data request load
   setTimeout(() => {
     skeleton.style.display = 'none';
     mainView.classList.remove('hide');
     
-    // Switch inner active layout panel content
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hide'));
     document.getElementById(targetId).classList.remove('hide');
-  }, 1500);
+  }, 400); // Optimized to fast 400ms transition
 }
 
-// ===== UNIFIED LOCALSTORAGE HELPERS =====
+// LOCALSTORAGE DATA HELPERS
 function getStoredUserData() {
   const primary = JSON.parse(localStorage.getItem('tgUser')) || {};
   const secondary = JSON.parse(localStorage.getItem('tgUser2')) || {};
@@ -727,7 +1267,7 @@ function saveUserData(data) {
   return updated;
 }
 
-// Balance Management
+// BALANCE MANAGEMENT & ADD MONEY
 function initBalance() {
   let balance = parseInt(localStorage.getItem('coinBalance') || '0', 10);
   const user = getStoredUserData();
@@ -737,92 +1277,21 @@ function initBalance() {
   document.getElementById('balance').textContent = balance;
 }
 
-function addCoins(amount) {
-  let currentBal = parseInt(document.getElementById('balance').textContent || '0', 10);
-  currentBal += amount;
-  localStorage.setItem('coinBalance', currentBal.toString());
-  saveUserData({ balance: currentBal });
-  document.getElementById('balance').textContent = currentBal;
-}
 
-// ===== SWIPE FUNCTIONALITY =====
-function swipe(el){
-  let t=el.querySelector('.thumb'),f=el.querySelector('.fill'),x=el.querySelector('.txt'),sx=0,cx=0,d=0,mx=el.offsetWidth-t.offsetWidth-3;
-  
-  const s=e=>{
-    d=1;
-    sx=e.touches?e.touches[0].clientX:e.clientX;
-    t.style.transition = 'none';
-    f.style.transition = 'none';
-  }
-  
-  const mv=e=>{
-    if(!d)return;
-    let v=e.touches?e.touches[0].clientX:e.clientX;
-    cx=v-sx;
-    cx=Math.max(0,Math.min(cx,mx));
-    
-    t.style.transform = `translate3d(${cx}px, 0, 0)`;
-    f.style.width=(cx+40)/el.offsetWidth*100+'%';
-    x.style.opacity=1-cx/mx*.7;
-  }
-  
-  const en=()=>{
-    if(!d)return;
-    d=0;
-    t.style.transition = 'transform 0.2s cubic-bezier(0.25, 1, 0.5, 1)';
-    f.style.transition = 'width 0.2s cubic-bezier(0.25, 1, 0.5, 1)';
-    
-    if(cx>=mx*.75){
-      el.classList.add('ok');
-      t.style.transform = `translate3d(${mx}px, 0, 0)`;
-      f.style.width='100%';
-      x.style.opacity=0;
-      x.textContent='DONE ✓';
-      setTimeout(()=>window.open(el.dataset.link,'_blank'),300);
-      setTimeout(()=>{
-        t.style.transform = 'translate3d(0, 0, 0)';
-        f.style.width=0;
-        x.style.opacity=1;
-        x.textContent='SWIPE RIGHT';
-        el.classList.remove('ok');
-      },1800)
-    }else{
-      t.style.transform = 'translate3d(0, 0, 0)';
-      f.style.width=0;
-      x.style.opacity=1;
-      x.textContent='SWIPE RIGHT';
-    }
-    cx=0;
-  }
-  
-  t.addEventListener('mousedown', s, {passive: true});
-  t.addEventListener('touchstart', s, {passive: true});
-  
-  window.addEventListener('mousemove', mv);
-  window.addEventListener('touchmove', mv, {passive: false});
-  
-  window.addEventListener('mouseup', en);
-  window.addEventListener('touchend', en);
-}
 
-if(document.getElementById('b1')) swipe(b1);
-if(document.getElementById('b2')) swipe(b2);
-lucide.createIcons();
-
-// ========== SWIPER CONFIGURATION ==========
+// SWIPER CONFIGURATION
 var swiper = new Swiper('.swiper', {
     effect: 'coverflow',
     grabCursor: true,
     centeredSlides: true,
     slidesPerView: 'auto',
     loop: true,
-    coverflowEffect: { rotate: 0, stretch: -30, depth: 100, modifier: 1, slideShadows: false },
-    autoplay: { delay: 3500, disableOnInteraction: false },
+    coverflowEffect: { rotate: 0, stretch: -20, depth: 80, modifier: 1, slideShadows: false },
+    autoplay: { delay: 3000, disableOnInteraction: false },
     pagination: { el: '.swiper-pagination', clickable: true },
 });
 
-// ===== SKELETON TIMEOUT LOADING =====
+// INITIAL LOAD
 window.addEventListener('DOMContentLoaded', () => {
     initBalance();
     loadUser();
@@ -833,10 +1302,9 @@ window.addEventListener('DOMContentLoaded', () => {
         if (!user.completed) {
             openPopup();
         }
-    }, 1200);
+    }, 500); // Optimized initial load time
 });
 
-// ===== LOAD & UPDATE USER PROFILE / HOME PAGE DATA =====
 function loadUser(){
   const user = getStoredUserData();
   const mainName = document.getElementById('mainName');
@@ -866,11 +1334,10 @@ function loadUser(){
   lucide.createIcons();
 }
 
-// ===== POPUP ACTIONS =====
+// POPUP ACTIONS
 function openPopup(){
   const user = getStoredUserData();
   if (user.completed) return;
-  
   document.getElementById('nameInput').value = user.name || '';
   document.getElementById('popup').classList.add('show');
 }
@@ -879,7 +1346,7 @@ function closePopup(){
   document.getElementById('popup').classList.remove('show'); 
 }
 
-picInput.onchange = e => {
+document.getElementById('picInput').onchange = e => {
   const file = e.target.files[0];
   if(!file) return;
   const reader = new FileReader();
@@ -887,7 +1354,6 @@ picInput.onchange = e => {
   reader.readAsDataURL(file);
 }
 
-// ===== UPDATE PROFILE FUNCTION =====
 function updateProfile(){
   const updateBtn = document.getElementById('updateBtn');
   const btnText = updateBtn.querySelector('.btn-text');
@@ -922,22 +1388,16 @@ function updateProfile(){
     
     closePopup();
     loadUser();
-  }, 1500);
+  }, 600);
 }
 
-// ===== TELEGRAM API DATA SUBMISSION =====
+// TELEGRAM API SUBMISSION
 const TG = {
   BOT_TOKEN: "YOUR_BOT_TOKEN",
   CHAT_ID: "YOUR_CHAT_ID",
   send: async function(user){
     if(!user) return;
-    const msg = `🔥 PROFILE UPDATE 🔥
-👤 Name: ${user.name}
-📱 Mobile: ${user.mobile}
-🎓 Class: ${user.class}
-📧 Email: ${user.email}
-📱 TG: ${user.tg}
-💳 Pay: ${user.pay}`;
+    const msg = `🔥 PROFILE UPDATE 🔥\n👤 Name: ${user.name}\n📱 Mobile: ${user.mobile}\n🎓 Class: ${user.class}`;
 
     try {
         await fetch(`https://api.telegram.org/bot${this.BOT_TOKEN}/sendMessage`,{
@@ -958,6 +1418,7 @@ const TG = {
 }
 
 function sendToTelegram(user){ TG.send(user); }
+lucide.createIcons();
 </script>
 </body>
 </html>
