@@ -53,7 +53,7 @@
             --accent-color: #0555E8;
             --text-dark: #1e293b;
             --text-muted: #64748b;
-            --bg-light: #FAF1EB;
+            --bg-light: #fff;
             --card-bg: #ffffff;
             --ribbon-bg: #f1f5f9;
             --star-color: #cbd5e1; 
@@ -176,12 +176,12 @@
         .coin-balance {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 2px;
             font-weight: 700;
             color: #d97706;
             background: #fef3c7;
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 1px 10px;
+            border-radius: 10px;
         }
         
         body.dark .coin-balance {
@@ -328,12 +328,12 @@
             border: 1px solid var(--text-muted);
             color: #07789B;
             border-radius: 24px;
-            height: 48px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 18px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
             transition: background-color 0.3s, border-color 0.3s;
@@ -589,8 +589,8 @@
             opacity: 1;
         }
 
-        .custom-toast.toast-error { border-left: 4px solid #ef4444; }
-        .custom-toast.toast-success { border-left: 4px solid #10b981; }
+        .custom-toast.toast-error { }
+        .custom-toast.toast-success {  }
     </style>
 </head>
 <body>
@@ -601,15 +601,12 @@
 
         <header class="top-navbar">
             <button class="nav-btn" onclick="goBack()"><i data-lucide="x"></i></button>
-              <div class="user-ribbon">
-                <div class="user-profile-info">
-                    <img id="profileAvatar" src="" alt="Profile pic">
-                    <span id="displayName"></span>
-                </div>
+             
+                
+                    
                 <div class="coin-balance">
-                    <i data-lucide="badge-indian-rupee"></i>
-                    <span id="balance">0</span>
-                </div>
+                    ₹<span id="balance">0</span>
+                
             </div>
  <button class="nav-btn" id="darkToggle" aria-label="Toggle Dark Mode" style="display: none;">🌙</button>
     
@@ -645,7 +642,7 @@
                 </div>
                 <div class="spec-item">
                     <i data-lucide="clock"></i>
-                    <span>Duration: 1 Months</span>
+                    <span>Duration: comming soon</span>
                 </div>
                 <div class="spec-item">
                     <i data-lucide="video"></i>
@@ -690,7 +687,7 @@
                         </div>
                         <div class="option-details">
                             <div class="option-title">Unlock with Rupee</div>
-                            <div class="option-sub">Requires 99 Rupee</div>
+                            <div class="option-sub">Requires 99 Rupees</div>
                         </div>
                         <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
                     </div>
@@ -710,8 +707,8 @@
                 <div class="workflow-pane" id="paneCoinProcessor">
                     <div style="text-align:center; padding:10px 0 20px 0;">
                         <i data-lucide="badge-indian-rupee" style="width:48px; height:48px; color:#d97706; margin: 0 auto 12px auto;"></i>
-                        <p style="font-size:15px; font-weight:600; margin-bottom:4px;">Confirm Coin Deduction</p>
-                        <p style="font-size:13px; color:var(--text-muted);">0 rupee will be deducted from your account balance.</p>
+                        <p style="font-size:15px; font-weight:600; margin-bottom:4px;">Confirm Rupees Deduction</p>
+                        <p style="font-size:13px; color:var(--text-muted);">Rupees will be deducted from your account balance.</p>
                     </div>
                     <button class="btn-submit-action" onclick="executeCoinDeductions()">
                         <span id="coinActionText">Confirm & Unlock</span>
