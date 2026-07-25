@@ -1,539 +1,624 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Search</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            transition: background 0.3s, color 0.3s, border-color 0.3s;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Nunito', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Notifications - EduLive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root {
+    --primary: #0555E8;
+    --primary-light: #eef4ff;
+    --primary-hover: #0444ba;
+    --bg-surface: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --danger: #ef4444;
+    --danger-light: #fef2f2;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 25px -5px rgba(5, 85, 232, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+  }
 
-        a, span, p, h1, h2, h3, h4, h5, h6, div {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-            text-decoration: none;
-        }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-        img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            user-drag: none;
-        }
+  body {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+  }
 
-        /* LIGHT MODE VARIABLES */
-        :root {
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --header-bg: #07789B;
-            --text-dark: #1e293b;
-            --text-light: #64748b;
-            --text-muted: #94a3b8;
-            --border: #f1f5f9;
-            --border-dark: #e2e8f0;
-            --input-bg: rgba(255,255,0.95);
-            --search-results-bg: #ffffff;
-            --result-hover: #f8fafc;
-            --result-active: #f1f5f9;
-            --clear-btn-bg: #e2e8f0;
-            --clear-btn-color: #475569;
-            --highlight-bg: linear-gradient(135deg, #fbbf24, #f59e0b);
-            --highlight-text: #1e293b;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
-        }
+  .app-shell {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background: #ffffff;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+  }
 
-        /* DARK MODE VARIABLES */
-        body.dark {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --header-bg: #1e293b;
-            --text-dark: #f1f5f9;
-            --text-light: #cbd5e1;
-            --text-muted: #64748b;
-            --border: #334155;
-            --border-dark: #475569;
-            --input-bg: rgba(30,41,59,0.95);
-            --search-results-bg: #1e293b;
-            --result-hover: #334155;
-            --result-active: #475569;
-            --clear-btn-bg: #334155;
-            --clear-btn-color: #cbd5e1;
-            --highlight-bg: linear-gradient(135deg, #fbbf24, #f59e0b);
-            --highlight-text: #0f172a;
-            --shadow: 0 4px 12px rgba(0,0,0,0.3);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
-        }
+  /* HEADER DESIGN */
+  .header {
+    background: var(--primary);
+    padding: 5px; width: 100%; height: 50px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(5, 85, 232, 0.15);
+  }
 
-        body {
-            background: var(--bg);
-            overflow-x: hidden;
-        }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
 
-        /* --- Header Styles --- */
-      .app-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: var(--header-bg);
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-            gap: 12px;
-        }
+  .back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s;
+  }
 
-      .back-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: white;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
+  .back-btn:active {
+    background: rgba(255, 255, 255, 0.3);
+  }
 
-      .back-btn:active {
-            background: rgba(255,255,0.15);
-            transform: scale(0.95);
-        }
+  .back-btn i {
+    width: 20px;
+    height: 20px;
+  }
 
-      .search-container {
-            flex: 1;
-            position: relative;
-            max-width: 500px;
-        }
+  .header h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
 
-      .search-input {
-            width: 100%;
-            height: 40px;
-            border-radius: 50px;
-            border: none;
-            padding: 0 45px 0 18px;
-            font-size: 15px;
-            font-weight: 600;
-            outline: none;
-            background: var(--bg);
-            color: var(--text-dark);
-            transition: all 0.3s;
-        }
+  .header-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
 
-      .search-input:focus {
-            background: var(--card-bg);
-            
-        }
+  /* CONTAINER & LIST */
+  .container {
+    padding: 16px;
+    flex: 1;
+    background: var(--bg-surface);
+  }
 
-      .search-input::placeholder {
-            color: var(--text-light);
-            font-weight: 500;
-        }
+  /* EMPTY STATE */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+  }
 
-      .search-icon {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            pointer-events: none;
-        }
+  .empty-icon-box {
+    width: 90px;
+    height: 90px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--primary);
+  }
 
-      .clear-btn {
-            position: absolute;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--clear-btn-bg);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--clear-btn-color);
-        }
+  .empty h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
 
-      .clear-btn.show {
-            display: flex;
-        }
+  .empty p {
+    color: var(--text-muted);
+    font-size: 14px;
+    max-width: 240px;
+    line-height: 1.5;
+  }
 
-      .dark-toggle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: white;
-            transition: all 0.2s;
-            flex-shrink: 0;
-            background: rgba(255,255,0.15);
-            border: none;
-            font-size: 18px;
-        }
+  /* NOTIFICATION LIST */
+  .noti-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-      .dark-toggle:active {
-            background: rgba(255,255,0.25);
-            transform: scale(0.95);
-        }
+  .noti-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-sm);
+  }
 
-        /* MAIN CONTENT */
-      .app-content {
-            margin-top: 60px;
-            padding: 20px 16px;
-            min-height: calc(100vh - 60px);
-        }
+  .noti-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: rgba(5, 85, 232, 0.2);
+  }
 
-        /* SEARCH RESULTS DROPDOWN */
-      .search-results {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            background: var(--search-results-bg);
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            box-shadow: var(--shadow-lg);
-            z-index: 999;
-        }
+  .noti-card:active {
+    transform: scale(0.99);
+    background: #f8fafc;
+  }
 
-      .search-results.show {
-            max-height: 400px;
-            overflow-y: auto;
-        }
+  .noti-card.unread {
+    background: #ffffff;
+    border-color: rgba(5, 85, 232, 0.25);
+  }
 
-      .result-item {
-            display: flex;
-            align-items: center;
-            padding: 14px 20px;
-            border-bottom: 1px solid var(--border);
-            text-decoration: none;
-            color: var(--text-dark);
-            transition: all 0.2s;
-            gap: 12px;
-        }
+  .noti-card.unread::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    right: 16px;
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+  }
 
-      .result-item:hover {
-            background: var(--result-hover);
-        }
+  .noti-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 8px;
+  }
 
-      .result-item:active {
-            background: var(--result-active);
-        }
+  .noti-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+  }
 
-      .result-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            flex-shrink: 0;
-        }
+  .noti-content {
+    flex: 1;
+    padding-right: 18px;
+  }
 
-      .result-text {
-            flex: 1;
-        }
+  .noti-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
 
-      .result-title {
-            font-weight: 800;
-            font-size: 15px;
-            margin-bottom: 2px;
-            color: var(--text-dark);
-        }
+  .noti-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
-      .result-desc {
-            font-size: 12px;
-            color: var(--text-light);
-            font-weight: 600;
-        }
+  .noti-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-      .no-results {
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--text-light);
-        }
+  .noti-time {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
 
-      .no-results-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 16px;
-            background: var(--border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-        }
+  .delete-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
 
-      .no-results-title {
-            font-weight: 800;
-            font-size: 18px;
-            color: var(--text-dark);
-            margin-bottom: 6px;
-        }
+  .delete-btn:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+  }
 
-      .no-results-text {
-            font-size: 14px;
-            color: var(--text-light);
-        }
+  /* BOTTOM SHEET POPUP */
+  .popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
 
-        /* DEMO CONTENT */
-      .demo-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            border: 1px solid var(--border);
-        }
+  .popup.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-      .demo-title {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--text-dark);
-            margin-bottom: 8px;
-        }
+  .popup-box {
+    background: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 24px 24px 0 0;
+    padding: 24px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 85vh;
+    overflow-y: auto;
+  }
 
-      .demo-text {
-            color: var(--text-light);
-            line-height: 1.6;
-            font-size: 15px;
-        }
+  .popup.show .popup-box {
+    transform: translateY(0);
+  }
 
-      .highlight {
-            background: var(--highlight-bg);
-            color: var(--highlight-text);
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-weight: 800;
-        }
-    </style>
+  .popup-drag-handle {
+    width: 36px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    margin: 0 auto 16px auto;
+  }
+
+  .popup-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .popup-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-main);
+  }
+
+  .popup-close {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    background: var(--bg-surface);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .popup-img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+    max-height: 220px;
+    object-fit: cover;
+  }
+
+  .popup-text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #334155;
+  }
+
+  .popup-date {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+/* APPLICATION CONTAINER MAIN */
+.app-container {
+    position: fixed; top: 50px; bottom: 65px; width: 100%; overflow-y: auto;
+    background: var(--bg); scrollbar-width: none; -ms-overflow-style: none;
+    will-change: scroll-position;
+}
+.app-container::-webkit-scrollbar { display: none; }
+.content { padding: 0 16px; }
+
+</style>
 </head>
 <body>
 
-    <!-- HEADER WITH BACK + SEARCH + DARK TOGGLE -->
-    <header class="app-header">
-        <div class="back-btn" onclick="goBack()">
-            <i data-lucide="arrow-left" width="22" height="22"></i>
+<div class="app-shell">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="back-btn" onclick="handleHeaderBack()">
+        <i data-lucide="arrow-left"></i>
+      </div>
+      <h1>Notifications</h1>
+    </div>
+    <div class="header-badge" id="unreadBadge">0 New</div>
+  </div>
+<main class="app-container">
+  <div class="container">
+    <!-- EMPTY STATE -->
+    <div class="empty" id="emptyState" style="display: none;">
+      <div class="empty-icon-box">
+        <i data-lucide="bell-off" style="width: 40px; height: 40px;"></i>
+      </div>
+      <h3>No Notifications Yet</h3>
+      <p>We'll notify you when important updates or new classes are available.</p>
+    </div>
+
+    <!-- NOTIFICATION LIST -->
+    <div class="noti-list" id="notiList"></div>
+  </div>
+</div>
+</main>
+<!-- BOTTOM POPUP -->
+<div class="popup" id="popup" onclick="closePopup(event)">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <div class="popup-drag-handle"></div>
+    <div class="popup-header">
+      <h2 id="popupTitle">Title</h2>
+      <div class="popup-close" onclick="closePopup()"><i data-lucide="x" style="width: 18px; height: 18px;"></i></div>
+    </div>
+    <img src="" id="popupImg" class="popup-img">
+    <div id="popupText" class="popup-text"></div>
+    <div id="popupDate" class="popup-date"></div>
+  </div>
+</div>
+
+<script>
+lucide.createIcons();
+
+const defaultNotifications = [
+  {
+    id: "n-1",
+    title: "HS বাংলা সাজেশন 2026 আপডেট",
+    text: "তৃতীয় সেমিস্টারের জন্য নতুন সাজেশন আপলোড করা হয়েছে। এখনই চেক করুন।",
+    img: "https://i.ibb.co/1pF4mN2/nsou.jpg",
+    time: new Date().toISOString(),
+    viewed: false
+  },
+  {
+    id: "n-2", 
+    title: "New Video Class Live",
+    text: "Class 12 English Chapter 1 এর Live Class আজ রাত 8টায়।",
+    img: "https://i.ibb.co/6nL3v4B/banner3.jpg",
+    time: new Date().toISOString(),
+    viewed: false
+  }
+];
+
+let notifications = JSON.parse(localStorage.getItem('edulive_notifications') || '[]');
+if(notifications.length === 0){
+  notifications = defaultNotifications;
+  saveNotifications();
+}
+
+function saveNotifications(){
+  localStorage.setItem('edulive_notifications', JSON.stringify(notifications));
+}
+
+function renderNotifications(){
+  const list = document.getElementById('notiList');
+  const empty = document.getElementById('emptyState');
+  const badge = document.getElementById('unreadBadge');
+  
+  const unreadCount = notifications.filter(n => !n.viewed).length;
+  badge.textContent = `${unreadCount} New`;
+
+  if(notifications.length === 0){
+    empty.style.display = 'flex';
+    list.innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = '';
+  notifications.forEach(noti => {
+    const date = new Date(noti.time);
+    const timeStr = date.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'});
+    const dateStr = date.toLocaleDateString('en-IN', {day: '2-digit', month: 'short'});
+    
+    list.innerHTML += `
+      <div class="noti-card ${noti.viewed ? '' : 'unread'}" onclick="openPopup('${noti.id}')">
+        <div class="noti-icon">
+          <img src="https://i.ibb.co/Vm3hYg2/logo.png" alt="EduLive">
         </div>
-        
-        <div class="search-container">
-            <input 
-                type="text" 
-                class="search-input" 
-                id="searchInput" 
-                placeholder="Search courses, topics..."
-                autocomplete="on"
-                autofocus
-                enterkeyhint="search"
-            >
-            <div class="clear-btn" id="clearBtn" onclick="clearSearch()">
-                <i data-lucide="x" width="12" height="12"></i>
-            </div>
-            <i data-lucide="search" width="18" height="18" class="search-icon"></i>
+        <div class="noti-content">
+          <div class="noti-title">${noti.title}</div>
+          <div class="noti-text">${noti.text}</div>
+          <div class="noti-footer">
+            <span class="noti-time">
+              <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+              ${timeStr} • ${dateStr}
+            </span>
+          </div>
         </div>
+        <div class="delete-btn" onclick="deleteNoti(event, '${noti.id}')" title="Delete">
+          <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+        </div>
+      </div>
+    `;
+  });
+  lucide.createIcons();
+}
 
-        <button style="display: none;" class="dark-toggle" id="darkToggle">🌙</button>
-    </header>
+/* --- URL ROUTING & BACK SYSTEM --- */
 
-    <!-- SEARCH RESULTS DROPDOWN -->
-    <div class="search-results" id="searchResults"></div>
+function handleHeaderBack() {
+  const popup = document.getElementById('popup');
+  if (popup.classList.contains('show')) {
+    closePopupUI();
+    cleanUrlPath();
+  } else {
+    if (document.referrer && document.referrer !== window.location.href) {
+      history.back();
+    } else {
+      window.location.href = '/';
+    }
+  }
+}
 
- 
+function getNotificationIdFromPath() {
+  const path = window.location.pathname;
+  const match = path.match(/\/(n-\d+)$/);
+  if (match) return match[1];
+  return window.location.hash.replace('#', '');
+}
 
-    <script>
-        lucide.createIcons();
+function updateUrlPath(id) {
+  const newPath = `/${id}`;
+  if (window.location.pathname !== newPath) {
+    history.pushState({ popupOpen: true, id: id }, '', newPath);
+  }
+}
 
-        // Sample searchable data - replace with your actual data
-        const searchData = [
-            {
-                id: 1,
-                title: "Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার",
-                desc: "Advanced Course & Technology",
-                url: "hs/hs.html?id=course1",
-                icon: "search",
-                keywords: ["class12","hs", "3rd semester", "বাংলা + english", "উচ্চমাধ্যমিক তৃতীয় সেমিস্টার", "class 12"]
-            },
-            {
-                id: 2,
-                title: "Class 11 1st Semester [বাংলা + English] একাদশ প্রথম সেমিস্টার",
-                desc: "Full syllabus practice papers",
-                url: "hs/hs.html?id=course2",
-                icon: "search",
-                keywords: ["class11","hs", "1st semester", "বাংলা + english", "একাদশ প্রথম সেমিস্টার", "class 11"]
-            },
-        ];
+function cleanUrlPath() {
+  if (window.location.pathname !== '/' && window.location.pathname !== '') {
+    history.pushState(null, '', '/');
+  }
+}
 
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        const clearBtn = document.getElementById('clearBtn');
-        const darkToggle = document.getElementById('darkToggle');
+function openPopup(id){
+  const noti = notifications.find(n => n.id === id);
+  if(!noti) return;
 
-        // DARK MODE TOGGLE
-        if (localStorage.getItem("darkMode") === "true") {
-            document.body.classList.add("dark");
-            darkToggle.textContent = "☀️";
-        }
+  if(!noti.viewed){
+    noti.viewed = true;
+    noti.viewTime = new Date().toISOString();
+    saveNotifications();
+    renderNotifications();
+  }
 
-        darkToggle.addEventListener("click", () => {
-            document.body.classList.toggle("dark");
-            const isDark = document.body.classList.contains("dark");
-            localStorage.setItem("darkMode", isDark);
-            darkToggle.textContent = isDark ? "☀️" : "🌙";
-        });
+  document.getElementById('popupTitle').textContent = noti.title;
+  document.getElementById('popupText').textContent = noti.text;
+  
+  const imgEl = document.getElementById('popupImg');
+  if(noti.img) {
+    imgEl.src = noti.img;
+    imgEl.style.display = 'block';
+  } else {
+    imgEl.style.display = 'none';
+  }
+  
+  const date = new Date(noti.viewTime || noti.time);
+  document.getElementById('popupDate').innerHTML = `
+    <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i> 
+    Viewed: ${date.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'})} • ${date.toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'})}
+  `;
 
-        // AUTO FOCUS ON LOAD - Makes keyboard appear
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                searchInput.focus();
-                searchInput.click();
-            }, 100);
-        });
+  document.getElementById('popup').classList.add('show');
+  lucide.createIcons();
+  updateUrlPath(id);
+}
 
-        // Also focus when page becomes visible
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                setTimeout(() => searchInput.focus(), 100);
-            }
-        });
+function closePopupUI() {
+  document.getElementById('popup').classList.remove('show');
+}
 
-        function goBack() {
-            if (document.referrer) {
-                window.history.back();
-            } else {
-                window.location.href = 'home.html';
-            }
-        }
+function closePopup(e){
+  if(!e || e.target.id === 'popup' || e.target.closest('.popup-close')){
+    closePopupUI();
+    cleanUrlPath();
+  }
+}
 
-        function clearSearch() {
-            searchInput.value = '';
-            searchResults.classList.remove('show');
-            clearBtn.classList.remove('show');
-            searchInput.focus();
-        }
+function deleteNoti(e, id){
+  e.stopPropagation();
+  notifications = notifications.filter(n => n.id !== id);
+  saveNotifications();
+  renderNotifications();
+}
 
-        // Live search function
-        searchInput.addEventListener('input', function(e) {
-            const query = e.target.value.trim().toLowerCase();
-            
-            if (query.length === 0) {
-                searchResults.classList.remove('show');
-                clearBtn.classList.remove('show');
-                return;
-            }
+/* --- EVENT LISTENERS --- */
 
-            clearBtn.classList.add('show');
+window.addEventListener('popstate', (e) => {
+  const notiId = getNotificationIdFromPath();
+  if (notiId) {
+    openPopup(notiId);
+  } else {
+    closePopupUI();
+  }
+});
 
-            if (query.length < 2) {
-                searchResults.classList.remove('show');
-                return;
-            }
+window.addEventListener('load', () => {
+  renderNotifications();
+  const directId = getNotificationIdFromPath();
+  if(directId) {
+    openPopup(directId);
+  }
+});
 
-            const results = searchData.filter(item => {
-                const searchText = item.title.toLowerCase() + ' ' + item.desc.toLowerCase() + ' ' + item.keywords.join(' ');
-                return searchText.includes(query);
-            });
-
-            displayResults(results, query);
-        });
-
-        function displayResults(results, query) {
-            searchResults.innerHTML = '';
-            
-            if (results.length === 0) {
-                searchResults.innerHTML = `
-                    <div class="no-results">
-                        <div class="no-results-icon">
-                            <i data-lucide="search-x" width="28" height="28"></i>
-                        </div>
-                        <div class="no-results-title">Not found</div>
-                        <div class="no-results-text">No results for "${query}"</div>
-                    </div>
-                `;
-            } else {
-                results.forEach(item => {
-                    const resultHTML = `
-                        <a href="${item.url}" class="result-item">
-                            <div class="result-icon">
-                                <i data-lucide="${item.icon}" width="20" height="20"></i>
-                            </div>
-                            <div class="result-text">
-                                <div class="result-title">${highlightMatch(item.title, query)}</div>
-                                <div class="result-desc">${item.desc}</div>
-                            </div>
-                            <i data-lucide="chevron-right" width="18" height="18" style="color: var(--text-muted);"></i>
-                        </a>
-                    `;
-                    searchResults.innerHTML += resultHTML;
-                });
-            }
-
-            searchResults.classList.add('show');
-            lucide.createIcons();
-        }
-
-        function highlightMatch(text, query) {
-            const regex = new RegExp(`(${query})`, 'gi');
-            return text.replace(regex, '<span class="highlight">$1</span>');
-        }
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.app-header') && !e.target.closest('.search-results')) {
-                searchResults.classList.remove('show');
-            }
-        });
-
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const firstResult = searchResults.querySelector('.result-item');
-                if (firstResult) {
-                    window.location.href = firstResult.href;
-                }
-            }
-        });
-
-        searchInput.addEventListener('focus', function() {
-            if (this.value.trim().length >= 2) {
-                searchResults.classList.add('show');
-            }
-        });
-    </script>
+function addNotification(title, text, img){
+  const newId = "n-" + (notifications.length + 1);
+  notifications.unshift({
+    id: newId,
+    title, text, img,
+    time: new Date().toISOString(),
+    viewed: false
+  });
+  saveNotifications();
+  renderNotifications();
+}
+</script>
 </body>
 </html>
