@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Bangla Notes | HS Semester 1</title>
+  <title>English Notes | HS Semester 1</title>
   <meta name="theme-color" content="#07789B">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -39,13 +39,13 @@
     }
     
     :root {
-      --bg: #f8fafc;
+      --bg: #ffffff;
       --card: #ffffff;
       --text-main: #1e293b;
       --text-sub: #64748b;
       --header: #0555E8;
       --accent: #3b82f6;
-      --border: #e2e8f0;
+      --border: #0555E8;
       --success: #10b981;
       --skeleton-bg: #e2e8f0;
       --skeleton-shimmer: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
@@ -143,8 +143,8 @@
     
     .subject-item {
       background: var(--card);
-      border-radius: 16px;
-      padding: 15px;
+      border-radius: 10px;
+      padding: 10px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -272,7 +272,7 @@
     .loading-dot {
       width: 10px;
       height: 10px;
-      background-color: #07789B;
+      background-color: #0555E8;
       border-radius: 50%;
       display: inline-block;
       animation: smoothDotBounce 1.4s infinite ease-in-out both;
@@ -303,12 +303,10 @@
       border-radius: 24px 24px 0 0;
       z-index: 2000;
       transform: translateY(100%);
-      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-      overflow-y: auto;
+       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
-    }
+       }
     
     .bottom-sheet.open {
       transform: translateY(0);
@@ -354,7 +352,7 @@
     }
     
     .sheet-close-icon {
-      background: #07789B;
+      background: #0555E8;
       border: none;
       width: 32px;
       height: 32px;
@@ -394,7 +392,7 @@
     
     .sheet-divider {
       height: 2px;
-      background: #07789B;
+      background: #0555E8;
       margin: 16px 0;
       border-radius: 2px;
     }
@@ -496,7 +494,7 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background: #07789B;
+      background: #0555E8;
       border: none;
       color: white;
       z-index: 3100;
@@ -556,7 +554,14 @@
       { border: '#d97706', num: 'linear-gradient(135deg, #f59e0b, #d97706)' }, // Amber
       { border: '#059669', num: 'linear-gradient(135deg, #34d399, #059669)' }, // Emerald
       { border: '#7c3aed', num: 'linear-gradient(135deg, #a78bfa, #7c3aed)' }, // Violet
+      { border: '#e11d48', num: 'linear-gradient(135deg, #fb7185, #e11d48)' },  // Rose
+      { border: '#4f46e5', num: 'linear-gradient(135deg, #6366f1, #4f46e5)' }, // Indigo
+      { border: '#0284c7', num: 'linear-gradient(135deg, #38bdf8, #0284c7)' }, // Cyan/Blue
+      { border: '#d97706', num: 'linear-gradient(135deg, #f59e0b, #d97706)' }, // Amber
+      { border: '#059669', num: 'linear-gradient(135deg, #34d399, #059669)' }, // Emerald
+      { border: '#7c3aed', num: 'linear-gradient(135deg, #a78bfa, #7c3aed)' }, // Violet
       { border: '#e11d48', num: 'linear-gradient(135deg, #fb7185, #e11d48)' }  // Rose
+   
     ];
 
     // Track completed lessons
