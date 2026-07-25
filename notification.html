@@ -55,12 +55,12 @@
   /* HEADER DESIGN */
   .header {
     background: var(--primary);
-    padding: 5px; width: 100%; height: 50px;
+    padding: 16px 20px;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: fixed;
+    position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 4px 20px rgba(5, 85, 232, 0.15);
@@ -370,16 +370,6 @@
     align-items: center;
     gap: 6px;
   }
-
-/* APPLICATION CONTAINER MAIN */
-.app-container {
-    position: fixed; top: 50px; bottom: 65px; width: 100%; overflow-y: auto;
-    background: var(--bg); scrollbar-width: none; -ms-overflow-style: none;
-    will-change: scroll-position;
-}
-.app-container::-webkit-scrollbar { display: none; }
-.content { padding: 0 16px; }
-
 </style>
 </head>
 <body>
@@ -395,7 +385,7 @@
     </div>
     <div class="header-badge" id="unreadBadge">0 New</div>
   </div>
-<main class="app-container">
+
   <div class="container">
     <!-- EMPTY STATE -->
     <div class="empty" id="emptyState" style="display: none;">
@@ -410,7 +400,7 @@
     <div class="noti-list" id="notiList"></div>
   </div>
 </div>
-</main>
+
 <!-- BOTTOM POPUP -->
 <div class="popup" id="popup" onclick="closePopup(event)">
   <div class="popup-box" onclick="event.stopPropagation()">
@@ -430,21 +420,14 @@ lucide.createIcons();
 
 const defaultNotifications = [
   {
-    id: "n-1",
+    id: "n-3",
     title: "HS বাংলা সাজেশন 2026 আপডেট",
     text: "তৃতীয় সেমিস্টারের জন্য নতুন সাজেশন আপলোড করা হয়েছে। এখনই চেক করুন।",
     img: "https://i.ibb.co/1pF4mN2/nsou.jpg",
     time: new Date().toISOString(),
     viewed: false
   },
-  {
-    id: "n-2", 
-    title: "New Video Class Live",
-    text: "Class 12 English Chapter 1 এর Live Class আজ রাত 8টায়।",
-    img: "https://i.ibb.co/6nL3v4B/banner3.jpg",
-    time: new Date().toISOString(),
-    viewed: false
-  }
+  
 ];
 
 let notifications = JSON.parse(localStorage.getItem('edulive_notifications') || '[]');
@@ -502,39 +485,21 @@ function renderNotifications(){
   lucide.createIcons();
 }
 
-/* --- URL ROUTING & BACK SYSTEM --- */
+/* --- APP NAVIGATION & BACK SYSTEM --- */
 
 function handleHeaderBack() {
   const popup = document.getElementById('popup');
   if (popup.classList.contains('show')) {
     closePopupUI();
-    cleanUrlPath();
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
   } else {
     if (document.referrer && document.referrer !== window.location.href) {
       history.back();
     } else {
       window.location.href = '/';
     }
-  }
-}
-
-function getNotificationIdFromPath() {
-  const path = window.location.pathname;
-  const match = path.match(/\/(n-\d+)$/);
-  if (match) return match[1];
-  return window.location.hash.replace('#', '');
-}
-
-function updateUrlPath(id) {
-  const newPath = `/${id}`;
-  if (window.location.pathname !== newPath) {
-    history.pushState({ popupOpen: true, id: id }, '', newPath);
-  }
-}
-
-function cleanUrlPath() {
-  if (window.location.pathname !== '/' && window.location.pathname !== '') {
-    history.pushState(null, '', '/');
   }
 }
 
@@ -568,7 +533,10 @@ function openPopup(id){
 
   document.getElementById('popup').classList.add('show');
   lucide.createIcons();
-  updateUrlPath(id);
+
+  if (window.location.hash !== `#${id}`) {
+    history.pushState({ popupOpen: true, id: id }, '', `#${id}`);
+  }
 }
 
 function closePopupUI() {
@@ -578,7 +546,9 @@ function closePopupUI() {
 function closePopup(e){
   if(!e || e.target.id === 'popup' || e.target.closest('.popup-close')){
     closePopupUI();
-    cleanUrlPath();
+    if (window.location.hash) {
+      history.back();
+    }
   }
 }
 
@@ -592,9 +562,8 @@ function deleteNoti(e, id){
 /* --- EVENT LISTENERS --- */
 
 window.addEventListener('popstate', (e) => {
-  const notiId = getNotificationIdFromPath();
-  if (notiId) {
-    openPopup(notiId);
+  if (e.state && e.state.popupOpen) {
+    openPopup(e.state.id);
   } else {
     closePopupUI();
   }
@@ -602,9 +571,9 @@ window.addEventListener('popstate', (e) => {
 
 window.addEventListener('load', () => {
   renderNotifications();
-  const directId = getNotificationIdFromPath();
-  if(directId) {
-    openPopup(directId);
+  const hash = window.location.hash.replace('#','');
+  if(hash) {
+    openPopup(hash);
   }
 });
 
@@ -622,3 +591,4 @@ function addNotification(title, text, img){
 </script>
 </body>
 </html>
+
