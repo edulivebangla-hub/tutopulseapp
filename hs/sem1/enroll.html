@@ -7,50 +7,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Razorpay Checkout SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     
     <style>
-    * {
+ /* ... tomr sob CSS same thakbe ... */
+ * {
       box-sizing: border-box;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
       transition: background 0.3s, color 0.3s;
       -webkit-tap-highlight-color: transparent;
     }
-    
-    a, span, p, h1, h2, h3, h4, h5, h6, div {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
-      text-decoration: none;
-    }
-    
-    img {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
-    }
-
-        :root {
+    :root {
             --primary-color: #0555E8;
             --accent-color: #0555E8;
             --text-dark: #1e293b;
@@ -64,7 +35,6 @@
             --shimmer-start: #e2e8f0;
             --shimmer-mid: #f1f5f9;
         }
-
         body.dark {
             --text-dark: #f1f5f9;
             --text-muted: #94a3b8;
@@ -74,497 +44,47 @@
             --shimmer-start: #1e293b;
             --shimmer-mid: #334155;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: 'Inter', 'Hind Siliguri', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .app-container {
-            position: fixed;
-            top: 0px;
-            bottom: 60px;
-            width: 100%;
-            overflow-y: auto;
-            background: var(--bg-light);
-            transition: background-color 0.3s;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .top-navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: #0555E8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .nav-btn {
-            background: none;
-            border: none;
-            color: #ffffff;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: var(--transition-smooth);
-            font-size: 20px;
-        }
-
-        .nav-btn svg {
-            width: 25px;
-            height: 25px;
-        }
-
-        .nav-btn:active {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .coin-balance {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            font-weight: 700;
-            color: #d97706;
-            background: #fef3c7;
-            padding: 1px 10px;
-            border-radius: 10px;
-        }
-        
-        body.dark .coin-balance {
-            background: #78350f;
-            color: #fef3c7;
-        }
-
-        .content-scroll {
-            padding: 60px 20px 30px 20px; 
-            flex: 1;
-        }
-
-        .media-frame {
-            width: 100%;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            position: relative;
-            aspect-ratio: 16 / 9;
-            background-color: var(--shimmer-start);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: background-color 0.3s;
-        }
-
-        .media-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .media-frame.loaded img {
-            opacity: 1;
-        }
-
-        .skeleton-shimmer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--shimmer-start) 25%, var(--shimmer-mid) 50%, var(--shimmer-start) 75%);
-            background-size: 200% 100%;
-            animation: shimmerLinear 1.6s infinite;
-            z-index: 2;
-        }
-
-        .media-frame.loaded .skeleton-shimmer {
-            display: none;
-        }
-
-        @keyframes shimmerLinear {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .course-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-top: 20px;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .course-description {
-            font-size: 15px;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            font-weight: 400;
-        }
-
-        .author-section {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .author-label {
-            display: flex;
-            align-items: center;
-            font-size: 18px;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .author-brand { 
-            font-size: 20px; 
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            color: #38bdf8; 
-            margin-left: 5px; 
-        }
-
-        .spec-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 30px;
-        }
-
-        .spec-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: 15px;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .spec-item svg {
-            width: 18px;
-            height: 18px;
-            color: var(--text-muted);
-        }
-
-        .action-dock {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 480px; 
-            background: var(--card-bg);
-            padding: 16px 20px;
-            display: grid;
-            grid-template-columns: 85px 1fr;
-            gap: 12px;
-            align-items: center;
-            border-top: 1px solid var(--shimmer-start);
-            box-sizing: border-box;
-            z-index: 10;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        .badge-free {
-            background-color: var(--card-bg);
-            border: 1px solid var(--text-muted);
-            color: #07789B;
-            border-radius: 24px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        .btn-action-trigger {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            border: none;
-            border-radius: 24px;
-            height: 48px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-smooth);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .btn-action-trigger:active {
-            transform: scale(0.98);
-            opacity: 0.9;
-        }
-
-        .loader-dots-element {
-            display: none;
-            align-items: center;
-            gap: 6px;
-            justify-content: center;
-            position: absolute;
-            inset: 0;
-            background: inherit;
-            z-index: 3;
-        }
-
-        .loader-dots-element span {
-            width: 8px;
-            height: 8px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: inline-block;
-            animation: dotElasticity 1.4s infinite ease-in-out both;
-        }
-
+        body {font-family: 'Inter', 'Hind Siliguri', sans-serif;background-color: var(--bg-light);color: var(--text-dark);display: flex;justify-content: center;}
+        .app-container {position: fixed;top: 0px;bottom: 60px;width: 100%;overflow-y: auto;background: var(--bg-light);}
+        .top-navbar {position: fixed;top: 0;left: 0;width: 100%;height: 50px;background: #0555E8;display: flex;align-items: center;justify-content: space-between;padding: 0 16px;z-index: 1000;}
+        .nav-btn {background: none;border: none;color: #ffffff;cursor: pointer;width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;border-radius: 50%;}
+        .coin-balance {display: flex;align-items: center;gap: 2px;font-weight: 700;color: #d97706;background: #fef3c7;padding: 1px 10px;border-radius: 10px;}
+        .content-scroll {padding: 60px 20px 30px 20px; }
+        .media-frame {width: 100%;border-radius: 10px;overflow: hidden;position: relative;aspect-ratio: 16 / 9;background-color: var(--shimmer-start);}
+        .media-frame img {width: 100%;height: 100%;object-fit: cover;display: block;opacity: 0;transition: opacity 0.5s ease;}
+        .media-frame.loaded img {opacity: 1;}
+        .skeleton-shimmer {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: linear-gradient(90deg, var(--shimmer-start) 25%, var(--shimmer-mid) 50%, var(--shimmer-start) 75%);background-size: 200% 100%;animation: shimmerLinear 1.6s infinite;}
+        .media-frame.loaded .skeleton-shimmer {display: none;}
+        @keyframes shimmerLinear {0% { background-position: 200% 0; }100% { background-position: -200% 0; }}
+        .course-title {font-size: 20px;font-weight: 700;margin-top: 20px;margin-bottom: 10px;line-height: 1.4;}
+        .course-description {font-size: 15px;color: var(--text-muted);margin-bottom: 24px;font-weight: 400;}
+        .author-section {margin-bottom: 20px;display: flex;flex-direction: column;}
+        .author-label {display: flex;align-items: center;font-size: 18px;font-weight: 500;}
+        .author-brand { font-size: 20px; display: flex;align-items: center;font-weight: 700;color: #38bdf8; margin-left: 5px; }
+        .spec-list {display: flex;flex-direction: column;gap: 14px;margin-bottom: 30px;}
+        .spec-item {display: flex;align-items: center;gap: 14px;font-size: 15px;font-weight: 500;}
+        .spec-item svg {width: 18px;height: 18px;color: var(--text-muted);}
+        .action-dock {position: fixed;bottom: 0;width: 100%;max-width: 480px;background: var(--card-bg);padding: 16px 20px;display: grid;grid-template-columns: 85px 1fr;gap: 12px;align-items: center;border-top: 1px solid var(--shimmer-start);z-index: 10;box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);}
+        .badge-free {background-color: var(--card-bg);border: 1px solid var(--text-muted);color: #07789B;border-radius: 24px;height: 30px;display: flex;align-items: center;justify-content: center;font-weight: 700;font-size: 18px;}
+        .btn-action-trigger {background-color: var(--primary-color);color: #ffffff;border: none;border-radius: 24px;height: 48px;font-size: 18px;font-weight: 600;cursor: pointer;display: flex;align-items: center;justify-content: center;width: 100%;position: relative;overflow: hidden;}
+        .btn-action-trigger:active {transform: scale(0.98);opacity: 0.9;}
+        .loader-dots-element {display: none;align-items: center;gap: 6px;justify-content: center;position: absolute;inset: 0;background: inherit;z-index: 3;}
+        .loader-dots-element span {width: 8px;height: 8px;background-color: #ffffff;border-radius: 50%;display: inline-block;animation: dotElasticity 1.4s infinite ease-in-out both;}
         .loader-dots-element span:nth-child(1) { animation-delay: -0.32s; }
         .loader-dots-element span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes dotElasticity {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
-
-        .modal-overlay {
-            position: fixed; 
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 100;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-sheet {
-            width: 100%;
-            max-width: 480px;
-            background: var(--card-bg);
-            border-radius: 24px 24px 0 0;
-            padding: 24px 20px;
-            transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 85%;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-overlay.active .modal-sheet {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .btn-modal-close {
-            background: var(--ribbon-bg);
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: background-color 0.3s;
-        }
-
-        .btn-modal-close svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .unlock-option-card {
-            border: 2px solid var(--shimmer-start);
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: var(--transition-smooth);
-            background: var(--card-bg);
-        }
-
-        .unlock-option-card:hover, .unlock-option-card.selected {
-            border-color: var(--accent-color);
-        }
-
-        .option-icon-frame {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .option-icon-frame svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .coin-frame { background: #fef3c7; color: #d97706; }
-        .pass-frame { background: #e0f2fe; color: #0284c7; }
-
-        .option-details {
-            flex: 1;
-        }
-
-        .option-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .option-sub {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .workflow-pane {
-            display: none;
-        }
-
-        .workflow-pane.active {
-            display: block;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .input-control {
-            width: 100%;
-            height: 50px;
-            border: 2px solid var(--shimmer-start);
-            background: var(--card-bg);
-            color: var(--text-dark);
-            border-radius: 12px;
-            padding: 0 16px;
-            font-size: 15px;
-            outline: none;
-            font-family: inherit;
-            transition: var(--transition-smooth);
-        }
-
-        .input-control:focus {
-            border-color: var(--accent-color);
-        }
-
-        .btn-submit-action {
-            width: 100%;
-            height: 48px;
-            background-color: var(--accent-color);
-            color: #ffffff;
-            border: none;
-            border-radius: 24px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .toast-notification-hub {
-            position: fixed; 
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 440px;
-            z-index: 200;
-            pointer-events: none;
-        }
-
-        .custom-toast {
-            background: #1e293b;
-            color: #ffffff;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin-bottom: 8px;
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .custom-toast.reveal {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        @keyframes dotElasticity {0%, 80%, 100% { transform: scale(0); }40% { transform: scale(1.0); }}
+        .toast-notification-hub {position: fixed; top: 80px;left: 50%;transform: translateX(-50%);width: calc(100% - 40px);max-width: 440px;z-index: 200;pointer-events: none;}
+        .custom-toast {background: #1e293b;color: #ffffff;padding: 12px 16px;border-radius: 10px;font-size: 14px;font-weight: 500;display: flex;align-items: center;gap: 10px;box-shadow: 0 4px 12px rgba(0,0,0,0.15);margin-bottom: 8px;transform: translateY(-20px);opacity: 0;transition: all 0.3s;}
+        .custom-toast.reveal {transform: translateY(0);opacity: 1;}
     </style>
 </head>
 <body>
 
     <div class="app-container">
-        
         <div class="toast-notification-hub" id="toastHub"></div>
 
         <header class="top-navbar">
             <button class="nav-btn" onclick="goBack()"><i data-lucide="x"></i></button>
-             
             <div class="coin-balance">
                 ₹<span id="balance">0</span>
             </div>
@@ -572,10 +92,9 @@
         </header>
 
         <main class="content-scroll">
-
             <div class="media-frame" id="bannerFrame">
                 <div class="skeleton-shimmer"></div>
-                <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 11 Arts" id="courseImage">
+                <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 12" id="courseImage">
             </div>
 
             <h1 class="course-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার!</h1>
@@ -589,37 +108,18 @@
             </div>
 
             <div class="spec-list">
-                <div class="spec-item">
-                    <i data-lucide="calendar"></i>
-                    <span>Last Updated: 26 May 2026</span>
-                </div>
-                <div class="spec-item">
-                    <i data-lucide="globe"></i>
-                    <span>Language: বাংলা & English</span>
-                </div>
-                <div class="spec-item">
-                    <i data-lucide="clock"></i>
-                    <span>Duration: coming soon</span>
-                </div>
-                <div class="spec-item">
-                    <i data-lucide="video"></i>
-                    <span>0 Lessons</span>
-                </div>
+                <div class="spec-item"><i data-lucide="calendar"></i><span>Last Updated: 26 May 2026</span></div>
+                <div class="spec-item"><i data-lucide="globe"></i><span>Language: বাংলা & English</span></div>
+                <div class="spec-item"><i data-lucide="clock"></i><span>Duration: comming soon</span></div>
+                <div class="spec-item"><i data-lucide="video"></i><span>0 Lessons</span></div>
             </div>
-
+            
             <h2>📘 <u><b>উচ্চমাধ্যমিক তৃতীয় সেমিস্টার সম্পর্কে</b></u></h2>
-
-            <p>উচ্চমাধ্যমিক দ্বাদশ শ্রেণির <b>তৃতীয় সেমিস্টার</b> শিক্ষার্থীদের জন্য একটি গুরুত্বপূর্ণ ধাপ। এই সেমিস্টারের মাধ্যমে ছাত্র-ছাত্রীরা বিষয়ভিত্তিক জ্ঞান আরও <i>শক্তিশালী</i> করতে পারে এবং বোর্ড পরীক্ষার জন্য সঠিকভাবে প্রস্তুতি নিতে পারে।</p>
-
-            <p>🎓 <b><u>বাংলা ও English Medium</u></b> শিক্ষার্থীদের জন্য এখানে নোটস, সাজেশন, MCQ, সংক্ষিপ্ত প্রশ্নোত্তর এবং গুরুত্বপূর্ণ স্টাডি মেটেরিয়াল সহজ ও সুন্দরভাবে উপস্থাপন করা হয়।</p>
-
-            <p>📚 এই সেমিস্টারের মূল উদ্দেশ্য হলো পড়াশোনাকে আরও <b>আধুনিক, গোছানো এবং শিক্ষার্থী-বান্ধব</b> করে তোলা। নিয়মিত অনুশীলন ও সঠিক গাইডলাইনের মাধ্যমে ভালো ফলাফল অর্জন করা সম্ভব।</p>
-
-            <p>✨ <i>সঠিক প্রস্তুতি, আত্মবিশ্বাস এবং নিয়মিত পড়াশোনাই সফলতার চাবিকাঠি।</i></p>
+            <p>উচ্চমাধ্যমিক দ্বাদশ শ্রেণির <b>তৃতীয় সেমিস্টার</b> শিক্ষার্থীদের জন্য একটি গুরুত্বপূর্ণ ধাপ...</p>
         </main>
 
         <footer class="action-dock">
-            <div class="badge-free">₹99</div> 
+            <div class="badge-free">₹99</div>
             <button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()">
                 <span id="buttonTextLabel">Enroll Now</span>
                 <div class="loader-dots-element" id="dockButtonLoader">
@@ -627,70 +127,6 @@
                 </div>
             </button>
         </footer>
-
-        <div class="modal-overlay" id="workflowModalOverlay">
-            <div class="modal-sheet">
-                
-                <div class="modal-header">
-                    <h3 class="modal-title" id="modalDisplayTitle">Unlock Course</h3>
-                    <button class="btn-modal-close" onclick="dismissModalSheet()"><i data-lucide="x"></i></button>
-                </div>
-
-                <div class="workflow-pane active" id="paneSelectionHub">
-                    <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">কোর্সটি আনলক করতে নিচের যেকোনো একটি মাধ্যম বেছে নিন:</p>
-                    
-                    <div class="unlock-option-card" onclick="routeToPane('razorpay')">
-                        <div class="option-icon-frame coin-frame">
-                            <i data-lucide="credit-card"></i>
-                        </div>
-                        <div class="option-details">
-                            <div class="option-title">Pay via Razorpay</div>
-                            <div class="option-sub">UPI, Cards, NetBanking (₹99)</div>
-                        </div>
-                        <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
-                    </div>
-
-                    <div class="unlock-option-card" onclick="routeToPane('password')">
-                        <div class="option-icon-frame pass-frame">
-                            <i data-lucide="key-round"></i>
-                        </div>
-                        <div class="option-details">
-                            <div class="option-title">Unlock with Password</div>
-                            <div class="option-sub">Enter premium authorization key</div>
-                        </div>
-                        <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
-                    </div>
-                </div>
-
-                <div class="workflow-pane" id="paneCoinProcessor">
-                    <div style="text-align:center; padding:10px 0 20px 0;">
-                        <i data-lucide="shield-check" style="width:48px; height:48px; color:#0555E8; margin: 0 auto 12px auto;"></i>
-                        <p style="font-size:15px; font-weight:600; margin-bottom:4px;">Razorpay Secure Payment</p>
-                        <p style="font-size:13px; color:var(--text-muted);">Amount to pay: ₹99</p>
-                    </div>
-                    <button class="btn-submit-action" onclick="executeRazorpayPayment()">
-                        <span id="coinActionText">Pay ₹99 Now</span>
-                        <div class="loader-dots-element" id="coinPaneLoader">
-                            <span></span><span></span>
-                        </div>
-                    </button>
-                </div>
-
-                <div class="workflow-pane" id="panePasswordProcessor">
-                    <div class="input-group">
-                        <input type="password" class="input-control" id="secretPasskeyField" placeholder="Enter Unlock Password">
-                    </div>
-                    <button class="btn-submit-action" onclick="executePasswordVerification()">
-                        <span id="passActionText">Verify Secret Password</span>
-                        <div class="loader-dots-element" id="passPaneLoader">
-                            <span></span><span></span>
-                        </div>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
     </div>
 
     <script>
@@ -700,52 +136,20 @@
 
         const COURSE_ID = "c12_sem378"; 
         const REDIRECT_URL = "subject.html";
-        const REQUIRED_COINS_COST = 99; 
-        const SECRET_MASTER_PASSWORD = "123"; 
-
-        // ⚠️ Replace with your actual Razorpay Key ID from your Razorpay Dashboard
-        const RAZORPAY_KEY_ID = "
-rzp_live_TCAdMXaQjeBzbK"; 
+        const COURSE_PRICE = 99; // Razorpay amount
+        const RAZORPAY_KEY = "rzp_test_1DP5mmOlhWQgfH"; // << Tomar Razorpay Key boshao
 
         let currentBalance = 0;
 
         function loadBalance() {
             let stored = localStorage.getItem("coinBalance");
-            if(stored === null || isNaN(parseInt(stored))) { 
-                currentBalance = 0; 
-                localStorage.setItem("coinBalance", "0"); 
-            } else { 
-                currentBalance = parseInt(stored, 10); 
-            }
-            const balanceSpan = document.getElementById("balance");
-            if(balanceSpan) balanceSpan.innerText = currentBalance;
-        }
-
-        function loadProfileData() {
-            let savedName = localStorage.getItem("student_display_name");
-            if(!savedName || savedName.trim() === "") { 
-                savedName = "TutoPulse"; 
-                localStorage.setItem("student_display_name", savedName); 
-            }
-
-            let savedPic = localStorage.getItem("profile_image_url");
-            if(!savedPic || savedPic === "") { 
-                savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; 
-                localStorage.setItem("profile_image_url", savedPic); 
-            }
-        }
-
-        function ensureDataIntegrity() {
-            if(localStorage.getItem("coinBalance") === null) localStorage.setItem("coinBalance", "0");
-            if(localStorage.getItem("student_display_name") === null) localStorage.setItem("student_display_name", "TutoPulse");
-            if(localStorage.getItem("profile_image_url") === null) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
+            currentBalance = stored ? parseInt(stored) : 0;
+            document.getElementById("balance").innerText = currentBalance;
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             initDarkModePreference();
-            ensureDataIntegrity();
             loadBalance();
-            loadProfileData();
             initializeViewLifecycle();
             evaluateEnrollmentLockState();
             lucide.createIcons();
@@ -753,29 +157,30 @@ rzp_live_TCAdMXaQjeBzbK";
 
         const darkToggle = document.getElementById("darkToggle");
         const body = document.body;
-        
         function initDarkModePreference() {
             if (localStorage.getItem("darkMode") === "true") {
                 body.classList.add("dark");
-                if(darkToggle) darkToggle.textContent = "☀️";
+                darkToggle.textContent = "☀️";
             } else {
                 body.classList.remove("dark");
-                if(darkToggle) darkToggle.textContent = "🌙";
+                darkToggle.textContent = "🌙";
             }
         }
+        darkToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            localStorage.setItem("darkMode", isDark);
+            darkToggle.textContent = isDark ? "☀️" : "🌙";
+        });
 
         function initializeViewLifecycle() {
             const bannerFrame = document.getElementById("bannerFrame");
             const courseImg = document.getElementById("courseImage");
-            
             if (courseImg.complete) {
                 bannerFrame.classList.add("loaded");
             } else {
                 courseImg.addEventListener("load", () => {
                     bannerFrame.classList.add("loaded");
-                });
-                courseImg.addEventListener("error", () => {
-                    bannerFrame.style.background = "var(--shimmer-mid)";
                 });
             }
         }
@@ -784,15 +189,11 @@ rzp_live_TCAdMXaQjeBzbK";
             const hub = document.getElementById("toastHub");
             const toast = document.createElement("div");
             toast.className = `custom-toast toast-${mode}`;
-            
             const iconName = mode === "success" ? "circle-check" : "triangle-alert";
             toast.innerHTML = `<i data-lucide="${iconName}"></i> <span>${textAlert}</span>`;
-            
             hub.appendChild(toast);
-            lucide.createIcons({ attrs: { class: [] } });
-            
+            lucide.createIcons();
             setTimeout(() => toast.classList.add("reveal"), 50);
-
             setTimeout(() => {
                 toast.classList.remove("reveal");
                 setTimeout(() => toast.remove(), 300);
@@ -805,14 +206,13 @@ rzp_live_TCAdMXaQjeBzbK";
             const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`);
             
             if (isUnlocked === "true") {
-                actionBtn.classList.add("unlocked-state");
                 textLabel.innerText = "Start Course";
             } else {
-                actionBtn.classList.remove("unlocked-state");
                 textLabel.innerText = "Enroll Now";
             }
         }
 
+        // MAIN FUNCTION: RAZORPAY INTEGRATION
         function handleEnrollmentWorkflow() {
             const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`);
             const loader = document.getElementById("dockButtonLoader");
@@ -820,109 +220,61 @@ rzp_live_TCAdMXaQjeBzbK";
 
             if (loader.style.display === "flex") return;
 
+            if (isUnlocked === "true") {
+                window.location.href = REDIRECT_URL; // Direct course e niye jabe
+                return;
+            }
+
+            // Razorpay open koro
             textLabel.style.opacity = "0";
             loader.style.display = "flex";
 
-            setTimeout(() => {
-                textLabel.style.opacity = "1";
-                loader.style.display = "none";
-
-                if (isUnlocked === "true") {
-                    window.location.href = REDIRECT_URL;
-                } else {
-                    presentModalSheet();
-                }
-            }, 800); 
-        }
-
-        function presentModalSheet() {
-            document.getElementById("workflowModalOverlay").classList.add("active");
-            routeToPane('hub');
-        }
-
-        function dismissModalSheet() {
-            document.getElementById("workflowModalOverlay").classList.remove("active");
-            document.getElementById("secretPasskeyField").value = "";
-        }
-
-        function routeToPane(paneId) {
-            const titleEl = document.getElementById("modalDisplayTitle");
-            
-            document.getElementById("paneSelectionHub").classList.remove("active");
-            document.getElementById("paneCoinProcessor").classList.remove("active");
-            document.getElementById("panePasswordProcessor").classList.remove("active");
-
-            if (paneId === 'hub') {
-                titleEl.innerText = "Unlock Course";
-                document.getElementById("paneSelectionHub").classList.add("active");
-            } else if (paneId === 'razorpay') {
-                titleEl.innerText = "Unlock via Razorpay";
-                document.getElementById("paneCoinProcessor").classList.add("active");
-            } else if (paneId === 'password') {
-                titleEl.innerText = "Unlock via Password";
-                document.getElementById("panePasswordProcessor").classList.add("active");
-            }
-        }
-
-        function commitSuccessfulUnlock() {
-            localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
-            dispatchToast("কোর্সটি সফলভাবে আনলক করা হয়েছে!", "success");
-            evaluateEnrollmentLockState();
-            dismissModalSheet();
-            setTimeout(() => {
-                window.location.href = REDIRECT_URL;
-            }, 1000);
-        }
-
-        function executeRazorpayPayment() {
-            const options = {
-                "key": RAZORPAY_KEY_ID,
-                "amount": REQUIRED_COINS_COST * 100, // Amount in paise (9900 = ₹99)
+            var options = {
+                "key": RAZORPAY_KEY, 
+                "amount": COURSE_PRICE * 100, // Amount in paisa
                 "currency": "INR",
-                "name": "Class 12 Course",
-                "description": "Unlock 3rd Semester Course",
+                "name": "TutoGenius",
+                "description": "Class 12 3rd Semester Course",
                 "image": "https://i.ibb.co/nN1kVj31/class-12.jpg",
-                "handler": function (response) {
-                    // Payment successful
-                    commitSuccessfulUnlock();
+                "handler": function (response){
+                    // Payment Success
+                    localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
+                    localStorage.setItem(`rzp_payment_id_${COURSE_ID}`, response.razorpay_payment_id);
+                    
+                    dispatchToast("Payment Successful! Course Unlocked", "success");
+                    evaluateEnrollmentLockState();
+                    
+                    textLabel.style.opacity = "1";
+                    loader.style.display = "none";
+                    
+                    // 1.5s por course e niye jao
+                    setTimeout(() => {
+                        window.location.href = REDIRECT_URL;
+                    }, 1500);
                 },
                 "prefill": {
                     "name": localStorage.getItem("student_display_name") || "Student",
-                    "email": "student@example.com",
-                    "contact": ""
+                    "email": "student@tutogenius.com",
+                    "contact": "9999"
                 },
                 "theme": {
                     "color": "#0555E8"
+                },
+                "modal": {
+                    "ondismiss": function(){
+                        // User cancel korle
+                        textLabel.style.opacity = "1";
+                        loader.style.display = "none";
+                    }
                 }
             };
-
-            const rzp1 = new Razorpay(options);
+            var rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response){
-                dispatchToast("Payment Failed! Please try again.", "error");
+                dispatchToast("Payment Failed: " + response.error.description, "error");
+                textLabel.style.opacity = "1";
+                loader.style.display = "none";
             });
-
             rzp1.open();
-        }
-
-        function executePasswordVerification() {
-            const inputField = document.getElementById("secretPasskeyField");
-            const textLabel = document.getElementById("passActionText");
-            const loader = document.getElementById("passPaneLoader");
-
-            if(loader.style.display === "flex") return;
-
-            if (inputField.value.trim() === SECRET_MASTER_PASSWORD) {
-                textLabel.style.opacity = "0";
-                loader.style.display = "flex";
-
-                setTimeout(() => {
-                    textLabel.style.opacity = "1";
-                    loader.style.display = "none";
-                    commitSuccessfulUnlock();
-                }, 1000);
-            } else {
-                dispatchToast("ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।", "error");
-            }
         }
     </script>
 </body>
