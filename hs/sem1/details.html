@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details</title>
+    <title>Class 12 Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -12,24 +12,27 @@
  * {box-sizing: border-box;-webkit-user-select: none;-webkit-tap-highlight-color: transparent;}
     :root {--primary-color: #0555E8;--text-dark: #1e293b;--text-muted: #64748b;--bg-light: #fff;--card-bg: #ffffff;--shimmer-start: #e2e8f0;}
     body.dark {--text-dark: #f1f5f9;--text-muted: #94a3b8;--bg-light: #0f172a;--card-bg: #1e293b;--shimmer-start: #1e293b;}
-    body {font-family: sans-serif;background-color: var(--bg-light);color: var(--text-dark);display: flex;justify-content: center;margin:0}
-    .app-container {position: fixed;top: 0px;bottom: 60px;width: 100%;overflow-y: auto;background: var(--bg-light);}
-    .top-navbar {position: fixed;top: 0;left: 0;width: 100%;height: 50px;background: #0555E8;display: flex;align-items: center;justify-content: space-between;padding: 0 16px;z-index: 1000;color:#fff}
+    body {font-family: 'Inter', sans-serif;background-color: var(--bg-light);color: var(--text-dark);display: flex;justify-content: center;margin:0}
+    .app-container {position: fixed;top: 0px;bottom: 60px;width: 100%;max-width: 480px;overflow-y: auto;background: var(--bg-light);}
+    .top-navbar {position: fixed;top: 0;left: 0;right:0;margin:auto;max-width:480px;width: 100%;height: 50px;background: #0555E8;display: flex;align-items: center;justify-content: space-between;padding: 0 16px;z-index: 1000;color:#fff}
     .nav-btn {background: none;border: none;color: #ffffff;cursor: pointer;width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;}
     .coin-balance {display: flex;align-items: center;gap: 2px;font-weight: 700;color: #d97706;background: #fef3c7;padding: 1px 10px;border-radius: 10px;}
     .content-scroll {padding: 60px 20px 30px 20px;}
-    .media-frame img {width: 100%;border-radius: 10px;}
-    .course-title {font-size: 20px;font-weight: 700;margin-top: 20px;}
+    .media-frame img {width: 100%;border-radius: 10px;aspect-ratio: 16/9;object-fit:cover}
+    .course-title {font-size: 20px;font-weight: 700;margin-top: 20px;margin-bottom: 10px;}
     .course-description {font-size: 15px;color: var(--text-muted);margin-bottom: 24px;}
-    .action-dock {position: fixed;bottom: 0;width: 100%;max-width: 480px;background: var(--card-bg);padding: 16px 20px;display: grid;grid-template-columns: 85px 1fr;gap: 12px;border-top: 1px solid var(--shimmer-start);z-index: 10;}
-    .badge-free {border: 1px solid var(--text-muted);color: #07789B;border-radius: 24px;height: 30px;display: flex;align-items: center;justify-content: center;font-weight: 700;font-size: 18px;}
+    .action-dock {position: fixed;bottom: 0;left:0;right:0;margin:auto;width: 100%;max-width: 480px;background: var(--card-bg);padding: 16px 20px;display: grid;grid-template-columns: 85px 1fr;gap: 12px;border-top: 1px solid var(--shimmer-start);z-index: 10;}
+    .badge-free {border: 1px solid var(--text-muted);color: #07789B;border-radius: 24px;height: 48px;display: flex;align-items: center;justify-content: center;font-weight: 700;font-size: 18px;}
     .btn-action-trigger {background-color: var(--primary-color);color: #ffffff;border: none;border-radius: 24px;height: 48px;font-size: 18px;font-weight: 600;width: 100%;position:relative}
-    .loader-dots-element {display: none;align-items: center;gap: 6px;justify-content: center;position: absolute;inset: 0;background: inherit;z-index: 3;}
+    .loader-dots-element {display: none;align-items: center;gap: 6px;justify-content: center;position: absolute;inset: 0;background: inherit;z-index: 3;border-radius:24px}
     .loader-dots-element span {width: 8px;height: 8px;background-color: #ffffff;border-radius: 50%;display: inline-block;animation: dotElasticity 1.4s infinite ease-in-out both;}
+    .loader-dots-element span:nth-child(1) { animation-delay: -0.32s; }
+    .loader-dots-element span:nth-child(2) { animation-delay: -0.16s; }
     @keyframes dotElasticity {0%, 80%, 100% { transform: scale(0); }40% { transform: scale(1.0); }}
-    .toast-notification-hub {position: fixed;top: 80px;left: 50%;transform: translateX(-50%);width: calc(100% - 40px);z-index: 200;}
-    .custom-toast {background: #16a34a;color: #ffffff;padding: 12px 16px;border-radius: 10px;font-size: 14px;transform: translateY(-20px);opacity: 0;transition: all 0.3s;}
+    .toast-notification-hub {position: fixed;top: 80px;left: 50%;transform: translateX(-50%);width: calc(100% - 40px);max-width:440px;z-index: 200;}
+    .custom-toast {background: #16a34a;color: #ffffff;padding: 12px 16px;border-radius: 10px;font-size: 14px;font-weight:600;transform: translateY(-20px);opacity: 0;transition: all 0.3s;margin-bottom:8px}
     .custom-toast.reveal {transform: translateY(0);opacity: 1;}
+    .custom-toast.error {background: #dc2626;}
     </style>
 </head>
 <body>
@@ -38,12 +41,12 @@
         <header class="top-navbar">
             <button class="nav-btn" onclick="history.back()"><i data-lucide="x"></i></button>
             <div class="coin-balance">₹<span id="balance">0</span></div>
-            <button class="nav-btn" id="darkToggle">🌙</button>
+            <button class="nav-btn" id="darkToggle"><i data-lucide="moon"></i></button>
         </header>
 
         <main class="content-scroll">
-            <div class="media-frame" id="bannerFrame"><img src="https://i.ibb.co/nN1kVj31/class-12.jpg"></div>
-            <h1 class="course-title">Class 12 3rd Semester [বাংলা + English]</h1>
+            <div class="media-frame" id="bannerFrame"><img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 12"></div>
+            <h1 class="course-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার!</h1>
             <p class="course-description">নতুন সেমিস্টার সিস্টেমে পড়ুয়াদের জন্য পড়াশোনা, সাজেশন ও ভিডিও ক্লাস!</p>
         </main>
 
@@ -51,14 +54,13 @@
             <div class="badge-free">₹99</div> 
             <button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()">
                 <span id="buttonTextLabel">Enroll Now</span>
-                <div class="loader-dots-element" id="dockButtonLoader"><span></span><span></span></div>
+                <div class="loader-dots-element" id="dockButtonLoader"><span></span><span></span><span></span></div>
             </button>
         </footer>
     </div>
 
     <script>
-        const COURSE_ID = "c12_sem3789"; 
-        const REDIRECT_URL = "payment-success.html"; // Payment success file
+        const COURSE_ID = "c12_sem3798"; 
         const REQUIRED_COINS_COST = 1; 
         const RAZORPAY_KEY = "rzp_live_TI1dFwgtX10E02"; // TOMAR LIVE KEY
 
@@ -70,19 +72,20 @@
         });
 
         function initDarkMode() {
-            if (localStorage.getItem("darkMode") === "true") {document.body.classList.add("dark");document.getElementById("darkToggle").textContent = "☀️";} 
+            if (localStorage.getItem("darkMode") === "true") {document.body.classList.add("dark");}
             document.getElementById("darkToggle").addEventListener("click", () => {
                 document.body.classList.toggle("dark");
                 const isDark = document.body.classList.contains("dark");
                 localStorage.setItem("darkMode", isDark);
-                document.getElementById("darkToggle").textContent = isDark ? "☀️" : "🌙";
+                document.getElementById("darkToggle").innerHTML = isDark ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+                lucide.createIcons();
             });
         }
 
-        function dispatchToast(textAlert, mode = "error") {
+        function dispatchToast(textAlert, mode = "success") {
             const hub = document.getElementById("toastHub");
             const toast = document.createElement("div");
-            toast.className = `custom-toast reveal`;
+            toast.className = `custom-toast ${mode === 'error' ? 'error' : ''} reveal`;
             toast.innerHTML = `<span>${textAlert}</span>`;
             hub.appendChild(toast);
             setTimeout(() => {toast.classList.remove("reveal");setTimeout(() => toast.remove(), 300);}, 3000);
@@ -110,9 +113,6 @@
             const textLabel = document.getElementById("buttonTextLabel");
             loader.style.display = "flex"; textLabel.style.opacity = "0";
 
-            // Order ID banano - Razorpay ke bolbe eta real payment
-            const orderId = "order_" + Date.now(); 
-
             const options = {
                 "key": RAZORPAY_KEY,
                 "amount": REQUIRED_COINS_COST * 100, // 9900
@@ -120,28 +120,39 @@
                 "name": "TutoPulse",
                 "description": "Class 12 3rd Semester Course",
                 "image": "https://i.ibb.co/nN1kVj31/class-12.jpg",
-                "order_id": orderId, // Eta add koray ₹1 test bondho hobe
                 "handler": function (response){
                     loader.style.display = "none"; textLabel.style.opacity = "1";
-                    // Payment ID niye success page e pathabo
-                    window.location.href = `${REDIRECT_URL}?razorpay_payment_id=${response.razorpay_payment_id}&course_id=${COURSE_ID}`;
+                    localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
+                    dispatchToast("✅ Payment Successful! Unlocking...", "success");
+                    setTimeout(()=>{ window.location.href = "payment-success.html?cid="+COURSE_ID; }, 1200);
                 },
-                
+                "prefill": {
+                    "name": localStorage.getItem("student_display_name") || "Student",
+                    "email": "student@tutopulse.com",
+                    "contact": "9000000"
+                },
                 "theme": {"color": "#0555E8"},
-                "retry": { "enabled": false }, // ₹1 retry bondho
+                "retry": { "enabled": false }, // ₹1 retry bondho - MAIN FIX
                 "modal": {
+                    "escape": false,
                     "ondismiss": function(){
                         loader.style.display = "none"; textLabel.style.opacity = "1";
                         dispatchToast("Payment Cancelled", "error");
                     }
                 }
             };
-            const rzp1 = new Razorpay(options);
-            rzp1.on('payment.failed', function (response){
+            
+            try {
+                const rzp1 = new Razorpay(options);
+                rzp1.on('payment.failed', function (response){
+                    loader.style.display = "none"; textLabel.style.opacity = "1";
+                    dispatchToast("Payment Failed: " + response.error.description, "error");
+                });
+                rzp1.open();
+            } catch(e) {
                 loader.style.display = "none"; textLabel.style.opacity = "1";
-                dispatchToast("Payment Failed: " + response.error.description, "error");
-            });
-            rzp1.open();
+                dispatchToast("Razorpay load hoyni. Internet check koro", "error");
+            }
         }
     </script>
 </body>
