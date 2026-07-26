@@ -1,8 +1,33 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment Success</title><style>body{display:flex;justify-content:center;align-items:center;height:100vh;background:#f0fdf4;font-family:sans-serif;text-align:center}.box{background:#fff;padding:30px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}h1{color:#16a34a}</style></head>
-<body><div class="box"><h1>✅ Payment Successful</h1><p>Redirecting...</p></div>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Status</title>
+<style>body{display:flex;justify-content:center;align-items:center;height:100vh;background:#f0fdf4;font-family:sans-serif;text-align:center}.box{background:#fff;padding:30px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}h1{color:#16a34a;font-size:24px}p{color:#64748b}</style>
+</head>
+<body>
+<div class="box">
+    <h1 id="statusTitle">Processing...</h1>
+    <p id="statusDesc">Please wait</p>
+</div>
 <script>
-const urlParams=new URLSearchParams(location.search);const payment_id=urlParams.get('razorpay_payment_id');const course_id="c12_sem378";
-if(payment_id){localStorage.setItem(`course_unlocked_${course_id}`,"true");localStorage.setItem(`rzp_payment_id_${course_id}`,payment_id);
-setTimeout(()=>{location.href="details.html"},2000);}else{document.querySelector("h1").innerText="❌ Payment Failed";setTimeout(()=>{location.href="details.html"},2000)}
-</script></body></html>
+const urlParams = new URLSearchParams(window.location.search);
+const course_id = urlParams.get('course_id');
+const payment_id = urlParams.get('razorpay_payment_id');
+const payment_status = urlParams.get('razorpay_payment_link_status');
+
+if(payment_status === 'paid' && payment_id){
+    // SUCCESS: Unlock course
+    localStorage.setItem(`course_unlocked_${course_id}`, "true");
+    document.getElementById("statusTitle").innerText = "✅ Payment Successful";
+    document.getElementById("statusDesc").innerText = "Redirecting to course...";
+    setTimeout(() => { window.location.href = "details.html"; }, 2000);
+} else {
+    // FAILED
+    document.getElementById("statusTitle").innerText = "❌ Payment Failed";
+    document.getElementById("statusDesc").innerText = "Redirecting back...";
+    setTimeout(() => { window.location.href = "details.html"; }, 2000);
+}
+</script>
+</body>
+</html>
