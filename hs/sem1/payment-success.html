@@ -1,33 +1,41 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment Status</title>
-<style>body{display:flex;justify-content:center;align-items:center;height:100vh;background:#f0fdf4;font-family:sans-serif;text-align:center}.box{background:#fff;padding:30px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}h1{color:#16a34a;font-size:24px}p{color:#64748b}</style>
-</head>
-<body>
-<div class="box">
-    <h1 id="statusTitle">Processing...</h1>
-    <p id="statusDesc">Please wait</p>
-</div>
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-const course_id = urlParams.get('course_id');
-const payment_id = urlParams.get('razorpay_payment_id');
-const payment_status = urlParams.get('razorpay_payment_link_status');
+const urlParams=new URLSearchParams(location.search);
+const course_id=urlParams.get('course_id');
+const payment_id=urlParams.get('razorpay_payment_id');
+const BACKEND_URL = "create-payment.php";
 
-if(payment_status === 'paid' && payment_id){
-    // SUCCESS: Unlock course
-    localStorage.setItem(`course_unlocked_${course_id}`, "true");
-    document.getElementById("statusTitle").innerText = "✅ Payment Successful";
-    document.getElementById("statusDesc").innerText = "Redirecting to course...";
-    setTimeout(() => { window.location.href = "details.html"; }, 2000);
-} else {
-    // FAILED
-    document.getElementById("statusTitle").innerText = "❌ Payment Failed";
-    document.getElementById("statusDesc").innerText = "Redirecting back...";
-    setTimeout(() => { window.location.href = "details.html"; }, 2000);
+async function checkPayment(){
+    if(payment_id){
+        // 3 sec por por check korbe payment hoyeche kina
+        let res = await fetch(`${BACKEND_URL}/check-payment.php?pid=${payment_id}`);
+        let data = await res.json();
+        if(data.status == "paid"){
+            localStorage.setItem(`course_unlocked_${course_id}`,"true");
+            location.href="details.html";
+        } else {
+            setTimeout(checkPayment, 3000); // abar check korbe
+        }
+    }
 }
+checkPayment();
+</script><script>
+const urlParams=new URLSearchParams(location.search);
+const course_id=urlParams.get('course_id');
+const payment_id=urlParams.get('razorpay_payment_id');
+const BACKEND_URL = "create-payment.php";
+
+async function checkPayment(){
+    if(payment_id){
+        // 3 sec por por check korbe payment hoyeche kina
+        let res = await fetch(`${BACKEND_URL}/check-payment.php?pid=${payment_id}`);
+        let data = await res.json();
+        if(data.status == "paid"){
+            localStorage.setItem(`course_unlocked_${course_id}`,"true");
+            location.href="details.html";
+        } else {
+            setTimeout(checkPayment, 3000); // abar check korbe
+        }
+    }
+}
+checkPayment();
 </script>
-</body>
-</html>
