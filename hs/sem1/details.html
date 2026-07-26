@@ -5,188 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Payments - TutoGenius</title>
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script> <!-- RAZORPAY ADD -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
 :root {
-  --primary: #FFD60A;
-  --primary-dark: #e5be00;
-  --accent: #1e40af;
-  --bg: #fff;
-  --card-bg: #fff;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --radius: 16px;
-  --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  --danger: #ef4444;
-  --success: #22c55e;
+  --primary: #FFD60A; --accent: #1e40af; --bg: #fff; --text-main: #0f172a; --text-muted: #64748b;
+  --radius: 16px; --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
+*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;}
+body{background:var(--bg);display:flex;justify-content:center;min-height:100vh;}
+.app-wrapper {width: 100%;max-width: 480px;background: var(--bg);min-height: 100vh;}
 
-*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;-webkit-tap-highlight-color: transparent;}
-body{background:var(--bg);color:var(--text-main);display:flex;justify-content:center;min-height:100vh;}
-
-.app-wrapper {
-  width: 100%;
-  max-width: 480px;
-  background: var(--bg);
-  min-height: 100vh;
-  position: relative;
-  padding-bottom: 20px;
-}
-
-.header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:5px 20px;background:#0555E8;position:sticky;top:0;z-index:10;
-  border-bottom:1px solid #f1f5f9;
-}
-.header .left{display:flex;align-items:center;gap:14px;color: #fff;}
-.header .left i{width:22px;height:22px;cursor:pointer;color:#fff;}
-.header h1{font-size: 19px; font-weight: 700; color: #fff;}
-.help-btn{
-  display:flex;align-items:center;gap:6px;border:1px solid #e2e8f0;
-  padding:7px 14px;border-radius:20px;font-size: 13px; font-weight: 600; cursor:pointer;background:#fff;
-  transition: all 0.2s ease;
-}
-.help-btn:active { background: #f8fafc; transform: scale(0.96); }
-.help-btn i{width:16px;height:16px;color: var(--accent);}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#0555E8;color:#fff;position:sticky;top:0;z-index:10;}
+.header h1{font-size: 19px; font-weight: 700;}
 
 .container{padding:18px;}
-.section-title{font-size: 14px; font-weight: 700; margin: 20px 0 10px 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
-
-.card{
-  background:var(--card-bg);border-radius:var(--radius);padding:18px;margin-bottom:14px;
-  box-shadow:var(--shadow); border: 1px solid #f1f5f9;
-}
 .wallet-card {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
+  color: #fff; border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);
 }
-.wallet-card::after {
-  content: '';
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 120px;
-  height: 120px;
-  background:  var(--primary);
-  border-radius: 50%;
-}
-.wallet-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.wallet-icon-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.wallet-header i{width:22px;height:22px;color: var(--primary);}
-.wallet-title{font-size: 15px; font-weight: 600; opacity: 0.9;}
-.low-balance{font-size: 12px; font-weight: 500; color: #fca5a5; margin-top: 2px;}
-.balance{font-size: 32px; font-weight: 800; margin: 12px 0 16px; color: #fff;}
-
+.balance{font-size: 32px; font-weight: 800; margin: 12px 0 16px;}
 .add-money-btn{
-  border:none; padding:10px 18px; border-radius:30px;
-  display:inline-flex; align-items:center; gap:8px; font-size: 14px; font-weight: 700;
-  cursor:pointer; background: var(--primary); color: #000;
-  transition: transform 0.2s ease;
+  border:none; padding:12px 18px; border-radius:30px; display:inline-flex; align-items:center; gap:8px; 
+  font-size: 14px; font-weight: 700; cursor:pointer; background: var(--primary); color: #000; width:100%; justify-content:center;
 }
-.add-money-btn:active { transform: scale(0.96); }
-.add-money-btn i{width:18px;height:18px;}
 
-/* ADD MONEY MODAL */
-.addmoney-page{
-  display:none;position:fixed;inset:0;background:#fff;z-index:100;
-  flex-direction:column; max-width: 480px; margin: 0 auto;
-  animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow-y: auto;
-}
+.addmoney-page{display:none;position:fixed;inset:0;background:#fff;z-index:100;flex-direction:column; max-width: 480px; margin: 0 auto;}
 .addmoney-page.show{display:flex;}
-@keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-.addmoney-header{background: #0555E8;padding:16px 20px;color: #fff;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:14px;}
+.addmoney-header{background: #0555E8;padding:16px 20px;color: #fff;display:flex;align-items:center;gap:14px;}
 .addmoney-header i{width:22px;height:22px;cursor:pointer;}
-.addmoney-header h2{font-size: 18px; font-weight: 700;color: #fff;}
 .addmoney-content{padding:24px 20px;flex:1;}
-
-.step-card {
-  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;
-  padding: 18px; margin-bottom: 20px;
-}
-.step-title {
-  font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
-  margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
-}
-
 .amount-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .amount-btn{border:2px solid #e2e8f0;background:#fff;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
 .amount-btn.active{border-color:#0555E8;background:#eff6ff;color:#0555E8}
+.custom-amount-input {width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px;font-size: 15px; font-weight: 700; margin-bottom: 12px;}
+.pay-btn {width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;}
 
-.custom-amount-input {
-  width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px;
-  font-size: 15px; font-weight: 700; outline: none; margin-bottom: 12px;
-}
-.custom-amount-input:focus { border-color: var(--accent); }
-
-.verify-btn {
-  width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
-  border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
-  transition: all 0.2s ease;
-}
-.verify-btn:active { background: var(--primary-dark); transform: scale(0.98); }
-.verify-btn:disabled{opacity:0.6;cursor:not-allowed}
-
-/* HELP MODAL */
-.help-modal{position:fixed;inset:0;background:rgba(15, 23, 42, 0.5);backdrop-filter: blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:200;}
-.help-modal.show{display:flex;}
-.help-box{
-  background:#fff; width:100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px 20px 32px;
-  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.help-box h3{font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center;}
-.help-option{
-  display:flex; align-items:center; gap:14px; padding:16px; border-radius:14px;
-  background:#f8fafc; margin-bottom:12px; cursor:pointer; text-decoration:none; color:var(--text-main);
-  border: 1px solid #f1f5f9;
-}
-.help-option i{width:22px;height:22px;color: var(--accent);}
-.help-option .text h4{font-size: 15px; font-weight: 600;}
-.help-option .text p{font-size: 13px; color: var(--text-muted); margin-top:2px;}
-
-/* CUSTOM ALERT POPUP */
-.custom-toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  width: calc(100% - 40px);
-  max-width: 440px;
-  background: #0f172a;
-  color: #fff;
-  padding: 16px 20px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 300;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-.custom-toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
+.custom-toast {position: fixed;bottom: 20px;left: 50%;transform: translateX(-50%) translateY(100px);width: calc(100% - 40px);max-width: 440px;
+  background: #0f172a;color: #fff;padding: 16px 20px;border-radius: 14px;display: flex;align-items: center;gap: 12px;z-index: 300;
+  transition: transform 0.3s ease, opacity 0.3s ease;opacity: 0;}
+.custom-toast.show {transform: translateX(-50%) translateY(0);opacity: 1;}
 .custom-toast.success i { color: #4ade80; }
 .custom-toast.error i { color: #f87171; }
-.custom-toast.warning i { color: #facc15; }
-.custom-toast .toast-msg { font-size: 14px; font-weight: 600; flex: 1; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -195,27 +54,13 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
   <!-- MAIN PAGE -->
   <div id="mainPage">
     <header class="header">
-      <div class="left">
-        <i data-lucide="arrow-left" onclick="window.history.back()"></i>
-        <h1>Payments</h1>
-      </div>
-      <div class="help-btn" onclick="openHelp()">
-        <i data-lucide="help-circle"></i> Help
-      </div>
+      <i data-lucide="arrow-left" onclick="window.history.back()"></i>
+      <h1>Payments</h1>
+      <div></div>
     </header>
-
     <div class="container">
-      <h2 class="section-title">Wallets</h2>
-      <div class="card wallet-card">
-        <div class="wallet-header">
-          <div class="wallet-icon-box">
-            <i data-lucide="wallet"></i>
-          </div>
-          <div>
-            <div class="wallet-title">TutoGenius Wallet</div>
-            <div class="low-balance" id="lowBalanceText">Low Balance: ₹0</div>
-          </div>
-        </div>
+      <div class="wallet-card">
+        <div>TutoGenius Wallet</div>
         <div class="balance">₹<span id="balance">0</span></div>
         <button class="add-money-btn" onclick="openAddMoney()">
           <i data-lucide="plus"></i> Add Money
@@ -224,57 +69,31 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
     </div>
   </div>
 
-  <!-- ADD MONEY PAGE - RAZORPAY -->
+  <!-- ADD MONEY PAGE -->
   <div class="addmoney-page" id="addMoneyPage">
     <div class="addmoney-header">
       <i data-lucide="arrow-left" onclick="closeAddMoney()"></i>
-      <h2>Add Money to Wallet</h2>
+      <h2>Add Money</h2>
     </div>
-    
     <div class="addmoney-content">
-      <div class="step-card">
-        <div class="step-title">
-          <i data-lucide="indian-rupee"></i> Select Amount
-        </div>
-        <div class="amount-grid">
-          <button class="amount-btn" onclick="selectAmount(50)">₹50</button>
-          <button class="amount-btn" onclick="selectAmount(100)">₹100</button>
-          <button class="amount-btn" onclick="selectAmount(200)">₹200</button>
-          <button class="amount-btn" onclick="selectAmount(500)">₹500</button>
-        </div>
-        <input type="number" id="customAmount" class="custom-amount-input" placeholder="Or Enter Custom Amount" min="10">
-        <button class="verify-btn" id="payBtn" onclick="openRazorpay()">
-          <i data-lucide="credit-card"></i> Pay Now
-        </button>
+      <h3 style="margin-bottom:12px">Select Amount</h3>
+      <div class="amount-grid">
+        <button class="amount-btn" onclick="selectAmount(50,this)">₹50</button>
+        <button class="amount-btn" onclick="selectAmount(100,this)">₹100</button>
+        <button class="amount-btn" onclick="selectAmount(200,this)">₹200</button>
+        <button class="amount-btn" onclick="selectAmount(500,this)">₹500</button>
       </div>
+      <input type="number" id="customAmount" class="custom-amount-input" placeholder="Or Enter Custom Amount" min="50">
+      <button class="pay-btn" id="payBtn" onclick="payNow()">
+        <i data-lucide="credit-card"></i> Pay ₹<span id="payAmount">100</span>
+      </button>
     </div>
   </div>
 
-  <!-- HELP MODAL -->
-  <div class="help-modal" id="helpModal" onclick="closeHelp(event)">
-    <div class="help-box" onclick="event.stopPropagation()">
-      <h3>Need Support?</h3>
-      <a href="https://wa.me/919332466756" target="_blank" class="help-option">
-        <i data-lucide="message-circle"></i>
-        <div class="text">
-          <h4>WhatsApp Support</h4>
-          <p>+91 9332466756</p>
-        </div>
-      </a>
-      <a href="mailto:admin.tutogenius@gmail.com" target="_blank" class="help-option">
-        <i data-lucide="mail"></i>
-        <div class="text">
-          <h4>Email Support</h4>
-          <p>admin.tutogenius@gmail.com</p>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- CUSTOM ALERT TOAST UI -->
+  <!-- TOAST -->
   <div class="custom-toast" id="customToast">
     <i data-lucide="info" id="toastIcon"></i>
-    <div class="toast-msg" id="toastMsg">Notification message</div>
+    <div id="toastMsg">Notification</div>
   </div>
 </div>
 
@@ -282,23 +101,12 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
 lucide.createIcons();
 
 const RAZORPAY_KEY = "rzp_live_TI1dFwgtX10E02"; // TOMAR LIVE KEY
-let selectedAmount = 100; // Default
+let selectedAmount = 100;
 
-// --- BALANCE SYSTEM ---
+// --- BALANCE ---
 let balance = parseInt(localStorage.getItem('coinBalance') || '0');
 const balanceEl = document.getElementById('balance');
-const lowBalanceEl = document.getElementById('lowBalanceText');
-
-function updateBalanceUI(){
-  balanceEl.textContent = balance;
-  if(balance < 100) {
-    lowBalanceEl.textContent = `Low Balance: ₹${balance}`;
-    lowBalanceEl.style.color = '#fca5a5';
-  } else {
-    lowBalanceEl.textContent = `Active Balance: ₹${balance}`;
-    lowBalanceEl.style.color = '#86efac';
-  }
-}
+function updateBalanceUI(){ balanceEl.textContent = balance; }
 updateBalanceUI();
 
 function addCoins(amount) {
@@ -307,97 +115,73 @@ function addCoins(amount) {
   updateBalanceUI();
 }
 
-// --- CUSTOM ALERT TOAST SYSTEM ---
-let toastTimeout;
-function showCustomAlert(msg, type = 'info') {
+// --- TOAST ---
+function showToast(msg, type = 'success') {
   const toast = document.getElementById('customToast');
   const toastMsg = document.getElementById('toastMsg');
   const toastIcon = document.getElementById('toastIcon');
-
   toast.className = `custom-toast ${type} show`;
   toastMsg.textContent = msg;
-
-  if (type === 'success') {
-    toastIcon.setAttribute('data-lucide', 'check-circle-2');
-  } else if (type === 'error') {
-    toastIcon.setAttribute('data-lucide', 'alert-circle');
-  } else if (type === 'warning') {
-    toastIcon.setAttribute('data-lucide', 'alert-triangle');
-  } else {
-    toastIcon.setAttribute('data-lucide', 'info');
-  }
+  toastIcon.setAttribute('data-lucide', type==='success' ? 'check-circle-2' : 'alert-circle');
   lucide.createIcons();
-
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3500);
+  setTimeout(() => { toast.classList.remove('show'); }, 3000);
 }
 
-// --- ADD MONEY UI ---
-function openAddMoney(){
-  document.getElementById('addMoneyPage').classList.add('show');
-}
-function closeAddMoney(){
-  document.getElementById('addMoneyPage').classList.remove('show');
-}
+// --- UI ---
+function openAddMoney(){ document.getElementById('addMoneyPage').classList.add('show'); }
+function closeAddMoney(){ document.getElementById('addMoneyPage').classList.remove('show'); }
 
-function selectAmount(amt){
+function selectAmount(amt, el){
   selectedAmount = amt;
   document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+  el.classList.add('active');
   document.getElementById('customAmount').value = '';
+  document.getElementById('payAmount').innerText = amt;
 }
 
 document.getElementById('customAmount').addEventListener('input', function(){
   selectedAmount = parseInt(this.value) || 0;
+  document.getElementById('payAmount').innerText = selectedAmount;
   document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
 });
 
-// --- RAZORPAY PAYMENT ---
-function openRazorpay(){
+// --- RAZORPAY CHECKOUT ---
+function payNow(){
   let amount = parseInt(document.getElementById('customAmount').value) || selectedAmount;
   
-  if(amount < 10){
-    showCustomAlert("Minimum ₹10 add korte hobe", "warning");
+  if(amount < 50){ // Live e 50 er niche problem
+    showToast("Minimum ₹50 add korte hobe", 'error');
     return;
   }
 
   const btn = document.getElementById('payBtn');
   btn.disabled = true;
-  btn.innerHTML = '<i data-lucide="loader"></i> Processing...';
-  lucide.createIcons();
+  btn.innerText = 'Processing...';
 
   const options = {
     "key": RAZORPAY_KEY,
-    "amount": amount * 100, // Paisa te convert
+    "amount": amount * 100, // Paisa
     "currency": "INR",
     "name": "TutoGenius",
     "description": "Wallet Recharge",
     "image": "https://i.ibb.co/nN1kVj31/class-12.jpg",
     "handler": function (response){
-      // Payment Success
+      // SUCCESS
       addCoins(amount);
-      showCustomAlert(`✅ ₹${amount} successfully added to wallet!`, "success");
+      showToast(`✅ ₹${amount} added successfully!`, 'success');
       btn.disabled = false;
-      btn.innerHTML = '<i data-lucide="credit-card"></i> Pay Now';
+      btn.innerHTML = '<i data-lucide="credit-card"></i> Pay ₹<span id="payAmount">'+selectedAmount+'</span>';
       lucide.createIcons();
       closeAddMoney();
     },
-    "prefill": {
-      "name": "TutoGenius User",
-      "email": "user@tutogenius.com",
-      "contact": "9000000000"
-    },
-    "theme": {
-      "color": "#0555E8"
-    },
+    "prefill": { "name": "TutoGenius User", "email": "user@tutogenius.com", "contact": "9000000000" },
+    "theme": { "color": "#0555E8" },
     "modal": {
       "ondismiss": function(){
         btn.disabled = false;
-        btn.innerHTML = '<i data-lucide="credit-card"></i> Pay Now';
+        btn.innerHTML = '<i data-lucide="credit-card"></i> Pay ₹<span id="payAmount">'+selectedAmount+'</span>';
         lucide.createIcons();
-        showCustomAlert("Payment Cancelled", "error");
+        showToast("Payment Cancelled", 'error');
       }
     }
   };
@@ -405,21 +189,11 @@ function openRazorpay(){
   const rzp = new Razorpay(options);
   rzp.on('payment.failed', function (response){
     btn.disabled = false;
-    btn.innerHTML = '<i data-lucide="credit-card"></i> Pay Now';
+    btn.innerHTML = '<i data-lucide="credit-card"></i> Pay ₹<span id="payAmount">'+selectedAmount+'</span>';
     lucide.createIcons();
-    showCustomAlert("Payment Failed: " + response.error.description, "error");
+    showToast("Payment Failed: " + response.error.description, 'error');
   });
   rzp.open();
-}
-
-// --- HELP MODAL ---
-function openHelp(){
-  document.getElementById('helpModal').classList.add('show');
-}
-function closeHelp(e){
-  if(!e || e.target.id === 'helpModal'){
-    document.getElementById('helpModal').classList.remove('show');
-  }
 }
 </script>
 </body>
