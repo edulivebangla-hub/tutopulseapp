@@ -3,26 +3,145 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Details</title>
-<script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest"></script><script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<style>*{box-sizing:border-box;-webkit-user-select:none;transition:background 0.3s,color 0.3s;-webkit-tap-highlight-color:transparent}:root{--primary-color:#0555E8;--text-dark:#1e293b;--text-muted:#64748b;--bg-light:#fff;--card-bg:#fff;--shimmer-start:#e2e8f0;--shimmer-mid:#f1f5f9}body.dark{--text-dark:#f1f5f9;--text-muted:#94a3b8;--bg-light:#0f172a;--card-bg:#1e293b}body{font-family:'Inter',sans-serif;background:var(--bg-light);color:var(--text-dark);display:flex;justify-content:center}.app-container{position:fixed;top:0;bottom:60px;width:100%;overflow-y:auto;background:var(--bg-light)}.top-navbar{position:fixed;top:0;left:0;width:100%;height:50px;background:#0555E8;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:1000}.nav-btn{background:none;border:none;color:#fff;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center}.coin-balance{display:flex;align-items:center;gap:2px;font-weight:700;color:#d97706;background:#fef3c7;padding:1px 10px;border-radius:10px}.content-scroll{padding:60px 20px 30px}.media-frame{width:100%;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--shimmer-start)}.media-frame img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}.media-frame.loaded img{opacity:1}.course-title{font-size:20px;font-weight:700;margin-top:20px}.course-description{font-size:15px;color:var(--text-muted);margin-bottom:24px}.action-dock{position:fixed;bottom:0;width:100%;max-width:480px;background:var(--card-bg);padding:16px 20px;display:grid;grid-template-columns:85px 1fr;gap:12px;border-top:1px solid var(--shimmer-start);z-index:10}.badge-free{border:1px solid var(--text-muted);color:#07789B;border-radius:24px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}.btn-action-trigger{background:var(--primary-color);color:#fff;border:none;border-radius:24px;height:48px;font-size:18px;font-weight:600;width:100%;position:relative}.loader-dots-element{display:none;align-items:center;gap:6px;justify-content:center;position:absolute;inset:0;background:inherit}.toast-notification-hub{position:fixed;top:80px;left:50%;transform:translateX(-50%);width:calc(100% - 40px);z-index:200}.custom-toast{background:#1e293b;color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:10px;transform:translateY(-20px);opacity:0;transition:.3s}.custom-toast.reveal{transform:translateY(0);opacity:1}.custom-toast.toast-success{background:#16a34a}.custom-toast.toast-error{background:#dc2626}</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+*{box-sizing:border-box;-webkit-user-select:none;transition:background 0.3s,color 0.3s;-webkit-tap-highlight-color:transparent}
+:root{--primary-color:#0555E8;--text-dark:#1e293b;--text-muted:#64748b;--bg-light:#fff;--card-bg:#fff;--shimmer-start:#e2e8f0;--shimmer-mid:#f1f5f9}
+body.dark{--text-dark:#f1f5f9;--text-muted:#94a3b8;--bg-light:#0f172a;--card-bg:#1e293b}
+body{font-family:'Inter',sans-serif;background:var(--bg-light);color:var(--text-dark);display:flex;justify-content:center}
+.app-container{position:fixed;top:0;bottom:60px;width:100%;overflow-y:auto;background:var(--bg-light)}
+.top-navbar{position:fixed;top:0;left:0;width:100%;height:50px;background:#0555E8;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:1000}
+.nav-btn{background:none;border:none;color:#fff;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+.coin-balance{display:flex;align-items:center;gap:2px;font-weight:700;color:#d97706;background:#fef3c7;padding:1px 10px;border-radius:10px}
+.content-scroll{padding:60px 20px 30px}
+.media-frame{width:100%;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--shimmer-start)}
+.media-frame img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}
+.media-frame.loaded img{opacity:1}
+.course-title{font-size:20px;font-weight:700;margin-top:20px}
+.course-description{font-size:15px;color:var(--text-muted);margin-bottom:24px}
+.action-dock{position:fixed;bottom:0;width:100%;max-width:480px;background:var(--card-bg);padding:16px 20px;display:grid;grid-template-columns:85px 1fr;gap:12px;border-top:1px solid var(--shimmer-start);z-index:10}
+.badge-free{border:1px solid var(--text-muted);color:#07789B;border-radius:24px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+.btn-action-trigger{background:var(--primary-color);color:#fff;border:none;border-radius:24px;height:48px;font-size:18px;font-weight:600;width:100%;position:relative}
+.loader-dots-element{display:none;align-items:center;gap:6px;justify-content:center;position:absolute;inset:0;background:inherit}
+.loader-dots-element span{width:8px;height:8px;background:#fff;border-radius:50%;display:inline-block;animation:dot 1.4s infinite ease-in-out both}
+.loader-dots-element span:nth-child(1){animation-delay:-0.32s}
+.loader-dots-element span:nth-child(2){animation-delay:-0.16s}
+@keyframes dot{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+.toast-notification-hub{position:fixed;top:80px;left:50%;transform:translateX(-50%);width:calc(100% - 40px);z-index:200}
+.custom-toast{background:#1e293b;color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:10px;transform:translateY(-20px);opacity:0;transition:.3s}
+.custom-toast.reveal{transform:translateY(0);opacity:1}
+.custom-toast.toast-success{background:#16a34a}
+.custom-toast.toast-error{background:#dc2626}
+</style>
 </head>
 <body>
 <div class="app-container">
 <div class="toast-notification-hub" id="toastHub"></div>
-<header class="top-navbar"><button class="nav-btn" onclick="history.back()"><i data-lucide="x"></i></button><div class="coin-balance">₹<span id="balance">0</span></div><button class="nav-btn" id="darkToggle">🌙</button></header>
+<header class="top-navbar">
+    <button class="nav-btn" onclick="history.back()"><i data-lucide="x"></i></button>
+    <div class="coin-balance">₹<span id="balance">0</span></div>
+    <button class="nav-btn" id="darkToggle">🌙</button>
+</header>
 <main class="content-scroll">
-<div class="media-frame" id="bannerFrame"><img src="https://i.ibb.co/nN1kVj31/class-12.jpg" id="courseImage" onload="document.getElementById('bannerFrame').classList.add('loaded')"></div>
-<h1 class="course-title">Class 12 3rd Semester [বাংলা + English]</h1>
-<p class="course-description">নতুন সেমিস্টার সিস্টেমে পড়ুয়াদের জন্য পড়াশোনা, সাজেশন ও ভিডিও ক্লাস!</p>
+    <div class="media-frame" id="bannerFrame">
+        <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" id="courseImage" onload="document.getElementById('bannerFrame').classList.add('loaded')">
+    </div>
+    <h1 class="course-title">Class 12 3rd Semester [বাংলা + English]</h1>
+    <p class="course-description">নতুন সেমিস্টার সিস্টেমে পড়ুয়াদের জন্য পড়াশোনা, সাজেশন ও ভিডিও ক্লাস!</p>
 </main>
-<footer class="action-dock"><div class="badge-free">₹99</div><button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()"><span id="buttonTextLabel">Enroll Now</span><div class="loader-dots-element" id="dockButtonLoader"><span></span><span></span><span></span></div></button></footer>
+<footer class="action-dock">
+    <div class="badge-free">₹99</div>
+    <button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()">
+        <span id="buttonTextLabel">Enroll Now</span>
+        <div class="loader-dots-element" id="dockButtonLoader"><span></span><span></span><span></span></div>
+    </button>
+</footer>
 </div>
+
 <script>
-const COURSE_ID="c12_sem378";const REDIRECT_URL="subject.html";const COURSE_PRICE=99;const RAZORPAY_KEY="rzp_live_TI1dFwgtX10E02";const CALLBACK_URL="https://TOMAR-USERNAME.github.io/TOMAR-REPO/payment-success.html";
-document.addEventListener("DOMContentLoaded",()=>{document.getElementById("balance").innerText=localStorage.getItem("coinBalance")||0;document.getElementById("buttonTextLabel").innerText=localStorage.getItem(`course_unlocked_${COURSE_ID}`)==="true"?"Start Course":"Enroll Now";lucide.createIcons();});
-function dispatchToast(text,mode="error"){const hub=document.getElementById("toastHub");const toast=document.createElement("div");toast.className=`custom-toast toast-${mode}`;toast.innerHTML=`<span>${text}</span>`;hub.appendChild(toast);setTimeout(()=>toast.classList.add("reveal"),50);setTimeout(()=>{toast.classList.remove("reveal");setTimeout(()=>toast.remove(),300)},3000)}
-function handleEnrollmentWorkflow(){if(localStorage.getItem(`course_unlocked_${COURSE_ID}`)==="true"){dispatchToast("কোর্সে যাচ্ছেন...","success");setTimeout(()=>location.href=REDIRECT_URL,800);return}document.getElementById("buttonTextLabel").style.opacity="0";document.getElementById("dockButtonLoader").style.display="flex";var options={"key":RAZORPAY_KEY,"amount":COURSE_PRICE*100,"currency":"INR","name":"TutoGenius","description":"Class 12 Course","redirect":true,"callback_url":CALLBACK_URL,"prefill":{"name":"Student","email":"student@tutogenius.sbs","contact":"9332466756"},"theme":{"color":"#0555E8"}};var rzp=new Razorpay(options);rzp.open();}
+const COURSE_ID="c12_sem378";
+const REDIRECT_URL="subject.html";
+const COURSE_PRICE=9; 
+const RAZORPAY_KEY="rzp_live_TI1dFwgtX10E02"; 
+const CALLBACK_URL="https://TOMAR-USERNAME.github.io/TOMAR-REPO/payment-success.html"; // <-- TOMAR LINK
+
+document.addEventListener("DOMContentLoaded",()=>{
+    document.getElementById("balance").innerText=localStorage.getItem("coinBalance")||0;
+    document.getElementById("buttonTextLabel").innerText=localStorage.getItem(`course_unlocked_${COURSE_ID}`)==="true"?"Start Course":"Enroll Now";
+    lucide.createIcons();
+    
+    document.getElementById("darkToggle").addEventListener("click",()=>{
+        document.body.classList.toggle("dark");
+        const isDark=document.body.classList.contains("dark");
+        localStorage.setItem("darkMode",isDark);
+        document.getElementById("darkToggle").textContent=isDark?"☀️":"🌙";
+    });
+});
+
+function dispatchToast(text,mode="error"){
+    const hub=document.getElementById("toastHub");
+    const toast=document.createElement("div");
+    toast.className=`custom-toast toast-${mode}`;
+    toast.innerHTML=`<span>${text}</span>`;
+    hub.appendChild(toast);
+    setTimeout(()=>toast.classList.add("reveal"),50);
+    setTimeout(()=>{toast.classList.remove("reveal");setTimeout(()=>toast.remove(),300)},3000)
+}
+
+function handleEnrollmentWorkflow(){
+    if(localStorage.getItem(`course_unlocked_${COURSE_ID}`)==="true"){
+        dispatchToast("কোর্সে যাচ্ছেন...","success");
+        setTimeout(()=>location.href=REDIRECT_URL,800);
+        return
+    }
+    
+    document.getElementById("buttonTextLabel").style.opacity="0";
+    document.getElementById("dockButtonLoader").style.display="flex";
+
+    var options={
+        "key": RAZORPAY_KEY,
+        "amount": COURSE_PRICE*100,
+        "currency": "INR",
+        "name": "TutoGenius India Pvt Ltd",
+        "description": "Class 12 3rd Semester Course",
+        "image": "https://i.ibb.co/nN1kVj31/class-12.jpg",
+        "redirect": true, // APK ER JONNO MUST
+        "callback_url": CALLBACK_URL,
+        
+        "method": { // <<< UPI SHOW KORANOR JONNO
+            "upi": true,
+            "card": true,
+            "netbanking": true,
+            "wallet": true
+        },
+
+        "prefill": {
+            "name": "Student",
+            "email": "student@tutogenius.sbs",
+            "contact": "9332466756"
+        },
+        "theme": {"color": "#0555E8"},
+        "modal": {
+            "ondismiss": function(){
+                dispatchToast("Payment Cancelled", "error");
+                document.getElementById("buttonTextLabel").style.opacity="1";
+                document.getElementById("dockButtonLoader").style.display="none";
+            }
+        }
+    };
+    
+    var rzp = new Razorpay(options);
+    
+    rzp.on('payment.failed', function (response){
+        dispatchToast(response.error.description || "Payment Failed", "error");
+        document.getElementById("buttonTextLabel").style.opacity="1";
+        document.getElementById("dockButtonLoader").style.display="none";
+    });
+    
+    rzp.open();
+}
 </script>
-</body></html>
 </body>
 </html>
