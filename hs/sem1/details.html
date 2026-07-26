@@ -4,46 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script> <!-- Razorpay Checkout -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     
     <style>
  * {box-sizing: border-box;-webkit-user-select: none;-webkit-tap-highlight-color: transparent;}
-    a, span, p, h1, h2, h3, h4, h5, h6, div {user-select: none;text-decoration: none;}
-    img {user-select: none;user-drag: none;}
-    :root {--primary-color: #0555E8;--accent-color: #0555E8;--text-dark: #1e293b;--text-muted: #64748b;--bg-light: #fff;--card-bg: #ffffff;--ribbon-bg: #f1f5f9;--star-color: #cbd5e1; --border-radius: 10px;--transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);--shimmer-start: #e2e8f0;--shimmer-mid: #f1f5f9;}
-    body.dark {--text-dark: #f1f5f9;--text-muted: #94a3b8;--bg-light: #0f172a;--card-bg: #1e293b;--ribbon-bg: #1e293b;--shimmer-start: #1e293b;--shimmer-mid: #334155;}
-    body {font-family: 'Inter', 'Hind Siliguri', sans-serif;background-color: var(--bg-light);color: var(--text-dark);line-height: 1.6;display: flex;justify-content: center;align-items: flex-start;transition: background-color 0.3s, color 0.3s;}
-    .app-container {position: fixed;top: 0px;bottom: 60px;width: 100%;overflow-y: auto;background: var(--bg-light);transition: background-color 0.3s;scrollbar-width: none;-ms-overflow-style: none;}
-    .top-navbar {position: fixed;top: 0;left: 0;width: 100%;height: 50px;background: #0555E8;display: flex;align-items: center;justify-content: space-between;padding: 0 16px;z-index: 1000;box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
-    .nav-btn {background: none;border: none;color: #ffffff;cursor: pointer;width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;border-radius: 50%;transition: var(--transition-smooth);font-size: 20px;}
-    .nav-btn svg {width: 25px;height: 25px;}
-    .nav-btn:active {background-color: rgba(255, 255, 255, 0.15);}
+    :root {--primary-color: #0555E8;--text-dark: #1e293b;--text-muted: #64748b;--bg-light: #fff;--card-bg: #ffffff;--shimmer-start: #e2e8f0;}
+    body.dark {--text-dark: #f1f5f9;--text-muted: #94a3b8;--bg-light: #0f172a;--card-bg: #1e293b;--shimmer-start: #1e293b;}
+    body {font-family: sans-serif;background-color: var(--bg-light);color: var(--text-dark);display: flex;justify-content: center;margin:0}
+    .app-container {position: fixed;top: 0px;bottom: 60px;width: 100%;overflow-y: auto;background: var(--bg-light);}
+    .top-navbar {position: fixed;top: 0;left: 0;width: 100%;height: 50px;background: #0555E8;display: flex;align-items: center;justify-content: space-between;padding: 0 16px;z-index: 1000;color:#fff}
+    .nav-btn {background: none;border: none;color: #ffffff;cursor: pointer;width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;}
     .coin-balance {display: flex;align-items: center;gap: 2px;font-weight: 700;color: #d97706;background: #fef3c7;padding: 1px 10px;border-radius: 10px;}
-    body.dark .coin-balance {background: #78350f;color: #fef3c7;}
-    .content-scroll {padding: 60px 20px 30px 20px; flex: 1;}
-    .media-frame {width: 100%;border-radius: var(--border-radius);overflow: hidden;position: relative;aspect-ratio: 16 / 9;background-color: var(--shimmer-start);box-shadow: 0 4px 12px rgba(0,0,0,0.08);transition: background-color 0.3s;}
-    .media-frame img {width: 100%;height: 100%;object-fit: cover;display: block;opacity: 0;transition: opacity 0.5s ease;}
-    .media-frame.loaded img {opacity: 1;}
-    .skeleton-shimmer {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: linear-gradient(90deg, var(--shimmer-start) 25%, var(--shimmer-mid) 50%, var(--shimmer-start) 75%);background-size: 200% 100%;animation: shimmerLinear 1.6s infinite;z-index: 2;}
-    .media-frame.loaded .skeleton-shimmer {display: none;}
-    @keyframes shimmerLinear {0% { background-position: 200% 0; }100% { background-position: -200% 0; }}
-    .course-title {font-size: 20px;font-weight: 700;color: var(--text-dark);margin-top: 20px;margin-bottom: 10px;line-height: 1.4;}
-    .course-description {font-size: 15px;color: var(--text-muted);margin-bottom: 24px;font-weight: 400;}
-    .action-dock {position: fixed;bottom: 0;width: 100%;max-width: 480px; background: var(--card-bg);padding: 16px 20px;display: grid;grid-template-columns: 85px 1fr;gap: 12px;align-items: center;border-top: 1px solid var(--shimmer-start);box-sizing: border-box;z-index: 10;box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);transition: background-color 0.3s, border-color 0.3s;}
-    .badge-free {background-color: var(--card-bg);border: 1px solid var(--text-muted);color: #07789B;border-radius: 24px;height: 30px;display: flex;align-items: center;justify-content: center;font-weight: 700;font-size: 18px;letter-spacing: 0.5px;text-transform: uppercase;transition: background-color 0.3s, border-color 0.3s;}
-    .btn-action-trigger {background-color: var(--primary-color);color: #ffffff;border: none;border-radius: 24px;height: 48px;font-size: 18px;font-weight: 600;cursor: pointer;display: flex;align-items: center;justify-content: center;transition: var(--transition-smooth);width: 100%;position: relative;overflow: hidden;text-decoration: none;}
-    .btn-action-trigger:active {transform: scale(0.98);opacity: 0.9;}
+    .content-scroll {padding: 60px 20px 30px 20px;}
+    .media-frame img {width: 100%;border-radius: 10px;}
+    .course-title {font-size: 20px;font-weight: 700;margin-top: 20px;}
+    .course-description {font-size: 15px;color: var(--text-muted);margin-bottom: 24px;}
+    .action-dock {position: fixed;bottom: 0;width: 100%;max-width: 480px;background: var(--card-bg);padding: 16px 20px;display: grid;grid-template-columns: 85px 1fr;gap: 12px;border-top: 1px solid var(--shimmer-start);z-index: 10;}
+    .badge-free {border: 1px solid var(--text-muted);color: #07789B;border-radius: 24px;height: 30px;display: flex;align-items: center;justify-content: center;font-weight: 700;font-size: 18px;}
+    .btn-action-trigger {background-color: var(--primary-color);color: #ffffff;border: none;border-radius: 24px;height: 48px;font-size: 18px;font-weight: 600;width: 100%;position:relative}
     .loader-dots-element {display: none;align-items: center;gap: 6px;justify-content: center;position: absolute;inset: 0;background: inherit;z-index: 3;}
     .loader-dots-element span {width: 8px;height: 8px;background-color: #ffffff;border-radius: 50%;display: inline-block;animation: dotElasticity 1.4s infinite ease-in-out both;}
-    .loader-dots-element span:nth-child(1) { animation-delay: -0.32s; }
-    .loader-dots-element span:nth-child(2) { animation-delay: -0.16s; }
     @keyframes dotElasticity {0%, 80%, 100% { transform: scale(0); }40% { transform: scale(1.0); }}
-    .toast-notification-hub {position: fixed; top: 80px;left: 50%;transform: translateX(-50%);width: calc(100% - 40px);max-width: 440px;z-index: 200;pointer-events: none;}
-    .custom-toast {background: #1e293b;color: #ffffff;padding: 12px 16px;border-radius: 10px;font-size: 14px;font-weight: 500;display: flex;align-items: center;gap: 10px;box-shadow: 0 4px 12px rgba(0,0,0,0.15);margin-bottom: 8px;transform: translateY(-20px);opacity: 0;transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+    .toast-notification-hub {position: fixed;top: 80px;left: 50%;transform: translateX(-50%);width: calc(100% - 40px);z-index: 200;}
+    .custom-toast {background: #16a34a;color: #ffffff;padding: 12px 16px;border-radius: 10px;font-size: 14px;transform: translateY(-20px);opacity: 0;transition: all 0.3s;}
     .custom-toast.reveal {transform: translateY(0);opacity: 1;}
     </style>
 </head>
@@ -51,133 +36,116 @@
     <div class="app-container">
         <div class="toast-notification-hub" id="toastHub"></div>
         <header class="top-navbar">
-            <button class="nav-btn" onclick="goBack()"><i data-lucide="x"></i></button>
+            <button class="nav-btn" onclick="history.back()"><i data-lucide="x"></i></button>
             <div class="coin-balance">₹<span id="balance">0</span></div>
-            <button class="nav-btn" id="darkToggle" aria-label="Toggle Dark Mode">🌙</button>
+            <button class="nav-btn" id="darkToggle">🌙</button>
         </header>
 
         <main class="content-scroll">
-            <div class="media-frame" id="bannerFrame">
-                <div class="skeleton-shimmer"></div>
-                <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 12" id="courseImage">
-            </div>
-            <h1 class="course-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার!</h1>
+            <div class="media-frame" id="bannerFrame"><img src="https://i.ibb.co/nN1kVj31/class-12.jpg"></div>
+            <h1 class="course-title">Class 12 3rd Semester [বাংলা + English]</h1>
             <p class="course-description">নতুন সেমিস্টার সিস্টেমে পড়ুয়াদের জন্য পড়াশোনা, সাজেশন ও ভিডিও ক্লাস!</p>
         </main>
 
         <footer class="action-dock">
-            <div class="badge-free">₹1</div> 
+            <div class="badge-free">₹99</div> 
             <button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()">
                 <span id="buttonTextLabel">Enroll Now</span>
-                <div class="loader-dots-element" id="dockButtonLoader"><span></span><span></span><span></span></div>
+                <div class="loader-dots-element" id="dockButtonLoader"><span></span><span></span></div>
             </button>
         </footer>
     </div>
 
     <script>
-        function goBack() {window.history.back();}
-
-        const COURSE_ID = "c12_sem37899"; 
-        const REDIRECT_URL = "subject.html"; // Payment er por ekhane jabe
+        const COURSE_ID = "c12_sem3789"; 
+        const REDIRECT_URL = "payment-success.html"; // Payment success file
         const REQUIRED_COINS_COST = 1; 
         const RAZORPAY_KEY = "rzp_live_TI1dFwgtX10E02"; // TOMAR LIVE KEY
 
-        let currentBalance = 0;
-
-        function loadBalance() {
-            currentBalance = parseInt(localStorage.getItem("coinBalance") || "0", 10);
-            document.getElementById("balance").innerText = currentBalance;
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
-            initDarkModePreference();
-            loadBalance();
-            initializeViewLifecycle();
+            document.getElementById("balance").innerText = localStorage.getItem("coinBalance") || 0;
             evaluateEnrollmentLockState();
+            initDarkMode();
             lucide.createIcons();
         });
 
-        const darkToggle = document.getElementById("darkToggle");
-        const body = document.body;
-        function initDarkModePreference() {
-            if (localStorage.getItem("darkMode") === "true") {body.classList.add("dark");darkToggle.textContent = "☀️";} 
-            else {body.classList.remove("dark");darkToggle.textContent = "🌙";}
-        }
-        darkToggle.addEventListener("click", () => {
-            body.classList.toggle("dark");const isDark = body.classList.contains("dark");
-            localStorage.setItem("darkMode", isDark);darkToggle.textContent = isDark ? "☀️" : "🌙";
-        });
-
-        function initializeViewLifecycle() {
-            const bannerFrame = document.getElementById("bannerFrame");
-            const courseImg = document.getElementById("courseImage");
-            if (courseImg.complete) {bannerFrame.classList.add("loaded");} 
-            else {courseImg.addEventListener("load", () => {bannerFrame.classList.add("loaded");});}
+        function initDarkMode() {
+            if (localStorage.getItem("darkMode") === "true") {document.body.classList.add("dark");document.getElementById("darkToggle").textContent = "☀️";} 
+            document.getElementById("darkToggle").addEventListener("click", () => {
+                document.body.classList.toggle("dark");
+                const isDark = document.body.classList.contains("dark");
+                localStorage.setItem("darkMode", isDark);
+                document.getElementById("darkToggle").textContent = isDark ? "☀️" : "🌙";
+            });
         }
 
         function dispatchToast(textAlert, mode = "error") {
             const hub = document.getElementById("toastHub");
             const toast = document.createElement("div");
-            toast.className = `custom-toast toast-${mode}`;
-            const iconName = mode === "success" ? "circle-check" : "triangle-alert";
-            toast.innerHTML = `<i data-lucide="${iconName}"></i> <span>${textAlert}</span>`;
-            hub.appendChild(toast);lucide.createIcons();
-            setTimeout(() => toast.classList.add("reveal"), 50);
+            toast.className = `custom-toast reveal`;
+            toast.innerHTML = `<span>${textAlert}</span>`;
+            hub.appendChild(toast);
             setTimeout(() => {toast.classList.remove("reveal");setTimeout(() => toast.remove(), 300);}, 3000);
         }
 
         function evaluateEnrollmentLockState() {
-            const actionBtn = document.getElementById("masterActionButton");
             const textLabel = document.getElementById("buttonTextLabel");
-            const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`);
-            if (isUnlocked === "true") {textLabel.innerText = "Start Course";} 
-            else {textLabel.innerText = "Enroll Now";}
+            if (localStorage.getItem(`course_unlocked_${COURSE_ID}`) === "true") {
+                textLabel.innerText = "Start Course";
+            } else {
+                textLabel.innerText = "Enroll Now";
+            }
         }
 
         function handleEnrollmentWorkflow() {
-            const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`);
-            if (isUnlocked === "true") {
-                window.location.href = REDIRECT_URL; // Direct course e pathao
+            if (localStorage.getItem(`course_unlocked_${COURSE_ID}`) === "true") {
+                window.location.href = "subject.html"; // Tomar course page
             } else {
-                openRazorpayCheckout(); // Payment kholo
+                openRazorpayCheckout();
             }
         }
 
         function openRazorpayCheckout() {
+            const loader = document.getElementById("dockButtonLoader");
+            const textLabel = document.getElementById("buttonTextLabel");
+            loader.style.display = "flex"; textLabel.style.opacity = "0";
+
+            // Order ID banano - Razorpay ke bolbe eta real payment
+            const orderId = "order_" + Date.now(); 
+
             const options = {
-                "key": RAZORPAY_KEY, // rzp_live_TI1dFwgtX10E02
-                "amount": REQUIRED_COINS_COST * 100, // 99 * 100 = 9900 paise
+                "key": RAZORPAY_KEY,
+                "amount": REQUIRED_COINS_COST * 100, // 9900
                 "currency": "INR",
                 "name": "TutoPulse",
                 "description": "Class 12 3rd Semester Course",
                 "image": "https://i.ibb.co/nN1kVj31/class-12.jpg",
+                "order_id": orderId, // Eta add koray ₹1 test bondho hobe
                 "handler": function (response){
-                    // Payment success
-                    console.log(response.razorpay_payment_id);
-                    commitSuccessfulUnlock();
+                    loader.style.display = "none"; textLabel.style.opacity = "1";
+                    // Payment ID niye success page e pathabo
+                    window.location.href = `${REDIRECT_URL}?razorpay_payment_id=${response.razorpay_payment_id}&course_id=${COURSE_ID}`;
                 },
                 "prefill": {
-                    "name": localStorage.getItem("student_display_name") || "Student",
-                    "email": "student@tutopulse.com"
+                    "name": "Student",
+                    "email": "student@tutopulse.com",
+                    "contact": "9000000000"
                 },
-                "theme": {
-                    "color": "#0555E8"
-                },
+                "theme": {"color": "#0555E8"},
+                "retry": { "enabled": false }, // ₹1 retry bondho
                 "modal": {
                     "ondismiss": function(){
+                        loader.style.display = "none"; textLabel.style.opacity = "1";
                         dispatchToast("Payment Cancelled", "error");
                     }
                 }
             };
             const rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                loader.style.display = "none"; textLabel.style.opacity = "1";
+                dispatchToast("Payment Failed: " + response.error.description, "error");
+            });
             rzp1.open();
-        }
-
-        function commitSuccessfulUnlock() {
-            localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
-            dispatchToast("✅ Payment Successful! Course Unlocked", "success");
-            evaluateEnrollmentLockState();
-            setTimeout(() => {window.location.href = REDIRECT_URL;}, 1500); // 1.5 sec por course e niye jabe
         }
     </script>
 </body>
