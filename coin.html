@@ -6,11 +6,11 @@
 <title>Payments - TutoGenius</title>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
-   * {
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -23,197 +23,376 @@
     text-decoration: none;
   }
   
-:root {
-  --primary: #FFD60A;
-  --primary-dark: #e5be00;
-  --accent: #1e40af;
-  --bg: #fff;
-  --card-bg: #fff;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --radius: 16px;
-  --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  --danger: #ef4444;
-  --success: #22c55e;
-}
+  :root {
+    --primary: #FFD60A;
+    --primary-dark: #e5be00;
+    --accent: #0555E8;
+    --accent-hover: #0342b8;
+    --bg: #fff;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --radius: 16px;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --danger: #ef4444;
+    --success: #22c55e;
+    --whatsapp: #25D366;
+  }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;-webkit-tap-highlight-color: transparent;}
-body{background:var(--bg);color:var(--text-main);display:flex;justify-content:center;min-height:100vh;}
+  body {
+    background: #e2e8f0;
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
 
-.app-wrapper {
-  width: 100%;
-  max-width: 480px;
-  background: var(--bg);
-  min-height: 100vh;
-  position: relative;
+  .app-wrapper {
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 30px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.1);
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: var(--accent);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(5, 85, 232, 0.2);
+  }
+  .header .left { display: flex; align-items: center; gap: 12px; color: #fff; }
+  .header .left i { width: 22px; height: 22px; cursor: pointer; color: #fff; }
+  .header h1 { font-size: 18px; font-weight: 700; color: #fff; }
+  .header .right-actions { display: flex; align-items: center; gap: 8px; }
   
-  padding-bottom: 20px;
+  .icon-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15); color: #fff;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .icon-btn:active { background: rgba(255, 255, 255, 0.3); transform: scale(0.92); }
+  .icon-btn i { width: 20px; height: 20px; }
+
+  .container { padding: 18px; }
+  .section-title {
+    font-size: 12px; font-weight: 700; margin: 16px 0 10px 4px;
+    color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;
+  }
+
+  /* WALLET CARD */
+  .card {
+    background: var(--card-bg); border-radius: var(--radius); padding: 20px;
+    margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid #f1f5f9;
+  }
+  .wallet-card {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #fff; position: relative; overflow: hidden; border: none;
+  }
+  .wallet-card::after {
+    content: ''; position: absolute; right: -20px; bottom: -20px;
+    width: 130px; height: 130px; background: var(--primary);
+    border-radius: 50%; opacity: 0.15; pointer-events: none;
+  }
+  .wallet-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .wallet-icon-box {
+    background: rgba(255, 255, 255, 0.1); padding: 10px;
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  }
+  .wallet-header i { width: 22px; height: 22px; color: var(--primary); }
+  .wallet-title { font-size: 15px; font-weight: 600; opacity: 0.9; }
+  .low-balance { font-size: 12px; font-weight: 500; color: #fca5a5; margin-top: 2px; }
+  .balance { font-size: 34px; font-weight: 800; margin: 10px 0 18px; color: #fff; letter-spacing: -0.5px; }
+
+  .add-money-btn {
+    border: none; padding: 12px 20px; border-radius: 30px;
+    display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700;
+    cursor: pointer; background: var(--primary); color: #000;
+    box-shadow: 0 4px 12px rgba(255, 214, 10, 0.3); transition: transform 0.2s ease;
+  }
+  .add-money-btn:active { transform: scale(0.96); }
+  .add-money-btn i { width: 18px; height: 18px; }
+
+  /* MAIN BUTTONS GRID */
+  .action-buttons-grid {
+    display: flex; flex-direction: column; gap: 12px; margin-top: 10px;
+  }
+  .action-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px; border-radius: var(--radius); font-size: 15px;
+    font-weight: 700; border: none; cursor: pointer; transition: all 0.2s ease;
+    box-shadow: var(--shadow); text-align: left;
+  }
+  .action-btn:active { transform: scale(0.98); }
+  .action-btn .btn-content { display: flex; align-items: center; gap: 12px; }
+  .action-btn .btn-content i { width: 22px; height: 22px; }
+
+  .btn-topup {
+    background: #ffffff; color: var(--accent); border: 1.5px solid #e2e8f0;
+  }
+  .btn-topup .icon-wrapper {
+    background: #eff6ff; padding: 8px; border-radius: 10px; display: flex; color: var(--accent);
+  }
+
+  .btn-whatsapp {
+    background: #10b981; color: #ffffff;
+  }
+  .btn-whatsapp .icon-wrapper {
+    background: rgba(255, 255, 255, 0.2); padding: 8px; border-radius: 10px; display: flex; color: #fff;
+  }
+
+  /* MODALS / OVERLAYS */
+  .full-page-modal {
+    display: none; position: fixed; inset: 0; background: var(--bg); z-index: 1000;
+    flex-direction: column; max-width: 480px; margin: 0 auto;
+    animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto;
+  }
+  .full-page-modal.show { display: flex; }
+  @keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  .modal-header {
+    background: var(--accent); padding: 16px 20px; color: #fff;
+    display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 5;
+  }
+  .modal-header i { width: 22px; height: 22px; cursor: pointer; }
+  .modal-header h2 { font-size: 18px; font-weight: 700; color: #fff; }
+  .modal-content { padding: 20px; flex: 1; }
+
+  /* STEP CARD */
+  .step-card {
+    background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px;
+    padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow);
+  }
+  .step-title {
+    font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px;
+  }
+  .payment-id-input {
+    width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px;
+    font-size: 15px; font-weight: 700; outline: none; margin-bottom: 14px; text-transform: uppercase;
+    letter-spacing: 0.5px; transition: border-color 0.2s ease;
+  }
+  .payment-id-input:focus { border-color: var(--accent); }
+
+  .verify-btn {
+    width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
+    border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4); transition: all 0.2s ease;
+  }
+  .verify-btn:active { background: var(--primary-dark); transform: scale(0.98); }
+
+  /* TERMS PAGE CONTENT */
+  .terms-section { margin-bottom: 20px; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; }
+  .terms-section h3 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+  .terms-section p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* HELP MODAL BOTTOM SHEET */
+  .help-modal {
+    position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px);
+    display: none; align-items: flex-end; justify-content: center; z-index: 200;
+  }
+  .help-modal.show { display: flex; }
+  .help-box {
+    background: #fff; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px 20px 32px;
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .help-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+  .help-option {
+    display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 14px;
+    background: #f8fafc; margin-bottom: 12px; cursor: pointer; text-decoration: none; color: var(--text-main);
+    border: 1px solid #f1f5f9; transition: background 0.2s ease;
+  }
+  .help-option:active { background: #f1f5f9; }
+  .help-option i { width: 22px; height: 22px; color: var(--accent); }
+  .help-option .text h4 { font-size: 15px; font-weight: 600; }
+  .help-option .text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* CUSTOM TOAST NOTIFICATION POPUP */
+  .custom-toast {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+    width: calc(100% - 32px); max-width: 440px; background: #0f172a; color: #fff;
+    padding: 14px 18px; border-radius: 14px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    display: flex; align-items: center; gap: 12px; z-index: 300;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    opacity: 0; pointer-events: none; border-left: 5px solid var(--accent);
+  }
+  .custom-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
+  .custom-toast.success { border-left-color: var(--success); }
+  .custom-toast.success i { color: var(--success); }
+  .custom-toast.error { border-left-color: var(--danger); }
+  .custom-toast.error i { color: var(--danger); }
+  .custom-toast.warning { border-left-color: var(--primary); }
+  .custom-toast.warning i { color: var(--primary); }
+  .custom-toast .toast-msg { font-size: 14px; font-weight: 600; flex: 1; line-height: 1.4; }
+
+
+
+/* Button Style */
+.how-to-search-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1.5px solid #d0d5dd;
+    border-radius: 50px;
+    background: #fff;
+    color: #1d2b64;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.how-to-search-btn:hover {
+    border-color: #1d2b64;
+    box-shadow: 0 2px 8px rgba(29,43,100,0.1);
+}
+.how-to-search-btn svg {
+    width: 20px;
+    height: 20px;
+    color: #1d2b64;
+    flex-shrink: 0;
 }
 
-.header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:5px 20px;background:#0555E8;position:sticky;top:0;z-index:10;
-  border-bottom:1px solid #f1f5f9;
+/* Popup Overlay */
+.search-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
-.header .left{display:flex;align-items:center;gap:14px;color: #fff;}
-.header .left i{width:22px;height:22px;cursor:pointer;color:#fff;}
-.header h1{font-size: 19px; font-weight: 700; color: #fff;}
-.help-btn{
-  display:flex;align-items:center;gap:6px;border:1px solid #e2e8f0;
-  padding:7px 14px;border-radius:20px;font-size: 13px; font-weight: 600; cursor:pointer;background:#fff;
-  transition: all 0.2s ease;
-}
-.help-btn:active { background: #f8fafc; transform: scale(0.96); }
-.help-btn i{width:16px;height:16px;color: var(--accent);}
-
-.container{padding:18px;}
-.section-title{font-size: 14px; font-weight: 700; margin: 20px 0 10px 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
-
-.card{
-  background:var(--card-bg);border-radius:var(--radius);padding:18px;margin-bottom:14px;
-  box-shadow:var(--shadow); border: 1px solid #f1f5f9;
-}
-.wallet-card {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-.wallet-card::after {
-  content: '';
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 120px;
-  height: 120px;
- background:  var(--primary);
-  border-radius: 50%;
-}
-.wallet-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.wallet-icon-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.wallet-header i{width:22px;height:22px;color: var(--primary);}
-.wallet-title{font-size: 15px; font-weight: 600; opacity: 0.9;}
-.low-balance{font-size: 12px; font-weight: 500; color: #fca5a5; margin-top: 2px;}
-.balance{font-size: 32px; font-weight: 800; margin: 12px 0 16px; color: #fff;}
-
-.add-money-btn{
-  border:none; padding:10px 18px; border-radius:30px;
-  display:inline-flex; align-items:center; gap:8px; font-size: 14px; font-weight: 700;
-  cursor:pointer; background: var(--primary); color: #000;
-  transition: transform 0.2s ease;
-}
-.add-money-btn:active { transform: scale(0.96); }
-.add-money-btn i{width:18px;height:18px;}
-
-/* ADD MONEY MODAL */
-.addmoney-page{
-  display:none;position:fixed;inset:0;background:#fff;z-index:100;
-  flex-direction:column; max-width: 480px; margin: 0 auto;
-  animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow-y: auto;
-}
-.addmoney-page.show{display:flex;}
-@keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-.addmoney-header{background: #0555E8;padding:16px 20px;color: #fff;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:14px;}
-.addmoney-header i{width:22px;height:22px;cursor:pointer;}
-.addmoney-header h2{font-size: 18px; font-weight: 700;color: #fff;}
-.addmoney-content{padding:24px 20px;flex:1;}
-
-.step-card {
-  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;
-  padding: 18px; margin-bottom: 20px;
-}
-.step-title {
-  font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
-  margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+.search-popup-overlay.active {
+    display: block;
+    opacity: 1;
 }
 
-.payment-id-input {
-  width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px;
-  font-size: 15px; font-weight: 700; outline: none; margin-bottom: 12px; text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* Popup Box */
+.search-popup {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    padding: 20px 16px 30px;
+    z-index: 10000;
+    transition: bottom 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
 }
-.payment-id-input:focus { border-color: var(--accent); }
+.search-popup-overlay.active .search-popup {
+    bottom: 0;
+}
+.popup-handle {
+    width: 40px;
+    height: 5px;
+    background: #d0d5dd;
+    border-radius: 10px;
+    margin: 0 auto 16px;
+}
 
-.verify-btn {
-  width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
-  border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
-  transition: all 0.2s ease;
+/* Popup Title */
+.search-popup h3 {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #101828;
+    margin: 0 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-.verify-btn:active { background: var(--primary-dark); transform: scale(0.98); }
 
-/* HELP MODAL */
-.help-modal{position:fixed;inset:0;background:rgba(15, 23, 42, 0.5);backdrop-filter: blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:200;}
-.help-modal.show{display:flex;}
-.help-box{
-  background:#fff; width:100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px 20px 32px;
-  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+/* Popup Items */
+.search-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
 }
-@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.help-box h3{font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center;}
-.help-option{
-  display:flex; align-items:center; gap:14px; padding:16px; border-radius:14px;
-  background:#f8fafc; margin-bottom:12px; cursor:pointer; text-decoration:none; color:var(--text-main);
-  border: 1px solid #f1f5f9;
-}
-.help-option i{width:22px;height:22px;color: var(--accent);}
-.help-option .text h4{font-size: 15px; font-weight: 600;}
-.help-option .text p{font-size: 13px; color: var(--text-muted); margin-top:2px;}
+.search-option.blue { background: #eff8ff; }
+.search-option.orange { background: #fff6ed; }
+.search-option.pink { background: #fdf2f8; }
 
-/* CUSTOM ALERT POPUP */
-.custom-toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  width: calc(100% - 40px);
-  max-width: 440px;
-  background: #0f172a;
-  color: #fff;
-  padding: 16px 20px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 300;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-  opacity: 0;
-  pointer-events: none;
+.search-option-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
-.custom-toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+.search-option-content {
+    flex: 1;
 }
-.custom-toast.success i { color: #4ade80; }
-.custom-toast.error i { color: #f87171; }
-.custom-toast.warning i { color: #facc15; }
-.custom-toast .toast-msg { font-size: 14px; font-weight: 600; flex: 1; line-height: 1.4; }
+.search-option-content h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #101828;
+    margin: 0 0 4px;
+}
+.search-option-content p {
+    font-size: 12px;
+    color: #475467;
+    margin: 0;
+    line-height: 1.5;
+}
+.search-option-arrow {
+    width: 20px;
+    height: 20px;
+    color: #98a2b3;
+    align-self: center;
+}
+.search-option:hover {
+    opacity: 0.8;
+}
+    /* BOTTOM NAV */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 65px;
+        background: #fff;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+         z-index: 1000;
+    }
 </style>
 </head>
 <body>
 
 <div class="app-wrapper">
-  <!-- MAIN PAGE -->
   <div id="mainPage">
     <header class="header">
       <div class="left">
         <i data-lucide="arrow-left" onclick="window.history.back()"></i>
         <h1>Payments</h1>
       </div>
-      <div class="help-btn" onclick="openHelp()">
-        <i data-lucide="help-circle"></i> Help
+     
+        <div class="icon-btn" onclick="openTerms()" title="Terms & Conditions">
+          <i data-lucide="info"></i>
+        </div>
       </div>
     </header>
 
@@ -234,41 +413,103 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
           <i data-lucide="plus"></i> Add Money
         </button>
       </div>
-    </div>
+
+      <h2 class="section-title">Quick Actions</h2>
+      <div class="action-buttons-grid">
+        <a href="#" class="action-btn btn-topup" >
+          <div class="btn-content">
+            <div class="icon-wrapper">
+              <i data-lucide="chevron-right"></i>
+            </div>
+            <span>Get Top-up Code</span>
+          </div>
+         </a>
+
+        <a href="https://wa.me/919339061296" target="_blank" class="action-btn btn-whatsapp">
+          <div class="btn-content">
+            <div class="icon-wrapper">
+              <i data-lucide="message-square"></i>
+            </div>
+            <span> WhatsApp Support</span>
+          </div>
+          <i data-lucide="external-link" style="width:18px; height:18px; opacity:0.8;"></i>
+        </a>
+
+      </div>
+
+    </div><nav class="bottom-nav">
+<!-- Button -->
+<button class="how-to-search-btn" id="openSearchPopup">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    How to Add Money? (কীভাবে টাকা যোগ করবেন?)
+</button></nav>
   </div>
 
-  <!-- ADD MONEY PAGE -->
-  <div class="addmoney-page" id="addMoneyPage">
-    <div class="addmoney-header">
-      <i data-lucide="arrow-left" onclick="closeAddMoney()"></i>
-      <h2>Redeem Transaction Code</h2>
+  <div class="full-page-modal" id="addMoneyPage">
+    <div class="modal-header">
+      <i data-lucide="x" onclick="closeAddMoney()"></i>
+      <h2>Redeem Top-up Code</h2>
     </div>
     
-    <div class="addmoney-content">
+    <div class="modal-content">
       <div class="step-card">
         <div class="step-title">
-          <i data-lucide="key-round"></i> Enter TXN ID
+          <i data-lucide="key-round"></i> Enter TXN / Top-up Code
         </div>
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
-          Please enter your transaction ID starting with <strong>TGCOIN_</strong> to verify and top up your wallet.
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5;">
+          Please enter your top-up code starting with <strong>TGCOIN_</strong> to verify and credit funds directly into your wallet.
         </p>
         <input type="text" id="paymentIdInput" class="payment-id-input" placeholder="TGCOIN_XXXXXXXXXX">
         <button class="verify-btn" onclick="verifyAndAddMoney()">
-          <i data-lucide="check-circle"></i> Verify & Add Money
+          <i data-lucide="check-circle"></i> Redeem Code Now
         </button>
       </div>
     </div>
   </div>
 
-  <!-- HELP MODAL -->
+  <div class="full-page-modal" id="termsPage">
+    <div class="modal-header">
+      <i data-lucide="x" onclick="closeTerms()"></i>
+      <h2>Terms & Conditions</h2>
+    </div>
+    
+    <div class="modal-content">
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; font-weight: 600;">
+        TutoGenius Private Ltd • Last updated: 2026
+      </p>
+
+      <div class="terms-section">
+        <h3>1. Introduction</h3>
+        <p>Welcome to TutoGenius Private Ltd. By accessing our payment systems, top-up services, and digital products, you agree to comply with and be bound by these terms.</p>
+      </div>
+
+      <div class="terms-section">
+        <h3>2. Wallet Balance & Top-Up Codes</h3>
+        <p>Top-up codes (TGCOIN) purchased through official channels are non-refundable and non-transferable. Funds added to the TutoGenius Wallet can only be used for platform services.</p>
+      </div>
+
+      <div class="terms-section">
+        <h3>3. Fraud & Unauthorized Transactions</h3>
+        <p>Any attempt to manipulate or redeem fake top-up codes will result in immediate suspension of your TutoGenius account and legal reporting if necessary.</p>
+      </div>
+
+      <div class="terms-section">
+        <h3>4. Helpline & Support</h3>
+        <p>For assistance with transactions, please contact our verified helpline via WhatsApp at +91 9339061296 or email support.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="help-modal" id="helpModal" onclick="closeHelp(event)">
     <div class="help-box" onclick="event.stopPropagation()">
       <h3>Need Support?</h3>
-      <a href="https://wa.me/919332466756" target="_blank" class="help-option">
+      <a href="https://wa.me/919339061296" target="_blank" class="help-option">
         <i data-lucide="message-circle"></i>
         <div class="text">
           <h4>WhatsApp Support</h4>
-          <p>+91 9332466756</p>
+          <p>+91 9339061296</p>
         </div>
       </a>
       <a href="mailto:admin.tutogenius@gmail.com" target="_blank" class="help-option">
@@ -281,14 +522,54 @@ body{background:var(--bg);color:var(--text-main);display:flex;justify-content:ce
     </div>
   </div>
 
-  <!-- CUSTOM ALERT TOAST UI -->
   <div class="custom-toast" id="customToast">
     <i data-lucide="info" id="toastIcon"></i>
     <div class="toast-msg" id="toastMsg">Notification message</div>
   </div>
 </div>
+<!-- Popup -->
+<div class="search-popup-overlay" id="searchPopupOverlay">
+    <div class="search-popup">
+        <div class="popup-handle"></div>
+        <h3>How to Add Money? (কীভাবে টাকা যোগ করবেন?)</h3>
 
+        <div class="search-option blue">
+            <svg class="search-option-icon" fill="none" stroke="#1570ef" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+            </svg>
+            <div class="search-option-content">
+                <h4>Click on Add Money (Add Money-এ ক্লিক করুন)</h4>
+                <p>And Enter Valid Code then click on redeem code now.</p>
+            </div>
+        </div>
+
+        <div class="search-option orange">
+            <svg class="search-option-icon" fill="none" stroke="#f79009" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10h.01"/>
+            </svg>
+            <div class="search-option-content">
+                <h4>How to get a top-up code? (টপ-আপ কোড কীভাবে পাবেন?)</h4>
+                <p>উপরে দেওয়া লিংকে ক্লিক করুন।</p>
+            </div>
+        </div>
+
+        <a href="#" target="_blank" class="search-option pink">
+            <svg class="search-option-icon" fill="#f04438" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="12"/>
+                <path fill="#fff" d="M10 8.5l6 3.5-6 3.5V8.5z"/>
+            </svg>
+            <div class="search-option-content">
+                <h4>Watch Video Tutorial</h4>
+                <p>ভিডিও দেখে নিন</p>
+            </div>
+            <svg class="search-option-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
+</div>
 <script>
+
 lucide.createIcons();
 
 // --- VALID TXN CODES DATABASE ---
@@ -299,7 +580,7 @@ const validTxnCodes = {
   "TGCOIN_500000002": 500
 };
 
-// Storage for processed payment IDs to prevent reuse
+// Storage for processed payment IDs
 let usedPaymentIds = JSON.parse(localStorage.getItem('usedPaymentIds') || '[]');
 
 // --- BALANCE SYSTEM ---
@@ -338,7 +619,7 @@ function showCustomAlert(msg, type = 'info') {
   if (type === 'success') {
     toastIcon.setAttribute('data-lucide', 'check-circle-2');
   } else if (type === 'error') {
-    toastIcon.setAttribute('data-lucide', 'alert-circle');
+    toastIcon.setAttribute('data-lucide', 'x-circle');
   } else if (type === 'warning') {
     toastIcon.setAttribute('data-lucide', 'alert-triangle');
   } else {
@@ -352,12 +633,20 @@ function showCustomAlert(msg, type = 'info') {
   }, 3500);
 }
 
-// --- ADD MONEY UI ---
+// --- ADD MONEY UI MODAL ---
 function openAddMoney(){
   document.getElementById('addMoneyPage').classList.add('show');
 }
 function closeAddMoney(){
   document.getElementById('addMoneyPage').classList.remove('show');
+}
+
+// --- TERMS & CONDITIONS MODAL ---
+function openTerms(){
+  document.getElementById('termsPage').classList.add('show');
+}
+function closeTerms(){
+  document.getElementById('termsPage').classList.remove('show');
 }
 
 // --- VERIFY TXN CODE & ADD MONEY ---
@@ -370,12 +659,12 @@ function verifyAndAddMoney(){
   }
 
   if(!paymentId.startsWith("TGCOIN_")){
-    showCustomAlert("Invalid format! TXN ID must start with TGCOIN_", "error");
+    showCustomAlert("Transaction Failed: ID must start with TGCOIN_", "error");
     return;
   }
 
   if(usedPaymentIds.includes(paymentId)){
-    showCustomAlert("This TXN ID has already been redeemed!", "error");
+    showCustomAlert("Transaction Failed: This code has already been redeemed!", "error");
     return;
   }
 
@@ -386,12 +675,12 @@ function verifyAndAddMoney(){
     localStorage.setItem('usedPaymentIds', JSON.stringify(usedPaymentIds));
 
     addCoins(amount);
-    showCustomAlert(`Success! Verified ₹${amount} added to your wallet.`, "success");
+    showCustomAlert(`Success! Added ₹${amount} to your wallet.`, "success");
     
     document.getElementById('paymentIdInput').value = '';
     closeAddMoney();
   } else {
-    showCustomAlert("Invalid or expired TXN ID. Please check and try again.", "error");
+    showCustomAlert("Transaction Failed: Invalid or expired top-up code.", "error");
   }
 }
 
@@ -404,6 +693,39 @@ function closeHelp(e){
     document.getElementById('helpModal').classList.remove('show');
   }
 }
+
+
+
+
+(function(){
+    const openBtn = document.getElementById('openSearchPopup');
+    const overlay = document.getElementById('searchPopupOverlay');
+    const videoBtn = document.getElementById('watchVideoBtn');
+
+    // Open Popup
+    openBtn.addEventListener('click', function(){
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // prevent scroll
+    });
+
+    // Close Popup on overlay click
+    overlay.addEventListener('click', function(e){
+        if(e.target === overlay){
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+  
+
+    // ESC key to close
+    document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && overlay.classList.contains('active')){
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+})();
 </script>
 </body>
 </html>
