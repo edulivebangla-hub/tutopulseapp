@@ -2,465 +2,407 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Payments - TutoGenius</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library</title>
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
+/* ===== LIGHT MODE MODERN SYSTEM ===== */
 :root {
-  --primary: #FFD60A;
-  --primary-dark: #e5be00;
-  --accent: #1e40af;
-  --bg: #f4f6f9;
-  --card-bg: #ffffff;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --radius: 16px;
-  --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    --bg-primary: #fff;
+    --bg-surface: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --accent-blue: #0555E8;
+    --border-light: #E2E8F0;
+    --shadow-soft: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01);
+    --shadow-card: 0 4px 14px 0 rgba(0, 0, 0, 0.04);
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;-webkit-tap-highlight-color: transparent;}
-body{background:var(--bg);color:var(--text-main);display:flex;justify-content:center;min-height:100vh;}
-
-.app-wrapper {
-  width: 100%;
-  max-width: 480px;
-  background: var(--bg);
-  min-height: 100vh;
-  position: relative;
-  box-shadow: 0 0 40px rgba(0,0,0,0.08);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
+a, span, p, h1, h2, h3, h4, h5, h6, div {
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.app-content {
+    width: 100%;
+    overflow-y: auto;
+    background-color: var(--bg-primary);
+    padding: 0px;
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* HEADER (UNTOUCHED) */
 .header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px;background:#fff;position:sticky;top:0;z-index:10;
-  border-bottom:1px solid #f1f5f9;
-}
-.header .left{display:flex;align-items:center;gap:14px;}
-.header .left i{width:22px;height:22px;cursor:pointer;color:var(--text-main);}
-.header h1{font-size: 19px; font-weight: 700; color: var(--text-main);}
-.help-btn{
-  display:flex;align-items:center;gap:6px;border:1px solid #e2e8f0;
-  padding:7px 14px;border-radius:20px;font-size: 13px; font-weight: 600; cursor:pointer;background:#fff;
-  transition: all 0.2s ease;
-}
-.help-btn:active { background: #f8fafc; transform: scale(0.96); }
-.help-btn i{width:16px;height:16px;color: var(--accent);}
-
-.container{padding:18px;}
-.section-title{font-size: 14px; font-weight: 700; margin: 20px 0 10px 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
-
-.card{
-  background:var(--card-bg);border-radius:var(--radius);padding:18px;margin-bottom:14px;
-  box-shadow:var(--shadow); border: 1px solid #f1f5f9;
-}
-.wallet-card {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-.wallet-card::after {
-  content: '';
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 120px;
-  height: 120px;
-  background: rgba(255, 214, 10, 0.1);
-  border-radius: 50%;
-}
-.wallet-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.wallet-icon-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.wallet-header i{width:22px;height:22px;color: var(--primary);}
-.wallet-title{font-size: 15px; font-weight: 600; opacity: 0.9;}
-.low-balance{font-size: 12px; font-weight: 500; color: #fca5a5; margin-top: 2px;}
-.balance{font-size: 32px; font-weight: 800; margin: 12px 0 16px; color: #fff;}
-
-.add-money-btn{
-  border:none; padding:10px 18px; border-radius:30px;
-  display:inline-flex; align-items:center; gap:8px; font-size: 14px; font-weight: 700;
-  cursor:pointer; background: var(--primary); color: #000;
-  transition: transform 0.2s ease;
-}
-.add-money-btn:active { transform: scale(0.96); }
-.add-money-btn i{width:18px;height:18px;}
-
-.option-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 0;border-bottom:1px solid #f1f5f9;cursor:pointer;
-}
-.option-row:last-child{border:none; padding-bottom: 0;}
-.option-row:first-child{padding-top: 0;}
-.option-row:active { opacity: 0.7; }
-.option-left{display:flex;align-items:center;gap:14px;}
-.brand-icon {
-  width: 40px; height: 40px; border-radius: 10px; display: flex;
-  align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
-}
-.paytm-bg { background: #00baf2; color: #fff; }
-.phonepe-bg { background: #5f259f; color: #fff; }
-.gpay-bg { background: #ea4335; color: #fff; }
-.whatsapp-bg { background: #25d366; color: #fff; }
-
-.option-title{font-size: 15px; font-weight: 600; color: var(--text-main);}
-.option-desc{font-size: 12px; font-weight: 500; color: #16a34a; margin-top:2px;}
-.chevron { width: 18px; height: 18px; color: var(--text-muted); }
-
-/* ADD MONEY MODAL */
-.addmoney-page{
-  display:none;position:fixed;inset:0;background:#fff;z-index:100;
-  flex-direction:column; max-width: 480px; margin: 0 auto;
-  animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow-y: auto;
-}
-.addmoney-page.show{display:flex;}
-@keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-.addmoney-header{padding:16px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:14px;}
-.addmoney-header i{width:22px;height:22px;cursor:pointer;}
-.addmoney-header h2{font-size: 18px; font-weight: 700;}
-.addmoney-content{padding:24px 20px;flex:1;}
-
-.step-card {
-  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;
-  padding: 16px; margin-bottom: 20px;
-}
-.step-title {
-  font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
-  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    position: fixed; top: 0; left: 0; width: 100%; height: 50px; background: #0555E8;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+    z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.input-wrapper { position: relative; margin-bottom: 14px; }
-.currency-symbol { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 22px; font-weight: 700; color: var(--text-main); }
-.amount-input{
-  width:100%; padding: 12px 12px 12px 40px; border: 2px solid #e2e8f0; border-radius: 12px;
-  font-size: 22px; font-weight: 800; color: var(--text-main); outline: none;
+/* APPLICATION CONTAINER MAIN */
+.app-container {
+    position: fixed; top: 50px; bottom: 65px; width: 100%; overflow-y: auto;
+    background: var(--bg-primary); scrollbar-width: none; -ms-overflow-style: none;
+    will-change: scroll-position;
 }
-.amount-input:focus { border-color: var(--accent); }
+.app-container::-webkit-scrollbar { display: none; }
 
-.amount-btns{display:flex;gap:8px;justify-content:center;margin-bottom:10px;}
-.amount-btn{
-  flex: 1; border: 1px solid #e2e8f0; padding: 10px 0; border-radius: 10px;
-  font-size: 13px; font-weight: 700; cursor: pointer; background: #fff; text-align: center;
+/* HORIZONTAL STORY/ICON BADGES */
+.quick-nav-card {
+    background: #FFFFFF;
+    border: 1px solid #EEF2F6;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.amount-btn.active { border-color: var(--primary); background: var(--primary); color: #000; }
+.quick-nav-card:active {
+    transform: scale(0.95);
+}
 
-.pay-external-btn {
-  width: 100%; background: #0f172a; color: #fff; border: none; padding: 14px;
-  border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+/* REDESIGNED MAIN CONTENT LAYOUT */
+.main {
+    display: flex;
+    gap: 10px;
+    padding: 0 16px 20px 16px;
 }
-.pay-external-btn:active { opacity: 0.9; }
 
-.payment-id-input {
-  width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px;
-  font-size: 16px; font-weight: 600; outline: none; margin-bottom: 12px; text-transform: uppercase;
+.side {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
-.payment-id-input:focus { border-color: var(--accent); }
 
-.verify-btn {
-  width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
-  border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
+.side button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    background: #FFFFFF;
+    padding: 4px 4px;
+    gap: 12px;
+    border-radius: 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-card);
+    transition: all 0.2s ease;
 }
-.verify-btn:active { background: var(--primary-dark); }
 
-/* HELP MODAL */
-.help-modal{position:fixed;inset:0;background:rgba(15, 23, 42, 0.5);backdrop-filter: blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:200;}
-.help-modal.show{display:flex;}
-.help-box{
-  background:#fff; width:100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px 20px 32px;
-  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.side button img {
+    border-radius: 8px;
+    object-fit: contain;
 }
-@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.help-box h3{font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center;}
-.help-option{
-  display:flex; align-items:center; gap:14px; padding:16px; border-radius:14px;
-  background:#f8fafc; margin-bottom:12px; cursor:pointer; text-decoration:none; color:var(--text-main);
-  border: 1px solid #f1f5f9;
+
+.side button:hover {
+    background: #FFFFFF;
+    color: var(--text-primary);
 }
-.help-option i{width:22px;height:22px;color: var(--accent);}
-.help-option .text h4{font-size: 15px; font-weight: 600;}
-.help-option .text p{font-size: 13px; color: var(--text-muted); margin-top:2px;}
+
+.side button.active {
+    color: #0555E8;
+    font-weight: 700;
+    border-color: rgba(5, 85, 232, 0.25);
+    background: linear-gradient(135deg, rgba(5, 85, 232, 0.08) 0%, rgba(5, 85, 232, 0.02) 100%);
+    box-shadow: 0 4px 12px rgba(5, 85, 232, 0.08);
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.exam-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.exam-card-wrapper {
+    display: block;
+}
+
+.exam {
+    background: #FFFFFF;
+    border: 1px solid #F1F5F9;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.exam:hover, .exam-card-wrapper:active .exam {
+    
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    border-color: #E2E8F0;
+}
+
+.exam img {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 8px;
+    display: block;
+    object-fit: contain;
+    border-radius: 10px;
+    padding: 2px;
+    background: #F8FAFC;
+}
+
+.exam h3 {
+    font-size: 11.5px;
+    color: var(--text-primary);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 2px;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media(max-width: 768px){
+    .main { 
+        flex-direction: column; 
+        gap: 14px;
+        padding: 0 12px 20px 12px;
+    }
+    .side { 
+        width: 100%; 
+        display: flex; 
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scroll-snap-type: x mandatory;
+    }
+    .side button { 
+        min-width: 155px; 
+        white-space: nowrap;
+        scroll-snap-align: start;
+        padding: 10px 14px;
+    }
+    .exam-grid { 
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+}
+
+@media(max-width: 480px){
+    .exam-grid { 
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+    .exam {
+        padding: 4px 6px;
+    }
+    .exam img {
+        width: 40px;
+        height: 40px;
+    }
+    .exam h3 {
+        font-size: 10.5px;
+    }
+}
+
+/* BOTTOM NAV (UNTOUCHED) */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:65px;background:#fff;
+  display:flex;justify-content:space-around;align-items:center;
+  border-top:1px solid #e5e7eb;box-shadow:0 -2px 10px rgba(0,0,0,.05);z-index:9
+}
+.nav-item{
+  flex:1;text-align:center;text-decoration:none;color:#888;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font:500 11px Segoe UI;
+  transition: color 0.2s;
+}
+.nav-item i{width:24px;height:24px;stroke:#888;stroke-width:2;transition: stroke 0.2s;}
+.nav-item.active{color:#3b49df}
+.nav-item.active i{stroke:#3b49df}
+.nav-item .icon-bg{padding:4px 10px;border-radius:12px;transition: background 0.2s;}
+.nav-item.active .icon-bg{background:#eef2ff}
 </style>
 </head>
 <body>
 
-<div class="app-wrapper">
-  <!-- MAIN PAGE -->
-  <div id="mainPage">
-    <header class="header">
-      <div class="left">
-        <i data-lucide="arrow-left" onclick="window.history.back()"></i>
-        <h1>Payments</h1>
-      </div>
-      <div class="help-btn" onclick="openHelp()">
-        <i data-lucide="help-circle"></i> Help
-      </div>
-    </header>
+<!-- UNTOUCHED HEADER -->
+<div class="header">
+ <h3 style="color: #fff; display: flex; font-size: 16px; font-weight: 700;">Library </h3><i data-lucide="book-open" style="width: 20px; height: 20px; color: #fff;"></i>
+</div>
 
-    <div class="container">
-      <h2 class="section-title">Wallets</h2>
-      <div class="card wallet-card">
-        <div class="wallet-header">
-          <div class="wallet-icon-box">
-            <i data-lucide="wallet"></i>
-          </div>
-          <div>
-            <div class="wallet-title">TutoGenius Wallet</div>
-            <div class="low-balance" id="lowBalanceText">Low Balance: ₹0</div>
-          </div>
+<main class="app-container">
+    <div class="p-2 space-y-4">
+        <!-- TOP CATEGORIES SLIDER -->
+        <div class="flex overflow-x-auto hide-scrollbar gap-3 py-1">
+            <a href="#" class="flex flex-col items-center min-w-[76px] text-center space-y-1.5 group">
+                <div class="w-14 h-14 quick-nav-card flex items-center justify-center p-2.5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/8750/8750754.png" alt="Study" class="w-full h-full object-contain">
+                </div>
+                <p class="text-[12px] font-semibold text-slate-700 tracking-tight">Study নোটস</p>
+            </a>
+            <a href="#" class="flex flex-col items-center min-w-[76px] text-center space-y-1.5 group">
+                <div class="w-14 h-14 quick-nav-card flex items-center justify-center p-2.5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/747/747086.png" alt="Study" class="w-full h-full object-contain">
+                </div>
+                <p class="text-[12px] font-semibold text-slate-700 tracking-tight">HS নোটস</p>
+            </a>
+            <a href="#" class="flex flex-col items-center min-w-[76px] text-center space-y-1.5 group">
+                <div class="w-14 h-14 quick-nav-card flex items-center justify-center p-2.5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/8750/8750743.png" alt="Study" class="w-full h-full object-contain">
+                </div>
+                <p class="text-[12px] font-semibold text-slate-700 tracking-tight">Exam প্রস্তুতি</p>
+            </a>
+            <a href="#" class="flex flex-col items-center min-w-[76px] text-center space-y-1.5 group">
+                <div class="w-14 h-14 quick-nav-card flex items-center justify-center p-2.5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1081/1081025.png" alt="Study" class="w-full h-full object-contain">
+                </div>
+                <p class="text-[12px] font-semibold text-slate-700 tracking-tight">সিলেবাস</p>
+            </a>
+            <a href="#" class="flex flex-col items-center min-w-[76px] text-center space-y-1.5 group">
+                <div class="w-14 h-14 quick-nav-card flex items-center justify-center p-2.5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/13906/13906210.png" alt="Study" class="w-full h-full object-contain">
+                </div>
+                <p class="text-[12px] font-semibold text-slate-700 tracking-tight">Demo</p>
+            </a>
         </div>
-        <div class="balance">₹<span id="balance">0</span></div>
-        <button class="add-money-btn" onclick="openAddMoney()">
-          <i data-lucide="plus"></i> Add Money
-        </button>
-      </div>
 
-      <h2 class="section-title">Pay via Any UPI App</h2>
-      <div class="card">
-        <div class="option-row" onclick="openAddMoney()">
-          <div class="option-left">
-            <div class="brand-icon paytm-bg">Paytm</div>
-            <div>
-              <div class="option-title">Paytm</div>
-              <div class="option-desc">Pay & Enter Payment ID</div>
+        <!-- ACTION BANNERS -->
+        <div class="grid grid-cols-2 gap-3.5">
+            <a href="#" class="relative overflow-hidden bg-gradient-to-br from-[#0555E8] to-[#1E40AF] p-3.5 rounded-2xl shadow-sm active:scale-95 transition-all duration-200 block border border-blue-400/20">
+                <div class="flex items-center gap-2.5 text-white mb-1">
+                    <div class="p-1.5 bg-white/10 rounded-lg backdrop-blur-md">
+                        <i data-lucide="book-open" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="text-[15px] font-bold tracking-tight">Free Library</span>
+                </div>
+                <p class="text-blue-100 text-[11px] font-medium opacity-90 pl-0.5">Study Resources</p>
+            </a>
+            <a href="#" class="relative overflow-hidden bg-gradient-to-br from-[#E11D48] to-[#9333EA] p-3.5 rounded-2xl shadow-sm active:scale-95 transition-all duration-200 block border border-rose-400/20">
+                <div class="flex items-center gap-2.5 text-white mb-1">
+                    <div class="p-1.5 bg-white/10 rounded-lg backdrop-blur-md">
+                        <i data-lucide="lock" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="text-[15px] font-bold tracking-tight">Premium PDF</span>
+                </div>
+                <p class="text-pink-100 text-[11px] font-medium opacity-90 pl-0.5">Paid & Exclusive</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN EXAM CATEGORIES & GRID -->
+    <div class="main">
+        <div class="side hide-scrollbar">
+            <button class="active" onclick="showCat('entrance',this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/1081/1081015.png" width="22" height="22" alt="Entrance">
+                <span>Entrance Exams</span>
+            </button>
+            <button onclick="showCat('jobs',this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/3985/3985018.png" width="22" height="22" alt="Jobs">
+                <span>Govt Jobs</span>
+            </button>
+            <button onclick="showCat('career',this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/3645/3645444.png" width="22" height="22" alt="Career">
+                <span>Career Courses</span>
+            </button>
+        </div>
+        <div class="content">
+            <!-- ENTRANCE EXAMS -->
+            <div id="entrance" class="cat">
+                <div class="exam-grid">
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsHA5meJEeOF_lloB4lisr6iB5z5yD-h313E7ytk1T490ZQffPM5pe2sHO73UhrXZz7HcyV_lq4hIZJBViFz7qbJ5H4kIbZ98bfyMDAbQnLd-qBJeCPaeZBUmKNs7-x_sC1_4Q62HCMuO2jDaF0tL27ossE3NTpS_HNVG-VNzkOoylhQcDzAO1vaHmDBfl/s920/1000138821.jpg" alt="WBJEE"><h3>WBJEE</h3></div></a>
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBmUzkAmmjeOoeEt0kMLDxeAcms94UVl4aPryXb-EJbtkWWLtP_5WNpQxHIqtbGdIn2lmBxAYwW5vOE89FsDRyX_OIawyfFKIA9gt6MLbh-cSxmKih7VYisBJ4jY1WFaDPOf5WvDexsWYdRwrnMvE9lsMg4lq5qeqOO12J_CXyRwUPkc3z6oZaFkWF8mZm/s716/1000138822.jpg" alt="NDA"><h3>NDA EXAM</h3></div></a>
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCazhP8e82delOVHkLsxjSCx5W8RUPBvedlqFUj-H3lh9JkYmmh1TBE3mbbuE9QzYKTVLgdEcSPJifwvu-l2JmOeBDaAzvUbQhuHYMNGLZ9uvSJlV-HXQez-xMPaZXGJDvBrs0Vkky69XwLyQzrifAPF3L4OYAUSRwEvcfdrESov9s_QR9Z8sGLE_fffd7/s688/1000138823.jpg" alt="IIT"><h3>IIT JEE</h3></div></a>
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyShszajxpSPYArknvI8S1p7mgX1ewTLWiYod5ZWt51sl2bhgRBwiPshyphenhyphenqXpHMR1QaWH5735rujVUs9RkqUvxC0e4i6sdXGTVCk-iuQ6qtNQHHtRuIOlU9BXqLU7fK04pRx8UqG6fi3N9j-QiAf8BSOLdc27sJgafg1KApJYRZ6E9KLnpHSQWGoXcfN5Ru/s680/1000138824.jpg" alt="ANM"><h3>ANM-GNM</h3></div></a>
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhva3xSXw545ycfRzkPEsoxLq0r_2l74rW9shTQtMbpp-7WTMJeMoc0s_MEZwehC-x6blkZJsGpIlxrbdvMlaR15O3aJhSwvSLAZbrtbqU9Hfsr0S7TeRJwjSU-56eP5uCjmbTIt8EY-zPCe0QYSbvvXZaQYjlqMw44JqyfFXvK9JX_W49R__VdBJiy5Dlk/s716/1000138825.jpg" alt="JENPAS"><h3>JENPAS UG</h3></div></a>
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgy_4nn-QFarLOgbYfUxRUQCoS8OVNrEtp6gxe4djIY8O8Z0hWLl8w_M8uz7qstNxfiBRQC6C1xYb-o1Ra04zCGZ-h1rIdZd3dwn1plCBwT2XthfNyPzRSEWQlQiFw2UBL0FFSSIDCgVGL8a6SG3k2zhhC0W2uwCIYa-RwdAkvOQqv1O5r3nQpWqatRPx7k/s716/1000138826.jpg" alt="SMFWB"><h3>SMFWB</h3></div></a>
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi1lftDc4WPkNRSqokx5_CFW17zRnhGtzs7RLb6JCT2evXIbEDx7tdvs0lxc-dNepp3C97foLeFwTYOvU3muPF-sSZSzkUyKTRv4QpyB3sh4pmlNOgODHQoEZcfuc_vowqEHvNm1BSiSNp7tYo3NLhAY_rAodErs6uOZCyWo6_tMcm8T7soYWy3Ap74uux4/s756/1000138827.jpg" alt="MAKAUT"><h3>MAKAUT CET</h3></div></a>
+                   <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5OM_q5-eaRrs_BY9oFFeYXiI3AXBjBiPhELj-19DIIzTyXbfV91RAIjBE7zOArydbmoJKOYWIcNv9OcL_nDgZsixRax_KoYL7dvktoM8dV1ysb-VhM3SJXqwYKmtn28rP6D2yLXELs-DndijkGPgRlu8OpyP38VJEsaqai1IR6x57BopDUA5m5-73y97t/s716/1000138828.jpg" alt="NEET"><h3>NEET UG</h3></div></a>
+                </div>
             </div>
-          </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
-        </div>
-        
-        <div class="option-row" onclick="openAddMoney()">
-          <div class="option-left">
-            <div class="brand-icon phonepe-bg">Pe</div>
-            <div class="option-title">PhonePe</div>
-          </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
-        </div>
 
-        <div class="option-row" onclick="openAddMoney()">
-          <div class="option-left">
-            <div class="brand-icon gpay-bg">GPay</div>
-            <div class="option-title">Google Pay</div>
-          </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
-        </div>
+            <!-- GOVT JOBS -->
+            <div id="jobs" class="cat" style="display:none">
+                <div class="exam-grid">
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi69FmO9MTnABZ6rri4gp1lB7qCb8svnImRtnccx36QHGmb_RZrnuSG6g1aNygbqkrydUTwn6q2wMBiYXd1HctNkwpATLtA8oHSynqOGrH75kRkiksiayUAyOUlAFBnGDznTFL304fmTtQCDee9PQFfm7qm2SmWRPBVtfMrFyUVF-CbXjdkkS3oNNf11eJr/s676/1000138845.jpg" alt="Govt Job"><h3>Govt Job</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgZSQ5c2PQ-uUu1nfM9l-xydCOYUfkfh_vo3GKdB8hqUebMwZ2Hao_swhp8ky4cD4ATkrnFkMneatCckvbkp9u3BPoy1XgZG5iZj_QsNfZxcz8EQvAEaZIXIpwc7SY9iIX2gqhTgmt0lIAzuS3Dux125RkkjgrQkkD5R4j47nupeJK6eMB5Lw9N4-eMCRmY/s496/1000138846.jpg" alt="UPSC"><h3>UPSC</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4J4H1K5yseJdKI6d915CbgsODfNRYLSaJ3PBYApNISrKbnBIWLPZacdXT6CVWGnUj57PlrE22rNMFiAcLSN3tsEzjvXc7-FKuMtbYT9xac-Eg3U_9rAbbpPLo9U1Cr74s8jee4vk8dAPlS1b5n9jAJ80nubSNTvN0Omim8D7xbKZCjUdPOCYuK6aBP4UQ/s588/1000138847.jpg" alt="WBPSC"><h3>WBPSC</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_EMitjzRh7aS1xM1tF9ucaGgblQL9xEfhkU-49PZFxoADKSj0v1ST8WX3Uprys_UCOiE7LHQUjhgCaFH2UiOJKfs-eNp64RfkwtzW658d64tE3Fb5OAsXC-joefPXBpFmw9XpHaGozGm8_f9SbxBHr38iRcX67OTzJXFlhpArGkFusBmwZr5KSaXhaKtC/s384/1000138848.jpg" alt="SSC"><h3>SSC</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh7N0MYAMGA689g7I-YwNOoPvDHHv_XSjD513XDEIfwGho1FeHhllmzJkPwnExh_qSuocZJIqgEWzRxe-D13ygA5tCi-VoEGbUWGv25qLmpid7LKGVbgrJI3tiT27JjORfIn27EwJ-8gFhfc_oXY_oZ0sEqGJ6sis3lD99iirNRn5eRy8HWOVSlG4Zt9ga1/s656/1000138849.jpg" alt="Defence"><h3>Defence</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhx7onx1qJLmSQRqtfMWtmeqrKPSp1y6GEIOm3ywmI8QpNNJ3Yt9IINi9ub9Bv-SD-Ycs2kjh_F9a6OA_X7QKwDxhdu4yIByPGKkWM4rrawu-tKDA3ALdV5Fi8TSLl7LEGqQA-Ieyw7Bqkja-2q7QGKJDcGsRaqvW0qh3mGMxsAEoOFDPv6O_SgYEo5J0B7/s712/1000138850.jpg" alt="Police"><h3>Police</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhn91JFfoVdvyhVktbttwFN9_diqSCDSyyXnClw__AFpQQRfz7UB_xqcSDyApyn-4TY3NUc8ss4mMqMDZNmfeQXFEsTi0btUA1n3xDDe_KIUBCxjvRs3agLtOhH8hR88aP2vg2gpilI4fK3weSaMSBnOqrP82RyHJ1iImMdKpl5M45xYf2y1wirk7XRQtxn/s664/1000138851.jpg" alt="Railway"><h3>Railway</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUeP5qpHHlkJ8cS5tZKMJwuQ0CQvQ5sTGaLdpPX1szUGKFW560BHoWg8Uqui2t1DUWBRXY1QP59lDA-l_ab9T0WSIoN80qbIjfHk0dUYpS6nja9fdtJVSUQ8U7XGHm0zl4kEOfz2Gu21Fnh_GZ0dw3GTQ80Rf8lE1feiSQwXSaAI3LHpWpJbwWoCMcLZWE/s504/1000138852.jpg" alt="Banking"><h3>Banking</h3></div></a>
+                </div>
+            </div>
 
-        <div class="option-row" onclick="openAddMoney()">
-          <div class="option-left">
-            <div class="brand-icon whatsapp-bg">WA</div>
-            <div class="option-title">WhatsApp Pay</div>
-          </div>
-          <i data-lucide="chevron-right" class="chevron"></i>
+            <!-- CAREER COURSES -->
+            <div id="career" class="cat" style="display:none">
+                <div class="exam-grid">
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUfxftBo7qMHYeD7RbAPxr1a2E6DaB4Oc7r0PkSD1FyV9KRISc6XB1hzLGZJpMPRvOY9LFf-gfR1htkrAqANuwL2cGaCx3lCoOQGHK5zQffsjZMvQ3NNr7fwc7YTK38f7_uwPgbEpyNUDNnF8vqnJKZ-ZBIe_fARu5uIWcjFMCpxo_WxJUYGuHZJ8vpjkh/s664/1000138869.jpg" alt="Polytechnic"><h3>Polytechnic</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdwFG4OBLFwEn2lDfQYjrmQKOZtCUHmVFm_6e_FKlgnKC2ATnEJS1tCg_S0WoakqpahXfZ4N1vZ9iXSBbq6_dw5rcvboOGD4o6TbJIitIrBHb9t1WY9fjLMrf2lk9urQUHsXE39izO9yrF7Yd1UIGL_dXSkzyD-jp-ml7T7rc8keb10gyHMhkE4t6eodjv/s576/1000138870.jpg" alt="Nursing"><h3>Nursing</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhLvdFqBSfjniCUVFDLuSjsPV3FpHAKQ5RWM8zSV42-PhuhKbCaydFl07GlHwjeKUxXTjfilr4QWvF73NOR9PPYI5nRTaIYy-HGxQY5QKcsk7Z5ofVPMGryOvQL7ToxgB5Nt7cqQXu5IdY0c6Mu5vb0iJ-UB64ZiDg4NKPgfmX6PeIAJdPlUg4wQO3WZw97/s680/1000138871.jpg" alt="Paramedical"><h3>Paramedical</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKcLVNYTRh0Btoz-ijqLv5vRzzCzV0Nln8haBANpcBDFi9QJ_JYArX-cwuyudvfn1ZlfhivixPYit60UFSoC1cK627F_VpAx7oAlWvgGC3iYPRYu815hZDt4mfMDYkT8wfZacrf9b2wkboVeFJJDLceXgaU3-BR04R1CCWGEngTMmNbiSr81Vy87OLjC5C/s632/1000138872.jpg" alt="Medical"><h3>Medical</h3></div></a>
+                    <a href="#" class="exam-card-wrapper"><div class="exam"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZk6XKmAmaKh1XnHMWX4yEVjN3sQXrPtgqbSCCFeqHNi9cFUXDViKI09BeQiHxWXu5XD9tAV7yxgxyq-SJgcdHjfKPIm6T2FMKWcYMJ2jRz6Yfw-9hvExGqSOaStVQOjqAPKA8cgTXrztOD5j8abCJSWbzq63pRSoHVgY5OFTWPN_SUtUX9P21-7P71Rlv/s644/1000138873.jpg" alt="Engineering"><h3>Engineering</h3></div></a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</main>
 
-  <!-- ADD MONEY PAGE -->
-  <div class="addmoney-page" id="addMoneyPage">
-    <div class="addmoney-header">
-      <i data-lucide="arrow-left" onclick="closeAddMoney()"></i>
-      <h2>Add Money to Wallet</h2>
-    </div>
-    
-    <div class="addmoney-content">
-      
-      <!-- STEP 1: PAYMENT SELECTION -->
-      <div class="step-card">
-        <div class="step-title">
-          <i data-lucide="1-circle"></i> Step 1: Select Amount & Pay
-        </div>
-        <div class="input-wrapper">
-          <span class="currency-symbol">₹</span>
-          <input type="number" id="amountInput" class="amount-input" placeholder="100" value="100">
-        </div>
-        <div class="amount-btns">
-          <div class="amount-btn active" onclick="setAmount(100, this)">+ ₹100</div>
-          <div class="amount-btn" onclick="setAmount(200, this)">+ ₹200</div>
-          <div class="amount-btn" onclick="setAmount(500, this)">+ ₹500</div>
-        </div>
-        <button class="pay-external-btn" onclick="openRazorpayPayment()">
-          <i data-lucide="external-link"></i> Pay with Razorpay
-        </button>
-      </div>
-
-      <!-- STEP 2: VERIFICATION -->
-      <div class="step-card">
-        <div class="step-title">
-          <i data-lucide="2-circle"></i> Step 2: Enter Razorpay Payment ID
-        </div>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-          After finishing the payment, copy the <strong>Payment ID</strong> (starts with <code>pay_</code>) from Razorpay and paste it below:
-        </p>
-        <input type="text" id="paymentIdInput" class="payment-id-input" placeholder="e.g. pay_P1x2y3z4a5b6">
-        <button class="verify-btn" onclick="verifyAndAddMoney()">
-          <i data-lucide="check-circle"></i> Verify & Add Money
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- HELP MODAL -->
-  <div class="help-modal" id="helpModal" onclick="closeHelp(event)">
-    <div class="help-box" onclick="event.stopPropagation()">
-      <h3>Need Support?</h3>
-      <a href="https://wa.me/919332466756" target="_blank" class="help-option">
-        <i data-lucide="message-circle"></i>
-        <div class="text">
-          <h4>WhatsApp Support</h4>
-          <p>+91 9332466756</p>
-        </div>
-      </a>
-      <a href="mailto:admin.tutogenius@gmail.com" target="_blank" class="help-option">
-        <i data-lucide="mail"></i>
-        <div class="text">
-          <h4>Email Support</h4>
-          <p>admin.tutogenius@gmail.com</p>
-        </div>
-      </a>
-    </div>
-  </div>
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="home.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="home"></i></div>
+    <span>Home</span>
+  </a>
+  <a href="courses.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
+    <span>Courses</span>
+  </a>  
+<a href="#" class="nav-item active">
+    <div class="icon-bg"><i data-lucide="book-open"></i></div>
+    <span>Library</span>
+  </a>
+  <a href="profile.html" class="nav-item">
+    <div class="icon-bg"><i data-lucide="user"></i></div>
+    <span>Profile</span>
+  </a>
 </div>
 
 <script>
-lucide.createIcons();
+    lucide.createIcons();
 
-// --- CONFIGURATION ---
-const RAZORPAY_KEY = "rzp_live_TB2Tex3fIBoKuX"; // Your Razorpay Key
-
-// Storage for processed payment IDs to prevent reuse
-let usedPaymentIds = JSON.parse(localStorage.getItem('usedPaymentIds') || '[]');
-
-// --- BALANCE SYSTEM ---
-let balance = parseInt(localStorage.getItem('coinBalance') || '0');
-const balanceEl = document.getElementById('balance');
-const lowBalanceEl = document.getElementById('lowBalanceText');
-
-function updateBalanceUI(){
-  balanceEl.textContent = balance;
-  if(balance < 100) {
-    lowBalanceEl.textContent = `Low Balance: ₹${balance}`;
-    lowBalanceEl.style.color = '#fca5a5';
-  } else {
-    lowBalanceEl.textContent = `Active Balance: ₹${balance}`;
-    lowBalanceEl.style.color = '#86efac';
-  }
-}
-updateBalanceUI();
-
-function addCoins(amount) {
-  balance += parseInt(amount);
-  localStorage.setItem('coinBalance', balance);
-  updateBalanceUI();
-}
-
-// --- ADD MONEY UI ---
-function openAddMoney(){
-  document.getElementById('addMoneyPage').classList.add('show');
-}
-function closeAddMoney(){
-  document.getElementById('addMoneyPage').classList.remove('show');
-}
-function setAmount(amt, el){
-  document.getElementById('amountInput').value = amt;
-  document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
-  if(el) el.classList.add('active');
-}
-
-// --- STEP 1: OPEN RAZORPAY ---
-function openRazorpayPayment(){
-  const amount = parseInt(document.getElementById('amountInput').value);
-  if(!amount || amount < 1){
-    alert("Please enter a valid amount");
-    return;
-  }
-
-  // 1. First attempt native Razorpay Popup
-  var options = {
-    "key": RAZORPAY_KEY,
-    "amount": amount * 100,
-    "currency": "INR",
-    "name": "TutoGenius",
-    "description": "Wallet Add Money",
-    "image": "https://i.ibb.co/3RwZ0kM/class11-arts.jpg",
-    "handler": function (response){
-        // Auto-fill the Payment ID if handler works inside browser
-        if(response.razorpay_payment_id) {
-          document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
-          alert("Payment successful! Your Payment ID has been filled automatically. Now click 'Verify & Add Money'.");
-        }
-    },
-    "prefill": {
-        "name": "TutoGenius User",
-        "email": "user@tutogenius.com"
-    },
-    "theme": { "color": "#FFD60A" }
-  };
-
-  try {
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-  } catch(e) {
-    // 2. Fallback for WebViews / APKs: Open standard external checkout link
-    window.open(`https://razorpay.com/pay/`, '_system');
-  }
-}
-
-// --- STEP 2: VERIFY PAYMENT ID ---
-function verifyAndAddMoney(){
-  const paymentId = document.getElementById('paymentIdInput').value.trim();
-  const amount = parseInt(document.getElementById('amountInput').value) || 100;
-
-  // Validation rules
-  if(!paymentId) {
-    alert("Please enter your Razorpay Payment ID");
-    return;
-  }
-
-  // Check valid Payment ID format (e.g. pay_XXXXXX or minimum 10 characters)
-  if(paymentId.length < 10) {
-    alert("Invalid Payment ID format. Please check and try again.");
-    return;
-  }
-
-  // Prevent duplicate usage of the same payment ID
-  if(usedPaymentIds.includes(paymentId)) {
-    alert("This Payment ID has already been redeemed!");
-    return;
-  }
-
-  // Successfully Add Money
-  usedPaymentIds.push(paymentId);
-  localStorage.setItem('usedPaymentIds', JSON.stringify(usedPaymentIds));
-
-  addCoins(amount);
-  alert(`Success! Payment ID verified. ₹${amount} added to your wallet.`);
-  
-  // Reset Form & Close Modal
-  document.getElementById('paymentIdInput').value = '';
-  closeAddMoney();
-}
-
-// --- HELP MODAL ---
-function openHelp(){
-  document.getElementById('helpModal').classList.add('show');
-}
-function closeHelp(e){
-  if(!e || e.target.id === 'helpModal'){
-    document.getElementById('helpModal').classList.remove('show');
-  }
-}
+    function showCat(id, btn) {
+        document.querySelectorAll('.cat').forEach(c => c.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.side button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
 </script>
 </body>
 </html>
