@@ -68,7 +68,7 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
   <p>Your TGCOIN Code:</p>
   <div class="code-box" id="codeShow"></div>
   <p style="color:var(--muted);font-size:13px">Amount: ₹<span id="amtShow"></span></p>
-  <a id="waBtn" class="whatsapp-btn" target="_blank">Share on WhatsApp</a>
+  <a id="waBtn" class="whatsapp-btn" target="_blank">Submit For Verification</a>
   <br><button class="btn" style="margin-top:12px;background:#334155" onclick="closeSuccess()">Close</button>
 </div>
 
@@ -128,7 +128,7 @@ function startRazorpay(amount, code){
     key: "rzp_live_TI1dFwgtX10E02", // Your Live Key
     amount: amount * 100, // in paise
     currency: "INR",
-    name: "TGCOIN",
+    name: "TutoGenius",
     description: "TGCOIN Recharge",
     handler: function (response){
       showSuccess(code, amount);
