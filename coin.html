@@ -6,41 +6,41 @@
 <title>Payments - TutoGenius</title>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
+  :root {
+    --primary: #FFD60A;
+    --primary-hover: #e5be00;
+    --accent: #0555E8;
+    --accent-dark: #0342b8;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --radius: 20px;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.08);
+    --shadow-lg: 0 20px 30px -10px rgba(0,0,0,0.15);
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --border-color: #e2e8f0;
+  }
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
-    -webkit-user-drag: none;
     -webkit-tap-highlight-color: transparent;
   }
 
   a, span, p, h1, h2, h3, h4, h5, h6, div {
     text-decoration: none;
   }
-  
-  :root {
-    --primary: #FFD60A;
-    --primary-dark: #e5be00;
-    --accent: #0555E8;
-    --accent-hover: #0342b8;
-    --bg: #fff;
-    --card-bg: #ffffff;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --radius: 16px;
-    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-    --danger: #ef4444;
-    --success: #22c55e;
-    --whatsapp: #25D366;
-  }
 
   body {
-    background: #e2e8f0;
+    background: #cbd5e1;
     color: var(--text-main);
     display: flex;
     justify-content: center;
@@ -53,8 +53,8 @@
     background: var(--bg);
     min-height: 100vh;
     position: relative;
-    padding-bottom: 30px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.1);
+    padding-bottom: 90px;
+    box-shadow: var(--shadow-lg);
   }
 
   /* HEADER */
@@ -62,95 +62,116 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
-    background: var(--accent);
+    padding: 6px 18px;
+    background: #0555E8;
     position: sticky;
     top: 0;
     z-index: 10;
-    box-shadow: 0 2px 10px rgba(5, 85, 232, 0.2);
+    box-shadow: 0 4px 15px rgba(5, 85, 232, 0.25);
   }
-  .header .left { display: flex; align-items: center; gap: 12px; color: #fff; }
-  .header .left i { width: 22px; height: 22px; cursor: pointer; color: #fff; }
-  .header h1 { font-size: 18px; font-weight: 700; color: #fff; }
-  .header .right-actions { display: flex; align-items: center; gap: 8px; }
-  
+  .header .left { display: flex; align-items: center; gap: 14px; color: #fff; }
+  .header .left i { width: 22px; height: 22px; cursor: pointer; stroke-width: 2.5; }
+  .header h1 { font-size: 19px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+
   .icon-btn {
     display: flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15); color: #fff;
-    cursor: pointer; transition: all 0.2s ease;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18); color: #fff;
+    cursor: pointer; backdrop-filter: blur(5px);
+    transition: all 0.2s ease;
   }
   .icon-btn:active { background: rgba(255, 255, 255, 0.3); transform: scale(0.92); }
   .icon-btn i { width: 20px; height: 20px; }
 
-  .container { padding: 18px; }
+  .container { padding: 20px 18px; }
+  
   .section-title {
-    font-size: 12px; font-weight: 700; margin: 16px 0 10px 4px;
-    color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 12px; font-weight: 800; margin: 20px 0 10px 4px;
+    color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
   }
 
   /* WALLET CARD */
   .card {
-    background: var(--card-bg); border-radius: var(--radius); padding: 20px;
-    margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid #f1f5f9;
+    background: var(--card-bg); border-radius: var(--radius); padding: 22px;
+    margin-bottom: 16px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);
   }
   .wallet-card {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: linear-gradient(140deg, #1e293b 0%, #0f172a 100%);
     color: #fff; position: relative; overflow: hidden; border: none;
   }
-  .wallet-card::after {
-    content: ''; position: absolute; right: -20px; bottom: -20px;
-    width: 130px; height: 130px; background: var(--primary);
-    border-radius: 50%; opacity: 0.15; pointer-events: none;
+  .wallet-card::before {
+    content: ''; position: absolute; right: -30px; top: -30px;
+    width: 150px; height: 150px; background: rgba(255, 214, 10, 0.12);
+    border-radius: 50%; pointer-events: none;
   }
-  .wallet-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .wallet-card::after {
+    content: ''; position: absolute; right: -10px; bottom: -40px;
+    width: 140px; height: 140px; background: rgba(5, 85, 232, 0.2);
+    border-radius: 50%; pointer-events: none;
+  }
+  
+  .wallet-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
   .wallet-icon-box {
     background: rgba(255, 255, 255, 0.1); padding: 10px;
-    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
   }
   .wallet-header i { width: 22px; height: 22px; color: var(--primary); }
-  .wallet-title { font-size: 15px; font-weight: 600; opacity: 0.9; }
-  .low-balance { font-size: 12px; font-weight: 500; color: #fca5a5; margin-top: 2px; }
-  .balance { font-size: 34px; font-weight: 800; margin: 10px 0 18px; color: #fff; letter-spacing: -0.5px; }
+  .wallet-title { font-size: 14px; font-weight: 600; opacity: 0.85; }
+  .low-balance { font-size: 12px; font-weight: 600; color: #fca5a5; margin-top: 2px; }
+  
+  .balance { font-size: 38px; font-weight: 800; margin: 12px 0 20px; color: #fff; letter-spacing: -0.8px; }
 
   .add-money-btn {
-    border: none; padding: 12px 20px; border-radius: 30px;
+    border: none; padding: 13px 22px; border-radius: 50px;
     display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700;
     cursor: pointer; background: var(--primary); color: #000;
-    box-shadow: 0 4px 12px rgba(255, 214, 10, 0.3); transition: transform 0.2s ease;
+    box-shadow: 0 4px 14px rgba(255, 214, 10, 0.35); transition: all 0.2s ease;
   }
-  .add-money-btn:active { transform: scale(0.96); }
-  .add-money-btn i { width: 18px; height: 18px; }
+  .add-money-btn:active { transform: scale(0.96); background: var(--primary-hover); }
+  .add-money-btn i { width: 18px; height: 18px; stroke-width: 2.5; }
 
-  /* MAIN BUTTONS GRID */
-  .action-buttons-grid {
-    display: flex; flex-direction: column; gap: 12px; margin-top: 10px;
-  }
+  /* QUICK ACTIONS GRID */
+  .action-buttons-grid { display: flex; flex-direction: column; gap: 12px; }
+  
   .action-btn {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 18px; border-radius: var(--radius); font-size: 15px;
-    font-weight: 700; border: none; cursor: pointer; transition: all 0.2s ease;
-    box-shadow: var(--shadow); text-align: left;
+    padding: 16px 20px; border-radius: var(--radius); font-size: 15px;
+    font-weight: 700; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm); background: #ffffff; text-align: left;
   }
-  .action-btn:active { transform: scale(0.98); }
-  .action-btn .btn-content { display: flex; align-items: center; gap: 12px; }
-  .action-btn .btn-content i { width: 22px; height: 22px; }
+  .action-btn:active { transform: scale(0.98); background: #f8fafc; }
+  .action-btn .btn-content { display: flex; align-items: center; gap: 14px; }
+  .action-btn .btn-content i { width: 20px; height: 20px; }
 
-  .btn-topup {
-    background: #ffffff; color: var(--accent); border: 1.5px solid #e2e8f0;
-  }
+  .btn-topup { color: var(--accent); }
   .btn-topup .icon-wrapper {
-    background: #eff6ff; padding: 8px; border-radius: 10px; display: flex; color: var(--accent);
+    background: #eff6ff; padding: 10px; border-radius: 12px; display: flex; color: var(--accent);
   }
 
-  .btn-whatsapp {
-    background: #10b981; color: #ffffff;
-  }
+  .btn-whatsapp { color: #0f172a; }
   .btn-whatsapp .icon-wrapper {
-    background: rgba(255, 255, 255, 0.2); padding: 8px; border-radius: 10px; display: flex; color: #fff;
+    background: #ecfdf5; padding: 10px; border-radius: 12px; display: flex; color: var(--success);
   }
 
-  /* MODALS / OVERLAYS */
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 480px; height: 75px; background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center;
+    z-index: 90; border-top: 1px solid var(--border-color); padding: 0 16px;
+  }
+
+  .how-to-search-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 10px 10px; border: 1.5px solid var(--accent); border-radius: 50px;
+    background: #eff6ff; color: var(--accent); font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s ease; box-shadow: var(--shadow-sm);
+  }
+  .how-to-search-btn:active { transform: scale(0.98); background: #dbeafe; }
+  .how-to-search-btn i { width: 18px; height: 18px; stroke-width: 2.5; }
+
+  /* MODALS & POPUPS */
   .full-page-modal {
     display: none; position: fixed; inset: 0; background: var(--bg); z-index: 1000;
     flex-direction: column; max-width: 480px; margin: 0 auto;
@@ -160,71 +181,86 @@
   @keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
   .modal-header {
-    background: var(--accent); padding: 16px 20px; color: #fff;
-    display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 5;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    padding: 16px 20px; color: #fff; display: flex; align-items: center; gap: 14px;
+    position: sticky; top: 0; z-index: 5;
   }
-  .modal-header i { width: 22px; height: 22px; cursor: pointer; }
+  .modal-header i { width: 22px; height: 22px; cursor: pointer; stroke-width: 2.5; }
   .modal-header h2 { font-size: 18px; font-weight: 700; color: #fff; }
   .modal-content { padding: 20px; flex: 1; }
 
-  /* STEP CARD */
   .step-card {
-    background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px;
-    padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow);
+    background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius);
+    padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow-md);
   }
   .step-title {
-    font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
-    margin-bottom: 12px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px;
+    font-size: 13px; font-weight: 800; color: var(--accent); text-transform: uppercase;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px;
   }
+  
   .payment-id-input {
-    width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px;
-    font-size: 15px; font-weight: 700; outline: none; margin-bottom: 14px; text-transform: uppercase;
-    letter-spacing: 0.5px; transition: border-color 0.2s ease;
+    width: 100%; padding: 15px 16px; border: 2px solid var(--border-color); border-radius: 14px;
+    font-size: 16px; font-weight: 700; outline: none; margin: 14px 0; text-transform: uppercase;
+    letter-spacing: 0.8px; transition: border-color 0.2s ease; background: #f8fafc;
   }
-  .payment-id-input:focus { border-color: var(--accent); }
+  .payment-id-input:focus { border-color: var(--accent); background: #fff; }
 
   .verify-btn {
     width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
-    border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer;
+    border-radius: 14px; font-size: 15px; font-weight: 700; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4); transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(255, 214, 10, 0.4); transition: all 0.2s ease;
   }
-  .verify-btn:active { background: var(--primary-dark); transform: scale(0.98); }
+  .verify-btn:active { background: var(--primary-hover); transform: scale(0.98); }
 
-  /* TERMS PAGE CONTENT */
-  .terms-section { margin-bottom: 20px; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; }
-  .terms-section h3 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+  /* TERMS PAGE */
+  .terms-section { margin-bottom: 16px; background: #fff; padding: 18px; border-radius: 16px; border: 1px solid var(--border-color); }
+  .terms-section h3 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
   .terms-section p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 
-  /* HELP MODAL BOTTOM SHEET */
-  .help-modal {
-    position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px);
-    display: none; align-items: flex-end; justify-content: center; z-index: 200;
+  /* BOTTOM SHEETS / POPUPS */
+  .search-popup-overlay {
+    position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+    z-index: 1200; display: none; align-items: flex-end; justify-content: center;
+    opacity: 0; transition: opacity 0.25s ease;
   }
-  .help-modal.show { display: flex; }
-  .help-box {
-    background: #fff; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px 20px 32px;
-    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-  .help-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center; }
-  .help-option {
-    display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 14px;
-    background: #f8fafc; margin-bottom: 12px; cursor: pointer; text-decoration: none; color: var(--text-main);
-    border: 1px solid #f1f5f9; transition: background 0.2s ease;
-  }
-  .help-option:active { background: #f1f5f9; }
-  .help-option i { width: 22px; height: 22px; color: var(--accent); }
-  .help-option .text h4 { font-size: 15px; font-weight: 600; }
-  .help-option .text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .search-popup-overlay.active { display: flex; opacity: 1; }
 
-  /* CUSTOM TOAST NOTIFICATION POPUP */
+  .search-popup {
+    background: #fff; width: 100%; max-width: 480px; border-radius: 28px 28px 0 0;
+    padding: 20px 20px 32px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-lg);
+  }
+  .search-popup-overlay.active .search-popup { transform: translateY(0); }
+  
+  .popup-handle {
+    width: 42px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 18px;
+  }
+  .search-popup h3 {
+    text-align: center; font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 20px;
+  }
+
+  .search-option {
+    display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 16px;
+    margin-bottom: 12px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; text-decoration: none;
+  }
+  .search-option.blue { background: #eff6ff; border-color: #dbeafe; }
+  .search-option.orange { background: #fff7ed; border-color: #ffedd5; }
+  .search-option.pink { background: #fdf2f8; border-color: #fce7f3; }
+  .search-option:active { transform: scale(0.98); }
+
+  .search-option-icon { width: 24px; height: 24px; flex-shrink: 0; margin-top: 2px; }
+  .search-option-content { flex: 1; }
+  .search-option-content h4 { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }
+  .search-option-content p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  /* CUSTOM TOAST NOTIFICATION */
   .custom-toast {
-    position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
-    width: calc(100% - 32px); max-width: 440px; background: #0f172a; color: #fff;
-    padding: 14px 18px; border-radius: 14px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-    display: flex; align-items: center; gap: 12px; z-index: 300;
-    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%) translateY(-120px);
+    width: calc(100% - 36px); max-width: 440px; background: #0f172a; color: #fff;
+    padding: 16px 20px; border-radius: 16px; box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 14px; z-index: 2000;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
     opacity: 0; pointer-events: none; border-left: 5px solid var(--accent);
   }
   .custom-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
@@ -232,164 +268,22 @@
   .custom-toast.success i { color: var(--success); }
   .custom-toast.error { border-left-color: var(--danger); }
   .custom-toast.error i { color: var(--danger); }
-  .custom-toast.warning { border-left-color: var(--primary); }
-  .custom-toast.warning i { color: var(--primary); }
+  .custom-toast.warning { border-left-color: var(--warning); }
+  .custom-toast.warning i { color: var(--warning); }
   .custom-toast .toast-msg { font-size: 14px; font-weight: 600; flex: 1; line-height: 1.4; }
-
-
-
-/* Button Style */
-.how-to-search-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    border: 1.5px solid #d0d5dd;
-    border-radius: 50px;
-    background: #fff;
-    color: #1d2b64;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.how-to-search-btn:hover {
-    border-color: #1d2b64;
-    box-shadow: 0 2px 8px rgba(29,43,100,0.1);
-}
-.how-to-search-btn svg {
-    width: 20px;
-    height: 20px;
-    color: #1d2b64;
-    flex-shrink: 0;
-}
-
-/* Popup Overlay */
-.search-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
-    z-index: 9999;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.search-popup-overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-/* Popup Box */
-.search-popup {
-    position: fixed;
-    bottom: -100%;
-    left: 0;
-    right: 0;
-    background: #fff;
-    border-radius: 24px 24px 0 0;
-    padding: 20px 16px 30px;
-    z-index: 10000;
-    transition: bottom 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-    max-width: 600px;
-    margin: 0 auto;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-}
-.search-popup-overlay.active .search-popup {
-    bottom: 0;
-}
-.popup-handle {
-    width: 40px;
-    height: 5px;
-    background: #d0d5dd;
-    border-radius: 10px;
-    margin: 0 auto 16px;
-}
-
-/* Popup Title */
-.search-popup h3 {
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: #101828;
-    margin: 0 0 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-/* Popup Items */
-.search-option {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 14px 16px;
-    border-radius: 16px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.search-option.blue { background: #eff8ff; }
-.search-option.orange { background: #fff6ed; }
-.search-option.pink { background: #fdf2f8; }
-
-.search-option-icon {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-.search-option-content {
-    flex: 1;
-}
-.search-option-content h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #101828;
-    margin: 0 0 4px;
-}
-.search-option-content p {
-    font-size: 12px;
-    color: #475467;
-    margin: 0;
-    line-height: 1.5;
-}
-.search-option-arrow {
-    width: 20px;
-    height: 20px;
-    color: #98a2b3;
-    align-self: center;
-}
-.search-option:hover {
-    opacity: 0.8;
-}
-    /* BOTTOM NAV */
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 65px;
-        background: #fff;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-         z-index: 1000;
-    }
 </style>
 </head>
 <body>
 
 <div class="app-wrapper">
+  <!-- MAIN PAGE -->
   <div id="mainPage">
     <header class="header">
       <div class="left">
         <i data-lucide="arrow-left" onclick="window.history.back()"></i>
         <h1>Payments</h1>
       </div>
-     
+      <div class="right-actions">
         <div class="icon-btn" onclick="openTerms()" title="Terms & Conditions">
           <i data-lucide="info"></i>
         </div>
@@ -416,37 +310,38 @@
 
       <h2 class="section-title">Quick Actions</h2>
       <div class="action-buttons-grid">
-        <a href="https://tuttogenius.netlify.app/pay" target="_blank" class="action-btn btn-topup" >
+        <a href="https://tuttogenius.netlify.app/pay" target="_blank" class="action-btn btn-topup">
           <div class="btn-content">
             <div class="icon-wrapper">
-              <i data-lucide="chevron-right"></i>
+              <i data-lucide="ticket"></i>
             </div>
             <span>Get Top-up Code</span>
           </div>
-         </a>
+          <i data-lucide="chevron-right" style="width:18px; height:18px; opacity:0.5;"></i>
+        </a>
 
         <a href="https://wa.me/919339061296" target="_blank" class="action-btn btn-whatsapp">
           <div class="btn-content">
             <div class="icon-wrapper">
               <i data-lucide="message-square"></i>
             </div>
-            <span> WhatsApp Support</span>
+            <span>WhatsApp Support</span>
           </div>
-          <i data-lucide="external-link" style="width:18px; height:18px; opacity:0.8;"></i>
+          <i data-lucide="external-link" style="width:18px; height:18px; opacity:0.5;"></i>
         </a>
-
       </div>
+    </div>
 
-    </div><nav class="bottom-nav">
-<!-- Button -->
-<button class="how-to-search-btn" id="openSearchPopup">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    How to Add Money? (কীভাবে টাকা যোগ করবেন?)
-</button></nav>
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="how-to-search-btn" id="openSearchPopup">
+        <i data-lucide="help-circle"></i>
+        How to Add Money? (কীভাবে টাকা যোগ করবেন?)
+      </button>
+    </nav>
   </div>
 
+  <!-- ADD MONEY MODAL -->
   <div class="full-page-modal" id="addMoneyPage">
     <div class="modal-header">
       <i data-lucide="x" onclick="closeAddMoney()"></i>
@@ -458,17 +353,18 @@
         <div class="step-title">
           <i data-lucide="key-round"></i> Enter TXN / Top-up Code
         </div>
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5;">
-          Please enter your top-up code starting with <strong>TGCOIN_</strong> to verify and credit funds directly into your wallet.
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+          Enter your top-up code starting with <strong>TGCOIN_</strong> to credit funds directly into your wallet.
         </p>
-        <input type="text" id="paymentIdInput" class="payment-id-input" placeholder="TGCOIN_XXXXXXXXXX">
+        <input type="text" id="paymentIdInput" class="payment-id-input" placeholder="TGCOIN_XXXXXXXXXX" autocomplete="off">
         <button class="verify-btn" onclick="verifyAndAddMoney()">
-          <i data-lucide="check-circle"></i> Redeem Code Now
+          <i data-lucide="check-circle-2"></i> Redeem Code Now
         </button>
       </div>
     </div>
   </div>
 
+  <!-- TERMS MODAL -->
   <div class="full-page-modal" id="termsPage">
     <div class="modal-header">
       <i data-lucide="x" onclick="closeTerms()"></i>
@@ -502,74 +398,48 @@
     </div>
   </div>
 
-  <div class="help-modal" id="helpModal" onclick="closeHelp(event)">
-    <div class="help-box" onclick="event.stopPropagation()">
-      <h3>Need Support?</h3>
-      <a href="https://wa.me/919339061296" target="_blank" class="help-option">
-        <i data-lucide="message-circle"></i>
-        <div class="text">
-          <h4>WhatsApp Support</h4>
-          <p>+91 9339061296</p>
+  <!-- HELP DRAWER POPUP -->
+  <div class="search-popup-overlay" id="searchPopupOverlay">
+    <div class="search-popup">
+      <div class="popup-handle"></div>
+      <h3>How to Add Money? (কীভাবে টাকা যোগ করবেন?)</h3>
+
+      <div class="search-option blue" onclick="closeSearchPopup(); openAddMoney();">
+        <i data-lucide="plus-circle" class="search-option-icon" style="color: #1570ef;"></i>
+        <div class="search-option-content">
+          <h4>Click on Add Money (Add Money-এ ক্লিক করুন)</h4>
+          <p>And Enter Valid Code then click on redeem code now.</p>
+        </div>
+      </div>
+
+      <a href="https://tuttogenius.netlify.app/pay" target="_blank" class="search-option orange">
+        <i data-lucide="shopping-bag" class="search-option-icon" style="color: #f79009;"></i>
+        <div class="search-option-content">
+          <h4>How to get a top-up code? (টপ-আপ কোড কীভাবে পাবেন?)</h4>
+          <p>উপরে দেওয়া লিংকে ক্লিক করুন।</p>
         </div>
       </a>
-      <a href="mailto:admin.tutogenius@gmail.com" target="_blank" class="help-option">
-        <i data-lucide="mail"></i>
-        <div class="text">
-          <h4>Email Support</h4>
-          <p>admin.tutogenius@gmail.com</p>
+
+      <a href="https://wa.me/919339061296" target="_blank" class="search-option pink">
+        <i data-lucide="play-circle" class="search-option-icon" style="color: #f04438;"></i>
+        <div class="search-option-content">
+          <h4>Watch Video Tutorial</h4>
+          <p>ভিডিও দেখে নিন</p>
         </div>
+        <i data-lucide="chevron-right" style="width:20px; height:20px; color:#98a2b3; align-self:center;"></i>
       </a>
     </div>
   </div>
 
+  <!-- TOAST ALERT -->
   <div class="custom-toast" id="customToast">
     <i data-lucide="info" id="toastIcon"></i>
     <div class="toast-msg" id="toastMsg">Notification message</div>
   </div>
 </div>
-<!-- Popup -->
-<div class="search-popup-overlay" id="searchPopupOverlay">
-    <div class="search-popup">
-        <div class="popup-handle"></div>
-        <h3>How to Add Money? (কীভাবে টাকা যোগ করবেন?)</h3>
 
-        <div class="search-option blue">
-            <svg class="search-option-icon" fill="none" stroke="#1570ef" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
-            </svg>
-            <div class="search-option-content">
-                <h4>Click on Add Money (Add Money-এ ক্লিক করুন)</h4>
-                <p>And Enter Valid Code then click on redeem code now.</p>
-            </div>
-        </div>
-
-        <div class="search-option orange">
-            <svg class="search-option-icon" fill="none" stroke="#f79009" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10h.01"/>
-            </svg>
-            <div class="search-option-content">
-                <h4>How to get a top-up code? (টপ-আপ কোড কীভাবে পাবেন?)</h4>
-                <p>উপরে দেওয়া লিংকে ক্লিক করুন।</p>
-            </div>
-        </div>
-
-        <a href="#" target="_blank" class="search-option pink">
-            <svg class="search-option-icon" fill="#f04438" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="12"/>
-                <path fill="#fff" d="M10 8.5l6 3.5-6 3.5V8.5z"/>
-            </svg>
-            <div class="search-option-content">
-                <h4>Watch Video Tutorial</h4>
-                <p>ভিডিও দেখে নিন</p>
-            </div>
-            <svg class="search-option-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-        </a>
-    </div>
-</div>
 <script>
-
+// Initialize icons
 lucide.createIcons();
 
 // --- VALID TXN CODES DATABASE ---
@@ -588,7 +458,7 @@ let balance = parseInt(localStorage.getItem('coinBalance') || '0');
 const balanceEl = document.getElementById('balance');
 const lowBalanceEl = document.getElementById('lowBalanceText');
 
-function updateBalanceUI(){
+function updateBalanceUI() {
   balanceEl.textContent = balance;
   if(balance < 100) {
     lowBalanceEl.textContent = `Low Balance: ₹${balance}`;
@@ -625,6 +495,8 @@ function showCustomAlert(msg, type = 'info') {
   } else {
     toastIcon.setAttribute('data-lucide', 'info');
   }
+  
+  // Re-render icon in toast dynamically
   lucide.createIcons();
 
   clearTimeout(toastTimeout);
@@ -633,7 +505,7 @@ function showCustomAlert(msg, type = 'info') {
   }, 3500);
 }
 
-// --- ADD MONEY UI MODAL ---
+// --- MODAL CONTROLS ---
 function openAddMoney(){
   document.getElementById('addMoneyPage').classList.add('show');
 }
@@ -641,7 +513,6 @@ function closeAddMoney(){
   document.getElementById('addMoneyPage').classList.remove('show');
 }
 
-// --- TERMS & CONDITIONS MODAL ---
 function openTerms(){
   document.getElementById('termsPage').classList.add('show');
 }
@@ -684,48 +555,33 @@ function verifyAndAddMoney(){
   }
 }
 
-// --- HELP MODAL ---
-function openHelp(){
-  document.getElementById('helpModal').classList.add('show');
+// --- HELP POPUP CONTROLS ---
+const openBtn = document.getElementById('openSearchPopup');
+const overlay = document.getElementById('searchPopupOverlay');
+
+function openSearchPopup(){
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
-function closeHelp(e){
-  if(!e || e.target.id === 'helpModal'){
-    document.getElementById('helpModal').classList.remove('show');
+
+function closeSearchPopup(){
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+openBtn.addEventListener('click', openSearchPopup);
+
+overlay.addEventListener('click', function(e){
+  if(e.target === overlay){
+    closeSearchPopup();
   }
-}
+});
 
-
-
-
-(function(){
-    const openBtn = document.getElementById('openSearchPopup');
-    const overlay = document.getElementById('searchPopupOverlay');
-    const videoBtn = document.getElementById('watchVideoBtn');
-
-    // Open Popup
-    openBtn.addEventListener('click', function(){
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // prevent scroll
-    });
-
-    // Close Popup on overlay click
-    overlay.addEventListener('click', function(e){
-        if(e.target === overlay){
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-
-  
-
-    // ESC key to close
-    document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape' && overlay.classList.contains('active')){
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-})();
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && overlay.classList.contains('active')){
+    closeSearchPopup();
+  }
+});
 </script>
 </body>
 </html>
