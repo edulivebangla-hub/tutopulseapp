@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Class 9-10</title>
+   <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -48,179 +48,218 @@
         }
 
         :root {
-            --text:#000;
-            --primary-color: #0075BB;
-            --text-dark: #000;
-            --text-light: #666;
-            --bg-gray: #ffffff;
-            --white: #ffffff;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-            --header-bg: #6aa0ff;
-            --controls-bg: #FAF1EB;
+            --primary: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            --surface-bg: #f8fafc;
             --card-bg: #ffffff;
-            --card-border: #f1f5f9;
-            --skeleton-base: #ececec;
-            --skeleton-shimmer: #f5f5f5;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --radius-lg: 10px;
+            --radius-md: 10px;
+            --radius-sm: 8px;
+            --skeleton-base: #e2e8f0;
+            --skeleton-shimmer: #f1f5f9;
+            --header-height: 50px;
+            --controls-height: 48px;
         }
 
-        /* Dark mode variables */
-        body.dark {
-            --text:#ffffff;
-            --text-dark: #ffffff;
-            --text-light: #b0b0b0;
-            --bg-gray: #000;
-            --white: #1e293b;
-            --card-bg: #1e293b;
-            --card-border: #334155;
-            --header-bg: #6aa0ff;
-            --controls-bg: #1e293b;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            --skeleton-base: #334155;
-            --skeleton-shimmer: #475569;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Body scroll off */
         }
 
         body {
-            margin: 0;
-            background-color: var(--bg-gray);
-            color: var(--text-dark);
-            -webkit-tap-highlight-color: transparent;
+            background-color: var(--surface-bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
         }
 
-        /* --- Header Styles --- */
+        /* --- Modern Header --- */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            color: #ffffff;
-            height: 50px;
-            background: #905AF8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: var(--header-height); 
+            background: #0555E8;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
             padding: 0 16px;
-            z-index: 1000;
-            box-shadow: var(--shadow);
+            z-index: 1000; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            color: #fff;
         }
 
-        header .left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .header-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
         }
 
-        header .left .back-btn {
-            color: #ffff;
-            font-size: 30px;
+        .icon-btn {
             background: none;
             border: none;
+            color: #ffffff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s;
-            padding: 5px;
-            border-radius: 50px;
+            transition: all 0.2s ease;
+            text-decoration: none;
         }
 
-        header .right {
+        .icon-btn:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 15px;
-        }
-
-        .dark-toggle, .transaction-btn {
-            background: none;
-            color: #ffff;
-            font-size: 25px;
-            cursor: pointer;
-            border: none;
-            display: flex;
-            align-items: center;
-            padding: 5px;
-            border-radius: 50px;
-        }
-
-        .transaction-btn:hover, .dark-toggle:hover, .left .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Controls Bar */
-        .controls {
-            background: var(--controls-bg);
-            right: 0; width: 100%;         
-            padding: 10px 12px;
-            display: flex;
-            justify-content: flex-end;
             gap: 10px;
+        }
+
+        /* --- Sub-Header / Controls Bar --- */
+        .controls-bar {
             position: fixed;
-            z-index: 999; border-bottom: 1px solid #07789B;
-            border-top: 1px solid #07789B;
-            transition: background-color 0.3s ease;
-            top: 50px;
-             }
+            top: var(--header-height);
+            left: 0;
+            width: 100%;
+            height: var(--controls-height);
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 999;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .controls-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .view-switcher {
+            display: flex;
+            background: var(--surface-bg);
+            padding: 3px;
+            border-radius: var(--radius-sm);
+            gap: 2px;
+            border: 1px solid var(--border-color);
+        }
 
         .view-btn {
-            font-size: 20px;
-            color: #ccc;
+            border: none;
+            background: transparent;
+            padding: 5px 10px;
+            border-radius: 6px;
+            color: var(--text-muted);
             cursor: pointer;
-            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
 
         .view-btn.active {
-            color: var(--primary-color);
+            background: #ffffff;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
         }
 
-        /* --- Main Content Area --- */
+        /* --- Main Content Area - FIXED SIZE --- */
         .app-content {
-            position: fixed;
-            top: 40px;
-            bottom: 0;
+            margin-top: calc(var(--header-height) + var(--controls-height));
+            height: calc(100vh - var(--header-height) - var(--controls-height)); /* Fixed height */
+            padding: 10px;
             width: 100%;
-            overflow-y: auto;
-            background: var(--bg-gray);
+            overflow-y: auto; /* Only this scrolls */
+            overflow-x: hidden;
+            
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            &::-webkit-scrollbar { display: none; }
+            /* Hide scrollbar for IE, Edge and Firefox */
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
         }
 
-        /* Content Container */
         .course-container {
-            padding: 70px 15px 30px; /* Added spacing to avoid controls bar overlapping standard layout */
             display: grid;
             gap: 10px;
-            transition: var(--transition);
+            transition: all 0.3s ease;
+            padding-bottom: 10px; /* Last card er niche gap */
         }
 
-        /* Default List View Styles */
+        /* List Mode Styling */
         .course-container.list-mode {
             grid-template-columns: 1fr;
         }
+        .course-container.list-mode .card {
+            flex-direction: row;
+            align-items: center;
+        }
+        .course-container.list-mode .image-box {
+            width: 40%;
+            padding: 2px;
+            height: 100%;
+            border-radius: 8px;
+            padding-top: 20%; /* Fixed aspect ratio */
+        }
 
-        /* Grid View Toggle - 2 items per row */
+        /* Grid Mode Styling */
         .course-container.grid-mode {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(1, 1fr);
             gap: 10px;
         }
-
-        /* NEW SMOOTH CARD DESIGN */
-        .card {
-            overflow: hidden;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            color: var(--text);
-            display: flex;
+        .course-container.grid-mode .card {
             flex-direction: column;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.09);
-            background: var(--card-bg);
-            border-radius: 10px;         
-            border: 2px solid var(--card-border);
         }
+        .course-container.grid-mode .image-box {
+            width: 100%;
+            padding-top: 50%;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+        }
+
+        /* Modern Card Component */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            display: flex;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+        
 
         .image-box {
             position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
             overflow: hidden;
-            border-radius: 8px 8px 0 0; 
+            background-color: var(--skeleton-base);
         }
 
         .image-box img {
@@ -231,123 +270,131 @@
             height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: opacity 0.3s ease;
         }
 
-        /* Skeleton Base Styling */
+        /* Skeleton States */
         .card.loading .image-box {
-            background: linear-gradient(110deg, var(--skeleton-base) 8%, var(--skeleton-shimmer) 18%, var(--skeleton-base) 33%);
+            background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shimmer) 50%, var(--skeleton-base) 75%);
             background-size: 200% 100%;
-            animation: 1.5s shine linear infinite;
+            animation: shimmer 1.5s infinite;
         }
-
-        /* Skeleton Text Styling */
         .card.loading .card-title {
             color: transparent !important;
-            background: linear-gradient(110deg, var(--skeleton-base) 8%, var(--skeleton-shimmer) 18%, var(--skeleton-base) 33%);
+            background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shimmer) 50%, var(--skeleton-base) 75%);
             background-size: 200% 100%;
-            animation: 1.5s shine linear infinite;
+            animation: shimmer 1.5s infinite;
             border-radius: 4px;
-            min-height: 40px;
         }
-
-        /* Once images are loaded, show them smoothly */
         .card.loaded .image-box img {
             opacity: 1;
         }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
         .card-body {
-            padding: 10px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .card-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.08);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            width: fit-content;
         }
 
         .card-title {
-            font-size: 16px;
-            font-weight: 800;
-            line-height: 1.4;
-            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text-main);
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            color: var(--text);
         }
 
-        /* Adjustments for List Mode specifically */
-        .list-mode .card {
-            flex-direction: column;
-        }
-
-        @media (max-width: 400px) {
-            .course-container.grid-mode {
-                gap: 12px;
-                padding: 70px 10px 30px;
-            }
-            .card-title { font-size: 14px; font-weight: 800;}
-        }
-
-        .hidden { display: none !important; }
-
-        /* No results message */
+        /* Empty State */
         .no-results {
             text-align: center;
             padding: 60px 20px;
-            color: var(--text-light);
+            color: var(--text-muted);
         }
         .no-results i {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
+            margin-bottom: 12px;
+            opacity: 0.4;
         }
     </style>
 </head>
 <body>
 
-   <header>
-    <div class="left">
-      <button onclick="goBack()" class="back-btn">
-        <i data-lucide="arrow-left" class="icon-img"></i>
-      </button>
-    </div>
-    <h3>মাধ্যমিক</h3>
-    <div class="right">
-      <button id="darkToggle" class="dark-toggle" style="display: none;">🌙</button>
-      <div class="controls">
-        <i id="listBtn" data-lucide="square" class="view-btn active" onclick="setView('list')"></i>
-        <i id="gridBtn" data-lucide="layout-grid" class="view-btn" onclick="setView('grid')"></i>
-      </div>
-      <a href="https://action_share" class="transaction-btn">
-        <i data-lucide="share2" class="icon-img"></i>
-      </a>
-    </div>
-  </header>
+    <!-- Header Navigation -->
+    <header>
+        <button onclick="goBack()" class="icon-btn" aria-label="Go Back">
+            <i data-lucide="arrow-left" style="width: 24px; height: 24px;"></i>
+        </button>
+        <span class="header-title">Class 9-10</span>
+        <div class="header-actions">
+            <a href="https://action_share" class="icon-btn" aria-label="Share">
+                <i data-lucide="share-2" style="width: 22px; height: 22px;"></i>
+            </a>
+        </div>
+    </header>
 
- <main class="app-content">
-    <main id="courseGrid" class="course-container list-mode">
-        
-        <!-- Added "loading" class by default to apply skeleton styles -->
-        
-       
+    <!-- Sub Header Controls -->
+    <div class="controls-bar">
+        <span class="controls-title">Available Courses</span>
+        <div class="view-switcher">
+            <button id="listBtn" class="view-btn" onclick="setView('list')" aria-label="List View">
+                <i data-lucide="list" style="width: 18px; height: 18px;"></i>
+            </button>
+            <button id="gridBtn" class="view-btn active" onclick="setView('grid')" aria-label="Grid View">
+                <i data-lucide="layout-grid" style="width: 18px; height: 18px;"></i>
+            </button>
+        </div>
+    </div>
 
+    <!-- Main Content Container -->
+    <main class="app-content">
+        <div id="courseGrid" class="course-container grid-mode">
+            
+            <!-- Course Card -->
+            <a href="sem3/enroll.html" class="card loading" data-course="course1" style="display: hidden;">
+                <div class="image-box">
+                    <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 12 Course" onload="imageLoaded(this)">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag">Semester 3</span>
+                    <div class="card-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার</div>
+                </div>
+            </a>
+          
+        </div>
     </main>
- </main>
 
     <script>
         function goBack() {
             window.history.back();
         }
 
-        // Lucide icons
         lucide.createIcons();
 
         const container = document.getElementById('courseGrid');
         const listBtn = document.getElementById('listBtn');
         const gridBtn = document.getElementById('gridBtn');
 
-        // This function handles removal of skeleton placeholders safely once asset loads
         function imageLoaded(imgElement) {
             const card = imgElement.closest('.card');
             if (card) {
@@ -356,7 +403,6 @@
             }
         }
 
-        // Fallback for cached images that might load instantly before JS triggers
         document.querySelectorAll('.image-box img').forEach(img => {
             if (img.complete) {
                 imageLoaded(img);
@@ -377,37 +423,12 @@
             }
         }
 
-        // ========== DARK MODE TOGGLE ==========
-        const darkToggle = document.getElementById("darkToggle");
-        const body = document.body;
-
-        if (localStorage.getItem("darkMode") === "true") {
-            body.classList.add("dark");
-            darkToggle.textContent = "☀️";
-        } else {
-            darkToggle.textContent = "🌙";
-        }
-
-        darkToggle.addEventListener("click", () => {
-            body.classList.toggle("dark");
-            const isDark = body.classList.contains("dark");
-            localStorage.setItem("darkMode", isDark);
-            darkToggle.textContent = isDark ? "☀️" : "🌙";
-            lucide.createIcons();
-        });
-
-        // ========== URL PARAMETER FILTER ==========
         function filterByURL() {
             const params = new URLSearchParams(window.location.search);
             const courseId = params.get('id');
-            
-            if (!courseId) {
-                return;
-            }
-
+            if (!courseId) return;
             const allCards = document.querySelectorAll('.card');
             let found = false;
-
             allCards.forEach(card => {
                 if (card.dataset.course === courseId) {
                     card.style.display = 'flex';
@@ -416,15 +437,8 @@
                     card.style.display = 'none';
                 }
             });
-
             if (!found) {
-                container.innerHTML = `
-                    <div class="no-results">
-                        <i data-lucide="search-x"></i>
-                        <h3 style="margin-top:16px;font-weight:800;color:var(--text-dark);">Course not found</h3>
-                        <p style="margin-top:8px;color:var(--text-light);">No course matches id="${courseId}"</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="no-results"><i data-lucide="search-x" style="width: 48px; height: 48px; stroke-width: 1.5;"></i><h3 style="margin-top:12px; font-weight:700;">Course Not Found</h3><p style="margin-top:4px; font-size:13px;">No course matches parameter "id=${courseId}"</p></div>`;
                 lucide.createIcons();
             }
         }
