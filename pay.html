@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TGCOIN Recharge</title>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0a0f1e; --card:#111827; --primary:#6366f1; --accent:#22c55e; --text:#f8fafc; --muted:#94a3b8;
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
+
+.header{text-align:center;padding:30px 16px}
+.header h1{font-size:28px;font-weight:800;background:linear-gradient(90deg,#6366f1,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header p{color:var(--muted);margin-top:6px;font-size:14px}
+
+.container{max-width:900px;margin:0 auto;padding:0 16px 60px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{background:rgba(17,24,39,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:20px;text-align:center;transition:0.3s}
+.card:hover{transform:translateY(-5px);border-color:var(--primary)}
+.card h3{font-size:22px;margin-bottom:6px}
+.card p{color:var(--muted);font-size:13px;margin-bottom:16px}
+.btn{background:var(--primary);color:#fff;border:none;padding:12px 20px;border-radius:10px;font-weight:700;cursor:pointer;width:100%;transition:0.2s}
+.btn:active{transform:scale(0.96)}
+
+.custom-box{background:rgba(17,24,39,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:20px;margin-top:30px}
+.custom-box input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:#0f172a;color:#fff;margin:10px 0;font-size:16px}
+.custom-box.btn{background:var(--accent)}
+
+.success{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111827;border:2px solid var(--accent);padding:30px;border-radius:20px;text-align:center;z-index:9999;display:none}
+.success h2{color:var(--accent);margin-bottom:10px}
+.code-box{background:#0f172a;padding:14px;border-radius:10px;font-size:18px;font-weight:800;letter-spacing:1px;margin:12px 0}
+.whatsapp-btn{background:#25D366;color:#fff;padding:12px 18px;border-radius:10px;text-decoration:none;display:inline-block;font-weight:700;margin-top:10px}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9998;display:none}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="header">
+  <h1>TGCOIN Recharge</h1>
+  <p>Instant Code Delivery via WhatsApp</p>
+</div>
+
+<div class="container">
+  <div class="grid" id="cards"></div>
+
+  <div class="custom-box">
+    <h3>Custom Amount</h3>
+    <p style="color:var(--muted);font-size:13px">Enter any amount in ₹</p>
+    <input type="number" id="customAmount" placeholder="Enter Amount ₹" min="10">
+    <button class="btn" onclick="payCustom()">Pay Custom Amount</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="success" id="successBox">
+  <h2>Payment Successful! 🎉</h2>
+  <p>Your TGCOIN Code:</p>
+  <div class="code-box" id="codeShow"></div>
+  <p style="color:var(--muted);font-size:13px">Amount: ₹<span id="amtShow"></span></p>
+  <a id="waBtn" class="whatsapp-btn" target="_blank">Share on WhatsApp</a>
+  <br><button class="btn" style="margin-top:12px;background:#334155" onclick="closeSuccess()">Close</button>
+</div>
+
+<script>
+lucide.createIcons();
+
+// 1. Canvas Background Animation
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+let particles = [];
+for(let i=0;i<80;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5})}
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='rgba(99,102,241,0.6)';particles.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>canvas.width)p.dx*=-1;if(p.y<0||p.y>canvas.height)p.dy*=-1});requestAnimationFrame(animate)}
+animate();
+
+// 2. Card Data
+const plans = [
+  {amount:10, name:"TGCOIN 10", code:"TGCOIN_426535257"},
+  {amount:50, name:"TGCOIN 50", code:"TGCOIN_426523257"},
+  {amount:100, name:"TGCOIN 100", code:"TGCOIN_426527277"},
+  {amount:200, name:"TGCOIN 200", code:"TGCOIN_426540123"},
+  {amount:500, name:"TGCOIN 500", code:"TGCOIN_426550456"},
+  {amount:1000, name:"TGCOIN 1000", code:"TGCOIN_426560789"}
+];
+
+const cardsDiv = document.getElementById('cards');
+plans.forEach(p=>{
+  cardsDiv.innerHTML += `
+  <div class="card">
+    <h3>₹${p.amount}</h3>
+    <p>${p.name}</p>
+    <button class="btn" onclick="payNow(${p.amount},'${p.code}')">Buy Now</button>
+  </div>`
+});
+
+// 3. Generate Unique Code
+function generateCode(base){
+  const rand = Math.floor(100000 + Math.random()*900000);
+  return base.split('_')[0] + '_' + rand;
+}
+
+// 4. Razorpay Payment
+function payNow(amount, baseCode){
+  const finalCode = generateCode(baseCode);
+  startRazorpay(amount, finalCode);
+}
+
+function payCustom(){
+  const amount = parseInt(document.getElementById('customAmount').value);
+  if(!amount || amount<10){alert("Enter minimum ₹10");return;}
+  const finalCode = generateCode("TGCOIN_426535257");
+  startRazorpay(amount, finalCode);
+}
+
+function startRazorpay(amount, code){
+  const options = {
+    key: "rzp_live_TB2Tex3fIBoKuX", // Your Live Key
+    amount: amount * 100, // in paise
+    currency: "INR",
+    name: "TGCOIN",
+    description: "TGCOIN Recharge",
+    handler: function (response){
+      showSuccess(code, amount);
+    },
+    prefill: { name: "", contact: "" },
+    theme: { color: "#6366f1" }
+  };
+  const rzp = new Razorpay(options);
+  rzp.open();
+}
+
+// 5. Show Success + WhatsApp
+function showSuccess(code, amount){
+  document.getElementById('overlay').style.display='block';
+  document.getElementById('successBox').style.display='block';
+  document.getElementById('codeShow').innerText=code;
+  document.getElementById('amtShow').innerText=amount;
+
+  const msg = `New TGCOIN Purchase%0A%0ACode: ${code}%0AAmount: ₹${amount}%0AStatus: Paid`;
+  document.getElementById('waBtn').href = `https://wa.me/919332466756?text=${msg}`;
+}
+
+function closeSuccess(){
+  document.getElementById('overlay').style.display='none';
+  document.getElementById('successBox').style.display='none';
+}
+
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight})
+</script>
+</body>
+</html>
