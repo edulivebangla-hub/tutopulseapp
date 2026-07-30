@@ -6,40 +6,78 @@
 <title>TGCOIN Recharge</title>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#0a0f1e; --card:#111827; --primary:#6366f1; --accent:#22c55e; --text:#f8fafc; --muted:#94a3b8;
-  --radius:18px;
+:root {
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --warning: #f59e0b;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --radius: 16px;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
-body{background:var(--bg);color:var(--text);overflow-x:hidden}
-canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
 
-.header{text-align:center;padding:30px 16px}
-.header h1{font-size:28px;font-weight:800;background:linear-gradient(90deg,#6366f1,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.header p{color:var(--muted);margin-top:6px;font-size:14px}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+body { background: var(--bg); color: var(--text-main); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-.container{max-width:900px;margin:0 auto;padding:0 16px 60px}
+canvas#bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-.card{background:rgba(17,24,39,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:20px;text-align:center;transition:0.3s}
-.card:hover{transform:translateY(-5px);border-color:var(--primary)}
-.card h3{font-size:22px;margin-bottom:6px}
-.card p{color:var(--muted);font-size:13px;margin-bottom:16px}
-.btn{background:var(--primary);color:#fff;border:none;padding:12px 20px;border-radius:10px;font-weight:700;cursor:pointer;width:100%;transition:0.2s}
-.btn:active{transform:scale(0.96)}
+.header { text-align: center; padding: 48px 16px 32px; max-width: 600px; margin: 0 auto; }
+.header .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #eef2ff; color: var(--primary); border-radius: 99px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.header h1 { font-size: 32px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+.header p { color: var(--text-muted); margin-top: 8px; font-size: 15px; }
 
-.custom-box{background:rgba(17,24,39,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:20px;margin-top:30px}
-.custom-box input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:#0f172a;color:#fff;margin:10px 0;font-size:16px}
-.custom-box.btn{background:var(--accent)}
+.container { max-width: 900px; margin: 0 auto; padding: 0 16px 60px; }
 
-.success{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111827;border:2px solid var(--accent);padding:30px;border-radius:20px;text-align:center;z-index:9999;display:none}
-.success h2{color:var(--accent);margin-bottom:10px}
-.code-box{background:#0f172a;padding:14px;border-radius:10px;font-size:18px;font-weight:800;letter-spacing:1px;margin:12px 0}
-.whatsapp-btn{background:#25D366;color:#fff;padding:12px 18px;border-radius:10px;text-decoration:none;display:inline-block;font-weight:700;margin-top:10px}
-.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9998;display:none}
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; transition: all 0.25s ease; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; }
+.card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-md); }
+.card h3 { font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
+.card p { color: var(--text-muted); font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+
+.btn { background: var(--primary); color: #ffffff; border: none; padding: 13px 20px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.15); }
+.btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+.btn:active { transform: scale(0.98); }
+
+.custom-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-top: 28px; box-shadow: var(--shadow-sm); }
+.custom-box h3 { font-size: 20px; font-weight: 800; color: var(--text-main); }
+.custom-box p { color: var(--text-muted); font-size: 14px; margin-top: 2px; }
+.input-group { margin: 16px 0 20px; position: relative; }
+.custom-box input { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); background: #f8fafc; color: var(--text-main); font-size: 16px; font-weight: 600; outline: none; transition: 0.2s; }
+.custom-box input:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+.custom-box .btn { background: var(--accent); box-shadow: 0 2px 4px rgba(16, 185, 129, 0.15); }
+.custom-box .btn:hover { background: var(--accent-hover); }
+
+/* Overlay & Modals */
+.overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); z-index: 9998; display: none; }
+
+.modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ffffff; border: 1px solid var(--border); padding: 32px 28px; border-radius: 24px; text-align: center; z-index: 9999; display: none; width: 90%; max-width: 420px; box-shadow: var(--shadow-lg); }
+
+/* Success Modal Details */
+.success-icon { width: 56px; height: 56px; background: #d1fae5; color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+.modal h2 { color: var(--text-main); font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.modal-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+.code-box { background: #f1f5f9; border: 1px dashed #cbd5e1; padding: 14px; border-radius: 12px; font-size: 18px; font-weight: 800; color: var(--primary); letter-spacing: 1px; margin: 12px 0; }
+.details-card { background: #f8fafc; border-radius: 12px; padding: 12px; margin-bottom: 20px; border: 1px solid var(--border); }
+.details-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); padding: 4px 0; }
+.details-row span:last-child { color: var(--text-main); font-weight: 700; word-break: break-all; }
+
+.whatsapp-btn { background: #25D366; color: #ffffff; padding: 14px 20px; border-radius: 12px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; font-size: 15px; margin-top: 10px; transition: 0.2s; box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2); }
+.whatsapp-btn:hover { background: #20ba5a; transform: translateY(-1px); }
+.btn-secondary { background: #f1f5f9; color: var(--text-muted); box-shadow: none; margin-top: 10px; }
+.btn-secondary:hover { background: #e2e8f0; color: var(--text-main); }
+
+/* Custom Alert Modal Styling */
+.alert-icon { width: 56px; height: 56px; background: #fef3c7; color: var(--warning); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
 </style>
 </head>
 <body>
@@ -47,29 +85,63 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
 <canvas id="bg"></canvas>
 
 <div class="header">
-  <h1>TutoGenius App Money Recharge</h1>
-  <p>Instant Code Delivery via WhatsApp</p>
+  <div class="badge">
+    <i data-lucide="zap" size="14"></i> Instant Delivery
+  </div>
+  <h1>TutoGenius Recharge</h1>
+  <p>Select a recharge package below or enter a custom amount</p>
 </div>
 
 <div class="container">
-  <div class="grid" id="cards"></div>
-
-  <div class="custom-box">
+ <div class="custom-box">
     <h3>Custom Amount</h3>
-    <p style="color:var(--muted);font-size:13px">Enter any amount in ₹</p>
-    <input type="number" id="customAmount" placeholder="Enter Amount ₹" min="10">
+    <p>Enter any custom amount to purchase TGCOINs</p>
+    <div class="input-group">
+      <input type="number" id="customAmount" placeholder="Enter amount in ₹ (Min. 10)" min="10">
+    </div>
     <button class="btn" onclick="payCustom()">Pay Custom Amount</button>
   </div>
 </div>
+ <div class="grid" id="cards"></div>
 
+  
 <div class="overlay" id="overlay"></div>
-<div class="success" id="successBox">
-  <h2>Payment Successful! 🎉</h2>
-  <p>Your TGCOIN Code:</p>
+
+<!-- Custom Alert Modal -->
+<div class="modal" id="alertBox">
+  <div class="alert-icon">
+    <i data-lucide="alert-circle" size="32"></i>
+  </div>
+  <h2 id="alertTitle">Notice</h2>
+  <p class="modal-subtitle" id="alertMessage" style="margin-bottom:20px;"></p>
+  <button class="btn" onclick="closeAlert()">Okay, Got It</button>
+</div>
+
+<!-- Success Modal -->
+<div class="modal" id="successBox">
+  <div class="success-icon">
+    <i data-lucide="check-circle-2" size="32"></i>
+  </div>
+  <h2>Payment Successful!</h2>
+  <p class="modal-subtitle">Your TGCOIN code is ready for verification</p>
+  
   <div class="code-box" id="codeShow"></div>
-  <p style="color:var(--muted);font-size:13px">Amount: ₹<span id="amtShow"></span></p>
-  <a id="waBtn" class="whatsapp-btn" target="_blank">Submit For Verification</a>
-  <br><button class="btn" style="margin-top:12px;background:#334155" onclick="closeSuccess()">Close</button>
+
+  <div class="details-card">
+    <div class="details-row">
+      <span>Amount Paid</span>
+      <span>₹<span id="amtShow"></span></span>
+    </div>
+    <div class="details-row">
+      <span>Transaction ID</span>
+      <span id="txShow"></span>
+    </div>
+  </div>
+
+  <a id="waBtn" class="whatsapp-btn" target="_blank">
+    <i data-lucide="message-square" size="18"></i> Submit via WhatsApp
+  </a>
+  <button class="btn btn-secondary" onclick="closeSuccess()">Close</button>
 </div>
 
 <script>
@@ -80,11 +152,45 @@ const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 let particles = [];
-for(let i=0;i<80;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5})}
-function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='rgba(99,102,241,0.6)';particles.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>canvas.width)p.dx*=-1;if(p.y<0||p.y>canvas.height)p.dy*=-1});requestAnimationFrame(animate)}
+for(let i=0; i<60; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 1,
+    dx: (Math.random() - 0.5) * 0.4,
+    dy: (Math.random() - 0.5) * 0.4
+  });
+}
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = 'rgba(79, 70, 229, 0.12)';
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+    p.x += p.dx;
+    p.y += p.dy;
+    if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
+  });
+  requestAnimationFrame(animate);
+}
 animate();
 
-// 2. Card Data
+// 2. Custom Alert System Functions
+function showAlert(message, title = "Notice") {
+  document.getElementById('alertTitle').innerText = title;
+  document.getElementById('alertMessage').innerText = message;
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('alertBox').style.display = 'block';
+}
+
+function closeAlert() {
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('alertBox').style.display = 'none';
+}
+
+// 3. Card Data
 const plans = [
   {amount:10, name:"TGCOIN 10", code:"TGCOIN_426535257"},
   {amount:50, name:"TGCOIN 50", code:"TGCOIN_426523257"},
@@ -95,22 +201,24 @@ const plans = [
 ];
 
 const cardsDiv = document.getElementById('cards');
-plans.forEach(p=>{
+plans.forEach(p => {
   cardsDiv.innerHTML += `
   <div class="card">
-    <h3>₹${p.amount}</h3>
-    <p>${p.name}</p>
+    <div>
+      <h3>₹${p.amount}</h3>
+      <p>${p.name}</p>
+    </div>
     <button class="btn" onclick="payNow(${p.amount},'${p.code}')">Buy Now</button>
-  </div>`
+  </div>`;
 });
 
-// 3. Generate Unique Code
+// 4. Unique Code Generation
 function generateCode(base){
-  const rand = Math.floor(100000 + Math.random()*900000);
+  const rand = Math.floor(100000 + Math.random() * 900000);
   return base.split('_')[0] + '_' + rand;
 }
 
-// 4. Razorpay Payment
+// 5. Razorpay Payment Logic
 function payNow(amount, baseCode){
   const finalCode = generateCode(baseCode);
   startRazorpay(amount, finalCode);
@@ -118,7 +226,10 @@ function payNow(amount, baseCode){
 
 function payCustom(){
   const amount = parseInt(document.getElementById('customAmount').value);
-  if(!amount || amount<10){alert("Enter minimum ₹10");return;}
+  if(!amount || amount < 10){ 
+    showAlert("Please enter a minimum amount of ₹10.", "Invalid Amount"); 
+    return; 
+  }
   const finalCode = generateCode("TGCOIN_426535257");
   startRazorpay(amount, finalCode);
 }
@@ -131,32 +242,37 @@ function startRazorpay(amount, code){
     name: "TutoGenius",
     description: "TGCOIN Recharge",
     handler: function (response){
-      showSuccess(code, amount);
+      const paymentId = response.razorpay_payment_id;
+      showSuccess(code, amount, paymentId);
     },
     prefill: { name: "", contact: "" },
-    theme: { color: "#6366f1" }
+    theme: { color: "#4f46e5" }
   };
   const rzp = new Razorpay(options);
   rzp.open();
 }
 
-// 5. Show Success + WhatsApp
-function showSuccess(code, amount){
-  document.getElementById('overlay').style.display='block';
-  document.getElementById('successBox').style.display='block';
-  document.getElementById('codeShow').innerText=code;
-  document.getElementById('amtShow').innerText=amount;
+// 6. Success Modal
+function showSuccess(code, amount, paymentId){
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('successBox').style.display = 'block';
+  document.getElementById('codeShow').innerText = code;
+  document.getElementById('txShow').innerText = paymentId;
+  document.getElementById('amtShow').innerText = amount;
 
-  const msg = `New TGCOIN Purchase%0A%0ACode: ${code}%0AAmount: ₹${amount}%0AStatus: Paid`;
+  const msg = `New TGCOIN Purchase Verification%0A%0A*Transaction ID:* ${paymentId}%0A*Code:* ${code}%0A*Amount:* ₹${amount}%0A*Status:* Paid`;
   document.getElementById('waBtn').href = `https://wa.me/919332466756?text=${msg}`;
 }
 
 function closeSuccess(){
-  document.getElementById('overlay').style.display='none';
-  document.getElementById('successBox').style.display='none';
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('successBox').style.display = 'none';
 }
 
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight})
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 </script>
 </body>
 </html>
