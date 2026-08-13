@@ -29,7 +29,7 @@
   }
 
   :root {
-    --bg: #fff;
+    --bg: #ffffff;
     --text: #000;
     --sub: #64748b;
     --primary: #2563eb;
@@ -39,13 +39,7 @@
     --border: #C9CDFF;
   }
 
-  body.dark {
-    --bg: #0b1220;
-    --text: #fff;
-    --sub: #94a3b8;
-    --card: #111827;
-    --border: #1f2937;
-  }
+  
 
   body {
     background: var(--bg);
@@ -267,16 +261,16 @@
   /* SWIPER */
   .swiper {
     width: 100%;
-    padding-bottom: 28px;
-    margin-top: 10px;
+    padding-bottom: 32px;
+    margin-top: 2px;
   }
 
   .swiper-slide {
     position: relative;
     width: 280px;
-    height: 130px;
-    border-radius: 12px;
-    border: 1px solid #905AF8;
+    height: 120px;
+    border-radius: 20px;
+    
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-in-out;
     overflow: hidden;
     will-change: transform, opacity;
@@ -299,8 +293,8 @@
   }
 
   .swiper-pagination-bullet {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     background: #d1d5db;
     opacity: 1;
   }
@@ -568,7 +562,7 @@
   .card img {
     width: 44px;
     height: 44px;
-    border-radius: 50%;
+    border-radius: 10%;
     object-fit: cover;
   }
 
@@ -584,8 +578,8 @@
 
   .apply {
     margin-left: auto;
-    background: #d9f99d;
-    color: #365314;
+    background: #22c55e;
+    color: #fff;
     font: 700 12px 'Segoe UI', sans-serif;
     padding: 6px 14px;
     border-radius: 20px;
@@ -708,6 +702,7 @@
 
   .showcase-item img {
     width: 100%;
+height: 150px;
     display: block;
   }
 
@@ -904,8 +899,7 @@
     <a href="coin" class="add-money-btn" title="Add Coins">
       <i data-lucide="plus-circle" style="width:16px;height:16px"></i> Add Money
     </a>
-    <a href="#vip" class="vip">BECOME<br><b>VIP</b></a>
-    <a href="notification" class="icon-btn">
+   <a href="notification" class="icon-btn">
      <img src="https://cdn-icons-png.flaticon.com/512/1827/1827370.png" style="width: 70%;"></a>
  <a href="gift" class="icon-btn">
      <img src="https://cdn-icons-png.flaticon.com/512/1139/1139982.png" style="width: 70%;"></a>
@@ -1012,20 +1006,20 @@
   <!-- TOP MENU TABS -->
   <div class="tabs">
     <div class="tab active" onclick="switchView(event, 'admission')">
-      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
-      Admission
+     <img src="https://cdn-icons-png.flaticon.com/512/1027/1027530.png" class="tab-icon"> 
+Admission
     </div>
     <div class="tab" onclick="switchView(event, 'govt')">
-      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-      Govt. Jobs
+     <img src="https://cdn-icons-png.flaticon.com/512/3688/3688609.png" class="tab-icon"> 
+ Govt. Jobs
     </div>
     <div class="tab" onclick="switchView(event, 'private')">
-      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-      Private Sch.
+       <img src="https://cdn-icons-png.flaticon.com/512/18550/18550026.png" class="tab-icon"> 
+Private Sch.
     </div>
     <div class="tab" onclick="switchView(event, 'govtsch')">
-      <svg class="tab-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-      Govt Sch.
+        <img src="https://cdn-icons-png.flaticon.com/512/4720/4720515.png" class="tab-icon"> 
+ Govt Sch.
     </div>
   </div>
 
@@ -1052,65 +1046,201 @@
   <!-- DYNAMIC TAB VIEWS -->
   <div class="view-container" id="main-view-target">
     <!-- ADMISSION TAB -->
-    <div id="admission" class="tab-content">
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="WBCAP">
-        <div>
-          <h3>WBCAP 2026</h3>
-          <p>Mop Up Round Registration Ongoing (7th-16th July)</p>
-        </div>
-        <button class="apply" onclick="window.open('#','_blank')">Apply</button>
-        <div class="date">JUL 16</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="WBJEE">
-        <div>
-          <h3>WBJEE Counselling 2026</h3>
-          <p>BE/BTech Admission 1st Round</p>
-        </div>
-        <button class="apply" onclick="window.open('#','_blank')">Apply</button>
-        <div class="date">JUL 11</div>
-      </div>
+<div id="admission" class="tab-content">
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="CLAT">
+    <div>
+      <h3>CLAT - National Law Admission 2026</h3>
+      <p>UG BA LLB From Central University</p>
     </div>
+    <button class="apply" onclick="window.open('https://consortiumofnlus.ac.in/','_blank')">Apply</button>
+    <div class="date">OCT 31</div>
+  </div>
+
+  <div class="card">
+    <img src="https://i.ibb.co/rKQhWWyb/logo.png" alt="NSOU">
+    <div>
+      <h3>NSOU Admission 2026-27</h3>
+      <p>UG/PG Distance Course</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.wbnsou.ac.in/','_blank')">Apply</button>
+    <div class="date">AUG 31</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="WBCAP">
+    <div>
+      <h3>WBCAP 2026 (Phase - 3)</h3>
+      <p>Special Round for Vacant Seats</p>
+    </div>
+    <button class="apply" onclick="window.open('https://wbcap.in/','_blank')">Apply</button>
+    <div class="date">AUG 08</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="DELED">
+    <div>
+      <h3>WB DElEd Admission 2026</h3>
+      <p>12th Pass, 50% Marks</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.wbbpe.org/','_blank')">Apply</button>
+    <div class="date">AUG 07</div>
+  </div>
+</div>
 
     <!-- GOVT JOBS TAB -->
-    <div id="govt" class="tab-content hide">
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="SSC">
-        <div>
-          <h3>SSC GD 2026</h3>
-          <p>Constable Recruitment, 10th Pass</p>
-        </div>
-        <button class="apply">Apply</button>
-        <div class="date">AUG 02</div>
-      </div>
+<div id="govt" class="tab-content hide">
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="RRB">
+    <div>
+      <h3>RRB Section Controller</h3>
+      <p>Railway Recruitment (Graduate)</p>
     </div>
+    <button class="apply" onclick="window.open('https://www.rrbcdg.gov.in/','_blank')">Apply</button>
+    <div class="date">AUG 14</div>
+  </div>
 
-    <!-- PRIVATE SCHOLARSHIP TAB -->
-    <div id="private" class="tab-content hide">
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="Tata">
-        <div>
-          <h3>Tata Trust Scholarship</h3>
-          <p>For UG Students, Family Income &lt; 4L</p>
-        </div>
-        <button class="apply">Apply</button>
-        <div class="date">SEP 15</div>
-      </div>
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="ISRO">
+    <div>
+      <h3>ISRO Recruitment</h3>
+      <p>Upper Division Clerk & Assistant</p>
     </div>
+    <button class="apply" onclick="window.open('https://www.isro.gov.in/','_blank')">Apply</button>
+    <div class="date">AUG 16</div>
+  </div>
 
-    <!-- GOVT SCHOLARSHIP TAB -->
-    <div id="govtsch" class="tab-content hide">
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064423.png" alt="SVMCM">
-        <div>
-          <h3>SVMCM 2026</h3>
-          <p>Swami Vivekananda Merit cum Means</p>
-        </div>
-        <button class="apply">Apply</button>
-        <div class="date">OCT 05</div>
-      </div>
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="IBPS">
+    <div>
+      <h3>IBPS Clerk Recruitment 2026</h3>
+      <p>Govt Bank | 11k+ Vacancies</p>
     </div>
+    <button class="apply" onclick="window.open('https://www.ibps.in/','_blank')">Apply</button>
+    <div class="date">AUG 21</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Saha">
+    <div>
+      <h3>Saha Institute Kolkata</h3>
+      <p>Clerk, Assistant, Scientist Various Vacancies - 10th Pass to M.Sc</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.saha.ac.in/','_blank')">Apply</button>
+    <div class="date">SEP 15</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Panchayat">
+    <div>
+      <h3>Panchayat Recruitment 2026</h3>
+      <p>Registration Soon through WBPSC (10th/12th/Graduate)</p>
+    </div>
+    <button class="apply" onclick="window.open('https://wbpsc.in/','_blank')">Apply</button>
+    <div class="date">SEP 30</div>
+  </div>
+</div>
+
+   <!-- PRIVATE SCHOLARSHIP TAB -->
+<div id="private" class="tab-content hide">
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Kotak">
+    <div>
+      <h3>Kotak Kanya Scholarship</h3>
+      <p>12th Pass UG Girls (Professional Courses) - 75% Marks</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.buddy4study.com/scholarship/kotak-kanya-scholarship','_blank')">Apply</button>
+    <div class="date">AUG 31</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="SBI">
+    <div>
+      <h3>SBI Asha Scholarship</h3>
+      <p>School (IX-XII), UG, PG, Medical, IIT, IIM - 75% Marks</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.buddy4study.com/scholarship/sbi-asha-scholarship-program','_blank')">Apply</button>
+    <div class="date">SEP 04</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="GP Birla">
+    <div>
+      <h3>GP Birla Scholarship</h3>
+      <p>HS Pass - 85% Marks</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.gpbirlascholarship.com/','_blank')">Apply</button>
+    <div class="date">AUG 15</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Hero">
+    <div>
+      <h3>Hero Ram Kanth Scholarship</h3>
+      <p>12th Pass - 80% Marks</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.buddy4study.com/scholarship/hero-rama-kant-scholarship','_blank')">Apply</button>
+    <div class="date">AUG 31</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Jindal">
+    <div>
+      <h3>Sitaram Jindal Scholarship</h3>
+      <p>10th Pass, 12th Pass, UG PG 75% Marks</p>
+    </div>
+    <button class="apply" onclick="window.open('https://www.sitaramjindalfoundation.org/','_blank')">Apply</button>
+    <div class="date">AUG 31</div>
+  </div>
+</div>
+
+   <!-- GOVT SCHOLARSHIP TAB -->
+<div id="govtsch" class="tab-content hide">
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="SVMCM">
+    <div>
+      <h3>SVMCM Scholarship</h3>
+      <p>Swami Vivekananda Scholarship: 10th, HS, UG, PG 60%</p>
+    </div>
+    <button class="apply" onclick="window.open('https://svmcm.wbhed.gov.in/','_blank')">Apply</button>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="CM">
+    <div>
+      <h3>Chief Minister Scholarship</h3>
+      <p>Financial aid offered by West Bengal CM Relief Fund.</p>
+    </div>
+    <button class="apply" onclick="window.open('https://cmrf.wb.gov.in/','_blank')">Apply</button>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Oasis">
+    <div>
+      <h3>Oasis Scholarship</h3>
+      <p>Scholarship for SC, ST, and OBC students by West Bengal govt</p>
+    </div>
+    <button class="apply" onclick="window.open('https://oasis.gov.in/','_blank')">Apply</button>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Aikyashree">
+    <div>
+      <h3>Aikyashree Scholarship</h3>
+      <p>Scholarship for minority students in West Bengal from WBMDFC.</p>
+    </div>
+    <button class="apply" onclick="window.open('https://wbmdfcscholarship.org/','_blank')">Apply</button>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="NSP">
+    <div>
+      <h3>National Scholarship Portal</h3>
+      <p>Central govt scholarships for SC/ST/OBC and minority students</p>
+    </div>
+    <button class="apply" onclick="window.open('https://scholarships.gov.in/','_blank')">Apply</button>
+  </div>
+</div>
   </div>
 <div style="padding: 10px;">
   <!-- SHOWCASE CAROUSEL SLIDES -->
@@ -1135,6 +1265,8 @@
     </div>
   </div>
 </div>
+<img src="https://i.ibb.co/BHdJmMvY/IMG-20260813-233539.png" style="width: 100%;">
+
 </main>
 
 <!-- PROFILE UPDATE POPUP -->
