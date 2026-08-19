@@ -3,44 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Admin Panel - TG Wallet</title>
     <!-- QR Code Reader Library -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body{background:#f4f6f9;color:#0f172a;display:flex;justify-content:center;padding:20px;font-family:sans-serif;}
-        .panel{width:100%;max-width:400px;background:#fff;padding:24px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);position:relative;}
-        input{width:100%;padding:12px;margin:8px 0;border:2px solid #e2e8f0;border-radius:8px;box-sizing:border-box;font-weight:700;}
-        button{width:100%;background:#0f172a;color:#fff;border:none;padding:14px;border-radius:8px;font-weight:700;cursor:pointer;margin-top:10px;transition:opacity 0.2s;}
-        button:disabled{opacity:0.6;cursor:not-allowed;}
-        .btn-sec{background:#FFD60A;color:#000;}
-        .btn-qr{background:#3b82f6;color:#fff;}
-        .btn-danger{background:#ef4444;color:#fff;}
-        
+        :root {
+            --bg-slate: #f8fafc;
+            --panel-bg: #ffffff;
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --yellow-accent: #eab308;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-slate);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px 12px;
+        }
+
+        .panel {
+            width: 100%;
+            max-width: 440px;
+            background: var(--panel-bg);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .section-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 12px;
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 12px 12px 38px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+        }
+
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.92;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-sec {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .btn-sec:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-qr {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .btn-qr:hover {
+            background: #c7d2fe;
+        }
+
+        .btn-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
         /* Balance Display Card */
         .balance-card {
-            background: #0f172a;
-            color: #fff;
+            background: var(--primary);
+            color: #ffffff;
             padding: 16px;
             border-radius: 12px;
-            margin-top: 10px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
-        .balance-card p { font-size: 13px; color: #94a3b8; font-weight: 600; }
-        .balance-card h2 { font-size: 28px; margin-top: 4px; color: #FFD60A; }
+
+        .balance-card p {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .balance-card h2 {
+            font-size: 26px;
+            color: #facc15;
+            margin-top: 4px;
+        }
 
         /* QR Scanner Container */
         #qr-reader-container {
-            margin: 15px 0;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
-            border: 2px dashed #cbd5e1;
-            padding: 10px;
-        }
-        #qr-reader {
-            width: 100%;
+            border: 2px dashed var(--border-color);
+            padding: 8px;
         }
 
-        /* Custom Toast Notification */
+        /* Toast Notification */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -50,20 +210,23 @@
             width: 90%;
             max-width: 360px;
         }
+
         .toast {
             background: #0f172a;
-            color: #fff;
+            color: #ffffff;
             padding: 12px 16px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-size: 14px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            font-size: 13px;
             font-weight: 600;
             animation: fadeIn 0.3s ease-in-out;
             margin-bottom: 8px;
         }
-        .toast.error { border-left: 4px solid #ef4444; }
-        .toast.success { border-left: 4px solid #10b981; }
-        .toast.info { border-left: 4px solid #FFD60A; color: #000; }
+
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.info { border-left: 4px solid var(--yellow-accent); color: #fff; }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -78,6 +241,7 @@
             pointer-events: none;
             border-color: #e2e8f0 !important;
         }
+
         .skeleton::after {
             content: "";
             position: absolute;
@@ -92,6 +256,7 @@
             );
             animation: shimmer 1.5s infinite;
         }
+
         @keyframes shimmer {
             100% { transform: translateX(100%); }
         }
@@ -102,36 +267,115 @@
 <div id="toast-container"></div>
 
 <div class="panel">
-    <h2>Admin Panel</h2>
-    <hr style="margin:15px 0;border:1px solid #f1f5f9;">
-
-    <!-- NEW: Check Balance Section -->
-    <h3>Check Customer Balance</h3>
-    <input type="text" id="checkUid" placeholder="e.g. TG0001" style="text-transform:uppercase;">
-    <button id="btnCheckBal" onclick="checkBalance()" class="btn-sec">Check Balance</button>
-    <div id="balanceDisplay" class="balance-card" style="display:none;">
-        <p id="dispUserLabel">User ID: -</p>
-        <h2>₹<span id="dispUserBalance">0</span></h2>
+    <div class="header-title">
+        <i data-lucide="shield-check" style="width: 26px; height: 26px; color: var(--accent);"></i>
+        <span>Admin Management</span>
+    </div>
+  <!-- Add / Deduct Balance -->
+    <div class="section-card">
+        <div class="section-header">
+            <i data-lucide="wallet" style="width: 18px; height: 18px; color: var(--accent);"></i>
+            <span>Adjust Wallet Balance</span>
+        </div>
+        <button id="btnScanQR" class="btn-qr" onclick="toggleQRScanner()">
+            <i data-lucide="qr-code" style="width: 16px; height: 16px;"></i> Scan User QR Code
+        </button>
+        <div id="qr-reader-container" style="display:none;">
+            <div id="qr-reader"></div>
+            <button onclick="stopQRScanner()" class="btn-danger" style="margin-top:8px;">
+                <i data-lucide="x" style="width: 16px; height: 16px;"></i> Close Camera
+            </button>
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="user"></i>
+            <input type="text" id="targetUid" placeholder="Target User ID" style="text-transform:uppercase;">
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="plus-minus"></i>
+            <input type="number" id="amount" placeholder="Amount (e.g. 500 or -500)">
+        </div>
+        <button id="btnUpdate" onclick="updateBalance()" class="btn-accent">
+            <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> Update Balance
+        </button>
+    </div>
+    <!-- Check Customer Details Section -->
+    <div class="section-card">
+        <div class="section-header">
+            <i data-lucide="search" style="width: 18px; height: 18px; color: var(--accent);"></i>
+            <span>Check Customer Details</span>
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="user"></i>
+            <input type="text" id="checkUid" placeholder="User ID (e.g. TG0001)" style="text-transform:uppercase;">
+        </div>
+        <button id="btnCheckBal" onclick="checkBalance()" class="btn-sec">
+            <i data-lucide="scan-eye" style="width: 16px; height: 16px;"></i> Check Details
+        </button>
+        <div id="balanceDisplay" class="balance-card" style="display:none;">
+            <p id="dispUserLabel">User ID: -</p>
+            <p id="dispUserKey">Key: -</p>
+            <h2>₹<span id="dispUserBalance">0</span></h2>
+        </div>
     </div>
 
-    <hr style="margin:25px 0;border:1px solid #f1f5f9;">
-    
-    <h3>Create Custom ID</h3>
-    <input type="text" id="createUid" placeholder="e.g. CUSTOM01" style="text-transform:uppercase;">
-    <button id="btnCreate" onclick="createID()" class="btn-sec">Create Custom ID</button>
-    
-    <h3 style="margin-top:25px;">Add / Deduct Coins</h3>
-    
-    <!-- QR Scanner Toggle -->
-    <button id="btnScanQR" class="btn-qr" onclick="toggleQRScanner()">📷 Scan User QR Code</button>
-    <div id="qr-reader-container" style="display:none;">
-        <div id="qr-reader"></div>
-        <button onclick="stopQRScanner()" class="btn-danger" style="margin-top:8px;">Close Camera</button>
+    <!-- Create Custom Gift Code Section -->
+    <div class="section-card" style="border-color: #fde68a; background: #fffbeb;">
+        <div class="section-header" style="color: #b45309;">
+            <i data-lucide="gift" style="width: 18px; height: 18px; color: #d97706;"></i>
+            <span>Generate Gift Code 🎁</span>
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="ticket"></i>
+            <input type="text" id="giftCodeName" placeholder="Code Name (e.g. GIFT50)" style="text-transform:uppercase;">
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="indian-rupee"></i>
+            <input type="number" id="giftCodeAmount" placeholder="Amount (e.g. 50)">
+        </div>
+        <button id="btnCreateGift" onclick="createGiftCode()" class="btn-accent" style="background: #d97706;">
+            <i data-lucide="plus-circle" style="width: 16px; height: 16px;"></i> Create Gift Code
+        </button>
     </div>
 
-    <input type="text" id="targetUid" placeholder="e.g. TG0001" style="text-transform:uppercase;">
-    <input type="number" id="amount" placeholder="e.g. 500 (or -500)">
-    <button id="btnUpdate" onclick="updateBalance()">Update Balance</button>
+    <!-- Create Custom ID with Key -->
+    <div class="section-card">
+        <div class="section-header">
+            <i data-lucide="user-plus" style="width: 18px; height: 18px; color: var(--accent);"></i>
+            <span>Create Custom User ID</span>
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="id-card"></i>
+            <input type="text" id="createUid" placeholder="User ID (e.g. CUSTOM01)" style="text-transform:uppercase;">
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="key"></i>
+            <input type="password" id="createKey" placeholder="6-Digit Key (e.g. 123456)" maxlength="6" inputmode="numeric">
+        </div>
+        <button id="btnCreate" onclick="createID()" class="btn-sec">
+            <i data-lucide="check" style="width: 16px; height: 16px;"></i> Register Custom ID
+        </button>
+    </div>
+
+  
+
+    <!-- Update User Security Key -->
+    <div class="section-card">
+        <div class="section-header">
+            <i data-lucide="lock" style="width: 18px; height: 18px; color: var(--accent);"></i>
+            <span>Update User Key</span>
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="user"></i>
+            <input type="text" id="updateKeyUid" placeholder="User ID" style="text-transform:uppercase;">
+        </div>
+        <div class="input-wrapper">
+            <i data-lucide="key-round"></i>
+            <input type="password" id="newKey" placeholder="New 6-Digit Key" maxlength="6" inputmode="numeric">
+        </div>
+        <button id="btnUpdateKey" onclick="updateUserKey()" class="btn-sec">
+            <i data-lucide="shield-alert" style="width: 16px; height: 16px;"></i> Reset Key
+        </button>
+    </div>
 </div>
 
 <script type="module">
@@ -151,19 +395,19 @@
     const db = getFirestore(app);
     let html5QrCode = null;
 
-    // Custom Alert Toast Function
+    document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+    });
+
     function showAlert(msg, type = "info") {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
         toast.textContent = msg;
         container.appendChild(toast);
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
+        setTimeout(() => toast.remove(), 3000);
     }
 
-    // Toggle Skeleton Effect for Buttons and Inputs during Loading
     function setSkeleton(elementId, isLoading) {
         const elem = document.getElementById(elementId);
         if (isLoading) {
@@ -175,7 +419,7 @@
         }
     }
 
-    // NEW: Function to Check Balance
+    // Check Balance Function
     window.checkBalance = async function() {
         const inputElem = document.getElementById('checkUid');
         const uid = inputElem.value.trim().toUpperCase();
@@ -191,9 +435,10 @@
             const snap = await getDoc(docRef);
 
             if(snap.exists()) {
-                const bal = snap.data().balance || 0;
+                const data = snap.data();
                 document.getElementById('dispUserLabel').textContent = `User ID: ${uid}`;
-                document.getElementById('dispUserBalance').textContent = bal;
+                document.getElementById('dispUserKey').textContent = `Security Key: ${data.key || "Not Set"}`;
+                document.getElementById('dispUserBalance').textContent = data.balance || 0;
                 displayCard.style.display = 'block';
                 showAlert(`Found user ${uid}!`, "success");
             } else {
@@ -201,20 +446,65 @@
                 showAlert("User ID not found!", "error");
             }
         } catch(e) {
-            showAlert("Error fetching balance: " + e.message, "error");
+            showAlert("Error: " + e.message, "error");
         } finally {
             setSkeleton('btnCheckBal', false);
             setSkeleton('checkUid', false);
         }
     };
 
+    // Create Gift Code System Function
+    window.createGiftCode = async function() {
+        const codeInput = document.getElementById('giftCodeName');
+        const amountInput = document.getElementById('giftCodeAmount');
+        const code = codeInput.value.trim().toUpperCase();
+        const amount = Number(amountInput.value);
+
+        if (!code) return showAlert("Please enter a gift code name!", "error");
+        if (isNaN(amount) || amount <= 0) return showAlert("Please enter a valid gift amount!", "error");
+
+        setSkeleton('btnCreateGift', true);
+        setSkeleton('giftCodeName', true);
+        setSkeleton('giftCodeAmount', true);
+
+        try {
+            const codeRef = doc(db, "gift_codes", code);
+            const snap = await getDoc(codeRef);
+
+            if (snap.exists()) {
+                showAlert(`Gift Code ${code} already exists!`, "error");
+            } else {
+                await setDoc(codeRef, {
+                    amount: amount,
+                    active: true,
+                    usedBy: []
+                });
+                showAlert(`Gift Code '${code}' created for ₹${amount}!`, "success");
+                codeInput.value = '';
+                amountInput.value = '';
+            }
+        } catch(e) {
+            showAlert("Failed to create gift code: " + e.message, "error");
+        } finally {
+            setSkeleton('btnCreateGift', false);
+            setSkeleton('giftCodeName', false);
+            setSkeleton('giftCodeAmount', false);
+        }
+    };
+
+    // Create Custom ID
     window.createID = async function() {
-        const inputElem = document.getElementById('createUid');
-        const uid = inputElem.value.trim().toUpperCase();
+        const uidInput = document.getElementById('createUid');
+        const keyInput = document.getElementById('createKey');
+        const uid = uidInput.value.trim().toUpperCase();
+        const key = keyInput.value.trim();
+
         if(!uid) return showAlert("Please enter an ID!", "error");
+        if(!/^\d{6}$/.test(key)) return showAlert("Key must be 6 numeric digits!", "error");
 
         setSkeleton('btnCreate', true);
         setSkeleton('createUid', true);
+        setSkeleton('createKey', true);
 
         try {
             const docRef = doc(db, "users", uid);
@@ -222,18 +512,21 @@
             if(snap.exists()) {
                 showAlert("ID already exists!", "error");
             } else {
-                await setDoc(docRef, { balance: 0, lastClaimed: null });
-                showAlert(`Successfully created ${uid}!`, "success");
-                inputElem.value = '';
+                await setDoc(docRef, { balance: 0, key: key, lastClaimed: null });
+                showAlert(`Created ${uid} successfully!`, "success");
+                uidInput.value = '';
+                keyInput.value = '';
             }
         } catch(e) {
-            showAlert("Error creating ID: " + e.message, "error");
+            showAlert("Error: " + e.message, "error");
         } finally {
             setSkeleton('btnCreate', false);
             setSkeleton('createUid', false);
+            setSkeleton('createKey', false);
         }
     };
 
+    // Update Balance
     window.updateBalance = async function() {
         const uidInput = document.getElementById('targetUid');
         const amtInput = document.getElementById('amount');
@@ -255,17 +548,15 @@
                 const currentBal = snap.data().balance || 0;
                 const newBal = currentBal + amt;
                 await updateDoc(docRef, { balance: newBal });
-                showAlert(`Success! Updated ${uid} balance to ₹${newBal}`, "success");
+                showAlert(`Updated ${uid} balance to ₹${newBal}`, "success");
                 
-                // If this is the currently checked user, update their displayed balance as well
                 if(document.getElementById('checkUid').value.trim().toUpperCase() === uid) {
                     document.getElementById('dispUserBalance').textContent = newBal;
                 }
-
                 amtInput.value = '';
             }
         } catch(e) {
-            showAlert("Error updating balance: " + e.message, "error");
+            showAlert("Error: " + e.message, "error");
         } finally {
             setSkeleton('btnUpdate', false);
             setSkeleton('targetUid', false);
@@ -273,7 +564,44 @@
         }
     };
 
-    // QR Code Camera Functions
+    // Update User Security Key
+    window.updateUserKey = async function() {
+        const uidInput = document.getElementById('updateKeyUid');
+        const keyInput = document.getElementById('newKey');
+        const uid = uidInput.value.trim().toUpperCase();
+        const key = keyInput.value.trim();
+
+        if(!uid) return showAlert("Please enter a User ID!", "error");
+        if(!/^\d{6}$/.test(key)) return showAlert("Key must be 6 numeric digits!", "error");
+
+        setSkeleton('btnUpdateKey', true);
+        setSkeleton('updateKeyUid', true);
+        setSkeleton('newKey', true);
+
+        try {
+            const docRef = doc(db, "users", uid);
+            const snap = await getDoc(docRef);
+            if(!snap.exists()) {
+                showAlert("User ID not found!", "error");
+            } else {
+                await updateDoc(docRef, { key: key });
+                showAlert(`Updated key for ${uid}!`, "success");
+                if(document.getElementById('checkUid').value.trim().toUpperCase() === uid) {
+                    document.getElementById('dispUserKey').textContent = `Security Key: ${key}`;
+                }
+                uidInput.value = '';
+                keyInput.value = '';
+            }
+        } catch(e) {
+            showAlert("Error: " + e.message, "error");
+        } finally {
+            setSkeleton('btnUpdateKey', false);
+            setSkeleton('updateKeyUid', false);
+            setSkeleton('newKey', false);
+        }
+    };
+
+    // QR Scanner logic
     window.toggleQRScanner = function() {
         const container = document.getElementById('qr-reader-container');
         if (container.style.display === 'none' || container.style.display === '') {
@@ -288,24 +616,27 @@
         html5QrCode = new Html5Qrcode("qr-reader");
         html5QrCode.start(
             { facingMode: "environment" },
-            {
-                fps: 10,
-                qrbox: { width: 200, height: 200 }
-            },
+            { fps: 10, qrbox: { width: 200, height: 200 } },
             (decodedText) => {
-                const scannedUid = decodedText.trim().toUpperCase();
+                let scannedUid = decodedText.trim();
+                if(scannedUid.includes("UID:")) {
+                    const parts = scannedUid.split('|');
+                    const uidPart = parts.find(p => p.startsWith("UID:"));
+                    if(uidPart) scannedUid = uidPart.replace("UID:", "");
+                }
+
+                scannedUid = scannedUid.toUpperCase();
                 document.getElementById('targetUid').value = scannedUid;
                 document.getElementById('checkUid').value = scannedUid;
+                document.getElementById('updateKeyUid').value = scannedUid;
+                
                 showAlert(`Scanned UID: ${scannedUid}`, "success");
                 stopQRScanner();
-                // Automatically fetch balance when scanned
                 checkBalance();
             },
-            (errorMessage) => {
-                // QR scan frame parsing errors (ignored)
-            }
-        ).catch(err => {
-            showAlert("Camera permission denied or unavailable", "error");
+            () => {}
+        ).catch(() => {
+            showAlert("Camera permission denied", "error");
             stopQRScanner();
         });
     }
@@ -315,7 +646,7 @@
             html5QrCode.stop().then(() => {
                 html5QrCode.clear();
                 document.getElementById('qr-reader-container').style.display = 'none';
-            }).catch(err => {
+            }).catch(() => {
                 document.getElementById('qr-reader-container').style.display = 'none';
             });
         } else {
