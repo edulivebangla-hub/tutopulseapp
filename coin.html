@@ -1,410 +1,865 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Payments - TutoGenius</title>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<style>
-:root {
-  --primary: #FFD60A;
-  --primary-dark: #e5be00;
-  --accent: #1e40af;
-  --bg: #f4f6f9;
-  --card-bg: #ffffff;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --radius: 16px;
-  --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TG Wallet</title>
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-light: #e6f7ff;
+            --blue-primary: #0066ff;
+            --blue-hover: #0052cc;
+            --green-btn: #00c853;
+            --red-btn: #ff3333;
+            --text-dark: #0f172a;
+        }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;-webkit-tap-highlight-color: transparent;}
-body{background:var(--bg);color:var(--text-main);display:flex;justify-content:center;min-height:100vh;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-.app-wrapper {
-  width: 100%;
-  max-width: 480px;
-  background: var(--bg);
-  min-height: 100vh;
-  position: relative;
-  box-shadow: 0 0 40px rgba(0,0,0,0.08);
-}
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-.header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px;background:#fff;position:sticky;top:0;z-index:10;
-  border-bottom:1px solid #f1f5f9;
-}
-.header .left{display:flex;align-items:center;gap:14px;}
-.header .left i{width:22px;height:22px;cursor:pointer;color:var(--text-main);}
-.header h1{font-size: 19px; font-weight: 700; color: var(--text-main);}
-.help-btn{
-  display:flex;align-items:center;gap:6px;border:1px solid #e2e8f0;
-  padding:7px 14px;border-radius:20px;font-size: 13px; font-weight: 600; cursor:pointer;background:#fff;
-  transition: all 0.2s ease;
-}
-.help-btn:active { background: #f8fafc; transform: scale(0.96); }
-.help-btn i{width:16px;height:16px;color: var(--accent);}
+        /* Mobile Container Frame */
+        .app-container {
+            width: 100%;
+            max-width: 390px;
+            height: 100vh;
+            max-height: 844px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
 
-.container{padding:18px;}
-.section-title{font-size: 14px; font-weight: 700; margin: 20px 0 10px 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
+        /* Top Header Navigation */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background-color: var(--bg-light);
+        }
 
-.card{
-  background:var(--card-bg);border-radius:var(--radius);padding:18px;margin-bottom:14px;
-  box-shadow:var(--shadow); border: 1px solid #f1f5f9;
-}
-.wallet-card {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-.wallet-card::after {
-  content: '';
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 120px;
-  height: 120px;
-  background: rgba(255, 214, 10, 0.1);
-  border-radius: 50%;
-}
-.wallet-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.wallet-icon-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.wallet-header i{width:22px;height:22px;color: var(--primary);}
-.wallet-title{font-size: 15px; font-weight: 600; opacity: 0.9;}
-.low-balance{font-size: 12px; font-weight: 500; color: #fca5a5; margin-top: 2px;}
-.balance{font-size: 32px; font-weight: 800; margin: 12px 0 16px; color: #fff;}
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #b3e5fc;
+            background: #fff;
+            color: var(--blue-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
 
-.add-money-btn{
-  border:none; padding:10px 18px; border-radius:30px;
-  display:inline-flex; align-items:center; gap:8px; font-size: 14px; font-weight: 700;
-  cursor:pointer; background: var(--primary); color: #000;
-  transition: transform 0.2s ease;
-}
-.add-money-btn:active { transform: scale(0.96); }
-.add-money-btn i{width:18px;height:18px;}
+        .top-action-btn {
+            background-color: var(--green-btn);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
 
-.option-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 0;border-bottom:1px solid #f1f5f9;cursor:pointer;
-}
-.option-row:last-child{border:none; padding-bottom: 0;}
-.option-row:first-child{padding-top: 0;}
-.option-row:active { opacity: 0.7; }
-.option-left{display:flex;align-items:center;gap:14px;}
-.brand-icon {
-  width: 40px; height: 40px; border-radius: 10px; display: flex;
-  align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
-}
-.paytm-bg { background: #00baf2; color: #fff; }
-.phonepe-bg { background: #5f259f; color: #fff; }
-.gpay-bg { background: #ea4335; color: #fff; }
-.whatsapp-bg { background: #25d366; color: #fff; }
+        .top-action-btn.switch {
+            background-color: var(--red-btn);
+        }
 
-.option-title{font-size: 15px; font-weight: 600; color: var(--text-main);}
-.option-desc{font-size: 12px; font-weight: 500; color: #16a34a; margin-top:2px;}
-.chevron { width: 18px; height: 18px; color: var(--text-muted); }
+        /* Views */
+        .view {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
 
-/* ADD MONEY MODAL */
-.addmoney-page{
-  display:none;position:fixed;inset:0;background:#fff;z-index:100;
-  flex-direction:column; max-width: 480px; margin: 0 auto;
-  animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow-y: auto;
-}
-.addmoney-page.show{display:flex;}
-@keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .hidden {
+            display: none !important;
+        }
 
-.addmoney-header{padding:16px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:14px;}
-.addmoney-header i{width:22px;height:22px;cursor:pointer;}
-.addmoney-header h2{font-size: 18px; font-weight: 700;}
-.addmoney-content{padding:24px 20px;flex:1;}
+        /* --- LOGIN & REGISTRATION STYLE --- */
+        .auth-view {
+            background-color: var(--bg-light);
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 40px;
+        }
 
-.step-card {
-  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;
-  padding: 16px; margin-bottom: 20px;
-}
-.step-title {
-  font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase;
-  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-}
+        .auth-title {
+            color: var(--blue-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
 
-.input-wrapper { position: relative; margin-bottom: 14px; }
-.currency-symbol { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 22px; font-weight: 700; color: var(--text-main); }
-.amount-input{
-  width:100%; padding: 12px 12px 12px 40px; border: 2px solid #e2e8f0; border-radius: 12px;
-  font-size: 22px; font-weight: 800; color: var(--text-main); outline: none;
-}
-.amount-input:focus { border-color: var(--accent); }
+        .input-group {
+            width: 100%;
+            margin-bottom: 16px;
+            text-align: center;
+        }
 
-.amount-btns{display:flex;gap:8px;justify-content:center;margin-bottom:10px;}
-.amount-btn{
-  flex: 1; border: 1px solid #e2e8f0; padding: 10px 0; border-radius: 10px;
-  font-size: 13px; font-weight: 700; cursor: pointer; background: #fff; text-align: center;
-}
-.amount-btn.active { border-color: var(--primary); background: var(--primary); color: #000; }
+        .custom-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--blue-primary);
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            background: #fff;
+            color: #333;
+        }
 
-.pay-external-btn {
-  width: 100%; background: #0f172a; color: #fff; border: none; padding: 14px;
-  border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.pay-external-btn:active { opacity: 0.9; }
+        .input-label {
+            color: var(--blue-primary);
+            font-weight: 800;
+            font-size: 16px;
+            margin-top: 6px;
+        }
 
-.payment-id-input {
-  width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px;
-  font-size: 16px; font-weight: 600; outline: none; margin-bottom: 12px; text-transform: uppercase;
-}
-.payment-id-input:focus { border-color: var(--accent); }
+        .btn-submit {
+            background-color: var(--blue-primary);
+            color: white;
+            border: none;
+            width: 140px;
+            padding: 10px 0;
+            border-radius: 20px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: 15px;
+            cursor: pointer;
+        }
 
-.verify-btn {
-  width: 100%; background: var(--primary); color: #000; border: none; padding: 16px;
-  border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 4px 12px rgba(255, 214, 10, 0.4);
-}
-.verify-btn:active { background: var(--primary-dark); }
+        /* --- DASHBOARD VIEW STYLE --- */
+        .dashboard-view {
+            background-color: #ffffff;
+            padding: 0;
+        }
 
-/* HELP MODAL */
-.help-modal{position:fixed;inset:0;background:rgba(15, 23, 42, 0.5);backdrop-filter: blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:200;}
-.help-modal.show{display:flex;}
-.help-box{
-  background:#fff; width:100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px 20px 32px;
-  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.help-box h3{font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center;}
-.help-option{
-  display:flex; align-items:center; gap:14px; padding:16px; border-radius:14px;
-  background:#f8fafc; margin-bottom:12px; cursor:pointer; text-decoration:none; color:var(--text-main);
-  border: 1px solid #f1f5f9;
-}
-.help-option i{width:22px;height:22px;color: var(--accent);}
-.help-option .text h4{font-size: 15px; font-weight: 600;}
-.help-option .text p{font-size: 13px; color: var(--text-muted); margin-top:2px;}
-</style>
+        .top-card-section {
+            background-color: var(--bg-light);
+            padding: 20px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+
+        .user-qr-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .qr-box {
+            background: #fff;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .user-info-text {
+            color: var(--blue-primary);
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .user-info-text span {
+            color: #000;
+        }
+
+        .btn-small-blue {
+            background-color: var(--blue-primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 6px;
+            width: fit-content;
+        }
+
+        /* Wallet Balance Pill */
+        .wallet-pill {
+            background: #fff;
+            border-radius: 30px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .wallet-pill-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wallet-icon {
+            width: 36px;
+            height: 36px;
+            background: #22c55e;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .wallet-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        .wallet-amount {
+            font-size: 15px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        .pill-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .refresh-icon {
+            color: var(--blue-primary);
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-add {
+            background-color: var(--blue-primary);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Dashboard Main Action Grid */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .action-card {
+            background-color: #f1f8fe;
+            border-radius: 12px;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .action-card-icon {
+            color: var(--blue-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-card-title {
+            color: var(--blue-primary);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        /* Footer Payments Display */
+        .payments-footer {
+            margin-top: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            font-weight: 800;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .phonepe { color: #5f259f; }
+        .paytm { color: #00baf2; }
+        .gpay { color: #5f6368; }
+
+        /* Toast Popup */
+        #toast-container {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: 85%;
+        }
+
+        .toast {
+            background: #0f172a;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+        }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.success { border-left: 4px solid #22c55e; }
+
+        /* --- POPUP / MODAL OVERLAY STYLES --- */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 320px;
+            border-radius: 20px;
+            padding: 24px 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            animation: scaleUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-icon-badge {
+            width: 52px;
+            height: 52px;
+            background-color: var(--bg-light);
+            color: var(--blue-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .modal-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: -6px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        .btn-modal-cancel {
+            flex: 1;
+            background-color: #f1f5f9;
+            color: #64748b;
+            border: none;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-modal-confirm {
+            flex: 1;
+            background-color: var(--blue-primary);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="app-wrapper">
-  <!-- MAIN PAGE -->
-  <div id="mainPage">
-    <header class="header">
-      <div class="left">
-        <i data-lucide="arrow-left" onclick="window.history.back()"></i>
-        <h1>Payments</h1>
-      </div>
-      <div class="help-btn" onclick="openHelp()">
-        <i data-lucide="help-circle"></i> Help
-      </div>
-    </header>
+<div class="app-container">
+    <div id="toast-container"></div>
 
-    <div class="container">
-      <h2 class="section-title">Wallets</h2>
-      <div class="card wallet-card">
-        <div class="wallet-header">
-          <div class="wallet-icon-box">
-            <i data-lucide="wallet"></i>
-          </div>
-          <div>
-            <div class="wallet-title">TutoGenius Wallet</div>
-            <div class="low-balance" id="lowBalanceText">Low Balance: ₹0</div>
-          </div>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="back-btn">
+            <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
         </div>
-        <div class="balance">₹<span id="balance">0</span></div>
-        <button class="add-money-btn" onclick="openAddMoney()">
-          <i data-lucide="plus"></i> Add Money
-        </button>
-      </div>
-
-      <h2 class="section-title">Pay via Any UPI App</h2>
-  
-  <!-- ADD MONEY PAGE -->
-  <div class="addmoney-page" id="addMoneyPage">
-    <div class="addmoney-header">
-      <i data-lucide="arrow-left" onclick="closeAddMoney()"></i>
-      <h2>Add Money to Wallet</h2>
+        <button id="topNavBtn" class="top-action-btn" onclick="toggleAuthMode()">Create New</button>
     </div>
-    
-    <div class="addmoney-content">
-      
-      <!-- STEP 1: PAYMENT SELECTION -->
-      <div class="step-card">
-        <div class="step-title">
-          <i data-lucide="1-circle"></i> Step 1: Select Amount & Pay
-        </div>
-        <div class="input-wrapper">
-          <span class="currency-symbol">₹</span>
-          <input type="number" id="amountInput" class="amount-input" placeholder="100" value="100">
-        </div>
-        <div class="amount-btns">
-          <div class="amount-btn active" onclick="setAmount(100, this)">+ ₹100</div>
-          <div class="amount-btn" onclick="setAmount(200, this)">+ ₹200</div>
-          <div class="amount-btn" onclick="setAmount(500, this)">+ ₹500</div>
-        </div>
-        <button class="pay-external-btn" onclick="openRazorpayPayment()">
-          <i data-lucide="external-link"></i> Pay with Razorpay
-        </button>
-      </div>
 
-      <!-- STEP 2: VERIFICATION -->
-      <div class="step-card">
-        <div class="step-title">
-          <i data-lucide="2-circle"></i> Step 2: Enter Razorpay Payment ID
-        </div>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-          After finishing the payment, copy the <strong>Payment ID</strong> (starts with <code>pay_</code>) from Razorpay and paste it below:
-        </p>
-        <input type="text" id="paymentIdInput" class="payment-id-input" placeholder="e.g. pay_P1x2y3z4a5b6">
-        <button class="verify-btn" onclick="verifyAndAddMoney()">
-          <i data-lucide="check-circle"></i> Verify & Add Money
-        </button>
-      </div>
+    <!-- VIEW 1: LOGIN / REGISTER -->
+    <div id="authView" class="view auth-view">
+        <h2 id="authTitle" class="auth-title">Wallet Login</h2>
 
+        <div class="input-group">
+            <input type="text" id="uidInput" class="custom-input" placeholder="TGXXXXX" style="text-transform: uppercase;">
+            <div class="input-label">Enter Your U ID</div>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="keyInput" class="custom-input" maxlength="6" pattern="\d{6}" placeholder="* * * * * *" inputmode="numeric">
+            <div class="input-label">Enter Your Key</div>
+        </div>
+
+        <button id="authSubmitBtn" class="btn-submit" onclick="handleAuth()">Login</button>
     </div>
-  </div>
 
-  <!-- HELP MODAL -->
-  <div class="help-modal" id="helpModal" onclick="closeHelp(event)">
-    <div class="help-box" onclick="event.stopPropagation()">
-      <h3>Need Support?</h3>
-      <a href="https://wa.me/919332466756" target="_blank" class="help-option">
-        <i data-lucide="message-circle"></i>
-        <div class="text">
-          <h4>WhatsApp Support</h4>
-          <p>+91 9332466756</p>
+    <!-- VIEW 2: DASHBOARD -->
+    <div id="dashboardView" class="view dashboard-view hidden">
+        <div class="top-card-section">
+            <div class="user-qr-row">
+                <div class="qr-box">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="user-details">
+                    <div class="user-info-text">U ID: <span id="dashUid">TGXXXXX</span></div>
+                    <div class="user-info-text">KEY : <span id="dashKey">******</span></div>
+                    <button class="btn-small-blue" onclick="openChangeKeyModal()">Change Key</button>
+                </div>
+            </div>
+
+            <!-- Wallet Balance Card -->
+            <div class="wallet-pill">
+                <div class="wallet-pill-left">
+                    <div class="wallet-icon">
+                        <i data-lucide="wallet" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <div>
+                        <div class="wallet-title">TG Wallet</div>
+                        <div class="wallet-amount">&#8377; <span id="dashBalance">0.00</span></div>
+                    </div>
+                </div>
+                <div class="pill-actions">
+                    <span class="refresh-icon" onclick="refreshBalance()">
+                        <i data-lucide="rotate-cw" style="width: 18px; height: 18px;"></i>
+                    </span>
+                    <button class="btn-add" onclick="openGiftModal()">Add</button>
+                </div>
+            </div>
         </div>
-      </a>
-      <a href="mailto:admin.tutogenius@gmail.com" target="_blank" class="help-option">
-        <i data-lucide="mail"></i>
-        <div class="text">
-          <h4>Email Support</h4>
-          <p>admin.tutogenius@gmail.com</p>
+
+        <!-- Center Actions -->
+        <div class="action-grid">
+            <div class="action-card" onclick="showAlert('Pay Online feature coming soon!')">
+                <div class="action-card-icon">
+                    <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
+                </div>
+                <div class="action-card-title">Pay Online</div>
+            </div>
+            <div class="action-card" onclick="showAlert('No recent transactions.')">
+                <div class="action-card-icon">
+                    <i data-lucide="history" style="width: 32px; height: 32px;"></i>
+                </div>
+                <div class="action-card-title">Transactions</div>
+            </div>
         </div>
-      </a>
+
+        <!-- Logos Footer -->
+        <div class="payments-footer">
+            <div class="brand-logos">
+                <span class="brand-logo phonepe"><span style="background:#5f259f;color:white;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:2px;">&#2346;</span> PhonePe</span>
+                <span class="brand-logo paytm"><span style="color:#002e6e">Pay</span>tm</span>
+                <span class="brand-logo gpay"><span style="color:#4285f4">G</span><span style="color:#ea4335">P</span><span style="color:#fbbc05">a</span><span style="color:#34a853">y</span></span>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- POPUP MODAL 1: CHANGE KEY -->
+    <div id="changeKeyModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-icon-badge">
+                <i data-lucide="key-round" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="modal-title">Change Secret Key</div>
+            <div class="modal-subtitle">Enter a new 6-digit numeric key</div>
+            
+            <input type="password" id="newKeyInput" class="custom-input" maxlength="6" pattern="\d{6}" placeholder="* * * * * *" inputmode="numeric">
+            
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" onclick="closeModal('changeKeyModal')">Cancel</button>
+                <button class="btn-modal-confirm" onclick="submitNewKey()">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP MODAL 2: ENTER GIFT CODE -->
+    <div id="giftModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-icon-badge">
+                🎁
+            </div>
+            <div class="modal-title">Redeem Gift Code</div>
+            <div class="modal-subtitle">Enter code to add balance directly</div>
+            
+            <input type="text" id="giftCodeInput" class="custom-input" placeholder="GIFT2026" style="text-transform: uppercase;">
+            
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" onclick="closeModal('giftModal')">Cancel</button>
+                <button class="btn-modal-confirm" onclick="submitGiftCode()">Redeem</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script>
-lucide.createIcons();
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+        getFirestore, doc, getDoc, setDoc, updateDoc, runTransaction, onSnapshot, arrayUnion 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// --- CONFIGURATION ---
-const RAZORPAY_KEY = "rzp_live_TB2Tex3fIBoKuX"; // Your Razorpay Key
+    const firebaseConfig = {
+        apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
+        authDomain: "tutogenius-1.firebaseapp.com",
+        projectId: "tutogenius-1",
+        storageBucket: "tutogenius-1.firebasestorage.app",
+        messagingSenderId: "65839146612",
+        appId: "1:65839146612:web:4e54c6ad4cea4bc5859321"
+    };
 
-// Storage for processed payment IDs to prevent reuse
-let usedPaymentIds = JSON.parse(localStorage.getItem('usedPaymentIds') || '[]');
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-// --- BALANCE SYSTEM ---
-let balance = parseInt(localStorage.getItem('coinBalance') || '0');
-const balanceEl = document.getElementById('balance');
-const lowBalanceEl = document.getElementById('lowBalanceText');
+    let isCreateMode = false;
+    let qrCodeInstance = null;
+    let unsubSnapshot = null;
 
-function updateBalanceUI(){
-  balanceEl.textContent = balance;
-  if(balance < 100) {
-    lowBalanceEl.textContent = `Low Balance: ₹${balance}`;
-    lowBalanceEl.style.color = '#fca5a5';
-  } else {
-    lowBalanceEl.textContent = `Active Balance: ₹${balance}`;
-    lowBalanceEl.style.color = '#86efac';
-  }
-}
-updateBalanceUI();
+    document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+    });
 
-function addCoins(amount) {
-  balance += parseInt(amount);
-  localStorage.setItem('coinBalance', balance);
-  updateBalanceUI();
-}
+    function showAlert(msg, type = "info") {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = msg;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
 
-// --- ADD MONEY UI ---
-function openAddMoney(){
-  document.getElementById('addMoneyPage').classList.add('show');
-}
-function closeAddMoney(){
-  document.getElementById('addMoneyPage').classList.remove('show');
-}
-function setAmount(amt, el){
-  document.getElementById('amountInput').value = amt;
-  document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
-  if(el) el.classList.add('active');
-}
+    window.closeModal = function(id) {
+        document.getElementById(id).classList.add('hidden');
+    };
 
-// --- STEP 1: OPEN RAZORPAY ---
-function openRazorpayPayment(){
-  const amount = parseInt(document.getElementById('amountInput').value);
-  if(!amount || amount < 1){
-    alert("Please enter a valid amount");
-    return;
-  }
+    window.toggleAuthMode = function() {
+        isCreateMode = !isCreateMode;
+        const navBtn = document.getElementById('topNavBtn');
+        const title = document.getElementById('authTitle');
+        const submitBtn = document.getElementById('authSubmitBtn');
+        const uidInput = document.getElementById('uidInput');
 
-  // 1. First attempt native Razorpay Popup
-  var options = {
-    "key": RAZORPAY_KEY,
-    "amount": amount * 100,
-    "currency": "INR",
-    "name": "TutoGenius",
-    "description": "Wallet Add Money",
-    "image": "https://i.ibb.co/3RwZ0kM/class11-arts.jpg",
-    "handler": function (response){
-        // Auto-fill the Payment ID if handler works inside browser
-        if(response.razorpay_payment_id) {
-          document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
-          alert("Payment successful! Your Payment ID has been filled automatically. Now click 'Verify & Add Money'.");
+        if (isCreateMode) {
+            navBtn.textContent = "Login";
+            title.textContent = "Create Account";
+            submitBtn.textContent = "Register";
+            uidInput.placeholder = "Auto-Generated";
+            uidInput.disabled = true;
+            uidInput.value = "";
+        } else {
+            navBtn.textContent = "Create New";
+            title.textContent = "Wallet Login";
+            submitBtn.textContent = "Login";
+            uidInput.placeholder = "TGXXXXX";
+            uidInput.disabled = false;
         }
-    },
-    "prefill": {
-        "name": "TutoGenius User",
-        "email": "user@tutogenius.com"
-    },
-    "theme": { "color": "#FFD60A" }
-  };
+    };
 
-  try {
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-  } catch(e) {
-    // 2. Fallback for WebViews / APKs: Open standard external checkout link
-    window.open(`https://razorpay.com/pay/`, '_system');
-  }
-}
+    window.handleAuth = async function() {
+        const key = document.getElementById('keyInput').value.trim();
 
-// --- STEP 2: VERIFY PAYMENT ID ---
-function verifyAndAddMoney(){
-  const paymentId = document.getElementById('paymentIdInput').value.trim();
-  const amount = parseInt(document.getElementById('amountInput').value) || 100;
+        if (!/^\d{6}$/.test(key)) {
+            showAlert("Key must be exactly 6 numeric digits!", "error");
+            return;
+        }
 
-  // Successfully Add Money
-  usedPaymentIds.push(paymentId);
-  localStorage.setItem('usedPaymentIds', JSON.stringify(usedPaymentIds));
+        if (isCreateMode) {
+            try {
+                const newUid = await runTransaction(db, async (transaction) => {
+                    const metaRef = doc(db, "metadata", "users");
+                    const metaSnap = await transaction.get(metaRef);
+                    const nextId = (metaSnap.exists() ? (metaSnap.data().lastId || 0) : 0) + 1;
+                    const formattedId = "TG" + String(nextId).padStart(4, "0");
 
-  addCoins(amount);
-  alert(`Success! Payment ID verified. ₹${amount} added to your wallet.`);
-  
-  // Reset Form & Close Modal
-  document.getElementById('paymentIdInput').value = '';
-  closeAddMoney();
-}
+                    transaction.set(metaRef, { lastId: nextId }, { merge: true });
+                    transaction.set(doc(db, "users", formattedId), {
+                        key: key,
+                        balance: 0.00
+                    });
+                    return formattedId;
+                });
 
-// --- HELP MODAL ---
-function openHelp(){
-  document.getElementById('helpModal').classList.add('show');
-}
-function closeHelp(e){
-  if(!e || e.target.id === 'helpModal'){
-    document.getElementById('helpModal').classList.remove('show');
-  }
-}
+                showAlert(`Created! Your ID is ${newUid}`, "success");
+                localStorage.setItem('tg_uid', newUid);
+                localStorage.setItem('tg_key', key);
+                loadDashboard(newUid, key);
+            } catch (e) {
+                showAlert("Registration failed: " + e.message, "error");
+            }
+        } else {
+            const uid = document.getElementById('uidInput').value.trim().toUpperCase();
+            if (!uid) {
+                showAlert("Please enter your U ID", "error");
+                return;
+            }
+
+            try {
+                const userSnap = await getDoc(doc(db, "users", uid));
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+                    if (data.key === key) {
+                        showAlert("Login successful!", "success");
+                        localStorage.setItem('tg_uid', uid);
+                        localStorage.setItem('tg_key', key);
+                        loadDashboard(uid, key);
+                    } else {
+                        showAlert("Incorrect 6-digit key!", "error");
+                    }
+                } else {
+                    showAlert("U ID not found!", "error");
+                }
+            } catch (e) {
+                showAlert("Login error: " + e.message, "error");
+            }
+        }
+    };
+
+    function generateQRCode(text) {
+        const qrContainer = document.getElementById("qrcode");
+        qrContainer.innerHTML = "";
+        qrCodeInstance = new QRCode(qrContainer, {
+            text: text,
+            width: 98,
+            height: 98,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+
+    function loadDashboard(uid, key) {
+        document.getElementById('authView').classList.add('hidden');
+        document.getElementById('dashboardView').classList.remove('hidden');
+
+        const navBtn = document.getElementById('topNavBtn');
+        navBtn.textContent = "Switch";
+        navBtn.className = "top-action-btn switch";
+        navBtn.onclick = logout;
+
+        document.getElementById('dashUid').textContent = uid;
+        document.getElementById('dashKey').textContent = key;
+
+        generateQRCode(`UID:${uid}\vert{}KEY:${key}`);
+
+        setTimeout(() => lucide.createIcons(), 50);
+
+        if (unsubSnapshot) unsubSnapshot();
+        unsubSnapshot = onSnapshot(doc(db, "users", uid), (snap) => {
+            if (snap.exists()) {
+                const data = snap.data();
+                document.getElementById('dashBalance').textContent = Number(data.balance || 0).toFixed(2);
+            }
+        });
+    }
+
+    /* POPUP: CHANGE KEY */
+    window.openChangeKeyModal = function() {
+        document.getElementById('newKeyInput').value = "";
+        document.getElementById('changeKeyModal').classList.remove('hidden');
+    };
+
+    window.submitNewKey = async function() {
+        const newKey = document.getElementById('newKeyInput').value.trim();
+        if (!/^\d{6}$/.test(newKey)) {
+            showAlert("Key must be 6 numeric digits!", "error");
+            return;
+        }
+
+        const uid = localStorage.getItem('tg_uid');
+        try {
+            await updateDoc(doc(db, "users", uid), { key: newKey });
+            localStorage.setItem('tg_key', newKey);
+            document.getElementById('dashKey').textContent = newKey;
+            generateQRCode(`UID:${uid}\vert{}KEY:${newKey}`);
+            closeModal('changeKeyModal');
+            showAlert("Key updated successfully!", "success");
+        } catch (e) {
+            showAlert("Failed to change key", "error");
+        }
+    };
+
+    /* POPUP: GIFT CODE / ADD MONEY */
+    window.openGiftModal = function() {
+        document.getElementById('giftCodeInput').value = "";
+        document.getElementById('giftModal').classList.remove('hidden');
+    };
+
+    window.submitGiftCode = async function() {
+        const codeInput = document.getElementById('giftCodeInput').value.trim().toUpperCase();
+        if (!codeInput) {
+            showAlert("Please enter a gift code", "error");
+            return;
+        }
+
+        const uid = localStorage.getItem('tg_uid');
+
+        try {
+            await runTransaction(db, async (transaction) => {
+                const codeRef = doc(db, "gift_codes", codeInput);
+                const codeSnap = await transaction.get(codeRef);
+
+                if (!codeSnap.exists()) {
+                    throw new Error("Invalid gift code!");
+                }
+
+                const codeData = codeSnap.data();
+
+                if (codeData.active === false) {
+                    throw new Error("This code is expired!");
+                }
+
+                const usedBy = codeData.usedBy || [];
+                if (usedBy.includes(uid)) {
+                    throw new Error("You have already used this code once!");
+                }
+
+                const giftAmount = Number(codeData.amount || 0);
+                if (giftAmount <= 0) {
+                    throw new Error("Invalid code value!");
+                }
+
+                const userRef = doc(db, "users", uid);
+                const userSnap = await transaction.get(userRef);
+                if (!userSnap.exists()) throw new Error("User record missing!");
+
+                // Update balance and track redemption
+                const currentBal = Number(userSnap.data().balance || 0);
+                transaction.update(userRef, { balance: currentBal + giftAmount });
+                transaction.update(codeRef, { usedBy: arrayUnion(uid) });
+            });
+
+            closeModal('giftModal');
+            showAlert("Gift Code Redeemed Successfully!", "success");
+        } catch (e) {
+            showAlert(e.message || "Failed to redeem code", "error");
+        }
+    };
+
+    window.refreshBalance = function() {
+        showAlert("Balance updated", "success");
+    };
+
+    function logout() {
+        localStorage.removeItem('tg_uid');
+        localStorage.removeItem('tg_key');
+        if (unsubSnapshot) unsubSnapshot();
+
+        document.getElementById('dashboardView').classList.add('hidden');
+        document.getElementById('authView').classList.remove('hidden');
+
+        const navBtn = document.getElementById('topNavBtn');
+        navBtn.textContent = "Create New";
+        navBtn.className = "top-action-btn";
+        navBtn.onclick = toggleAuthMode;
+
+        isCreateMode = true;
+        toggleAuthMode();
+        showAlert("Logged out", "info");
+
+        setTimeout(() => lucide.createIcons(), 50);
+    }
+
+    const savedUid = localStorage.getItem('tg_uid');
+    const savedKey = localStorage.getItem('tg_key');
+    if (savedUid && savedKey) {
+        loadDashboard(savedUid, savedKey);
+    }
 </script>
 </body>
 </html>
