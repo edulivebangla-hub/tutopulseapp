@@ -231,26 +231,26 @@
             background-size: 12px auto;
         }
 
-        .profile-upload-circle {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
+        .profile-upload-circle { 
+
+            width: 50px;
+            height: 200px;
+            border-radius: 100%;
             border: 1px solid var(--primary-blue);
             background-color: #f8fafc;
             align-self: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            overflow: hidden;
             position: relative;
         }
 
         .profile-upload-circle img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            
         }
 
         .forgot-link {
@@ -1082,11 +1082,12 @@
             <h1 class="auth-header-title" style="margin-top: 15px;">Create New ID</h1>
             <button class="btn-create-toggle" onclick="switchAuthView('login')">Back to Login</button>
 
-            <div class="profile-upload-circle" onclick="document.getElementById('regPhoto').click()">
-                <img id="regPhotoPreview" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="display:none;">
-                <i data-lucide="user" id="regPhotoPlaceholder" style="width: 40px; height: 40px; color: #94a3b8;"></i>
-                <input type="file" id="regPhoto" accept="image/*" class="hidden" onchange="handlePhotoSelect(event)">
-            </div>
+          
+        <div class="profile-upload-circle" onclick="document.getElementById('regPhoto').click()">
+            <img id="regPhotoPreview" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="display:none;">
+            <i data-lucide="user" id="regPhotoPlaceholder" style="width: 40px; height: 40px; color: #94a3b8;"></i>
+            <input type="file" id="regPhoto" accept="image/*" class="hidden" onchange="handlePhotoSelect(event)">
+        </div>
 
             <div class="form-input-wrapper">
                 <i data-lucide="user" class="left-icon"></i>
