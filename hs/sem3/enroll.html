@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details</title>
+    <title>Course Details & Unlock System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -38,619 +38,560 @@
       -webkit-user-drag: none;
     }
 
-        :root {   --blue-primary: #0066ff;
-            --primary-color: #0555E8;
-            --accent-color: #0555E8;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --bg-light: #fff;
-            --card-bg: #ffffff;
-            --ribbon-bg: #f1f5f9;
-            --star-color: #cbd5e1; 
-            --border-radius: 10px;
-            --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            --shimmer-start: #e2e8f0;
-            --shimmer-mid: #f1f5f9;
-        }
-
-        body.dark {
-            --text-dark: #f1f5f9;
-            --text-muted: #94a3b8;
-            --bg-light: #0f172a;
-            --card-bg: #1e293b;
-            --ribbon-bg: #1e293b;
-            --shimmer-start: #1e293b;
-            --shimmer-mid: #334155;
-        }
-
-        body {
-            font-family: 'Inter', 'Hind Siliguri', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* Fullscreen Page Loader Overlay */
-        #pageLoadingOverlay {
-            position: fixed;
-            inset: 0;
-            background-color: var(--bg-light);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-
-        #pageLoadingOverlay.hidden-loader {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .page-dots-loader {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .page-dots-loader span {
-            width: 14px;
-            height: 14px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            display: inline-block;
-            animation: pageDotBounce 1.4s infinite ease-in-out both;
-        }
-
-        .page-dots-loader span:nth-child(1) { animation-delay: -0.32s; }
-        .page-dots-loader span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes pageDotBounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        .app-container {
-            position: fixed;
-            top: 0px;
-            bottom: 60px;
-            width: 100%;
-            overflow-y: auto;
-            background: var(--bg-light);
-            transition: background-color 0.3s;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .top-navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: #e6f7ff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 12px;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .nav-btn {
-             width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid #b3e5fc;
-            background: #fff;
-            color: var(--blue-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            text-decoration: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .nav-btn svg {
-            width: 25px;
-            height: 25px;
-        }
-
-        .nav-btn:active {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        /* --- TG WALLET CUSTOM STYLING --- */
-        .tg-wallet-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #ffffff;
-            border-radius: 30px;
-            padding: px 8px 6px 10px;
-            gap: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .tg-wallet-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .tg-wallet-icon-box {
-            width: 34px;
-            height: 34px;
-            background: #22c55e;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-        }
-
-        .tg-wallet-info {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.15;
-        }
-
-        .tg-wallet-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .tg-wallet-amount {
-            font-size: 15px;
-            font-weight: 800;
-            color: #047857;
-        }
-
-        .tg-wallet-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .tg-refresh-btn {
-            background: transparent;
-            border: none;
-            color: #2563eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-
-        .tg-refresh-btn:active {
-            transform: rotate(180deg);
-        }
-
-        .tg-add-btn {
-            background: #0066ff;
-            color: #ffffff;
-            border: none;
-            border-radius: 20px;
-            padding: 6px 18px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .tg-add-btn:active {
-            opacity: 0.9;
-        }
-
-        .content-scroll {
-            padding: 75px 20px 30px 20px; 
-            flex: 1;
-        }
-
-        .media-frame {
-            width: 100%;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            position: relative;
-            aspect-ratio: 16 / 9;
-            background-color: var(--shimmer-start);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: background-color 0.3s;
-        }
-
-        .media-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .media-frame.loaded img {
-            opacity: 1;
-        }
-
-        .skeleton-shimmer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--shimmer-start) 25%, var(--shimmer-mid) 50%, var(--shimmer-start) 75%);
-            background-size: 200% 100%;
-            animation: shimmerLinear 1.6s infinite;
-            z-index: 2;
-        }
-
-        .media-frame.loaded .skeleton-shimmer {
-            display: none;
-        }
-
-        @keyframes shimmerLinear {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .course-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-top: 20px;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .course-description {
-            font-size: 15px;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            font-weight: 400;
-        }
-
-        .author-section {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .author-label {
-            display: flex;
-            align-items: center;
-            font-size: 18px;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .author-brand { 
-            font-size: 20px; 
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            color: #38bdf8; 
-            margin-left: 5px; 
-        }
-
-        .spec-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 30px;
-        }
-
-        .spec-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: 15px;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .spec-item svg {
-            width: 18px;
-            height: 18px;
-            color: var(--text-muted);
-        }
-
-        .action-dock {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 480px; 
-            background: var(--card-bg);
-            padding: 16px 20px;
-            display: grid;
-            grid-template-columns: 85px 1fr;
-            gap: 12px;
-            align-items: center;
-            border-top: 1px solid var(--shimmer-start);
-            box-sizing: border-box;
-            z-index: 10;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        .badge-free {
-            background-color: var(--card-bg);
-            border: 1px solid var(--text-muted);
-            color: #07789B;
-            border-radius: 24px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        .btn-action-trigger {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            border: none;
-            border-radius: 24px;
-            height: 48px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-smooth);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .btn-action-trigger.unlocked-state {
-            background-color: #16a34a;
-        }
-
-        .btn-action-trigger:active {
-            transform: scale(0.98);
-            opacity: 0.9;
-        }
-
-        .loader-dots-element {
-            display: none;
-            align-items: center;
-            gap: 6px;
-            justify-content: center;
-            position: absolute;
-            inset: 0;
-            background: inherit;
-            z-index: 3;
-        }
-
-        .loader-dots-element span {
-            width: 8px;
-            height: 8px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: inline-block;
-            animation: dotElasticity 1.4s infinite ease-in-out both;
-        }
-
-        .loader-dots-element span:nth-child(1) { animation-delay: -0.32s; }
-        .loader-dots-element span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes dotElasticity {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
-
-        .modal-overlay {
-            position: fixed; 
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 100;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-sheet {
-            width: 100%;
-            max-width: 480px;
-            background: var(--card-bg);
-            border-radius: 24px 24px 0 0;
-            padding: 24px 20px;
-            transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 85%;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-overlay.active .modal-sheet {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .btn-modal-close {
-            background: var(--ribbon-bg);
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: background-color 0.3s;
-        }
-
-        .btn-modal-close svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .unlock-option-card {
-            border: 2px solid var(--shimmer-start);
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: var(--transition-smooth);
-            background: var(--card-bg);
-        }
-
-        .unlock-option-card:hover, .unlock-option-card.selected {
-            border-color: var(--accent-color);
-        }
-
-        .option-icon-frame {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .coin-frame { background: #fef3c7; color: #d97706; }
-        .pass-frame { background: #e0f2fe; color: #0284c7; }
-
-        .option-details {
-            flex: 1;
-        }
-
-        .option-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .option-sub {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .workflow-pane {
-            display: none;
-        }
-
-        .workflow-pane.active {
-            display: block;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .input-control {
-            width: 100%;
-            height: 50px;
-            border: 2px solid var(--shimmer-start);
-            background: var(--card-bg);
-            color: var(--text-dark);
-            border-radius: 12px;
-            padding: 0 16px;
-            font-size: 15px;
-            outline: none;
-            font-family: inherit;
-            transition: var(--transition-smooth);
-        }
-
-        .input-control:focus {
-            border-color: var(--accent-color);
-        }
-
-        .btn-submit-action {
-            width: 100%;
-            height: 48px;
-            background-color: var(--accent-color);
-            color: #ffffff;
-            border: none;
-            border-radius: 24px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .toast-notification-hub {
-            position: fixed; 
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 440px;
-            z-index: 200;
-            pointer-events: none;
-        }
-
-        .custom-toast {
-            background: #1e293b;
-            color: #ffffff;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin-bottom: 8px;
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .custom-toast.reveal {
-            transform: translateY(0);
-            opacity: 1;
-        }
+    :root { 
+        --blue-primary: #0066ff;
+        --primary-color: #0555E8;
+        --accent-color: #0555E8;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+        --bg-light: #fff;
+        --card-bg: #ffffff;
+        --ribbon-bg: #f1f5f9;
+        --star-color: #cbd5e1; 
+        --border-radius: 10px;
+        --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        --shimmer-start: #e2e8f0;
+        --shimmer-mid: #f1f5f9;
+    }
+
+    body.dark {
+        --text-dark: #f1f5f9;
+        --text-muted: #94a3b8;
+        --bg-light: #0f172a;
+        --card-bg: #1e293b;
+        --ribbon-bg: #1e293b;
+        --shimmer-start: #1e293b;
+        --shimmer-mid: #334155;
+    }
+
+    body {
+        font-family: 'Inter', 'Hind Siliguri', sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Fullscreen Page Loader Overlay */
+    #pageLoadingOverlay {
+        position: fixed;
+        inset: 0;
+        background-color: var(--bg-light);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    #pageLoadingOverlay.hidden-loader {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .page-dots-loader {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .page-dots-loader span {
+        width: 14px;
+        height: 14px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        display: inline-block;
+        animation: pageDotBounce 1.4s infinite ease-in-out both;
+    }
+
+    .page-dots-loader span:nth-child(1) { animation-delay: -0.32s; }
+    .page-dots-loader span:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes pageDotBounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1); }
+    }
+
+    .app-container {
+        position: fixed;
+        top: 0px;
+        bottom: 60px;
+        width: 100%;
+        overflow-y: auto;
+        background: var(--bg-light);
+        transition: background-color 0.3s;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .top-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 55px;
+        background: #e6f7ff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid #b3e5fc;
+        background: #fff;
+        color: var(--blue-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    /* --- TG WALLET CUSTOM STYLING --- */
+    .tg-wallet-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #ffffff;
+        border-radius: 30px;
+        padding: 4px 10px;
+        gap: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .tg-wallet-left {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .tg-wallet-icon-box {
+        width: 30px;
+        height: 30px;
+        background: #22c55e;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+    }
+
+    .tg-wallet-info {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+    }
+
+    .tg-wallet-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .tg-wallet-amount {
+        font-size: 13px;
+        font-weight: 800;
+        color: #047857;
+    }
+
+    .tg-wallet-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .tg-refresh-btn {
+        background: transparent;
+        border: none;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 50%;
+    }
+
+    .tg-add-btn {
+        background: #0066ff;
+        color: #ffffff;
+        border: none;
+        border-radius: 16px;
+        padding: 4px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .uid-badge {
+        font-size: 11px;
+        background: #dbeafe;
+        color: #1e40af;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .content-scroll {
+        padding: 75px 20px 30px 20px; 
+        flex: 1;
+    }
+
+    .media-frame {
+        width: 100%;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background-color: var(--shimmer-start);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .media-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .media-frame.loaded img {
+        opacity: 1;
+    }
+
+    .skeleton-shimmer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--shimmer-start) 25%, var(--shimmer-mid) 50%, var(--shimmer-start) 75%);
+        background-size: 200% 100%;
+        animation: shimmerLinear 1.6s infinite;
+        z-index: 2;
+    }
+
+    .media-frame.loaded .skeleton-shimmer {
+        display: none;
+    }
+
+    @keyframes shimmerLinear {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+    .course-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-top: 20px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+
+    .course-description {
+        font-size: 15px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+    }
+
+    .author-section {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .author-label {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        color: var(--text-dark);
+        font-weight: 500;
+    }
+
+    .author-brand { 
+        font-size: 20px; 
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        color: #38bdf8; 
+        margin-left: 5px; 
+    }
+
+    .spec-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 30px;
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 15px;
+        color: var(--text-dark);
+        font-weight: 500;
+    }
+
+    .spec-item svg {
+        width: 18px;
+        height: 18px;
+        color: var(--text-muted);
+    }
+
+    .action-dock {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 480px; 
+        background: var(--card-bg);
+        padding: 16px 20px;
+        display: grid;
+        grid-template-columns: 85px 1fr;
+        gap: 12px;
+        align-items: center;
+        border-top: 1px solid var(--shimmer-start);
+        box-sizing: border-box;
+        z-index: 10;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .badge-free {
+        background-color: var(--card-bg);
+        border: 1px solid var(--text-muted);
+        color: #07789B;
+        border-radius: 24px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .btn-action-trigger {
+        background-color: var(--primary-color);
+        color: #ffffff;
+        border: none;
+        border-radius: 24px;
+        height: 48px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition-smooth);
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-action-trigger.unlocked-state {
+        background-color: #16a34a;
+    }
+
+    .loader-dots-element {
+        display: none;
+        align-items: center;
+        gap: 6px;
+        justify-content: center;
+        position: absolute;
+        inset: 0;
+        background: inherit;
+        z-index: 3;
+    }
+
+    .loader-dots-element span {
+        width: 8px;
+        height: 8px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        display: inline-block;
+        animation: dotElasticity 1.4s infinite ease-in-out both;
+    }
+
+    .loader-dots-element span:nth-child(1) { animation-delay: -0.32s; }
+    .loader-dots-element span:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes dotElasticity {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1.0); }
+    }
+
+    .modal-overlay {
+        position: fixed; 
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 100;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-sheet {
+        width: 100%;
+        max-width: 480px;
+        background: var(--card-bg);
+        border-radius: 24px 24px 0 0;
+        padding: 24px 20px;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 85%;
+        overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-sheet {
+        transform: translateY(0);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .modal-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+
+    .btn-modal-close {
+        background: var(--ribbon-bg);
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-muted);
+    }
+
+    .unlock-option-card {
+        border: 2px solid var(--shimmer-start);
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: var(--card-bg);
+    }
+
+    .option-icon-frame {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .coin-frame { background: #fef3c7; color: #d97706; }
+    .pass-frame { background: #e0f2fe; color: #0284c7; }
+
+    .option-details { flex: 1; }
+    .option-title { font-size: 15px; font-weight: 600; color: var(--text-dark); }
+    .option-sub { font-size: 13px; color: var(--text-muted); }
+
+    .workflow-pane { display: none; }
+    .workflow-pane.active { display: block; }
+
+    .input-group { margin-bottom: 20px; }
+    .input-control {
+        width: 100%;
+        height: 50px;
+        border: 2px solid var(--shimmer-start);
+        background: var(--card-bg);
+        color: var(--text-dark);
+        border-radius: 12px;
+        padding: 0 16px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    .btn-submit-action {
+        width: 100%;
+        height: 48px;
+        background-color: var(--accent-color);
+        color: #ffffff;
+        border: none;
+        border-radius: 24px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .toast-notification-hub {
+        position: fixed; 
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        max-width: 440px;
+        z-index: 200;
+        pointer-events: none;
+    }
+
+    .custom-toast {
+        background: #1e293b;
+        color: #ffffff;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        margin-bottom: 8px;
+        transform: translateY(-20px);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .custom-toast.reveal {
+        transform: translateY(0);
+        opacity: 1;
+    }
     </style>
 </head>
 <body>
 
-    <!-- Fullscreen 3-Dot Loading Overlay -->
+    <!-- Fullscreen Loading Loader Overlay -->
     <div id="pageLoadingOverlay">
         <div class="page-dots-loader">
             <span></span>
@@ -665,11 +606,14 @@
         <header class="top-navbar">
             <button class="nav-btn" onclick="goBack()"><i data-lucide="x"></i></button>
             
+            <!-- Dynamic UID Badge -->
+            <span class="uid-badge" id="currentUidLabel" >UID: Unset</span>
+
             <!-- TG WALLET COMPONENT -->
             <div class="tg-wallet-card">
                 <div class="tg-wallet-left">
                     <div class="tg-wallet-icon-box">
-                        <i data-lucide="wallet" size="20"></i>
+                        <i data-lucide="wallet" size="18"></i>
                     </div>
                     <div class="tg-wallet-info">
                         <span class="tg-wallet-title">TG Wallet</span>
@@ -678,19 +622,17 @@
                 </div>
                 <div class="tg-wallet-actions">
                     <button class="tg-refresh-btn" onclick="syncRealtimeBalance()" aria-label="Refresh">
-                        <i data-lucide="rotate-cw" size="18"></i>
+                        <i data-lucide="rotate-cw" size="16"></i>
                     </button>
                     <button onclick="window.location.href='https://tuttogenius.netlify.app/coin';" class="tg-add-btn">Add</button>
                 </div>
             </div>
-
-            <button class="nav-btn" id="darkToggle" aria-label="Toggle Dark Mode" style="display: none;">🌙</button>
         </header>
 
         <main class="content-scroll">
             <div class="media-frame" id="bannerFrame">
                 <div class="skeleton-shimmer"></div>
-                <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 11 Arts" id="courseImage">
+                <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 12" id="courseImage">
             </div>
 
             <h1 class="course-title">Class 12 3rd Semester [বাংলা + English] উচ্চমাধ্যমিক তৃতীয় সেমিস্টার!</h1>
@@ -700,7 +642,7 @@
             </p>
 
             <div class="author-section">
-                <span class="author-label">Created By <a href="https://tupopulse.netlify.app/tutor/aninda.html" class="author-brand"> Aninda Halder </a> <i data-lucide="verified" size="24" stroke-width="2" style="color: var(--bg-light);fill: #FFD036;"></i> </span>
+                <span class="author-label">Created By <a href="https://tupopulse.netlify.app/tutor/aninda.html" class="author-brand"> Aninda Halder </a> <i data-lucide="verified" size="24" stroke-width="2" style="fill: #FFD036;"></i> </span>
             </div>
 
             <div class="spec-list">
@@ -714,7 +656,7 @@
                 </div>
                 <div class="spec-item">
                     <i data-lucide="clock"></i>
-                    <span>Duration: comming soon</span>
+                    <span>Duration: Coming Soon</span>
                 </div>
                 <div class="spec-item">
                     <i data-lucide="video"></i>
@@ -723,10 +665,7 @@
             </div>
 
             <h2>📘 <u><b>উচ্চমাধ্যমিক তৃতীয় সেমিস্টার সম্পর্কে</b></u></h2>
-            <p>উচ্চমাধ্যমিক দ্বাদশ শ্রেণির <b>তৃতীয় সেমিস্টার</b> শিক্ষার্থীদের জন্য একটি গুরুত্বপূর্ণ ধাপ। এই সেমিস্টারের মাধ্যমে ছাত্র-ছাত্রীরা বিষয়ভিত্তিক জ্ঞান আরও <i>শক্তিশালী</i> করতে পারে এবং বোর্ড পরীক্ষার জন্য সঠিকভাবে প্রস্তুতি নিতে পারে।</p>
-            <p>🎓 <b><u>বাংলা ও English Medium</u></b> শিক্ষার্থীদের জন্য এখানে নোটস, সাজেশন, MCQ, সংক্ষিপ্ত প্রশ্নোত্তর এবং গুরুত্বপূর্ণ স্টাডি মেটেরিয়াল সহজ ও সুন্দরভাবে উপস্থাপন করা হয়।</p>
-            <p>📚 এই সেমিস্টারের মূল উদ্দেশ্য হলো পড়াশোনাকে আরও <b>আধুনিক, গোছানো এবং শিক্ষার্থী-বান্ধব</b> করে তোলা। নিয়মিত অনুশীলন ও সঠিক গাইডলাইনের মাধ্যমে ভালো ফলাফল অর্জন করা সম্ভব।</p>
-            <p>✨ <i>সঠিক প্রস্তুতি, আত্মবিশ্বাস এবং নিয়মিত পড়াশোনাই সফলতার চাবিকাঠি।</i></p>
+            <p>উচ্চমাধ্যমিক দ্বাদশ শ্রেণির <b>তৃতীয় সেমিস্টার</b> শিক্ষার্থীদের জন্য একটি গুরুত্বপূর্ণ ধাপ।</p>
         </main>
 
         <footer class="action-dock">
@@ -741,7 +680,6 @@
 
         <div class="modal-overlay" id="workflowModalOverlay">
             <div class="modal-sheet">
-                
                 <div class="modal-header">
                     <h3 class="modal-title" id="modalDisplayTitle">Unlock Course</h3>
                     <button class="btn-modal-close" onclick="dismissModalSheet()"><i data-lucide="x"></i></button>
@@ -756,7 +694,7 @@
                         </div>
                         <div class="option-details">
                             <div class="option-title">Unlock with Rupee</div>
-                            <div class="option-sub">Requires 99 Rupees</div>
+                            <div class="option-sub">Requires 99 Rupees (Balance)</div>
                         </div>
                         <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
                     </div>
@@ -777,7 +715,7 @@
                     <div style="text-align:center; padding:10px 0 20px 0;">
                         <i data-lucide="badge-indian-rupee" style="width:48px; height:48px; color:#d97706; margin: 0 auto 12px auto;"></i>
                         <p style="font-size:15px; font-weight:600; margin-bottom:4px;">Confirm Rupees Deduction</p>
-                        <p style="font-size:13px; color:var(--text-muted);">Rupees will be deducted automatically from your logged-in U ID account.</p>
+                        <p style="font-size:13px; color:var(--text-muted);">₹99 will be deducted automatically from your active U ID account.</p>
                     </div>
                     <button class="btn-submit-action" onclick="executeCoinDeductions()">
                         <span id="coinActionText">Confirm & Unlock</span>
@@ -803,7 +741,7 @@
         </div>
     </div>
 
-    <!-- FIREBASE INTEGRATION & DEDUCTION SYSTEM -->
+    <!-- FIREBASE INTEGRATION & REALTIME ID STATE SYSTEM -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -822,43 +760,48 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const COURSE_ID = "c12_sem378"; 
+        const COURSE_ID = "c12_sem8"; 
         const REDIRECT_URL = "subject.html";
         const REQUIRED_COINS_COST = 99; 
         const SECRET_MASTER_PASSWORD = "123"; 
 
         let currentBalance = 0;
-        let loggedInUid = localStorage.getItem("tg_uid");
+        let loggedInUid = localStorage.getItem("tg_uid") || "Update User ID";
         let balanceUnsubscribe = null;
         let enrollmentUnsubscribe = null;
 
-        // Tracks dynamic loading states to clear the overlay
         let isBalanceLoaded = false;
         let isEnrollmentLoaded = false;
+
+        function updateUidDisplay() {
+            const uidLabel = document.getElementById("currentUidLabel");
+            if (uidLabel) {
+                uidLabel.innerText = `UID: ${loggedInUid}`;
+            }
+        }
+
+        window.promptSwitchUid = function() {
+            const newUid = prompt("Enter User ID (U ID):", loggedInUid);
+            if (newUid && newUid.trim() !== "") {
+                window.setTgUid(newUid.trim());
+            }
+        };
 
         function checkDataLoadComplete() {
             if (isBalanceLoaded && isEnrollmentLoaded) {
                 const overlay = document.getElementById("pageLoadingOverlay");
-                if (overlay) {
-                    overlay.classList.add("hidden-loader");
-                }
+                if (overlay) overlay.classList.add("hidden-loader");
             }
         }
 
-        window.goBack = function() {
-            window.history.back();
-        };
+        window.goBack = function() { window.history.back(); };
 
-        // Realtime Balance Syncing from Firebase Database for logged in U ID
+        // Sync Balance from Firestore
         window.syncRealtimeBalance = function() {
-            if (balanceUnsubscribe) {
-                balanceUnsubscribe();
-            }
+            if (balanceUnsubscribe) balanceUnsubscribe();
 
             if (!loggedInUid) {
-                let stored = localStorage.getItem("coinBalance");
-                currentBalance = stored ? parseFloat(stored) : 0;
-                document.getElementById("balance").innerText = currentBalance.toFixed(2);
+                document.getElementById("balance").innerText = "0.00";
                 isBalanceLoaded = true;
                 checkDataLoadComplete();
                 return;
@@ -867,22 +810,22 @@
             balanceUnsubscribe = onSnapshot(doc(db, "users", loggedInUid), (docSnap) => {
                 if (docSnap.exists()) {
                     currentBalance = Number(docSnap.data().balance || 0);
-                    localStorage.setItem("coinBalance", currentBalance.toString());
                     document.getElementById("balance").innerText = currentBalance.toFixed(2);
+                } else {
+                    currentBalance = 0;
+                    document.getElementById("balance").innerText = "0.00";
                 }
                 isBalanceLoaded = true;
                 checkDataLoadComplete();
-            }, (error) => {
+            }, () => {
                 isBalanceLoaded = true;
                 checkDataLoadComplete();
             });
         };
 
-        // Check Firebase for enrollment status dynamically per U ID
+        // Sync Enrollment per UID from Firestore
         function listenToEnrollmentStatus() {
-            if (enrollmentUnsubscribe) {
-                enrollmentUnsubscribe();
-            }
+            if (enrollmentUnsubscribe) enrollmentUnsubscribe();
 
             if (!loggedInUid) {
                 evaluateEnrollmentLockState(false);
@@ -894,23 +837,21 @@
             const enrollmentRef = doc(db, "users", loggedInUid, "enrollments", COURSE_ID);
             enrollmentUnsubscribe = onSnapshot(enrollmentRef, (docSnap) => {
                 if (docSnap.exists() && docSnap.data().enrolled === true) {
-                    localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
                     evaluateEnrollmentLockState(true);
                 } else {
-                    const localStatus = localStorage.getItem(`course_unlocked_${COURSE_ID}`) === "true";
-                    evaluateEnrollmentLockState(localStatus);
+                    evaluateEnrollmentLockState(false);
+                    // Open re-enrollment option if needed when UID is updated
                 }
                 isEnrollmentLoaded = true;
                 checkDataLoadComplete();
             }, () => {
-                const localStatus = localStorage.getItem(`course_unlocked_${COURSE_ID}`) === "true";
-                evaluateEnrollmentLockState(localStatus);
+                evaluateEnrollmentLockState(false);
                 isEnrollmentLoaded = true;
                 checkDataLoadComplete();
             });
         }
 
-        // Global function to update UID dynamically and refresh interfaces
+        // Global function to update UID dynamically
         window.setTgUid = function(newUid) {
             loggedInUid = newUid;
             if (newUid) {
@@ -918,54 +859,46 @@
             } else {
                 localStorage.removeItem("tg_uid");
             }
+            updateUidDisplay();
             isBalanceLoaded = false;
             isEnrollmentLoaded = false;
             document.getElementById("pageLoadingOverlay")?.classList.remove("hidden-loader");
+            
             syncRealtimeBalance();
             listenToEnrollmentStatus();
         };
 
+        // Listen for storage changes across tabs or external scripts
+        window.addEventListener("storage", (e) => {
+            if (e.key === "tg_uid") {
+                window.setTgUid(e.newValue);
+            }
+        });
+
         document.addEventListener("DOMContentLoaded", () => {
-            initDarkModePreference();
+            if (!localStorage.getItem("tg_uid")) {
+                localStorage.setItem("tg_uid", loggedInUid);
+            }
+            updateUidDisplay();
             syncRealtimeBalance();
             listenToEnrollmentStatus();
             initializeViewLifecycle();
             lucide.createIcons();
 
-            // Safety fallback: Hide loader after 3.5 seconds if network lags
             setTimeout(() => {
                 isBalanceLoaded = true;
                 isEnrollmentLoaded = true;
                 checkDataLoadComplete();
-            }, 3500);
+            }, 3000);
         });
-
-        const darkToggle = document.getElementById("darkToggle");
-        const body = document.body;
-        
-        function initDarkModePreference() {
-            if (localStorage.getItem("darkMode") === "true") {
-                body.classList.add("dark");
-                if (darkToggle) darkToggle.textContent = "☀️";
-            } else {
-                body.classList.remove("dark");
-                if (darkToggle) darkToggle.textContent = "🌙";
-            }
-        }
 
         function initializeViewLifecycle() {
             const bannerFrame = document.getElementById("bannerFrame");
             const courseImg = document.getElementById("courseImage");
-            
             if (courseImg.complete) {
                 bannerFrame.classList.add("loaded");
             } else {
-                courseImg.addEventListener("load", () => {
-                    bannerFrame.classList.add("loaded");
-                });
-                courseImg.addEventListener("error", () => {
-                    bannerFrame.style.background = "var(--shimmer-mid)";
-                });
+                courseImg.addEventListener("load", () => bannerFrame.classList.add("loaded"));
             }
         }
 
@@ -987,12 +920,9 @@
             }, 3000);
         };
 
-        function evaluateEnrollmentLockState(isUnlockedOverride) {
+        function evaluateEnrollmentLockState(isUnlocked) {
             const actionBtn = document.getElementById("masterActionButton");
             const textLabel = document.getElementById("buttonTextLabel");
-            const isUnlocked = typeof isUnlockedOverride === "boolean" 
-                ? isUnlockedOverride 
-                : localStorage.getItem(`course_unlocked_${COURSE_ID}`) === "true";
             
             if (isUnlocked) {
                 actionBtn.classList.add("unlocked-state");
@@ -1004,7 +934,8 @@
         }
 
         window.handleEnrollmentWorkflow = function() {
-            const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`) === "true";
+            const actionBtn = document.getElementById("masterActionButton");
+            const isUnlocked = actionBtn.classList.contains("unlocked-state");
             const loader = document.getElementById("dockButtonLoader");
             const textLabel = document.getElementById("buttonTextLabel");
 
@@ -1022,7 +953,7 @@
                 } else {
                     presentModalSheet();
                 }
-            }, 800); 
+            }, 600); 
         };
 
         function presentModalSheet() {
@@ -1054,15 +985,13 @@
             }
         };
 
-        /* FIREBASE TRANSACTION MONEY DEDUCTION LOGIC FOR U ID */
+        /* FIREBASE DEDUCTION LOGIC FOR U ID */
         window.executeCoinDeductions = async function() {
             const textLabel = document.getElementById("coinActionText");
             const loader = document.getElementById("coinPaneLoader");
 
-            loggedInUid = localStorage.getItem("tg_uid");
-
             if (!loggedInUid) {
-                dispatchToast("অনুগ্রহ করে প্রথমে লগইন করুন!", "error");
+                dispatchToast("ইউজার আইডি যুক্ত করুন!", "error");
                 return;
             }
             
@@ -1072,23 +1001,21 @@
             loader.style.display = "flex";
 
             try {
-                // Run transaction on Firebase to update database safely
                 await runTransaction(db, async (transaction) => {
                     const userRef = doc(db, "users", loggedInUid);
                     const userSnap = await transaction.get(userRef);
 
-                    if (!userSnap.exists()) {
-                        throw new Error("ইউজার আইডি পাওয়া যায়নি!");
+                    let dbBalance = 0;
+                    if (userSnap.exists()) {
+                        dbBalance = Number(userSnap.data().balance || 0);
                     }
 
-                    const dbBalance = Number(userSnap.data().balance || 0);
-
                     if (dbBalance < REQUIRED_COINS_COST) {
-                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই!");
+                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই! (Need ₹99)");
                     }
 
                     const newBalance = dbBalance - REQUIRED_COINS_COST;
-                    transaction.update(userRef, { balance: newBalance });
+                    transaction.set(userRef, { balance: newBalance }, { merge: true });
                 });
 
                 await saveEnrollmentToFirebase();
@@ -1105,8 +1032,6 @@
             const inputField = document.getElementById("secretPasskeyField");
             const textLabel = document.getElementById("passActionText");
             const loader = document.getElementById("passPaneLoader");
-
-            if (loader.style.display === "flex") return;
 
             if (inputField.value.trim() !== SECRET_MASTER_PASSWORD) {
                 dispatchToast("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।", "error");
@@ -1137,7 +1062,6 @@
         }
 
         function commitSuccessfulUnlock() {
-            localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
             dispatchToast("কোর্সটি সফলভাবে আনলক করা হয়েছে!", "success");
             evaluateEnrollmentLockState(true);
             dismissModalSheet();
