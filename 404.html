@@ -1,448 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TutoGenius - Coming Soon</title>
-<script src="https://unpkg.com/lucide@latest"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #ffffff;
-    --card: #f8fafc;
-    --text: #0f172a;
-    --muted: #64748b;
-    --border: #e2e8f0;
-    --accent: #07789B;
-    --accent-hover: #065f7a;
-  }
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutogenius Auth & Profile System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
     * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    -webkit-tap-highlight-color: transparent;
-  }
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    position: relative;
-    overflow-x: hidden;
-  }
+    body {
+      background-color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-  .bg-pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-      radial-gradient(circle at 20% 50%, rgba(7, 120, 155, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(7, 120, 155, 0.04) 0%, transparent 50%);
-    z-index: 0;
-  }
+    .app-card {
+      width: 100%;
+      max-width: 414px;
+      background: #ffffff;
+      min-height: 100vh;
+      padding: 24px 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
 
-  .container {
-    max-width: 640px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
+    @media (min-width: 480px) {
+      .app-card {
+        min-height: 720px;
+        border-radius: 24px;
+      }
+    }
 
-  .logo-box {
-    width: 90px;
-    height: 90px;
-    background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 32px;
-    box-shadow: 0 8px 30px rgba(7, 120, 155, 0.25);
-  }
+    .close-btn {
+      align-self: flex-start;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #0f172a;
+      cursor: pointer;
+      margin-bottom: 24px;
+    }
 
-  .app-name {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--accent);
-    margin-bottom: 16px;
-    letter-spacing: -1px;
-  }
+    .header-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
 
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
-    color: var(--accent);
-    padding: 8px 16px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 28px;
-  }
+    .header-subtitle {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 28px;
+    }
 
-  h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    margin-bottom: 16px;
-    line-height: 1.2;
-    color: var(--text);
-  }
+    .google-btn {
+      width: 100%;
+      background-color: #4285f4;
+      color: #ffffff;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
 
-  .subtitle {
-    font-size: 1.15rem;
-    color: var(--muted);
-    margin-bottom: 40px;
-    line-height: 1.6;
-    font-weight: 500;
-  }
+    .google-icon-wrapper {
+      width: 24px;
+      height: 24px;
+      background: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .launch-info {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 36px;
-  }
+    .toggle-dropdown-btn {
+      background-color: #f1f5f9;
+      color: #475569;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0 auto 20px auto;
+      cursor: pointer;
+    }
 
-  .launch-label {
-    font-size: 0.9rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
+    .divider {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin: 16px 0 24px 0;
+    }
 
-  .launch-date {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--accent);
-  }
+    .input-group {
+      position: relative;
+      margin-bottom: 16px;
+    }
 
-  .countdown {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
-  }
+    .input-group i.left-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-size: 16px;
+    }
 
-  .time-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px 12px;
-    transition: all 0.3s;
-  }
+    .input-group i.right-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-  .time-box:hover {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(7, 120, 155, 0.1);
-  }
+    .input-field {
+      width: 100%;
+      padding: 14px 44px;
+      background-color: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #0f172a;
+      outline: none;
+    }
 
-  .time-number {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--accent);
-    display: block;
-    line-height: 1;
-  }
+    .input-field:focus {
+      border-color: #3b82f6;
+      background-color: #ffffff;
+    }
 
-  .time-label {
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    margin-top: 8px;
-  }
+    .forgot-link {
+      display: block;
+      text-align: right;
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 24px;
+    }
 
-  .notify-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 24px;
-    margin-bottom: 32px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  }
+    .primary-btn {
+      width: 100%;
+      background-color: #2b4bbb;
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 24px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 24px;
+    }
 
-  .notify-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--text);
-  }
+    .switch-mode {
+      text-align: center;
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 24px;
+    }
 
-  .notify-text {
-    font-size: 0.95rem;
-    color: var(--muted);
-    margin-bottom: 24px;
-  }
+    .switch-mode span {
+      color: #0f172a;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-  .email-form {
-    display: flex;
-    gap: 12px;
-    max-width: 420px;
-    margin: 0 auto;
-  }
+    .terms-text {
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: auto;
+      line-height: 1.5;
+    }
 
-  input[type="email"] {
-    flex: 1;
-    padding: 16px 20px;
-    background: var(--bg);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    color: var(--text);
-    font-size: 15px;
-    font-weight: 500;
-    outline: none;
-    transition: all 0.3s;
-  }
+    .terms-text a {
+      color: #2563eb;
+      text-decoration: underline;
+    }
 
-  input[type="email"]:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(7, 120, 155, 0.1);
-  }
+    .profile-card {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 20px;
+    }
 
-  input::placeholder {
-    color: var(--muted);
-    font-weight: 400;
-  }
+    .avatar-wrapper {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #e2e8f0;
+      margin-bottom: 16px;
+    }
 
-  button {
-    padding: 16px 28px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
-    white-space: nowrap;
-  }
+    .avatar-skeleton {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
 
-  button:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(7, 120, 155, 0.3);
-  }
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
 
-  button:active {
-    transform: scale(0.98);
-  }
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
 
-  .features {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-  }
+    .avatar-img.loaded {
+      opacity: 1;
+    }
 
-  .feature {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  .feature svg {
-    color: var(--accent);
-    width: 18px;
-    height: 18px;
-  }
-
-  .footer {
-    margin-top: 40px;
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--text);
-    color: white;
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 14px;
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 1000;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  }
-
-  .toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-
-  @media (max-width: 640px) {
-    h1 { font-size: 2.3rem; }
-    .countdown { gap: 10px; }
-    .time-box { padding: 20px 8px; }
-    .time-number { font-size: 2rem; }
-    .email-form { flex-direction: column; }
-    button { width: 100%; }
-    .features { gap: 16px; }
-  }
-</style>
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
 
-<div class="bg-pattern"></div>
+  <div class="app-card">
+    <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
 
-<div class="container">
-  <div class="logo-box">
-    <i data-lucide="graduation-cap" size="42" style="color: white;"></i>
-  </div>
+    <div id="authWrapper">
+      <h1 class="header-title" id="pageTitle">Login</h1>
+      <p class="header-subtitle" id="pageSubtitle">Unlock all features with Just one tap</p>
 
-  <div class="app-name">TutoGenius</div>
+      <button class="google-btn" id="googleSignInBtn">
+        <div class="google-icon-wrapper">
+          <svg width="14" height="14" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.41-1.57-5.13-3.72L.97 13.03C2.47 16 5.51 18 9 18z"/><path fill="#FBBC05" d="M3.87 10.8c-.18-.53-.28-1.1-.28-1.8s.1-1.27.28-1.8L.97 4.97C.35 6.2.0 7.56.0 9.0s.35 2.8 1.0 4.03l2.87-2.23z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.51 0 2.47 2 1.0 4.97l2.87 2.23C4.59 5.05 6.62 3.58 9 3.58z"/></svg>
+        </div>
+        Sign in with Google
+      </button>
 
-  <div class="status-badge">
-    <i data-lucide="wrench" size="16"></i>
-    App Under Maintenance
-  </div>
+      <button class="toggle-dropdown-btn" id="toggleDropdownBtn">
+        <span id="dropdownText">More sign-in options</span>
+        <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
+      </button>
 
-  <h1>We’re Building Something <span style="color: var(--accent);">Smart</span></h1>
-  
-  <p class="subtitle">
-    The smartest platform for education, updates & career growth is almost here. 
-    Get ready for a smarter learning experience.
-  </p>
+      <div class="divider hidden" id="dividerText">--- OR ---</div>
 
-  <div class="launch-info">
-    <div class="launch-label">Launching On</div>
-    <div class="launch-date">20 June 2025</div>
-  </div>
+      <form id="authForm">
+        <div class="input-group hidden" id="nameGroup">
+          <i class="fa-regular fa-user left-icon"></i>
+          <input type="text" class="input-field" id="nameInput" placeholder="Name">
+        </div>
 
-  <div class="countdown" id="countdown">
-    <div class="time-box">
-      <span class="time-number" id="days">00</span>
-      <span class="time-label">Days</span>
+        <div id="emailFormFields" class="hidden">
+          <div class="input-group">
+            <i class="fa-regular fa-envelope left-icon"></i>
+            <input type="email" class="input-field" id="emailInput" placeholder="Email">
+            <i class="fa-solid fa-xmark right-icon" id="clearEmailBtn"></i>
+          </div>
+
+          <div class="input-group">
+            <i class="fa-solid fa-lock left-icon"></i>
+            <input type="password" class="input-field" id="passwordInput" placeholder="Password">
+            <i class="fa-regular fa-eye-slash right-icon" id="togglePasswordBtn"></i>
+          </div>
+
+          <a href="#" class="forgot-link" id="forgotPasswordLink">Forgot Password?</a>
+
+          <button type="submit" class="primary-btn" id="submitBtn">Login</button>
+        </div>
+      </form>
+
+      <div class="switch-mode">
+        <span id="switchPrompt">Don't have an account?</span>
+        <span id="switchBtn">Create Account</span>
+      </div>
+
+      <p class="terms-text">
+        By SigningUp/Logging In, You agree to our<br>
+        <a href="#">Terms of Services</a> and <a href="#">Privacy Policy</a>
+      </p>
     </div>
-    <div class="time-box">
-      <span class="time-number" id="hours">00</span>
-      <span class="time-label">Hours</span>
-    </div>
-    <div class="time-box">
-      <span class="time-number" id="minutes">00</span>
-      <span class="time-label">Minutes</span>
-    </div>
-    <div class="time-box">
-      <span class="time-number" id="seconds">00</span>
-      <span class="time-label">Seconds</span>
-    </div>
-  </div>
 
-  <div class="features">
-    <div class="feature"><i data-lucide="book-open"></i> Education</div>
-    <div class="feature"><i data-lucide="bell"></i> Updates</div>
-    <div class="feature"><i data-lucide="briefcase"></i> Career</div>
-    <div class="feature"><i data-lucide="zap"></i> Smart</div>
-  </div>
+    <div class="profile-card" id="profileCard">
+      <div class="avatar-wrapper">
+        <div class="avatar-skeleton" id="avatarSkeleton"></div>
+        <img src="" alt="Profile Photo" class="avatar-img" id="userAvatar">
+      </div>
+      <h2 class="header-title" id="profileName">User Name</h2>
+      <p class="header-subtitle" id="profileEmail">user@example.com</p>
 
-  <div class="notify-card">
-    <div class="notify-title">Get Early Access 🚀</div>
-    <div class="notify-text">Drop your email and we’ll notify you the moment TutoGenius goes live</div>
-    <div class="email-form">
-      <input type="email" id="emailInput" placeholder="your@email.com">
-      <button onclick="subscribeEmail()">Notify Me</button>
+      <button class="primary-btn" id="logoutBtn" style="background-color: #ef4444;">Logout</button>
     </div>
   </div>
 
-  <div class="footer">
-    © 2025 TutoGenius. All rights reserved.
-  </div>
-</div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getAuth, 
+      GoogleAuthProvider, 
+      signInWithPopup, 
+      createUserWithEmailAndPassword, 
+      signInWithEmailAndPassword, 
+      signOut, 
+      onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-<div class="toast" id="toast">Thanks! We’ll notify you on launch 🚀</div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
+      authDomain: "tutogenius-1.firebaseapp.com",
+      databaseURL: "https://tutogenius-1-default-rtdb.firebaseio.com",
+      projectId: "tutogenius-1",
+      storageBucket: "tutogenius-1.firebasestorage.app",
+      messagingSenderId: "65839146612",
+      appId: "1:65839146612:web:4e54c6ad4cea4bc5859321",
+      measurementId: "G-1SQ3GKN5D7"
+    };
 
-<script>
-  lucide.createIcons();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-  // Countdown to 20 June 2025
-  const launchDate = new Date('2025-06-20T00:00:00').getTime();
-
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = launchDate - now;
-
-    if (distance < 0) {
-      document.getElementById('countdown').innerHTML = 
-        '<div style="grid-column: 1/-1; font-size: 1.6rem; font-weight: 800; color: #10b981;">TutoGenius is Live Now! 🎉</div>';
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById('days').textContent = String(days).padStart(2, '0');
-    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // Email subscription
-  function subscribeEmail() {
-    const email = document.getElementById('emailInput').value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Elements
+    const authWrapper = document.getElementById('authWrapper');
+    const profileCard = document.getElementById('profileCard');
+    const pageTitle = document.getElementById('pageTitle');
+    const pageSubtitle = document.getElementById('pageSubtitle');
+    const googleSignInBtn = document.getElementById('googleSignInBtn');
+    const toggleDropdownBtn = document.getElementById('toggleDropdownBtn');
+    const dropdownText = document.getElementById('dropdownText');
+    const dropdownIcon = document.getElementById('dropdownIcon');
+    const dividerText = document.getElementById('dividerText');
+    const nameGroup = document.getElementById('nameGroup');
+    const emailFormFields = document.getElementById('emailFormFields');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const submitBtn = document.getElementById('submitBtn');
+    const switchPrompt = document.getElementById('switchPrompt');
+    const switchBtn = document.getElementById('switchBtn');
+    const authForm = document.getElementById('authForm');
     
-    if (!email) {
-      showToast('Please enter your email');
-      return;
-    }
+    const nameInput = document.getElementById('nameInput');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
     
-    if (!emailRegex.test(email)) {
-      showToast('Please enter a valid email');
-      return;
+    const userAvatar = document.getElementById('userAvatar');
+    const avatarSkeleton = document.getElementById('avatarSkeleton');
+    const profileName = document.getElementById('profileName');
+    const profileEmail = document.getElementById('profileEmail');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    let isLoginMode = true;
+
+    function setAuthMode(isLogin) {
+      isLoginMode = isLogin;
+      if (isLogin) {
+        pageTitle.textContent = "Login";
+        pageSubtitle.textContent = "Unlock all features with Just one tap";
+        toggleDropdownBtn.classList.remove('hidden');
+        dividerText.classList.add('hidden');
+        nameGroup.classList.add('hidden');
+        emailFormFields.classList.add('hidden');
+        dropdownText.textContent = "More sign-in options";
+        dropdownIcon.className = "fa-solid fa-chevron-down";
+        switchPrompt.textContent = "Don't have an account? ";
+        switchBtn.textContent = "Create Account";
+        submitBtn.textContent = "Login";
+      } else {
+        pageTitle.textContent = "Create Account";
+        pageSubtitle.textContent = "Follow simple Steps";
+        toggleDropdownBtn.classList.add('hidden');
+        dividerText.classList.remove('hidden');
+        nameGroup.classList.remove('hidden');
+        emailFormFields.classList.remove('hidden');
+        forgotPasswordLink.classList.add('hidden');
+        switchPrompt.textContent = "Already have an account? ";
+        switchBtn.textContent = "Login";
+        submitBtn.textContent = "Create Account";
+      }
     }
 
-    let subscribers = JSON.parse(localStorage.getItem('tutogenius_subscribers') || '[]');
-    if (!subscribers.includes(email)) {
-      subscribers.push(email);
-      localStorage.setItem('tutogenius_subscribers', JSON.stringify(subscribers));
+    switchBtn.addEventListener('click', () => setAuthMode(!isLoginMode));
+
+    toggleDropdownBtn.addEventListener('click', () => {
+      const isHidden = emailFormFields.classList.contains('hidden');
+      if (isHidden) {
+        emailFormFields.classList.remove('hidden');
+        dropdownText.textContent = "Hide email sign-in";
+        dropdownIcon.className = "fa-solid fa-chevron-up";
+      } else {
+        emailFormFields.classList.add('hidden');
+        dropdownText.textContent = "More sign-in options";
+        dropdownIcon.className = "fa-solid fa-chevron-down";
+      }
+    });
+
+    async function saveUserData(user, name, photoURL) {
+      const userRef = doc(db, "users", user.uid);
+      const defaultPhoto = photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'User')}&background=random`;
+      
+      await setDoc(userRef, {
+        uid: user.uid,
+        name: name || user.displayName || "User",
+        email: user.email,
+        photoURL: defaultPhoto,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
     }
+
+    googleSignInBtn.addEventListener('click', async () => {
+      const provider = new GoogleAuthProvider();
+      try {
+        const result = await signInWithPopup(auth, provider);
+        await saveUserData(result.user, result.user.displayName, result.user.photoURL);
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      const name = nameInput.value.trim();
+
+      if (!email || !password) {
+        alert("Please fill in email and password.");
+        return;
+      }
+
+      try {
+        if (isLoginMode) {
+          await signInWithEmailAndPassword(auth, email, password);
+        } else {
+          if (!name) { alert("Please enter your name."); return; }
+          const res = await createUserWithEmailAndPassword(auth, email, password);
+          await saveUserData(res.user, name, null);
+        }
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    function loadProfileImage(url) {
+      avatarSkeleton.style.display = 'block';
+      userAvatar.classList.remove('loaded');
+
+      const imgLoader = new Image();
+      imgLoader.src = url;
+      imgLoader.onload = () => {
+        userAvatar.src = url;
+        userAvatar.classList.add('loaded');
+        avatarSkeleton.style.display = 'none';
+      };
+      imgLoader.onerror = () => {
+        userAvatar.src = `https://ui-avatars.com/api/?name=User&background=random`;
+        userAvatar.classList.add('loaded');
+        avatarSkeleton.style.display = 'none';
+      };
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        authWrapper.style.display = 'none';
+        profileCard.style.display = 'flex';
+
+        try {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            profileName.textContent = data.name;
+            profileEmail.textContent = data.email;
+            loadProfileImage(data.photoURL);
+          } else {
+            profileName.textContent = user.displayName || "User";
+            profileEmail.textContent = user.email;
+            loadProfileImage(user.photoURL || `https://ui-avatars.com/api/?name=User&background=random`);
+          }
+        } catch (e) {
+          profileName.textContent = user.displayName || "User";
+          profileEmail.textContent = user.email;
+        }
+      } else {
+        authWrapper.style.display = 'block';
+        profileCard.style.display = 'none';
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => signOut(auth));
+
+    document.getElementById('clearEmailBtn')?.addEventListener('click', () => emailInput.value = '');
     
-    document.getElementById('emailInput').value = '';
-    showToast('Thanks! We’ll notify you when TutoGenius launches 🚀');
-  }
-
-  function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-  }
-
-  document.getElementById('emailInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') subscribeEmail();
-  });
-</script>
-
+    document.getElementById('togglePasswordBtn')?.addEventListener('click', (e) => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      e.target.className = type === 'password' ? 'fa-regular fa-eye-slash right-icon' : 'fa-regular fa-eye right-icon';
+    });
+  </script>
 </body>
 </html>
