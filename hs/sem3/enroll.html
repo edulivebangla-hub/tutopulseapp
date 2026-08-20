@@ -7,20 +7,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
- * {
+    * {
       box-sizing: border-box;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
       -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
       transition: background 0.3s, color 0.3s;
       -webkit-tap-highlight-color: transparent;
     }
@@ -31,9 +27,6 @@
       -ms-user-select: none;
       user-select: none;
       -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
       text-decoration: none;
     }
     
@@ -43,9 +36,6 @@
       -ms-user-select: none;
       user-select: none;
       -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -ms-user-drag: none;
-      user-drag: none;
     }
 
         :root {
@@ -71,13 +61,6 @@
             --ribbon-bg: #1e293b;
             --shimmer-start: #1e293b;
             --shimmer-mid: #334155;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -108,12 +91,12 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 50px;
+            height: 65px;
             background: #0555E8;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 12px;
             z-index: 1000;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
@@ -142,60 +125,94 @@
             background-color: rgba(255, 255, 255, 0.15);
         }
 
-        .user-ribbon {
+        /* --- TG WALLET CUSTOM STYLING --- */
+        .tg-wallet-card {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 4px 8px;
-            background: var(--ribbon-bg);
-            margin: 0 0 0px 0; gap: 8px;
-            border-radius: 12px;
-            font-size: 13px;
-            transition: background-color 0.3s;
+            justify-content: space-between;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 6px 8px 6px 10px;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
-        .user-profile-info {
+        .tg-wallet-left {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .user-profile-info img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #e2e8f0;
-        }
-
-        .user-profile-info span {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .coin-balance {
+        .tg-wallet-icon-box {
+            width: 34px;
+            height: 34px;
+            background: #22c55e;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 2px;
-            font-weight: 700;
-            color: #d97706;
-            background: #fef3c7;
-            padding: 1px 10px;
-            border-radius: 10px;
-        }
-        
-        body.dark .coin-balance {
-            background: #78350f;
-            color: #fef3c7;
+            justify-content: center;
+            color: #ffffff;
         }
 
-        .coin-balance svg {
-            width: 14px;
-            height: 14px;
+        .tg-wallet-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .tg-wallet-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .tg-wallet-amount {
+            font-size: 15px;
+            font-weight: 800;
+            color: #047857;
+        }
+
+        .tg-wallet-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tg-refresh-btn {
+            background: transparent;
+            border: none;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .tg-refresh-btn:active {
+            transform: rotate(180deg);
+        }
+
+        .tg-add-btn {
+            background: #0066ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .tg-add-btn:active {
+            opacity: 0.9;
         }
 
         .content-scroll {
-            padding: 60px 20px 30px 20px; 
+            padding: 75px 20px 30px 20px; 
             flex: 1;
         }
 
@@ -486,11 +503,6 @@
             justify-content: center;
         }
 
-        .option-icon-frame svg {
-            width: 20px;
-            height: 20px;
-        }
-
         .coin-frame { background: #fef3c7; color: #d97706; }
         .pass-frame { background: #e0f2fe; color: #0284c7; }
 
@@ -588,34 +600,39 @@
             transform: translateY(0);
             opacity: 1;
         }
-
-        .custom-toast.toast-error { }
-        .custom-toast.toast-success {  }
     </style>
 </head>
 <body>
 
     <div class="app-container">
-        
         <div class="toast-notification-hub" id="toastHub"></div>
 
         <header class="top-navbar">
             <button class="nav-btn" onclick="goBack()"><i data-lucide="x"></i></button>
-             
-                
-                    
-                <div class="coin-balance">
-                    ₹<span id="balance">0</span>
-                
+            
+            <!-- TG WALLET COMPONENT -->
+            <div class="tg-wallet-card">
+                <div class="tg-wallet-left">
+                    <div class="tg-wallet-icon-box">
+                        <i data-lucide="wallet" size="20"></i>
+                    </div>
+                    <div class="tg-wallet-info">
+                        <span class="tg-wallet-title">TG Wallet</span>
+                        <span class="tg-wallet-amount">₹ <span id="balance">0.00</span></span>
+                    </div>
+                </div>
+                <div class="tg-wallet-actions">
+                    <button class="tg-refresh-btn" onclick="syncRealtimeBalance()" aria-label="Refresh">
+                        <i data-lucide="rotate-cw" size="18"></i>
+                    </button>
+                    <button class="tg-add-btn">Add</button>
+                </div>
             </div>
- <button class="nav-btn" id="darkToggle" aria-label="Toggle Dark Mode" style="display: none;">🌙</button>
-    
- </header>
+
+            <button class="nav-btn" id="darkToggle" aria-label="Toggle Dark Mode" style="display: none;">🌙</button>
+        </header>
 
         <main class="content-scroll">
-            
-           
-
             <div class="media-frame" id="bannerFrame">
                 <div class="skeleton-shimmer"></div>
                 <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="Class 11 Arts" id="courseImage">
@@ -649,15 +666,12 @@
                     <span>0 Lessons</span>
                 </div>
             </div>
-<h2>📘 <u><b>উচ্চমাধ্যমিক তৃতীয় সেমিস্টার সম্পর্কে</b></u></h2>
 
-    <p>উচ্চমাধ্যমিক দ্বাদশ শ্রেণির <b>তৃতীয় সেমিস্টার</b> শিক্ষার্থীদের জন্য একটি গুরুত্বপূর্ণ ধাপ। এই সেমিস্টারের মাধ্যমে ছাত্র-ছাত্রীরা বিষয়ভিত্তিক জ্ঞান আরও <i>শক্তিশালী</i> করতে পারে এবং বোর্ড পরীক্ষার জন্য সঠিকভাবে প্রস্তুতি নিতে পারে।</p>
-
-    <p>🎓 <b><u>বাংলা ও English Medium</u></b> শিক্ষার্থীদের জন্য এখানে নোটস, সাজেশন, MCQ, সংক্ষিপ্ত প্রশ্নোত্তর এবং গুরুত্বপূর্ণ স্টাডি মেটেরিয়াল সহজ ও সুন্দরভাবে উপস্থাপন করা হয়।</p>
-
-    <p>📚 এই সেমিস্টারের মূল উদ্দেশ্য হলো পড়াশোনাকে আরও <b>আধুনিক, গোছানো এবং শিক্ষার্থী-বান্ধব</b> করে তোলা। নিয়মিত অনুশীলন ও সঠিক গাইডলাইনের মাধ্যমে ভালো ফলাফল অর্জন করা সম্ভব।</p>
-
-    <p>✨ <i>সঠিক প্রস্তুতি, আত্মবিশ্বাস এবং নিয়মিত পড়াশোনাই সফলতার চাবিকাঠি।</i></p>
+            <h2>📘 <u><b>উচ্চমাধ্যমিক তৃতীয় সেমিস্টার সম্পর্কে</b></u></h2>
+            <p>উচ্চমাধ্যমিক দ্বাদশ শ্রেণির <b>তৃতীয় সেমিস্টার</b> শিক্ষার্থীদের জন্য একটি গুরুত্বপূর্ণ ধাপ। এই সেমিস্টারের মাধ্যমে ছাত্র-ছাত্রীরা বিষয়ভিত্তিক জ্ঞান আরও <i>শক্তিশালী</i> করতে পারে এবং বোর্ড পরীক্ষার জন্য সঠিকভাবে প্রস্তুতি নিতে পারে।</p>
+            <p>🎓 <b><u>বাংলা ও English Medium</u></b> শিক্ষার্থীদের জন্য এখানে নোটস, সাজেশন, MCQ, সংক্ষিপ্ত প্রশ্নোত্তর এবং গুরুত্বপূর্ণ স্টাডি মেটেরিয়াল সহজ ও সুন্দরভাবে উপস্থাপন করা হয়।</p>
+            <p>📚 এই সেমিস্টারের মূল উদ্দেশ্য হলো পড়াশোনাকে আরও <b>আধুনিক, গোছানো এবং শিক্ষার্থী-বান্ধব</b> করে তোলা। নিয়মিত অনুশীলন ও সঠিক গাইডলাইনের মাধ্যমে ভালো ফলাফল অর্জন করা সম্ভব।</p>
+            <p>✨ <i>সঠিক প্রস্তুতি, আত্মবিশ্বাস এবং নিয়মিত পড়াশোনাই সফলতার চাবিকাঠি।</i></p>
         </main>
 
         <footer class="action-dock">
@@ -708,7 +722,7 @@
                     <div style="text-align:center; padding:10px 0 20px 0;">
                         <i data-lucide="badge-indian-rupee" style="width:48px; height:48px; color:#d97706; margin: 0 auto 12px auto;"></i>
                         <p style="font-size:15px; font-weight:600; margin-bottom:4px;">Confirm Rupees Deduction</p>
-                        <p style="font-size:13px; color:var(--text-muted);">Rupees will be deducted from your account balance.</p>
+                        <p style="font-size:13px; color:var(--text-muted);">Rupees will be deducted automatically from your logged-in U ID account.</p>
                     </div>
                     <button class="btn-submit-action" onclick="executeCoinDeductions()">
                         <span id="coinActionText">Confirm & Unlock</span>
@@ -732,13 +746,26 @@
 
             </div>
         </div>
-
     </div>
 
-    <script>
-        function goBack() {
-            window.history.back();
-        }
+    <!-- FIREBASE INTEGRATION & DEDUCTION SYSTEM -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getFirestore, doc, onSnapshot, runTransaction 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
+            authDomain: "tutogenius-1.firebaseapp.com",
+            projectId: "tutogenius-1",
+            storageBucket: "tutogenius-1.firebasestorage.app",
+            messagingSenderId: "65839146612",
+            appId: "1:65839146612:web:4e54c6ad4cea4bc5859321"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
         const COURSE_ID = "c12_sem378"; 
         const REDIRECT_URL = "subject.html";
@@ -746,55 +773,33 @@
         const SECRET_MASTER_PASSWORD = "123"; 
 
         let currentBalance = 0;
+        let loggedInUid = localStorage.getItem("tg_uid");
 
-        function loadBalance() {
-            let stored = localStorage.getItem("coinBalance");
-            if(stored === null || isNaN(parseInt(stored))) { 
-                currentBalance = 0; 
-                localStorage.setItem("coinBalance", "0"); 
-            } else { 
-                currentBalance = parseInt(stored, 10); 
+        window.goBack = function() {
+            window.history.back();
+        };
+
+        // Realtime Balance Syncing from Firebase Database for logged in U ID
+        window.syncRealtimeBalance = function() {
+            if (!loggedInUid) {
+                let stored = localStorage.getItem("coinBalance");
+                currentBalance = stored ? parseFloat(stored) : 0;
+                document.getElementById("balance").innerText = currentBalance.toFixed(2);
+                return;
             }
-            const balanceSpan = document.getElementById("balance");
-            if(balanceSpan) balanceSpan.innerText = currentBalance;
-        }
 
-        function loadProfileData() {
-            let savedName = localStorage.getItem("student_display_name");
-            if(!savedName || savedName.trim() === "") { 
-                savedName = "TutoPulse"; 
-                localStorage.setItem("student_display_name", savedName); 
-            }
-            const nameEl = document.getElementById("displayName");
-            if(nameEl) nameEl.innerText = savedName;
-
-            let savedPic = localStorage.getItem("profile_image_url");
-            if(!savedPic || savedPic === "") { 
-                savedPic = "https://i.ibb.co/4pDNDk1/avatar.png"; 
-                localStorage.setItem("profile_image_url", savedPic); 
-            }
-            const avatar = document.getElementById("profileAvatar");
-            if(avatar) avatar.src = savedPic;
-        }
-
-        function ensureDataIntegrity() {
-            if(localStorage.getItem("coinBalance") === null) localStorage.setItem("coinBalance", "0");
-            if(localStorage.getItem("student_display_name") === null) localStorage.setItem("student_display_name", "TutoPulse");
-            if(localStorage.getItem("profile_image_url") === null) localStorage.setItem("profile_image_url", "https://i.ibb.co/4pDNDk1/avatar.png");
-        }
-
-        // Global function to add coins - use this in other scripts
-        function addCoins(amount) {
-            currentBalance += amount;
-            localStorage.setItem('coinBalance', currentBalance);
-            document.getElementById('balance').textContent = currentBalance;
-        }
+            onSnapshot(doc(db, "users", loggedInUid), (docSnap) => {
+                if (docSnap.exists()) {
+                    currentBalance = Number(docSnap.data().balance || 0);
+                    localStorage.setItem("coinBalance", currentBalance.toString());
+                    document.getElementById("balance").innerText = currentBalance.toFixed(2);
+                }
+            });
+        };
 
         document.addEventListener("DOMContentLoaded", () => {
             initDarkModePreference();
-            ensureDataIntegrity();
-            loadBalance();
-            loadProfileData();
+            syncRealtimeBalance();
             initializeViewLifecycle();
             evaluateEnrollmentLockState();
             lucide.createIcons();
@@ -806,19 +811,12 @@
         function initDarkModePreference() {
             if (localStorage.getItem("darkMode") === "true") {
                 body.classList.add("dark");
-                darkToggle.textContent = "☀️";
+                if (darkToggle) darkToggle.textContent = "☀️";
             } else {
                 body.classList.remove("dark");
-                darkToggle.textContent = "🌙";
+                if (darkToggle) darkToggle.textContent = "🌙";
             }
         }
-        
-        darkToggle.addEventListener("click", () => {
-            body.classList.toggle("dark");
-            const isDark = body.classList.contains("dark");
-            localStorage.setItem("darkMode", isDark);
-            darkToggle.textContent = isDark ? "☀️" : "🌙";
-        });
 
         function initializeViewLifecycle() {
             const bannerFrame = document.getElementById("bannerFrame");
@@ -836,7 +834,7 @@
             }
         }
 
-        function dispatchToast(textAlert, mode = "error") {
+        window.dispatchToast = function(textAlert, mode = "error") {
             const hub = document.getElementById("toastHub");
             const toast = document.createElement("div");
             toast.className = `custom-toast toast-${mode}`;
@@ -845,15 +843,14 @@
             toast.innerHTML = `<i data-lucide="${iconName}"></i> <span>${textAlert}</span>`;
             
             hub.appendChild(toast);
-            lucide.createIcons({ attrs: { class: [] } });
+            lucide.createIcons();
             
             setTimeout(() => toast.classList.add("reveal"), 50);
-
             setTimeout(() => {
                 toast.classList.remove("reveal");
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
-        }
+        };
 
         function evaluateEnrollmentLockState() {
             const actionBtn = document.getElementById("masterActionButton");
@@ -869,7 +866,7 @@
             }
         }
 
-        function handleEnrollmentWorkflow() {
+        window.handleEnrollmentWorkflow = function() {
             const isUnlocked = localStorage.getItem(`course_unlocked_${COURSE_ID}`);
             const loader = document.getElementById("dockButtonLoader");
             const textLabel = document.getElementById("buttonTextLabel");
@@ -886,28 +883,22 @@
                 if (isUnlocked === "true") {
                     window.location.href = REDIRECT_URL;
                 } else {
-                    if (REQUIRED_COINS_COST === 0) {
-                        localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
-                        dispatchToast("কোর্সটি সফলভাবে অ্যাক্টিভেট করা হয়েছে!", "success");
-                        evaluateEnrollmentLockState();
-                    } else {
-                        presentModalSheet();
-                    }
+                    presentModalSheet();
                 }
-            }, 1200); 
-        }
+            }, 800); 
+        };
 
         function presentModalSheet() {
             document.getElementById("workflowModalOverlay").classList.add("active");
             routeToPane('hub');
         }
 
-        function dismissModalSheet() {
+        window.dismissModalSheet = function() {
             document.getElementById("workflowModalOverlay").classList.remove("active");
             document.getElementById("secretPasskeyField").value = "";
-        }
+        };
 
-        function routeToPane(paneId) {
+        window.routeToPane = function(paneId) {
             const titleEl = document.getElementById("modalDisplayTitle");
             
             document.getElementById("paneSelectionHub").classList.remove("active");
@@ -924,40 +915,60 @@
                 titleEl.innerText = "Unlock via Password";
                 document.getElementById("panePasswordProcessor").classList.add("active");
             }
-        }
+        };
 
-        function executeCoinDeductions() {
+        /* FIREBASE TRANSACTION MONEY DEDUCTION LOGIC FOR U ID */
+        window.executeCoinDeductions = async function() {
             const textLabel = document.getElementById("coinActionText");
             const loader = document.getElementById("coinPaneLoader");
-            
-            if(loader.style.display === "flex") return;
 
-            if (currentBalance < REQUIRED_COINS_COST) {
-                dispatchToast("আপনার পর্যাপ্ত কয়েন নেই!", "error");
+            loggedInUid = localStorage.getItem("tg_uid");
+
+            if (!loggedInUid) {
+                dispatchToast("অনুগ্রহ করে প্রথমে লগইন করুন!", "error");
                 return;
             }
+            
+            if (loader.style.display === "flex") return;
 
             textLabel.style.opacity = "0";
             loader.style.display = "flex";
 
-            setTimeout(() => {
-                currentBalance -= REQUIRED_COINS_COST;
-                localStorage.setItem("coinBalance", currentBalance.toString()); 
-                document.getElementById("balance").innerText = currentBalance;
-                
+            try {
+                // Run transaction on Firebase to update database safely
+                await runTransaction(db, async (transaction) => {
+                    const userRef = doc(db, "users", loggedInUid);
+                    const userSnap = await transaction.get(userRef);
+
+                    if (!userSnap.exists()) {
+                        throw new Error("ইউজার আইডি পাওয়া যায়নি!");
+                    }
+
+                    const dbBalance = Number(userSnap.data().balance || 0);
+
+                    if (dbBalance < REQUIRED_COINS_COST) {
+                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই!");
+                    }
+
+                    const newBalance = dbBalance - REQUIRED_COINS_COST;
+                    transaction.update(userRef, { balance: newBalance });
+                });
+
                 commitSuccessfulUnlock();
-                
+            } catch (err) {
+                dispatchToast(err.message || "টাকা কাটা ব্যর্থ হয়েছে!", "error");
+            } finally {
                 textLabel.style.opacity = "1";
                 loader.style.display = "none";
-            }, 1500);
-        }
+            }
+        };
 
-        function executePasswordVerification() {
+        window.executePasswordVerification = function() {
             const inputField = document.getElementById("secretPasskeyField");
             const textLabel = document.getElementById("passActionText");
             const loader = document.getElementById("passPaneLoader");
 
-            if(loader.style.display === "flex") return;
+            if (loader.style.display === "flex") return;
 
             if (inputField.value.trim() !== SECRET_MASTER_PASSWORD) {
                 dispatchToast("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।", "error");
@@ -969,11 +980,10 @@
 
             setTimeout(() => {
                 commitSuccessfulUnlock();
-                
                 textLabel.style.opacity = "1";
                 loader.style.display = "none";
-            }, 1500);
-        }
+            }, 1000);
+        };
 
         function commitSuccessfulUnlock() {
             localStorage.setItem(`course_unlocked_${COURSE_ID}`, "true");
