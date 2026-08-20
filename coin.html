@@ -9,6 +9,46 @@
     <!-- Lucide Icons Library -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* Base reset and global touch behavior fixes */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: background 0.3s, color 0.3s;
+            -webkit-tap-highlight-color: transparent !important;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div, button, input {
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            text-decoration: none;
+        }
+
+        /* Allow user input selection in form fields */
+        input {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+        }
+
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
         :root {
             --bg-light: #e6f7ff;
             --blue-primary: #0066ff;
@@ -16,13 +56,6 @@
             --green-btn: #00c853;
             --red-btn: #ff3333;
             --text-dark: #0f172a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
@@ -68,6 +101,7 @@
             justify-content: center;
             cursor: pointer;
             text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .top-action-btn {
@@ -79,6 +113,8 @@
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
+            transition: background-color 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .top-action-btn.switch {
@@ -91,10 +127,27 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .hidden {
             display: none !important;
+        }
+
+        /* --- INITIAL AUTH CHECK OVERLAY --- */
+        .initial-loader-view {
+            background-color: var(--bg-light);
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .loader-title {
+            color: var(--blue-primary);
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 0.5px;
         }
 
         /* --- LOGIN & REGISTRATION STYLE --- */
@@ -143,12 +196,18 @@
             color: white;
             border: none;
             width: 140px;
+            min-height: 48px;
             padding: 10px 0;
             border-radius: 20px;
             font-size: 22px;
             font-weight: 700;
             margin-top: 15px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* --- DASHBOARD VIEW STYLE --- */
@@ -181,12 +240,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .user-details {
             display: flex;
             flex-direction: column;
             gap: 4px;
+            flex: 1;
         }
 
         .user-info-text {
@@ -210,6 +272,7 @@
             cursor: pointer;
             margin-top: 6px;
             width: fit-content;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Wallet Balance Pill */
@@ -221,6 +284,8 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
         }
 
         .wallet-pill-left {
@@ -265,6 +330,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.4s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .spin {
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
         }
 
         .btn-add {
@@ -276,6 +351,7 @@
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Dashboard Main Action Grid */
@@ -296,6 +372,7 @@
             justify-content: center;
             gap: 10px;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .action-card-icon {
@@ -339,6 +416,83 @@
         .phonepe { color: #5f259f; }
         .paytm { color: #00baf2; }
         .gpay { color: #5f6368; }
+
+        /* --- 3-DOT LOADING ANIMATION --- */
+        .dots-loader {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 24px;
+        }
+
+        .dots-loader.large div {
+            width: 12px;
+            height: 12px;
+        }
+
+        .dots-loader div {
+            width: 8px;
+            height: 8px;
+            background-color: var(--blue-primary);
+            border-radius: 50%;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .btn-submit .dots-loader div,
+        .btn-modal-confirm .dots-loader div {
+            background-color: #ffffff;
+        }
+
+        .dots-loader div:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dots-loader div:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            from {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-8px);
+            }
+        }
+
+        /* --- SKELETON LOADING UI STYLES --- */
+        .skeleton {
+            background: #e2e8f0;
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .skeleton-text {
+            height: 14px;
+            width: 80%;
+            margin-top: 4px;
+        }
+
+        .skeleton-qr {
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+        }
+
+        .skeleton-balance {
+            width: 60px;
+            height: 18px;
+        }
 
         /* Toast Popup */
         #toast-container {
@@ -437,6 +591,7 @@
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn-modal-confirm {
@@ -449,6 +604,11 @@
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes fadeIn {
@@ -469,14 +629,22 @@
 
     <!-- HEADER -->
     <div class="header">
-        <div class="back-btn">
+        <div class="back-btn" onclick="goBack()">
             <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
         </div>
-        <button id="topNavBtn" class="top-action-btn" onclick="toggleAuthMode()">Create New</button>
+        <button id="topNavBtn" class="top-action-btn" onclick="handleTopNavClick()">Create New</button>
+    </div>
+
+    <!-- VIEW 0: INITIAL LOGIN CHECKING LOADER -->
+    <div id="initialLoaderView" class="view initial-loader-view">
+        <div class="dots-loader large">
+            <div></div><div></div><div></div>
+        </div>
+        <div class="loader-title"></div>
     </div>
 
     <!-- VIEW 1: LOGIN / REGISTER -->
-    <div id="authView" class="view auth-view">
+    <div id="authView" class="view auth-view hidden">
         <h2 id="authTitle" class="auth-title">Wallet Login</h2>
 
         <div class="input-group">
@@ -489,7 +657,7 @@
             <div class="input-label">Enter Your Key</div>
         </div>
 
-        <button id="authSubmitBtn" class="btn-submit" onclick="handleAuth()">Login</button>
+        <button id="authSubmitBtn" class="btn-submit" onclick="confirmAuthAction()">Login</button>
     </div>
 
     <!-- VIEW 2: DASHBOARD -->
@@ -518,7 +686,7 @@
                     </div>
                 </div>
                 <div class="pill-actions">
-                    <span class="refresh-icon" onclick="refreshBalance()">
+                    <span id="refreshBtn" class="refresh-icon" onclick="refreshBalance()">
                         <i data-lucide="rotate-cw" style="width: 18px; height: 18px;"></i>
                     </span>
                     <button class="btn-add" onclick="openGiftModal()">Add</button>
@@ -552,6 +720,22 @@
         </div>
     </div>
 
+    <!-- GENERAL ACTION CONFIRMATION MODAL -->
+    <div id="actionConfirmModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-icon-badge" id="confirmModalIcon">
+                <i data-lucide="help-circle" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="modal-title" id="confirmModalTitle">Are you sure?</div>
+            <div class="modal-subtitle" id="confirmModalSubtitle">Do you want to proceed with this action?</div>
+            
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" onclick="closeModal('actionConfirmModal')">Cancel</button>
+                <button id="confirmModalBtn" class="btn-modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <!-- POPUP MODAL 1: CHANGE KEY -->
     <div id="changeKeyModal" class="modal-overlay hidden">
         <div class="modal-card">
@@ -565,7 +749,7 @@
             
             <div class="modal-actions">
                 <button class="btn-modal-cancel" onclick="closeModal('changeKeyModal')">Cancel</button>
-                <button class="btn-modal-confirm" onclick="submitNewKey()">Update</button>
+                <button id="updateKeyBtn" class="btn-modal-confirm" onclick="submitNewKey()">Update</button>
             </div>
         </div>
     </div>
@@ -583,7 +767,7 @@
             
             <div class="modal-actions">
                 <button class="btn-modal-cancel" onclick="closeModal('giftModal')">Cancel</button>
-                <button class="btn-modal-confirm" onclick="submitGiftCode()">Redeem</button>
+                <button id="redeemBtn" class="btn-modal-confirm" onclick="submitGiftCode()">Redeem</button>
             </div>
         </div>
     </div>
@@ -610,10 +794,58 @@
     let isCreateMode = false;
     let qrCodeInstance = null;
     let unsubSnapshot = null;
+    let pendingConfirmAction = null;
 
     document.addEventListener("DOMContentLoaded", () => {
         lucide.createIcons();
+        checkLoginStatus();
     });
+
+    /* --- GENERAL CONFIRMATION MODAL HELPER --- */
+    window.showConfirmationModal = function({ icon, title, subtitle, confirmText, onConfirm }) {
+        const iconBadge = document.getElementById('confirmModalIcon');
+        if (icon.startsWith('<')) {
+            iconBadge.innerHTML = icon;
+        } else {
+            iconBadge.innerHTML = `<i data-lucide="${icon}" style="width: 24px; height: 24px;"></i>`;
+            lucide.createIcons();
+        }
+        
+        document.getElementById('confirmModalTitle').textContent = title;
+        document.getElementById('confirmModalSubtitle').textContent = subtitle;
+        
+        const confirmBtn = document.getElementById('confirmModalBtn');
+        confirmBtn.textContent = confirmText || 'Confirm';
+        
+        pendingConfirmAction = async () => {
+            closeModal('actionConfirmModal');
+            if (onConfirm) await onConfirm();
+        };
+
+        confirmBtn.onclick = pendingConfirmAction;
+        document.getElementById('actionConfirmModal').classList.remove('hidden');
+    };
+
+    /* --- HELPER LOADING & SKELETON UI FUNCTIONS --- */
+    function showDotLoading(btnElement) {
+        btnElement.dataset.originalText = btnElement.textContent;
+        btnElement.disabled = true;
+        btnElement.innerHTML = `<div class="dots-loader"><div></div><div></div><div></div></div>`;
+    }
+
+    function hideDotLoading(btnElement) {
+        if (btnElement.dataset.originalText) {
+            btnElement.textContent = btnElement.dataset.originalText;
+        }
+        btnElement.disabled = false;
+    }
+
+    function showSkeletonLoading() {
+        document.getElementById('qrcode').innerHTML = `<div class="skeleton skeleton-qr"></div>`;
+        document.getElementById('dashUid').innerHTML = `<span class="skeleton skeleton-text" style="width: 70px;"></span>`;
+        document.getElementById('dashKey').innerHTML = `<span class="skeleton skeleton-text" style="width: 50px;"></span>`;
+        document.getElementById('dashBalance').innerHTML = `<span class="skeleton skeleton-balance"></span>`;
+    }
 
     function showAlert(msg, type = "info") {
         const container = document.getElementById('toast-container');
@@ -624,8 +856,55 @@
         setTimeout(() => toast.remove(), 3000);
     }
 
+    /* --- INITIAL AUTH STATUS CHECK WITH 3-DOT ANIMATION --- */
+    async function checkLoginStatus() {
+        const savedUid = localStorage.getItem('tg_uid');
+        const savedKey = localStorage.getItem('tg_key');
+
+        await new Promise(res => setTimeout(res, 1200));
+
+        if (savedUid && savedKey) {
+            try {
+                const userSnap = await getDoc(doc(db, "users", savedUid));
+                if (userSnap.exists() && userSnap.data().key === savedKey) {
+                    document.getElementById('initialLoaderView').classList.add('hidden');
+                    loadDashboard(savedUid, savedKey);
+                    return;
+                }
+            } catch (e) {
+                console.error("Session verification failed", e);
+            }
+        }
+
+        document.getElementById('initialLoaderView').classList.add('hidden');
+        document.getElementById('authView').classList.remove('hidden');
+    }
+
     window.closeModal = function(id) {
         document.getElementById(id).classList.add('hidden');
+    };
+
+    /* HEADER SWITCH / CREATE NEW BUTTON HANDLER */
+    window.handleTopNavClick = function() {
+        const navBtn = document.getElementById('topNavBtn');
+        if (navBtn.classList.contains('switch')) {
+            showConfirmationModal({
+                icon: 'log-out',
+                title: 'Switch Account',
+                subtitle: 'Are you sure you want to log out of your wallet account?',
+                confirmText: 'Yes, Switch',
+                onConfirm: logout
+            });
+        } else {
+            const nextModeText = isCreateMode ? 'Login' : 'Create Account';
+            showConfirmationModal({
+                icon: 'user-plus',
+                title: `Switch to ${nextModeText}`,
+                subtitle: `Are you sure you want to switch to the ${nextModeText} view?`,
+                confirmText: 'Continue',
+                onConfirm: () => toggleAuthMode()
+            });
+        }
     };
 
     window.toggleAuthMode = function() {
@@ -651,13 +930,37 @@
         }
     };
 
-    window.handleAuth = async function() {
+    /* LOGIN / REGISTER BUTTON CLICK CONFIRMATION */
+    window.confirmAuthAction = function() {
         const key = document.getElementById('keyInput').value.trim();
-
         if (!/^\d{6}$/.test(key)) {
             showAlert("Key must be exactly 6 numeric digits!", "error");
             return;
         }
+
+        if (!isCreateMode) {
+            const uid = document.getElementById('uidInput').value.trim();
+            if (!uid) {
+                showAlert("Please enter your U ID", "error");
+                return;
+            }
+        }
+
+        const actionText = isCreateMode ? 'Registration' : 'Login';
+        showConfirmationModal({
+            icon: isCreateMode ? 'user-check' : 'log-in',
+            title: `Confirm ${actionText}`,
+            subtitle: `Are you sure you want to proceed with ${actionText.toLowerCase()}?`,
+            confirmText: isCreateMode ? 'Register' : 'Login',
+            onConfirm: () => handleAuth()
+        });
+    };
+
+    window.handleAuth = async function() {
+        const submitBtn = document.getElementById('authSubmitBtn');
+        const key = document.getElementById('keyInput').value.trim();
+
+        showDotLoading(submitBtn);
 
         if (isCreateMode) {
             try {
@@ -681,13 +984,11 @@
                 loadDashboard(newUid, key);
             } catch (e) {
                 showAlert("Registration failed: " + e.message, "error");
+            } finally {
+                hideDotLoading(submitBtn);
             }
         } else {
             const uid = document.getElementById('uidInput').value.trim().toUpperCase();
-            if (!uid) {
-                showAlert("Please enter your U ID", "error");
-                return;
-            }
 
             try {
                 const userSnap = await getDoc(doc(db, "users", uid));
@@ -706,6 +1007,8 @@
                 }
             } catch (e) {
                 showAlert("Login error: " + e.message, "error");
+            } finally {
+                hideDotLoading(submitBtn);
             }
         }
     };
@@ -727,17 +1030,18 @@
         document.getElementById('authView').classList.add('hidden');
         document.getElementById('dashboardView').classList.remove('hidden');
 
+        showSkeletonLoading();
+
         const navBtn = document.getElementById('topNavBtn');
         navBtn.textContent = "Switch";
         navBtn.className = "top-action-btn switch";
-        navBtn.onclick = logout;
 
-        document.getElementById('dashUid').textContent = uid;
-        document.getElementById('dashKey').textContent = key;
-
-        generateQRCode(`UID:${uid}\vert{}KEY:${key}`);
-
-        setTimeout(() => lucide.createIcons(), 50);
+        setTimeout(() => {
+            document.getElementById('dashUid').textContent = uid;
+            document.getElementById('dashKey').textContent = key;
+            generateQRCode(`UID:${uid}|KEY:${key}`);
+            lucide.createIcons();
+        }, 600);
 
         if (unsubSnapshot) unsubSnapshot();
         unsubSnapshot = onSnapshot(doc(db, "users", uid), (snap) => {
@@ -755,22 +1059,26 @@
     };
 
     window.submitNewKey = async function() {
+        const updateBtn = document.getElementById('updateKeyBtn');
         const newKey = document.getElementById('newKeyInput').value.trim();
         if (!/^\d{6}$/.test(newKey)) {
             showAlert("Key must be 6 numeric digits!", "error");
             return;
         }
 
+        showDotLoading(updateBtn);
         const uid = localStorage.getItem('tg_uid');
         try {
             await updateDoc(doc(db, "users", uid), { key: newKey });
             localStorage.setItem('tg_key', newKey);
             document.getElementById('dashKey').textContent = newKey;
-            generateQRCode(`UID:${uid}\vert{}KEY:${newKey}`);
+            generateQRCode(`UID:${uid}|KEY:${newKey}`);
             closeModal('changeKeyModal');
             showAlert("Key updated successfully!", "success");
         } catch (e) {
             showAlert("Failed to change key", "error");
+        } finally {
+            hideDotLoading(updateBtn);
         }
     };
 
@@ -781,12 +1089,14 @@
     };
 
     window.submitGiftCode = async function() {
+        const redeemBtn = document.getElementById('redeemBtn');
         const codeInput = document.getElementById('giftCodeInput').value.trim().toUpperCase();
         if (!codeInput) {
             showAlert("Please enter a gift code", "error");
             return;
         }
 
+        showDotLoading(redeemBtn);
         const uid = localStorage.getItem('tg_uid');
 
         try {
@@ -818,7 +1128,6 @@
                 const userSnap = await transaction.get(userRef);
                 if (!userSnap.exists()) throw new Error("User record missing!");
 
-                // Update balance and track redemption
                 const currentBal = Number(userSnap.data().balance || 0);
                 transaction.update(userRef, { balance: currentBal + giftAmount });
                 transaction.update(codeRef, { usedBy: arrayUnion(uid) });
@@ -828,11 +1137,18 @@
             showAlert("Gift Code Redeemed Successfully!", "success");
         } catch (e) {
             showAlert(e.message || "Failed to redeem code", "error");
+        } finally {
+            hideDotLoading(redeemBtn);
         }
     };
 
     window.refreshBalance = function() {
-        showAlert("Balance updated", "success");
+        const refreshIcon = document.getElementById('refreshBtn');
+        refreshIcon.classList.add('spin');
+        setTimeout(() => {
+            refreshIcon.classList.remove('spin');
+            showAlert("Balance updated", "success");
+        }, 600);
     };
 
     function logout() {
@@ -846,7 +1162,6 @@
         const navBtn = document.getElementById('topNavBtn');
         navBtn.textContent = "Create New";
         navBtn.className = "top-action-btn";
-        navBtn.onclick = toggleAuthMode;
 
         isCreateMode = true;
         toggleAuthMode();
@@ -855,11 +1170,9 @@
         setTimeout(() => lucide.createIcons(), 50);
     }
 
-    const savedUid = localStorage.getItem('tg_uid');
-    const savedKey = localStorage.getItem('tg_key');
-    if (savedUid && savedKey) {
-        loadDashboard(savedUid, savedKey);
-    }
+    window.goBack = function() {
+        window.history.back();
+    };
 </script>
 </body>
 </html>
