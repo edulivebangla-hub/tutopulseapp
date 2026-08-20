@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tutogenius Auth & Profile System</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Edutips App</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -21,30 +21,69 @@
       min-height: 100vh;
     }
 
-    .app-card {
+    .app-container {
       width: 100%;
       max-width: 414px;
-      background: #ffffff;
+      background-color: #ffffff;
       min-height: 100vh;
-      padding: 24px 20px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow-x: hidden;
     }
 
     @media (min-width: 480px) {
-      .app-card {
+      .app-container {
         min-height: 720px;
         border-radius: 24px;
       }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Global Loader Overlay */
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 4px solid #e2e8f0;
+      border-top: 4px solid #2b4bbb;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* AUTHENTICATION STYLES */
+    .auth-card {
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .close-btn {
       align-self: flex-start;
       background: none;
       border: none;
-      font-size: 20px;
       color: #0f172a;
       cursor: pointer;
       margin-bottom: 24px;
@@ -117,23 +156,23 @@
       margin-bottom: 16px;
     }
 
-    .input-group i.left-icon {
+    .input-group .left-icon {
       position: absolute;
       left: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: #64748b;
-      font-size: 16px;
     }
 
-    .input-group i.right-icon {
+    .input-group .right-icon {
       position: absolute;
       right: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: #64748b;
-      font-size: 16px;
       cursor: pointer;
+      background: none;
+      border: none;
     }
 
     .input-field {
@@ -201,22 +240,83 @@
       text-decoration: underline;
     }
 
-    .profile-card {
-      display: none;
-      flex-direction: column;
+    /* HOME SCREEN STYLES */
+    .home-screen {
+      padding-bottom: 72px;
+    }
+
+    .navbar {
+      background-color: #2b4bbb;
+      color: #ffffff;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      text-align: center;
-      margin-top: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2b4bbb;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-icon-btn {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gift-icon {
+      color: #ff9800;
+    }
+
+    .profile-section {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .avatar-wrapper {
       position: relative;
-      width: 96px;
-      height: 96px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       overflow: hidden;
       background-color: #e2e8f0;
-      margin-bottom: 16px;
     }
 
     .avatar-skeleton {
@@ -247,17 +347,311 @@
       opacity: 1;
     }
 
-    .hidden {
-      display: none !important;
+    .user-details .subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+
+    .user-details .name-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-details .name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .name-input {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0f172a;
+      border: 1px solid #3b82f6;
+      border-radius: 4px;
+      padding: 2px 6px;
+      outline: none;
+      display: none;
+      width: 140px;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .edit-btn {
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+    }
+
+    .edit-btn:hover {
+      background-color: #f1f5f9;
+    }
+
+    .save-btn {
+      color: #22c55e;
+      border: 1px solid #bbf7d0;
+      background-color: #f0fdf4;
+      display: none;
+    }
+
+    .banner-container {
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .banner {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      border-radius: 16px;
+      padding: 16px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .banner-content {
+      z-index: 2;
+    }
+
+    .banner-tag {
+      background-color: #facc15;
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .banner-btn {
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .banner-bg-icon {
+      position: absolute;
+      right: 10px;
+      opacity: 0.15;
+      color: #ffffff;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin: 12px 0;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #cbd5e1;
+    }
+
+    .dot.active {
+      background-color: #f59e0b;
+      width: 10px;
+      height: 10px;
+    }
+
+    .section-header {
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .section-title span {
+      color: #3b82f6;
+    }
+
+    .view-all-btn {
+      border: 1px solid #2563eb;
+      color: #1e293b;
+      background: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 12px 16px;
+    }
+
+    .course-card {
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
+      padding: 12px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background-color: #ffffff;
+    }
+
+    .course-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .course-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 12px 16px 24px;
+    }
+
+    .action-card {
+      background-color: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 16px;
+      padding: 14px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .action-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-card-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logout-section {
+      padding: 0 16px 16px 16px;
+    }
+
+    /* Bottom Navigation Bar */
+    .footer-nav {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 64px;
+      padding: 0 8px;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
+      z-index: 100;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      flex: 1;
+      height: 100%;
+      transition: color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      color: #2b4bbb;
+      font-weight: 700;
+    }
+
+    .nav-item.active .nav-icon-container {
+      background-color: #eff6ff;
+      border-radius: 16px;
+      padding: 4px 12px;
+    }
+
+    .nav-icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
 <body>
 
-  <div class="app-card">
-    <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+  <div class="app-container">
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="spinner"></div>
+      <span style="font-size: 14px; color: #475569; font-weight: 600;">Authenticating...</span>
+    </div>
 
-    <div id="authWrapper">
+    <div id="authWrapper" class="auth-card">
+      <button class="close-btn"><i data-lucide="x" size="20"></i></button>
+
       <h1 class="header-title" id="pageTitle">Login</h1>
       <p class="header-subtitle" id="pageSubtitle">Unlock all features with Just one tap</p>
 
@@ -270,28 +664,32 @@
 
       <button class="toggle-dropdown-btn" id="toggleDropdownBtn">
         <span id="dropdownText">More sign-in options</span>
-        <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
+        <i data-lucide="chevron-down" size="16" id="dropdownIcon"></i>
       </button>
 
       <div class="divider hidden" id="dividerText">--- OR ---</div>
 
       <form id="authForm">
         <div class="input-group hidden" id="nameGroup">
-          <i class="fa-regular fa-user left-icon"></i>
+          <i data-lucide="user" size="18" class="left-icon"></i>
           <input type="text" class="input-field" id="nameInput" placeholder="Name">
         </div>
 
         <div id="emailFormFields" class="hidden">
           <div class="input-group">
-            <i class="fa-regular fa-envelope left-icon"></i>
+            <i data-lucide="mail" size="18" class="left-icon"></i>
             <input type="email" class="input-field" id="emailInput" placeholder="Email">
-            <i class="fa-solid fa-xmark right-icon" id="clearEmailBtn"></i>
+            <button type="button" class="right-icon" id="clearEmailBtn">
+              <i data-lucide="x" size="16"></i>
+            </button>
           </div>
 
           <div class="input-group">
-            <i class="fa-solid fa-lock left-icon"></i>
+            <i data-lucide="lock" size="18" class="left-icon"></i>
             <input type="password" class="input-field" id="passwordInput" placeholder="Password">
-            <i class="fa-regular fa-eye-slash right-icon" id="togglePasswordBtn"></i>
+            <button type="button" class="right-icon" id="togglePasswordBtn">
+              <i data-lucide="eye-off" size="16" id="togglePasswordIcon"></i>
+            </button>
           </div>
 
           <a href="#" class="forgot-link" id="forgotPasswordLink">Forgot Password?</a>
@@ -301,7 +699,7 @@
       </form>
 
       <div class="switch-mode">
-        <span id="switchPrompt">Don't have an account?</span>
+        <span id="switchPrompt">Don't have an account? </span>
         <span id="switchBtn">Create Account</span>
       </div>
 
@@ -311,15 +709,152 @@
       </p>
     </div>
 
-    <div class="profile-card" id="profileCard">
-      <div class="avatar-wrapper">
-        <div class="avatar-skeleton" id="avatarSkeleton"></div>
-        <img src="" alt="Profile Photo" class="avatar-img" id="userAvatar">
-      </div>
-      <h2 class="header-title" id="profileName">User Name</h2>
-      <p class="header-subtitle" id="profileEmail">user@example.com</p>
+    <div id="homeScreen" class="home-screen hidden">
+      <header class="navbar">
+        <div class="brand">
+          <div class="brand-logo">
+            <i data-lucide="graduation-cap" size="22"></i>
+          </div>
+          <span class="brand-title">Edutips</span>
+        </div>
+        <div class="nav-icons">
+          <button class="nav-icon-btn"><i data-lucide="search" size="20"></i></button>
+          <button class="nav-icon-btn"><i data-lucide="bell" size="20"></i></button>
+          <button class="nav-icon-btn gift-icon"><i data-lucide="gift" size="20"></i></button>
+        </div>
+      </header>
 
-      <button class="primary-btn" id="logoutBtn" style="background-color: #ef4444;">Logout</button>
+      <section class="profile-section">
+        <div class="profile-info">
+          <div class="avatar-wrapper">
+            <div class="avatar-skeleton" id="avatarSkeleton"></div>
+            <img src="" alt="User Photo" class="avatar-img" id="userAvatar">
+          </div>
+          <div class="user-details">
+            <div class="subtitle">Back to Study!</div>
+            <div class="name-container">
+              <span class="name" id="userName">User Name</span>
+              <input type="text" class="name-input" id="editNameInput">
+            </div>
+          </div>
+        </div>
+
+        <button class="action-btn edit-btn" id="editBtn" title="Edit Name">
+          <i data-lucide="pencil" size="16"></i>
+        </button>
+        <button class="action-btn save-btn" id="saveBtn" title="Save Name">
+          <i data-lucide="check" size="16"></i>
+        </button>
+      </section>
+
+      <section class="banner-container">
+        <div class="banner">
+          <div class="banner-content">
+            <span class="banner-tag">CLASS 11 - SEM 1</span>
+            <div class="banner-title">SCIENCE<br>PAID BATCH</div>
+            <button class="banner-btn">
+              JOIN NOW 
+              <i data-lucide="play" size="12" fill="white"></i>
+            </button>
+          </div>
+          <div class="banner-bg-icon">
+            <i data-lucide="atom" size="90"></i>
+          </div>
+        </div>
+        <div class="dots">
+          <div class="dot"></div>
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-header">
+          <h2 class="section-title">Top <span>Study Course</span></h2>
+          <button class="view-all-btn">View all</button>
+        </div>
+
+        <div class="courses-grid">
+          <div class="course-card">
+            <div class="course-icon" style="background-color: #fef3c7; color: #d97706;">
+              <i data-lucide="clipboard-list" size="22"></i>
+            </div>
+            <span class="course-title">Exam Prep</span>
+          </div>
+
+          <div class="course-card">
+            <div class="course-icon" style="background-color: #f1f5f9; color: #0f172a;">
+              <i data-lucide="book-open" size="22"></i>
+            </div>
+            <span class="course-title">মাধ্যমিক</span>
+          </div>
+
+          <div class="course-card">
+            <div class="course-icon" style="background-color: #f1f5f9; color: #334155;">
+              <i data-lucide="landmark" size="22"></i>
+            </div>
+            <span class="course-title">HS 11-12</span>
+          </div>
+
+          <div class="course-card">
+            <div class="course-icon" style="background-color: #f3e8ff; color: #9333ea;">
+              <i data-lucide="trending-up" size="22"></i>
+            </div>
+            <span class="course-title">Skills +</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="actions-grid">
+        <div class="action-card">
+          <div class="action-card-icon" style="background-color: #fef08a; color: #ca8a04;">
+            <i data-lucide="help-circle" size="20"></i>
+          </div>
+          <span class="action-card-text">
+            Explore 
+            <i data-lucide="chevron-right" size="16"></i>
+          </span>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-icon" style="background-color: #e0f2fe; color: #0284c7;">
+            <i data-lucide="shopping-cart" size="20"></i>
+          </div>
+          <span class="action-card-text">Buy Notes</span>
+        </div>
+      </section>
+
+      <div class="logout-section">
+        <button class="primary-btn" id="logoutBtn" style="background-color: #ef4444; margin-bottom: 0;">Logout</button>
+      </div>
+
+      <nav class="footer-nav">
+        <a href="#" class="nav-item active">
+          <div class="nav-icon-container">
+            <i data-lucide="home" size="20"></i>
+          </div>
+          <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+          <div class="nav-icon-container">
+            <i data-lucide="book-open-check" size="20"></i>
+          </div>
+          <span>Courses</span>
+        </a>
+        <a href="#" class="nav-item">
+          <div class="nav-icon-container">
+            <i data-lucide="compass" size="20"></i>
+          </div>
+          <span>Explore</span>
+        </a>
+        <a href="#" class="nav-item">
+          <div class="nav-icon-container">
+            <i data-lucide="user" size="20"></i>
+          </div>
+          <span>Profile</span>
+        </a>
+      </nav>
     </div>
   </div>
 
@@ -334,7 +869,7 @@
       signOut, 
       onAuthStateChanged 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
@@ -351,15 +886,16 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Elements
+    // DOM Elements
+    const loadingOverlay = document.getElementById('loadingOverlay');
     const authWrapper = document.getElementById('authWrapper');
-    const profileCard = document.getElementById('profileCard');
+    const homeScreen = document.getElementById('homeScreen');
+    
     const pageTitle = document.getElementById('pageTitle');
     const pageSubtitle = document.getElementById('pageSubtitle');
     const googleSignInBtn = document.getElementById('googleSignInBtn');
     const toggleDropdownBtn = document.getElementById('toggleDropdownBtn');
     const dropdownText = document.getElementById('dropdownText');
-    const dropdownIcon = document.getElementById('dropdownIcon');
     const dividerText = document.getElementById('dividerText');
     const nameGroup = document.getElementById('nameGroup');
     const emailFormFields = document.getElementById('emailFormFields');
@@ -375,11 +911,20 @@
     
     const userAvatar = document.getElementById('userAvatar');
     const avatarSkeleton = document.getElementById('avatarSkeleton');
-    const profileName = document.getElementById('profileName');
-    const profileEmail = document.getElementById('profileEmail');
+    const userName = document.getElementById('userName');
+    const editNameInput = document.getElementById('editNameInput');
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
     const logoutBtn = document.getElementById('logoutBtn');
 
     let isLoginMode = true;
+    let currentUser = null;
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    function showLoading() { loadingOverlay.classList.remove('hidden'); }
+    function hideLoading() { loadingOverlay.classList.add('hidden'); }
 
     function setAuthMode(isLogin) {
       isLoginMode = isLogin;
@@ -391,7 +936,6 @@
         nameGroup.classList.add('hidden');
         emailFormFields.classList.add('hidden');
         dropdownText.textContent = "More sign-in options";
-        dropdownIcon.className = "fa-solid fa-chevron-down";
         switchPrompt.textContent = "Don't have an account? ";
         switchBtn.textContent = "Create Account";
         submitBtn.textContent = "Login";
@@ -416,11 +960,9 @@
       if (isHidden) {
         emailFormFields.classList.remove('hidden');
         dropdownText.textContent = "Hide email sign-in";
-        dropdownIcon.className = "fa-solid fa-chevron-up";
       } else {
         emailFormFields.classList.add('hidden');
         dropdownText.textContent = "More sign-in options";
-        dropdownIcon.className = "fa-solid fa-chevron-down";
       }
     });
 
@@ -438,12 +980,14 @@
     }
 
     googleSignInBtn.addEventListener('click', async () => {
+      showLoading();
       const provider = new GoogleAuthProvider();
       try {
         const result = await signInWithPopup(auth, provider);
         await saveUserData(result.user, result.user.displayName, result.user.photoURL);
       } catch (err) {
         alert(err.message);
+        hideLoading();
       }
     });
 
@@ -458,16 +1002,22 @@
         return;
       }
 
+      showLoading();
       try {
         if (isLoginMode) {
           await signInWithEmailAndPassword(auth, email, password);
         } else {
-          if (!name) { alert("Please enter your name."); return; }
+          if (!name) { 
+            alert("Please enter your name."); 
+            hideLoading();
+            return; 
+          }
           const res = await createUserWithEmailAndPassword(auth, email, password);
           await saveUserData(res.user, name, null);
         }
       } catch (err) {
         alert(err.message);
+        hideLoading();
       }
     });
 
@@ -490,40 +1040,84 @@
     }
 
     onAuthStateChanged(auth, async (user) => {
+      currentUser = user;
       if (user) {
-        authWrapper.style.display = 'none';
-        profileCard.style.display = 'flex';
+        authWrapper.classList.add('hidden');
+        homeScreen.classList.remove('hidden');
 
         try {
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
             const data = userDoc.data();
-            profileName.textContent = data.name;
-            profileEmail.textContent = data.email;
+            userName.textContent = data.name;
+            editNameInput.value = data.name;
             loadProfileImage(data.photoURL);
           } else {
-            profileName.textContent = user.displayName || "User";
-            profileEmail.textContent = user.email;
+            const fallbackName = user.displayName || "User";
+            userName.textContent = fallbackName;
+            editNameInput.value = fallbackName;
             loadProfileImage(user.photoURL || `https://ui-avatars.com/api/?name=User&background=random`);
           }
         } catch (e) {
-          profileName.textContent = user.displayName || "User";
-          profileEmail.textContent = user.email;
+          userName.textContent = user.displayName || "User";
+          editNameInput.value = user.displayName || "User";
         }
       } else {
-        authWrapper.style.display = 'block';
-        profileCard.style.display = 'none';
+        authWrapper.classList.remove('hidden');
+        homeScreen.classList.add('hidden');
       }
+      hideLoading();
     });
 
-    logoutBtn.addEventListener('click', () => signOut(auth));
+    // Profile Inline Edit
+    editBtn.addEventListener('click', () => {
+      userName.style.display = 'none';
+      editNameInput.style.display = 'block';
+      editBtn.style.display = 'none';
+      saveBtn.style.display = 'flex';
+      editNameInput.focus();
+    });
 
+    saveBtn.addEventListener('click', async () => {
+      const newName = editNameInput.value.trim();
+      if (newName && currentUser) {
+        userName.textContent = newName;
+        try {
+          await updateDoc(doc(db, "users", currentUser.uid), { name: newName });
+        } catch (e) {
+          console.error("Error updating profile name:", e);
+        }
+      }
+      userName.style.display = 'inline';
+      editNameInput.style.display = 'none';
+      saveBtn.style.display = 'none';
+      editBtn.style.display = 'flex';
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      showLoading();
+      signOut(auth);
+    });
+
+    // Inputs Helpers
     document.getElementById('clearEmailBtn')?.addEventListener('click', () => emailInput.value = '');
     
-    document.getElementById('togglePasswordBtn')?.addEventListener('click', (e) => {
+    document.getElementById('togglePasswordBtn')?.addEventListener('click', () => {
       const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
       passwordInput.setAttribute('type', type);
-      e.target.className = type === 'password' ? 'fa-regular fa-eye-slash right-icon' : 'fa-regular fa-eye right-icon';
+      const icon = document.getElementById('togglePasswordIcon');
+      icon.setAttribute('data-lucide', type === 'password' ? 'eye-off' : 'eye');
+      lucide.createIcons();
+    });
+
+    // Bottom Navigation Switcher
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        navItems.forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+      });
     });
   </script>
 </body>
