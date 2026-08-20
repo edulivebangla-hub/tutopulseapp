@@ -878,7 +878,93 @@ height: 150px;
         font-size: 14px;
     }
 }
+   /* --- TG WALLET CARD STYLING --- */
+        .tg-wallet-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 6px 8px 6px 10px;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            width: 100%;
+            max-width: 320px;
+        }
 
+        .tg-wallet-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tg-wallet-icon-box {
+            width: 34px;
+            height: 34px;
+            background: #22c55e;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .tg-wallet-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .tg-wallet-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .tg-wallet-amount {
+            font-size: 15px;
+            font-weight: 800;
+            color: #047857;
+        }
+
+        .tg-wallet-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tg-refresh-btn {
+            background: transparent;
+            border: none;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .tg-refresh-btn:active {
+            transform: rotate(180deg);
+        }
+
+        .tg-add-btn {
+            background: #0066ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .tg-add-btn:active {
+            opacity: 0.9;
+        }
 </style>
 </head>
 
@@ -1329,7 +1415,48 @@ Private Sch.
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
+   <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
+            authDomain: "tutogenius-1.firebaseapp.com",
+            projectId: "tutogenius-1",
+            storageBucket: "tutogenius-1.firebasestorage.app",
+            messagingSenderId: "65839146612",
+            appId: "1:65839146612:web:4e54c6ad4cea4bc5859321"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let loggedInUid = localStorage.getItem("tg_uid");
+
+        // Realtime Balance Syncing from Firebase Database
+        window.syncRealtimeBalance = function() {
+            loggedInUid = localStorage.getItem("tg_uid");
+
+            if (!loggedInUid) {
+                let stored = localStorage.getItem("coinBalance");
+                let currentBalance = stored ? parseFloat(stored) : 0;
+                document.getElementById("balance").innerText = currentBalance.toFixed(2);
+                return;
+            }
+
+            onSnapshot(doc(db, "users", loggedInUid), (docSnap) => {
+                if (docSnap.exists()) {
+                    let currentBalance = Number(docSnap.data().balance || 0);
+                    localStorage.setItem("coinBalance", currentBalance.toString());
+                    document.getElementById("balance").innerText = currentBalance.toFixed(2);
+                }
+            });
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            syncRealtimeBalance();
+            lucide.createIcons();
+        });
 // SWIPE/SWITCH TAB VIEW FUNCTION WITH SMOOTH SKELETON
 function switchView(event, targetId){
   const mainView = document.getElementById('main-view-target');
@@ -1372,7 +1499,7 @@ function initBalance() {
   if (user.balance !== undefined) {
     balance = parseInt(user.balance, 10);
   }
-  document.getElementById('balance').textContent = balance;
+  
 }
 
 
