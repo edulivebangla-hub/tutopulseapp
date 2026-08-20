@@ -9,7 +9,7 @@
     <!-- Lucide Icons Library -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-<style>
+    <style>
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-user-select: none;
@@ -65,7 +65,7 @@
         /* APPLICATION CONTAINER MAIN */
         .app-container {
             position: fixed;
-            top: 0;  display: flex;
+            top: 0; display: flex;
             flex-direction: column;
             margin-top: 10px;
             bottom: 65px;
@@ -81,10 +81,6 @@
             display: none;
         }
 
-        .app {
-            padding-top: 10px;
-        }
-
         .header {
             position: fixed;
             top: 0;
@@ -97,20 +93,6 @@
             justify-content: space-between;
             padding: 0 12px;
             z-index: 1000;
-        }
-
-        .back-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 1px solid #e2e8f0;
-            background: #ffffff;
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
 
         .top-action-btn {
@@ -231,26 +213,66 @@
             background-size: 12px auto;
         }
 
-        .profile-upload-circle { 
-
-            width: 50px;
-            height: 200px;
-            border-radius: 100%;
-            border: 1px solid var(--primary-blue);
-            background-color: #f8fafc;
+        /* --- PROFILE PHOTO COMPONENT --- */
+        .profile-upload-container {
             align-self: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-upload-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px dashed var(--primary-blue);
+            background-color: #f8fafc;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(44, 74, 209, 0.08);
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        .profile-upload-circle img {
+        .profile-upload-box:active {
+            transform: scale(0.96);
+        }
+
+        .profile-upload-box img {
             width: 100%;
             height: 100%;
-            
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-upload-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: var(--primary-blue);
+            color: #ffffff;
+            border-radius: 50%;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .upload-label-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .upload-label-text span {
+            color: var(--danger-red);
         }
 
         .forgot-link {
@@ -281,7 +303,7 @@
             min-height: 52px;
         }
 
-        /* --- MODERN LEGAL FOOTER COMPONENT --- */
+        /* --- FOOTER COMPONENT --- */
         .auth-footer {
             margin-top: auto;
             width: 100%;
@@ -460,6 +482,72 @@
             cursor: pointer;
         }
 
+        /* --- SKELETON ANIMATIONS & CLASSES --- */
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+            background-color: #cbd5e1 !important;
+        }
+
+        .shimmer::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0,
+                rgba(255, 255, 255, 0.6) 20%,
+                rgba(255, 255, 255, 0.8) 60%,
+                rgba(255, 255, 255, 0)
+            );
+            animation: shimmer 1.4s infinite;
+            content: '';
+        }
+
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        /* HEADER PROFILE SKELETON SPECIFICS */
+        .profile-skeleton-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .skeleton-profile-pic {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-name-line {
+            width: 140px;
+            height: 22px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-creds-line {
+            width: 200px;
+            height: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .skeleton-balance-line {
+            width: 80px;
+            height: 18px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
         /* MODALS */
         .modal-overlay {
             position: absolute;
@@ -553,30 +641,7 @@
             margin-top: 8px;
         }
 
-        .spin { animation: spin 0.8s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* 3-DOT LOADER DESIGN */
-        .dots-loader {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .dots-loader div {
-            width: 8px;
-            height: 8px;
-            background-color: currentColor;
-            border-radius: 50%;
-            animation: bounce 0.5s infinite alternate;
-        }
-        .dots-loader div:nth-child(2) { animation-delay: 0.15s; }
-        .dots-loader div:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes bounce {
-            from { opacity: 0.3; transform: translateY(0); }
-            to { opacity: 1; transform: translateY(-6px); }
-        }
-
-        /* SECTION */
+        /* SECTION HEADER */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -761,15 +826,15 @@
             border-radius: 10px 0px 10px 0px;
         }
 
-        /* SKELETON LOADING FEATURE */
+        /* --- SKELETON TAB CONTENT LOADING FEATURE --- */
         .skeleton-container {
             display: none;
             padding: 12px 14px;
         }
 
         .skeleton-card {
-            background: #fff;
-            border: 1.5px solid #e0e7ff;
+            background: #ffffff;
+            border: 1.5px solid #f1f5f9;
             border-radius: 14px;
             padding: 12px;
             display: flex;
@@ -781,59 +846,40 @@
         .skeleton-img {
             width: 44px;
             height: 44px;
-            border-radius: 50%;
+            border-radius: 10px;
             background: #e2e8f0;
+            flex-shrink: 0;
         }
 
         .skeleton-info {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
         .skeleton-line {
             height: 12px;
             background: #e2e8f0;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .skeleton-line.title {
-            width: 40%;
+            width: 60%;
             height: 14px;
         }
 
         .skeleton-line.sub {
-            width: 75%;
+            width: 85%;
         }
 
         .skeleton-btn {
             width: 65px;
-            height: 26px;
+            height: 28px;
             background: #e2e8f0;
             border-radius: 20px;
             margin-left: auto;
-        }
-
-        .shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .shimmer::after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            transform: translate3d(-100%, 0, 0);
-            background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.6) 60%, rgba(255,255,255,0) 100%);
-            animation: loading 1.2s infinite;
-            content: '';
-        }
-
-        @keyframes loading {
-            100% { transform: translate3d(100%, 0, 0); }
+            flex-shrink: 0;
         }
 
         /* CAROUSEL IMAGES SECTION */
@@ -1030,19 +1076,9 @@
 <body>
     <div class="header">
         <img src="https://i.ibb.co/VpC7mGB9/1000209961-10kb.jpg" style="width: 200px; border-radius: 10px;">
-        <button class="top-action-btn" onclick="confirmLogout()">Switch</button>
-    </div>
-
-    <div class="app-container">
-        <!-- VIEW 0: INITIAL LOADER WITH 3-DOT ANIMATION -->
-        <div id="initialLoaderView" class="view" style="align-items:center; justify-content:center;">
-            <div class="dots-loader" style="color: var(--primary-blue);">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
         </div>
 
+    <div class="app-container">
         <div id="toast-container"></div>
 
         <!-- VIEW 1: LOGIN VIEW -->
@@ -1066,7 +1102,6 @@
 
             <button id="loginSubmitBtn" class="btn-auth-submit" onclick="confirmLoginAction()">Login</button>
 
-            <!-- BENGALI & LEGAL FOOTER LINKS -->
             <div class="auth-footer">
                 <p class="bengali-notice">আমাদের অ্যাপে আপনাকে স্বাগতম। এগিয়ে যেতে শর্তাবলী মেনে চলুন।</p>
                 <div class="legal-links">
@@ -1082,12 +1117,15 @@
             <h1 class="auth-header-title" style="margin-top: 15px;">Create New ID</h1>
             <button class="btn-create-toggle" onclick="switchAuthView('login')">Back to Login</button>
 
-          
-        <div class="profile-upload-circle" onclick="document.getElementById('regPhoto').click()">
-            <img id="regPhotoPreview" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="display:none;">
-            <i data-lucide="user" id="regPhotoPlaceholder" style="width: 40px; height: 40px; color: #94a3b8;"></i>
-            <input type="file" id="regPhoto" accept="image/*" class="hidden" onchange="handlePhotoSelect(event)">
-        </div>
+            <div class="profile-upload-container">
+                <div class="profile-upload-box" onclick="document.getElementById('regPhoto').click()">
+                    <img id="regPhotoPreview" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="display:none;">
+                    <i data-lucide="user" id="regPhotoPlaceholder" style="width: 44px; height: 44px; color: #94a3b8;"></i>
+                   
+                </div>
+                <span class="upload-label-text">Upload Photo <span>*</span></span>
+                <input type="file" id="regPhoto" accept="image/*" class="hidden" onchange="handlePhotoSelect(event)">
+            </div>
 
             <div class="form-input-wrapper">
                 <i data-lucide="user" class="left-icon"></i>
@@ -1121,7 +1159,6 @@
 
             <button id="regSubmitBtn" class="btn-auth-submit" onclick="confirmRegisterAction()">Register</button>
 
-            <!-- BENGALI & LEGAL FOOTER LINKS -->
             <div class="auth-footer">
                 <p class="bengali-notice">নতুন অ্যাকাউন্টের মাধ্যমে আপনি আমাদের প্রাইভেসি পলিসি মেনে নিচ্ছেন।</p>
                 <div class="legal-links">
@@ -1135,20 +1172,30 @@
         <!-- VIEW 3: DASHBOARD VIEW -->
         <div id="dashboardView" class="view dashboard-view hidden">
             <div class="top-card-section">
-                <img id="dashPhoto" class="dash-profile-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
                 
-                <div id="dashName" class="dash-user-name">User Name</div>
-
-                <div class="dash-actions-row">
-                    <span onclick="openViewDetailsModal()"><i data-lucide="eye" style="width: 16px; height: 16px;"></i> View Qr Code</span>
-                    <span>|</span>
-                    <span onclick="openEditProfileModal()"><i data-lucide="edit-2" style="width: 16px; height: 16px;"></i> Edit Key</span>
+                <!-- PROFILE SKELETON PLACEHOLDER -->
+                <div id="profileHeaderSkeleton" class="profile-skeleton-wrapper">
+                    <div class="skeleton-profile-pic shimmer"></div>
+                    <div class="skeleton-name-line shimmer"></div>
+                    <div class="skeleton-creds-line shimmer"></div>
                 </div>
 
-                <div class="dash-credentials-row">
-                    <div>U ID: <span id="dashUid" class="value">-</span></div>
-                    <div>KEY : <span id="dashKey" class="value">******</span></div>
-                    <i data-lucide="eye-off" id="toggleDashKey" style="width: 16px; height: 16px; cursor: pointer;" onclick="toggleDashKeyVisibility()"></i>
+                <!-- REAL PROFILE DATA CONTAINER -->
+                <div id="profileHeaderReal" class="profile-skeleton-wrapper hidden">
+                    <img id="dashPhoto" class="dash-profile-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
+                    <div id="dashName" class="dash-user-name">User Name</div>
+
+                    <div class="dash-actions-row">
+                        <span onclick="openViewDetailsModal()"><i data-lucide="eye" style="width: 16px; height: 16px;"></i> View Qr Code</span>
+                        <span>|</span>
+                        <span onclick="openEditProfileModal()"><i data-lucide="edit-2" style="width: 16px; height: 16px;"></i> Edit Key</span>
+                    </div>
+
+                    <div class="dash-credentials-row">
+                        <div>U ID: <span id="dashUid" class="value">-</span></div>
+                        <div>KEY : <span id="dashKey" class="value">******</span></div>
+                        <i data-lucide="eye-off" id="toggleDashKey" style="width: 16px; height: 16px; cursor: pointer;" onclick="toggleDashKeyVisibility()"></i>
+                    </div>
                 </div>
 
                 <!-- Wallet Balance Pill -->
@@ -1159,7 +1206,10 @@
                         </div>
                         <div class="wallet-pill-info">
                             <span class="wallet-pill-title">TG Wallet</span>
-                            <span class="wallet-pill-amount">&#8377; <span id="dashBalance">0.00</span></span>
+                            <span class="wallet-pill-amount">&#8377; 
+                                <span id="dashBalanceSkeleton" class="skeleton-balance-line shimmer"></span>
+                                <span id="dashBalance" class="hidden">0.00</span>
+                            </span>
                         </div>
                     </div>
                     <div class="wallet-pill-actions">
@@ -1175,35 +1225,37 @@
                 <h2 class="section-title">Top <span>Study Course</span></h2>
                 <a href="courses" class="view-all-btn">View all</a>
             </div>
-  <!-- COURSE GRID -->
-  <div class="course-grid">
-    <a href="#" class="course-card">
-        <div class="course-icon-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/2641/2641409.png" onerror="this.src='https://placehold.co/50x50'" alt="Exam Prep">
-        </div>
-        <span>Exam Prep</span>
-    </a>
-    <a href="mp/mp.html" class="course-card">
-        <div class="course-icon-container">
-            <img src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/50x50'" alt="Madhyamik">
-            <span class="badge-notification">A+</span>
-        </div>
-        <span>মাধ্যমিক</span>
-    </a>
-    <a href="hs/hs.html" class="course-card">
-        <div class="course-icon-container">
-            <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" onerror="this.src='https://placehold.co/50x50'" alt="HS">
-            <span class="badge-notification">A+</span>
-        </div>
-        <span>HS 11-12</span>
-    </a>
-    <a href="#" class="course-card">
-        <div class="course-icon-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/13972/13972644.png" onerror="this.src='https://placehold.co/50x50'" alt="Skills">
-        </div>
-        <span>Test+</span>
-    </a>
-  </div>
+
+            <!-- COURSE GRID -->
+            <div class="course-grid">
+                <a href="#" class="course-card">
+                    <div class="course-icon-container">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2641/2641409.png" onerror="this.src='https://placehold.co/50x50'" alt="Exam Prep">
+                    </div>
+                    <span>Exam Prep</span>
+                </a>
+                <a href="mp/mp.html" class="course-card">
+                    <div class="course-icon-container">
+                        <img src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/50x50'" alt="Madhyamik">
+                        <span class="badge-notification">A+</span>
+                    </div>
+                    <span>মাধ্যমিক</span>
+                </a>
+                <a href="hs/hs.html" class="course-card">
+                    <div class="course-icon-container">
+                        <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" onerror="this.src='https://placehold.co/50x50'" alt="HS">
+                        <span class="badge-notification">A+</span>
+                    </div>
+                    <span>HS 11-12</span>
+                </a>
+                <a href="#" class="course-card">
+                    <div class="course-icon-container">
+                        <img src="https://cdn-icons-png.flaticon.com/512/13972/13972644.png" onerror="this.src='https://placehold.co/50x50'" alt="Skills">
+                    </div>
+                    <span>Test+</span>
+                </a>
+            </div>
+
             <div class="explore-buy-section">
                 <div class="explore-buy-wrapper">
                     <a href="https://tutogenius.sbs" target="_blank" class="explore-buy-btn">
@@ -1233,8 +1285,16 @@
                 </div>
             </div>
 
-            <!-- SKELETON PLACEHOLDER -->
+            <!-- SKELETON LOADING UI PLACEHOLDER -->
             <div id="skeleton" class="skeleton-container">
+                <div class="skeleton-card">
+                    <div class="skeleton-img shimmer"></div>
+                    <div class="skeleton-info">
+                        <div class="skeleton-line title shimmer"></div>
+                        <div class="skeleton-line sub shimmer"></div>
+                    </div>
+                    <div class="skeleton-btn shimmer"></div>
+                </div>
                 <div class="skeleton-card">
                     <div class="skeleton-img shimmer"></div>
                     <div class="skeleton-info">
@@ -1439,7 +1499,6 @@
             </div>
 
             <div style="padding: 10px;">
-                <!-- SHOWCASE CAROUSEL SLIDES -->
                 <div class="showcase-wrapper">
                     <div class="showcase-item">
                         <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Career Guidance">
@@ -1583,13 +1642,13 @@
         document.getElementById(id).classList.add('hidden');
     };
 
-    function showDotLoading(btnElement) {
+    function setButtonLoading(btnElement, loadingText = "Processing...") {
         btnElement.dataset.originalText = btnElement.textContent;
         btnElement.disabled = true;
-        btnElement.innerHTML = `<div class="dots-loader"><div></div><div></div><div></div></div>`;
+        btnElement.textContent = loadingText;
     }
 
-    function hideDotLoading(btnElement) {
+    function resetButtonLoading(btnElement) {
         if (btnElement.dataset.originalText) {
             btnElement.textContent = btnElement.dataset.originalText;
         }
@@ -1636,6 +1695,7 @@
         }
     };
 
+    /* SKELETON LOADING DYNAMIC SWITCH */
     window.switchView = function(event, targetId) {
         const tabs = document.querySelectorAll('.tabs .tab');
         tabs.forEach(tab => tab.classList.remove('active'));
@@ -1660,7 +1720,7 @@
             if (selectedContent) {
                 selectedContent.classList.remove('hide');
             }
-        }, 300);
+        }, 350);
     };
 
     function processImageFile(file) {
@@ -1711,14 +1771,10 @@
         const savedUid = localStorage.getItem('tg_uid');
         const savedKey = localStorage.getItem('tg_key');
 
-        // Allow initial loader to display briefly for smooth transition
-        await new Promise(resolve => setTimeout(resolve, 600));
-
         if (savedUid && savedKey) {
             try {
                 const userSnap = await getDoc(doc(db, "users", savedUid));
                 if (userSnap.exists() && userSnap.data().key === savedKey) {
-                    document.getElementById('initialLoaderView').classList.add('hidden');
                     loadDashboard(savedUid, savedKey);
                     return;
                 }
@@ -1727,7 +1783,6 @@
             }
         }
 
-        document.getElementById('initialLoaderView').classList.add('hidden');
         document.getElementById('loginView').classList.remove('hidden');
     }
 
@@ -1743,7 +1798,7 @@
 
     async function handleLogin(uid, key) {
         const btn = document.getElementById('loginSubmitBtn');
-        showDotLoading(btn);
+        setButtonLoading(btn, "Logging in...");
 
         try {
             const userSnap = await getDoc(doc(db, "users", uid));
@@ -1758,30 +1813,31 @@
         } catch (e) {
             showAlert("Login failed: " + e.message);
         } finally {
-            hideDotLoading(btn);
+            resetButtonLoading(btn);
         }
     }
 
     window.confirmRegisterAction = function() {
+        const photoFile = document.getElementById('regPhoto').files[0];
         const name = document.getElementById('regName').value.trim();
         const phone = document.getElementById('regPhone').value.trim();
         const key = document.getElementById('regKey').value.trim();
         const userClass = document.getElementById('regClass').value;
 
+        if (!photoFile) { showAlert("Profile photo is required!"); return; }
         if (!name) { showAlert("Please enter your Name"); return; }
         if (!phone) { showAlert("Please enter your Phone No"); return; }
         if (!/^\d{6}$/.test(key)) { showAlert("Key must be 6 numeric digits!"); return; }
         if (!userClass) { showAlert("Please select your class"); return; }
 
-        handleRegister(name, phone, key, userClass);
+        handleRegister(photoFile, name, phone, key, userClass);
     };
 
-    async function handleRegister(name, phone, key, userClass) {
+    async function handleRegister(photoFile, name, phone, key, userClass) {
         const btn = document.getElementById('regSubmitBtn');
-        showDotLoading(btn);
+        setButtonLoading(btn, "Creating Account...");
 
         try {
-            const photoFile = document.getElementById('regPhoto').files[0];
             const photoBase64 = await processImageFile(photoFile);
 
             const newUid = await runTransaction(db, async (transaction) => {
@@ -1809,15 +1865,21 @@
         } catch (e) {
             showAlert("Registration error: " + e.message);
         } finally {
-            hideDotLoading(btn);
+            resetButtonLoading(btn);
         }
     }
 
-    /* DASHBOARD LOGIC */
+    /* DASHBOARD LOGIC WITH HEADER SKELETON TRANSITION */
     function loadDashboard(uid, key) {
         document.getElementById('loginView').classList.add('hidden');
         document.getElementById('registerView').classList.add('hidden');
         document.getElementById('dashboardView').classList.remove('hidden');
+
+        /* Display Skeletons Initially */
+        document.getElementById('profileHeaderSkeleton').classList.remove('hidden');
+        document.getElementById('profileHeaderReal').classList.add('hidden');
+        document.getElementById('dashBalanceSkeleton').classList.remove('hidden');
+        document.getElementById('dashBalance').classList.add('hidden');
 
         document.getElementById('dashUid').textContent = uid;
         document.getElementById('dashKey').textContent = "******";
@@ -1838,6 +1900,15 @@
                 if (data.photo) {
                     document.getElementById('dashPhoto').src = data.photo;
                 }
+
+                /* Smooth Hide Skeletons and Show Real Profile Data */
+                setTimeout(() => {
+                    document.getElementById('profileHeaderSkeleton').classList.add('hidden');
+                    document.getElementById('profileHeaderReal').classList.remove('hidden');
+                    document.getElementById('dashBalanceSkeleton').classList.add('hidden');
+                    document.getElementById('dashBalance').classList.remove('hidden');
+                    lucide.createIcons();
+                }, 300);
             }
         });
     }
@@ -1873,7 +1944,7 @@
             return; 
         }
 
-        showDotLoading(btn);
+        setButtonLoading(btn, "Saving...");
         const uid = localStorage.getItem('tg_uid');
 
         try {
@@ -1891,83 +1962,17 @@
         } catch (e) {
             showAlert("Failed to update key: " + e.message);
         } finally {
-            hideDotLoading(btn);
+            resetButtonLoading(btn);
         }
-    };
-
-    window.openGiftModal = function() {
-        document.getElementById('giftCodeInput').value = "";
-        document.getElementById('giftModal').classList.remove('hidden');
-    };
-
-    window.submitGiftCode = async function() {
-        const btn = document.getElementById('redeemBtn');
-        const codeInput = document.getElementById('giftCodeInput').value.trim().toUpperCase();
-        if (!codeInput) { showAlert("Please enter a gift code"); return; }
-
-        showDotLoading(btn);
-        const uid = localStorage.getItem('tg_uid');
-
-        try {
-            await runTransaction(db, async (transaction) => {
-                const codeRef = doc(db, "gift_codes", codeInput);
-                const codeSnap = await transaction.get(codeRef);
-
-                if (!codeSnap.exists()) throw new Error("Invalid gift code!");
-                const codeData = codeSnap.data();
-
-                if (codeData.active === false) throw new Error("This code is expired!");
-                const usedBy = codeData.usedBy || [];
-                if (usedBy.includes(uid)) throw new Error("Code already used!");
-
-                const giftAmount = Number(codeData.amount || 0);
-                const userRef = doc(db, "users", uid);
-                const userSnap = await transaction.get(userRef);
-
-                const currentBal = Number(userSnap.data().balance || 0);
-                transaction.update(userRef, { balance: currentBal + giftAmount });
-                transaction.update(codeRef, { usedBy: arrayUnion(uid) });
-            });
-
-            closeModal('giftModal');
-            showAlert("Gift code redeemed successfully!");
-        } catch (e) {
-            showAlert(e.message || "Redeem failed");
-        } finally {
-            hideDotLoading(btn);
-        }
-    };
-
-    window.refreshBalance = function() {
-        const icon = document.getElementById('refreshBtn');
-        icon.classList.add('spin');
-        setTimeout(() => {
-            icon.classList.remove('spin');
-            showAlert("Balance updated");
-        }, 600);
     };
 
     window.confirmLogout = function() {
-        document.getElementById('confirmTitle').textContent = "Switch Account";
-        document.getElementById('confirmSubtitle').textContent = "Are you sure you want to log out?";
-        
-        const confirmBtn = document.getElementById('confirmModalBtn');
-        confirmBtn.onclick = () => {
-            closeModal('confirmModal');
-            logout();
-        };
-        document.getElementById('confirmModal').classList.remove('hidden');
-    };
-
-    function logout() {
         localStorage.removeItem('tg_uid');
         localStorage.removeItem('tg_key');
         if (unsubSnapshot) unsubSnapshot();
-
         document.getElementById('dashboardView').classList.add('hidden');
         document.getElementById('loginView').classList.remove('hidden');
-        showAlert("Logged out successfully");
-    }
+    };
 </script>
 </body>
 </html>
