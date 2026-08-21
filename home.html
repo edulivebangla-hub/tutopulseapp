@@ -1581,7 +1581,7 @@
         if (qrContainer) {
             qrContainer.innerHTML = '';
             new QRCode(qrContainer, {
-                text: JSON.stringify({ uid: uid, phone: data.phone }),
+                text: JSON.stringify({uid}),
                 width: 140,
                 height: 140
             });
