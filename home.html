@@ -75,7 +75,6 @@
             padding: 20px;
         }
 
-        /* Animatic Logo / Icon pulse effect */
         .animatic-icon-box {
             position: relative;
             width: 90px;
@@ -105,7 +104,6 @@
             z-index: 1;
         }
 
-        /* RGB Animated Glowing Text */
         .rgb-text {
             font-size: 20px;
             font-weight: 800;
@@ -119,7 +117,6 @@
             margin-bottom: 12px;
         }
 
-        /* Modern Loading Bar */
         .loading-bar-container {
             width: 160px;
             height: 4px;
@@ -183,7 +180,6 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
-        /* Shift content layout when logged in */
         .app-container.logged-in {
             top: 55px;
             bottom: 65px;
@@ -306,7 +302,6 @@
             font-weight: 500;
         }
 
-        /* CIRCULAR AVATAR UPLOADER DESIGN */
         .avatar-upload-wrapper {
             display: flex;
             justify-content: center;
@@ -573,7 +568,6 @@
         }
         .btn-add-pill:active { background-color: #334155; }
 
-        /* ACTION BUTTONS GRID */
         .quick-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -597,18 +591,6 @@
             cursor: pointer;
         }
         .action-btn i { color: var(--primary); width: 18px; height: 18px; }
-
-        /* --- SKELETON ANIMATIONS & CLASSES --- */
-        .shimmer { position: relative; overflow: hidden; background-color: rgba(255,255,255,0.2) !important; }
-        .shimmer.dark { background-color: #e2e8f0 !important; }
-        .shimmer::after {
-            position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-            transform: translateX(-100%);
-            background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.6) 60%, rgba(255,255,255,0));
-            animation: shimmer 1.5s infinite;
-            content: '';
-        }
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
 
         /* SMART BOTTOM SHEET MODALS */
         .modal-overlay {
@@ -836,7 +818,6 @@
             transition: filter 0.15s;
         }
 
-        /* MAIN VIEW CONTAINER */
         .view-container {
             padding: 12px 14px;
         }
@@ -898,7 +879,6 @@
             border-radius: 10px 0px 10px 0px;
         }
 
-        /* CAROUSEL IMAGES SECTION */
         .showcase-wrapper { 
             display: flex;
             gap: 12px;
@@ -925,7 +905,6 @@
             display: block;
         }
 
-        /* SOCIALS */
         .social {
             text-align: center;
             padding: 20px 0 10px;
@@ -973,7 +952,6 @@
             display: none !important;
         }
 
-        /* BOTTOM NAV */
         .bottom-nav {
             position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
             width: 100%; max-width: 480px; height: 65px;
@@ -1093,9 +1071,7 @@
 
         <!-- DASHBOARD VIEW -->
         <div id="dashboardView" class="view dashboard-view hidden">
-            <!-- SMART HEADER SECTION -->
             <div class="top-card-section">
-                <!-- REAL PROFILE -->
                 <div id="profileHeaderReal">
                     <div class="dash-header-row">
                         <img id="dashPhoto" class="dash-profile-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Profile Photo">
@@ -1147,7 +1123,6 @@
                 </div>
             </div>
 
-            <!-- SECTIONS RETAINED EXACTLY -->
             <div class="section-header">
                 <h2 class="section-title">Top <span>Study Course</span></h2>
                 <a href="courses" class="view-all-btn">View all</a>
@@ -1517,11 +1492,6 @@
                     <input type="password" id="editKey" class="ui-input has-left-icon has-right-icon" placeholder="Enter New 6-digit Key" maxlength="6" inputmode="numeric">
                     <i data-lucide="eye-off" id="toggleEditKey" class="right-icon" onclick="togglePasswordVisibility('editKey', 'toggleEditKey')"></i>
                 </div>
-                
-                <div class="form-input-wrapper" style="display: none;">
-                    <i data-lucide="image" class="left-icon"></i>
-                    <input type="file" id="editPhoto" accept="image/*" class="ui-input has-left-icon">
-                </div>
 
                 <div class="modal-actions">
                     <button class="btn-modal-cancel" onclick="closeModal('editProfileModal')">Cancel</button>
@@ -1554,7 +1524,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
-        getFirestore, doc, getDoc, setDoc, updateDoc, runTransaction, onSnapshot 
+        getFirestore, doc, getDoc, updateDoc, runTransaction, onSnapshot 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -1573,7 +1543,6 @@
     let currentUserData = {};
     let realKey = "";
 
-    /* HIDE LOADING SCREEN CONTROLLER */
     function hideLoadingScreen() {
         const loader = document.getElementById('loadingScreen');
         if (loader) {
@@ -1591,7 +1560,6 @@
         checkLoginStatus();
     });
 
-    /* TIME-BASED GREETING AND STUDY TIP CONTROLLER */
     function updateTimeGreeting() {
         const hour = new Date().getHours();
         const greetingEl = document.getElementById('greetingText');
@@ -1614,7 +1582,6 @@
         }
     }
 
-    /* IMAGE PROCESSING */
     function processImageFile(file) {
         return new Promise((resolve, reject) => {
             if (!file) return resolve(null);
@@ -1646,7 +1613,6 @@
         });
     }
 
-    /* AVATAR PREVIEW */
     window.previewAvatar = function(input) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
@@ -1657,14 +1623,12 @@
         }
     };
 
-    /* AUTH CHECK & STATE CONTROLLER */
     async function checkLoginStatus() {
         const savedUid = localStorage.getItem('tg_uid');
         const savedKey = localStorage.getItem('tg_key');
         const cachedUserData = localStorage.getItem('tg_user_data');
 
         if (savedUid && savedKey) {
-            // Immediate local storage rendering for instantaneous UI load
             if (cachedUserData) {
                 try {
                     const parsedData = JSON.parse(cachedUserData);
@@ -1675,7 +1639,6 @@
                 }
             }
 
-            // Sync with Firestore in background
             try {
                 const userSnap = await getDoc(doc(db, "users", savedUid));
                 if (userSnap.exists() && userSnap.data().key === savedKey) {
@@ -1687,15 +1650,16 @@
                     return;
                 }
             } catch (e) {
-                console.error("Session failed", e);
+                console.error("Session sync failed, using cached data", e);
             }
         }
 
-        setAppAuthState(false);
+        if (!savedUid || !savedKey) {
+            setAppAuthState(false);
+        }
         hideLoadingScreen();
     }
 
-    /* RENDER USER DATA FROM LOCAL STORAGE OR FIRESTORE */
     function renderUserData(uid, key, data) {
         realKey = key;
         currentUserData = data;
@@ -1711,7 +1675,6 @@
         document.getElementById('detailPhone').textContent = data.phone || "-";
         document.getElementById('detailClass').textContent = data.userClass || "-";
 
-        // Generate QR code if element exists
         const qrContainer = document.getElementById('qrcode');
         if (qrContainer) {
             qrContainer.innerHTML = '';
@@ -1723,7 +1686,17 @@
         }
     }
 
-    /* TOGGLE APP VISIBILITY ACCORDING TO AUTH STATE */
+    function loadDashboard(uid, key) {
+        if (unsubSnapshot) unsubSnapshot();
+        unsubSnapshot = onSnapshot(doc(db, "users", uid), (docSnap) => {
+            if (docSnap.exists()) {
+                const freshData = docSnap.data();
+                localStorage.setItem('tg_user_data', JSON.stringify(freshData));
+                renderUserData(uid, key, freshData);
+            }
+        });
+    }
+
     function setAppAuthState(isLoggedIn) {
         const header = document.getElementById('mainHeader');
         const footer = document.getElementById('mainBottomNav');
@@ -1747,7 +1720,6 @@
         }
     }
 
-    /* AUTH MODAL TAB SWITCHER */
     window.openAuthModal = function(type) {
         switchAuthModalTab(type);
         openModal('authModal');
@@ -1765,7 +1737,6 @@
         }
     };
 
-    /* LOGIN LOGIC */
     window.confirmLoginAction = async function() {
         const uid = document.getElementById('loginUid').value.trim().toUpperCase();
         const key = document.getElementById('loginKey').value.trim();
@@ -1802,7 +1773,6 @@
         }
     };
 
-    /* REGISTER LOGIC */
     window.confirmRegisterAction = async function() {
         const name = document.getElementById('regName').value.trim();
         const phone = document.getElementById('regPhone').value.trim();
@@ -1841,11 +1811,11 @@
                 return formattedId;
             });
 
-            showAlert(`Registered! ID: ${newUid}`, "success");
             localStorage.setItem('tg_uid', newUid);
             localStorage.setItem('tg_key', key);
             localStorage.setItem('tg_user_data', JSON.stringify(userPayload));
 
+            showAlert(`Registered Successfully! Your UID: ${newUid}`, "success");
             renderUserData(newUid, key, userPayload);
             setAppAuthState(true);
             loadDashboard(newUid, key);
@@ -1857,120 +1827,115 @@
         }
     };
 
-    /* LOAD DASHBOARD DATA REALTIME & UPDATE LOCAL STORAGE */
-    function loadDashboard(uid, key) {
-        if (unsubSnapshot) unsubSnapshot();
-
-        unsubSnapshot = onSnapshot(doc(db, "users", uid), (snap) => {
-            if (snap.exists()) {
-                const data = snap.data();
-                localStorage.setItem('tg_user_data', JSON.stringify(data));
-                renderUserData(uid, key, data);
-            }
-        });
-    }
-
-    /* REFRESH BALANCE MANUAL */
-    window.refreshBalance = async function() {
+    window.submitProfileEdit = async function() {
+        const newKey = document.getElementById('editKey').value.trim();
         const uid = localStorage.getItem('tg_uid');
-        if (!uid) return;
+
+        if (!/^\d{6}$/.test(newKey)) {
+            showAlert("Enter a valid 6-digit numerical key!", "error");
+            return;
+        }
+
+        const btn = document.getElementById('updateProfileBtn');
+        btn.disabled = true;
+        btn.textContent = "Saving...";
 
         try {
-            const snap = await getDoc(doc(db, "users", uid));
-            if (snap.exists()) {
-                const data = snap.data();
-                const cachedData = JSON.parse(localStorage.getItem('tg_user_data') || '{}');
-                cachedData.balance = data.balance;
-                localStorage.setItem('tg_user_data', JSON.stringify(cachedData));
-                document.getElementById('dashBalance').textContent = Number(data.balance || 0).toFixed(2);
-                showAlert("Balance updated", "success");
-            }
+            await updateDoc(doc(db, "users", uid), { key: newKey });
+            localStorage.setItem('tg_key', newKey);
+            realKey = newKey;
+            
+            currentUserData.key = newKey;
+            localStorage.setItem('tg_user_data', JSON.stringify(currentUserData));
+            
+            document.getElementById('dashKey').textContent = "******";
+            const icon = document.getElementById('toggleDashKey');
+            if (icon) icon.setAttribute('data-lucide', 'eye-off');
+            lucide.createIcons();
+
+            showAlert("Key updated successfully!", "success");
+            closeModal('editProfileModal');
         } catch (e) {
-            showAlert("Failed to refresh balance", "error");
+            showAlert("Update failed: " + e.message, "error");
+        } finally {
+            btn.disabled = false;
+            btn.textContent = "Save Changes";
         }
     };
 
-    /* UI UTILITIES */
-    window.switchView = function(event, tabId) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hide'));
-        
-        event.currentTarget.classList.add('active');
-        const target = document.getElementById(tabId);
-        if (target) target.classList.remove('hide');
+    window.refreshBalance = async function() {
+        const uid = localStorage.getItem('tg_uid');
+        if (!uid) return;
+        try {
+            const snap = await getDoc(doc(db, "users", uid));
+            if (snap.exists()) {
+                const freshData = snap.data();
+                localStorage.setItem('tg_user_data', JSON.stringify(freshData));
+                document.getElementById('dashBalance').textContent = Number(freshData.balance || 0).toFixed(2);
+                showAlert("Balance synced", "success");
+            }
+        } catch (e) {
+            showAlert("Sync error", "error");
+        }
+    };
+
+    window.toggleDashKeyVisibility = function() {
+        const keySpan = document.getElementById('dashKey');
+        const icon = document.getElementById('toggleDashKey');
+        if (keySpan.textContent === "******") {
+            keySpan.textContent = realKey;
+            icon.setAttribute('data-lucide', 'eye');
+        } else {
+            keySpan.textContent = "******";
+            icon.setAttribute('data-lucide', 'eye-off');
+        }
+        lucide.createIcons();
+    };
+
+    window.togglePasswordVisibility = function(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.setAttribute('data-lucide', 'eye');
+        } else {
+            input.type = "password";
+            icon.setAttribute('data-lucide', 'eye-off');
+        }
+        lucide.createIcons();
     };
 
     window.openModal = function(id) {
-        const modal = document.getElementById(id);
-        if (modal) modal.classList.remove('hidden');
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('hidden');
     };
 
     window.closeModal = function(id) {
-        const modal = document.getElementById(id);
-        if (modal) modal.classList.add('hidden');
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
     };
 
     window.closeModalOnOverlay = function(e, id) {
         if (e.target.id === id) closeModal(id);
     };
 
-    window.togglePasswordVisibility = function(inputId, iconId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.setAttribute('data-lucide', 'eye');
-        } else {
-            input.type = 'password';
-            icon.setAttribute('data-lucide', 'eye-off');
-        }
-        lucide.createIcons();
-    };
+    window.switchView = function(evt, tabName) {
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(c => c.classList.add('hide'));
+        
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(t => t.classList.remove('active'));
 
-    window.toggleDashKeyVisibility = function() {
-        const keyEl = document.getElementById('dashKey');
-        const iconEl = document.getElementById('toggleDashKey');
-        if (keyEl.textContent === '******') {
-            keyEl.textContent = realKey;
-            iconEl.setAttribute('data-lucide', 'eye');
-        } else {
-            keyEl.textContent = '******';
-            iconEl.setAttribute('data-lucide', 'eye-off');
-        }
-        lucide.createIcons();
-    };
-
-    window.submitProfileEdit = async function() {
-        const newKey = document.getElementById('editKey').value.trim();
-        const uid = localStorage.getItem('tg_uid');
-
-        if (!/^\d{6}$/.test(newKey)) {
-            showAlert("Key must be 6 digits!", "error");
-            return;
-        }
-
-        try {
-            await updateDoc(doc(doc(db, "users", uid)), { key: newKey });
-            localStorage.setItem('tg_key', newKey);
-            
-            const cachedData = JSON.parse(localStorage.getItem('tg_user_data') || '{}');
-            cachedData.key = newKey;
-            localStorage.setItem('tg_user_data', JSON.stringify(cachedData));
-
-            realKey = newKey;
-            document.getElementById('dashKey').textContent = '******';
-            showAlert("Key updated successfully!", "success");
-            closeModal('editProfileModal');
-        } catch (e) {
-            showAlert("Failed to update key", "error");
-        }
+        document.getElementById(tabName).classList.remove('hide');
+        evt.currentTarget.classList.add('active');
     };
 
     window.showAlert = function(msg, type = "info") {
         const container = document.getElementById('toast-container');
         if (!container) return;
         const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
+        toast.className = 'toast';
+        toast.style.borderColor = type === 'error' ? 'var(--danger)' : 'var(--ok)';
         toast.textContent = msg;
         container.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
@@ -1978,5 +1943,6 @@
 </script>
 </body>
 </html>
+
 
 
