@@ -62,6 +62,32 @@
             min-height: 100vh;
         }
 
+        /* INITIAL LOADER SCREEN */
+        #app-splash-loader {
+            position: fixed;
+            inset: 0;
+            background: #e6f7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.3s ease;
+        }
+
+        .spinner {
+            width: 42px;
+            height: 42px;
+            border: 4px solid #cbd5e1;
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* APPLICATION CONTAINER MAIN */
         .app-container {
             position: fixed;
@@ -248,21 +274,6 @@
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
-        }
-
-        .profile-upload-badge {
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            background: var(--primary-blue);
-            color: #ffffff;
-            border-radius: 50%;
-            padding: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         .upload-label-text {
@@ -1074,9 +1085,15 @@
     </style>
 </head>
 <body>
+    <!-- FIRST TIME FULL PAGE LOADING OVERLAY -->
+    <div id="app-splash-loader">
+        <div class="spinner"></div>
+        <p style="margin-top: 14px; font-weight: 700; color: #0f172a; font-size: 14px;">Loading App...</p>
+    </div>
+
     <div class="header">
         <img src="https://i.ibb.co/VpC7mGB9/1000209961-10kb.jpg" style="width: 200px; border-radius: 10px;">
-        </div>
+    </div>
 
     <div class="app-container">
         <div id="toast-container"></div>
@@ -1121,7 +1138,6 @@
                 <div class="profile-upload-box" onclick="document.getElementById('regPhoto').click()">
                     <img id="regPhotoPreview" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="display:none;">
                     <i data-lucide="user" id="regPhotoPlaceholder" style="width: 44px; height: 44px; color: #94a3b8;"></i>
-                   
                 </div>
                 <span class="upload-label-text">Upload Photo <span>*</span></span>
                 <input type="file" id="regPhoto" accept="image/*" class="hidden" onchange="handlePhotoSelect(event)">
@@ -1172,7 +1188,6 @@
         <!-- VIEW 3: DASHBOARD VIEW -->
         <div id="dashboardView" class="view dashboard-view hidden">
             <div class="top-card-section">
-                
                 <!-- PROFILE SKELETON PLACEHOLDER -->
                 <div id="profileHeaderSkeleton" class="profile-skeleton-wrapper">
                     <div class="skeleton-profile-pic shimmer"></div>
@@ -1623,6 +1638,31 @@
     let unsubSnapshot = null;
     let isKeyVisible = false;
 
+    // Helper to hide splash loader screen
+    function hideAppSplash() {
+        const loader = document.getElementById('app-splash-loader');
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 300);
+        }
+    }
+
+    // Load locally saved profile data instantly
+    function loadCachedUserData() {
+        const cached = localStorage.getItem('tg_cached_user');
+        if (cached) {
+            try {
+                const data = JSON.parse(cached);
+                currentUserData = data;
+                renderDashboardData(data);
+                return true;
+            } catch (e) {
+                console.error("Error reading cached data", e);
+            }
+        }
+        return false;
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         lucide.createIcons();
         checkLoginStatus();
@@ -1766,24 +1806,38 @@
         }
     };
 
-    /* AUTHENTICATION LOGIC */
+    /* AUTHENTICATION & CACHING LOGIC */
     async function checkLoginStatus() {
         const savedUid = localStorage.getItem('tg_uid');
         const savedKey = localStorage.getItem('tg_key');
+        const isAppLoadedBefore = localStorage.getItem('tg_app_loaded');
 
+        // Check local storage for existing session
         if (savedUid && savedKey) {
+            const hasCache = loadCachedUserData();
+            loadDashboard(savedUid, savedKey, !hasCache);
+            hideAppSplash();
+
             try {
                 const userSnap = await getDoc(doc(db, "users", savedUid));
-                if (userSnap.exists() && userSnap.data().key === savedKey) {
-                    loadDashboard(savedUid, savedKey);
-                    return;
+                if (!userSnap.exists() || userSnap.data().key !== savedKey) {
+                    localStorage.removeItem('tg_uid');
+                    localStorage.removeItem('tg_key');
+                    localStorage.removeItem('tg_cached_user');
+                    location.reload();
                 }
             } catch (e) {
-                console.error("Session verification failed", e);
+                console.error("Offline or error during verification", e);
             }
+        } else {
+            document.getElementById('loginView').classList.remove('hidden');
+            hideAppSplash();
         }
 
-        document.getElementById('loginView').classList.remove('hidden');
+        // Set persistent flag for app visits
+        if (!isAppLoadedBefore) {
+            localStorage.setItem('tg_app_loaded', 'true');
+        }
     }
 
     window.confirmLoginAction = function() {
@@ -1806,7 +1860,8 @@
                 showAlert("Login successful!");
                 localStorage.setItem('tg_uid', uid);
                 localStorage.setItem('tg_key', key);
-                loadDashboard(uid, key);
+                localStorage.setItem('tg_cached_user', JSON.stringify(userSnap.data()));
+                loadDashboard(uid, key, false);
             } else {
                 showAlert("Invalid U ID or Key!");
             }
@@ -1840,6 +1895,15 @@
         try {
             const photoBase64 = await processImageFile(photoFile);
 
+            const newUserObject = {
+                name: name,
+                phone: phone,
+                userClass: userClass,
+                photo: photoBase64 || "",
+                key: key,
+                balance: 0.00
+            };
+
             const newUid = await runTransaction(db, async (transaction) => {
                 const metaRef = doc(db, "metadata", "users");
                 const metaSnap = await transaction.get(metaRef);
@@ -1847,21 +1911,15 @@
                 const formattedId = "TG" + String(nextId).padStart(4, "0");
 
                 transaction.set(metaRef, { lastId: nextId }, { merge: true });
-                transaction.set(doc(db, "users", formattedId), {
-                    name: name,
-                    phone: phone,
-                    userClass: userClass,
-                    photo: photoBase64 || "",
-                    key: key,
-                    balance: 0.00
-                });
+                transaction.set(doc(db, "users", formattedId), newUserObject);
                 return formattedId;
             });
 
             showAlert(`Account Created! Your ID: ${newUid}`);
             localStorage.setItem('tg_uid', newUid);
             localStorage.setItem('tg_key', key);
-            loadDashboard(newUid, key);
+            localStorage.setItem('tg_cached_user', JSON.stringify(newUserObject));
+            loadDashboard(newUid, key, false);
         } catch (e) {
             showAlert("Registration error: " + e.message);
         } finally {
@@ -1869,17 +1927,35 @@
         }
     }
 
+    function renderDashboardData(data) {
+        document.getElementById('dashName').textContent = data.name || "User Name";
+        document.getElementById('dashBalance').textContent = Number(data.balance || 0).toFixed(2);
+        document.getElementById('detailPhone').textContent = data.phone || "-";
+        document.getElementById('detailClass').textContent = data.userClass || "-";
+
+        if (data.photo) {
+            document.getElementById('dashPhoto').src = data.photo;
+        }
+
+        document.getElementById('profileHeaderSkeleton').classList.add('hidden');
+        document.getElementById('profileHeaderReal').classList.remove('hidden');
+        document.getElementById('dashBalanceSkeleton').classList.add('hidden');
+        document.getElementById('dashBalance').classList.remove('hidden');
+        lucide.createIcons();
+    }
+
     /* DASHBOARD LOGIC WITH HEADER SKELETON TRANSITION */
-    function loadDashboard(uid, key) {
+    function loadDashboard(uid, key, showSkeleton = true) {
         document.getElementById('loginView').classList.add('hidden');
         document.getElementById('registerView').classList.add('hidden');
         document.getElementById('dashboardView').classList.remove('hidden');
 
-        /* Display Skeletons Initially */
-        document.getElementById('profileHeaderSkeleton').classList.remove('hidden');
-        document.getElementById('profileHeaderReal').classList.add('hidden');
-        document.getElementById('dashBalanceSkeleton').classList.remove('hidden');
-        document.getElementById('dashBalance').classList.add('hidden');
+        if (showSkeleton) {
+            document.getElementById('profileHeaderSkeleton').classList.remove('hidden');
+            document.getElementById('profileHeaderReal').classList.add('hidden');
+            document.getElementById('dashBalanceSkeleton').classList.remove('hidden');
+            document.getElementById('dashBalance').classList.add('hidden');
+        }
 
         document.getElementById('dashUid').textContent = uid;
         document.getElementById('dashKey').textContent = "******";
@@ -1892,23 +1968,15 @@
             if (snap.exists()) {
                 const data = snap.data();
                 currentUserData = data;
-                document.getElementById('dashName').textContent = data.name || "User Name";
-                document.getElementById('dashBalance').textContent = Number(data.balance || 0).toFixed(2);
-                document.getElementById('detailPhone').textContent = data.phone || "-";
-                document.getElementById('detailClass').textContent = data.userClass || "-";
-
-                if (data.photo) {
-                    document.getElementById('dashPhoto').src = data.photo;
+                localStorage.setItem('tg_cached_user', JSON.stringify(data));
+                
+                if (showSkeleton) {
+                    setTimeout(() => {
+                        renderDashboardData(data);
+                    }, 300);
+                } else {
+                    renderDashboardData(data);
                 }
-
-                /* Smooth Hide Skeletons and Show Real Profile Data */
-                setTimeout(() => {
-                    document.getElementById('profileHeaderSkeleton').classList.add('hidden');
-                    document.getElementById('profileHeaderReal').classList.remove('hidden');
-                    document.getElementById('dashBalanceSkeleton').classList.add('hidden');
-                    document.getElementById('dashBalance').classList.remove('hidden');
-                    lucide.createIcons();
-                }, 300);
             }
         });
     }
@@ -1948,30 +2016,15 @@
         const uid = localStorage.getItem('tg_uid');
 
         try {
-            await updateDoc(doc(db, "users", uid), {
-                key: newKey
-            });
+            await updateDoc(doc(db, "users", uid), { key: newKey });
             localStorage.setItem('tg_key', newKey);
-            
-            if (isKeyVisible) {
-                document.getElementById('dashKey').textContent = newKey;
-            }
-
-            closeModal('editProfileModal');
             showAlert("Key updated successfully!");
+            closeModal('editProfileModal');
         } catch (e) {
-            showAlert("Failed to update key: " + e.message);
+            showAlert("Update failed: " + e.message);
         } finally {
             resetButtonLoading(btn);
         }
-    };
-
-    window.confirmLogout = function() {
-        localStorage.removeItem('tg_uid');
-        localStorage.removeItem('tg_key');
-        if (unsubSnapshot) unsubSnapshot();
-        document.getElementById('dashboardView').classList.add('hidden');
-        document.getElementById('loginView').classList.remove('hidden');
     };
 </script>
 </body>
