@@ -2,582 +2,953 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Profile & Settings - TutoGenius</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile & Settings</title>
+    <!-- Lucide Icons Library -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brandBlue: '#3047a5',
-                        appBg: '#f7f9fe',
-                        darkBg: '#0f172a',
-                        darkCard: '#1e293b'
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'Nunito', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
+        *, *::before, *::after {
             box-sizing: border-box;
             -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Poppins', 'Nunito', sans-serif;
-            transition: background 0.25s, color 0.25s, border-color 0.25s;
+            -webkit-user-drag: none;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            transition: background 0.2s, color 0.2s;
         }
 
-        body { 
-            background-color: #f7f9fe;
-            color: #000000;
-            overflow: hidden;
-            --text:#000;
-        }
-        body.dark {
-            background-color: #0f172a;
-            color: #f8fafc;
-            --text:#fff;
+        a, span, p, h1, h2, h3, h4, h5, h6, div, button, input, select {
+            -webkit-tap-highlight-color: transparent !important;
+            text-decoration: none;
         }
 
-        /* --- Header Styles --- */
-        .app-header {
-            position: fixed;
-            top: 0;
-            left: 0;
+        input {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+        }
+
+        :root {
+            --header-blue: #e6f7ff;
+            --btn-blue: #0840c4;
+            --bg-gray: #f8fafc;
+            --card-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
             width: 100%;
-            height: 50px;
-            background: #0555E8;
+            max-width: 390px;
+            height: 100vh;
+            max-height: 844px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Top Header */
+        .app-header {
+            background-color: var(--header-blue);
+            color: white;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1000;
         }
 
-        /* --- Main Content Area --- */
-        .app-content {
-            position: fixed;
-            top: 50px;
-            bottom: 65px;
-            width: 100%;
+        .header-title-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 800; 
+            color: #2c4ad1;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
             overflow-y: auto;
-            background-color: #ffffff;
-        }
-        body.dark .app-content {
-            background-color: #000;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
-        /* Custom Toggle Switch Style */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 46px;
-            height: 26px;
+        /* Profile Header Card */
+        .profile-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 4px 12px 4px;
         }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #b0bec5;
-            transition: .25s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .25s;
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #49599a;
-        }
-        body.dark input:checked + .slider {
-            background-color: #6366f1;
-        }
-        input:checked + .slider:before {
-            transform: translateX(20px);
+            object-fit: cover;
+            background-color: #cbd5e1;
         }
 
-        /* Modals & Popups styling */
-        #profileModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 60;
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .profile-sub {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .edit-icon-btn {
+            background: none;
+            border: none;
+            color: #334155;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        /* Menu Section Items */
+        .menu-item {
+            background-color: var(--card-bg);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .menu-item-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .menu-icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-blue-light { background-color: #e0f2fe; color: #0284c7; }
+        .bg-yellow-light { background-color: #fef9c3; color: #eab308; }
+        .bg-green-light { background-color: #dcfce7; color: #16a34a; }
+        .bg-slate-light { background-color: #f1f5f9; color: #334155; }
+        .bg-red-light { background-color: #fee2e2; color: #ef4444; }
+
+        .menu-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .chevron-icon {
+            color: #64748b;
+            width: 20px;
+            height: 20px;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background-color: #f1f5f9;
+            margin: 4px 0;
+        }
+
+        /* Footer Info Box */
+        .footer-info-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 10px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .footer-version {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Modal Overlay & Bottom Sheet Styling */
+        .modal-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            z-index: 1000;
+            display: flex;
             align-items: flex-end;
+            justify-content: center;
         }
-        #profileModal.active { display: flex; }
-        .modal-content {
-            background: white;
+
+        .bottom-sheet {
+            background: #ffffff;
             width: 100%;
-            border-radius: 24px 24px 0 0;
-            padding: 20px;
-            animation: slideUp 0.3s ease-out;
-            max-height: 85vh;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            padding: 24px 20px;
+            position: relative;
+            max-height: 90vh;
             overflow-y: auto;
+            animation: slideUp 0.25s ease-out;
         }
-        body.dark .modal-content {
-            background: #1e293b;
-        }
+
         @keyframes slideUp {
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
         }
-        
-        .crop-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 100;
-            display: none;
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #0f172a;
+        }
+
+        .modal-header-title {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        /* Logout Confirmation Modal Styles */
+        .logout-content {
+            text-align: center;
+            padding: 10px 0 10px 0;
+        }
+
+        .logout-icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #fee2e2;
+            color: #ef4444;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            margin: 0 auto 16px auto;
         }
-        .crop-card {
-            background: white;
-            border-radius: 24px;
+
+        .logout-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .logout-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .modal-btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            border: none;
+            padding: 14px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-logout-confirm {
+            flex: 1;
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Avatar Upload Circle */
+        .avatar-upload-box {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px auto;
+        }
+
+        .avatar-upload-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #38bdf8;
+        }
+
+        .avatar-cam-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #0840c4;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            cursor: pointer;
+        }
+
+        /* Input Fields */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-input-box {
+            display: flex;
+            align-items: center;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 14px;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .form-input-box i {
+            color: #64748b;
+            width: 18px;
+            height: 18px;
+        }
+
+        .form-input-box input {
+            border: none;
+            background: transparent;
             width: 100%;
-            max-width: 480px;
+            outline: none;
+            font-size: 14px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .btn-update {
+            width: 100%;
+            background-color: var(--btn-blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Class Selection Dropdown Overlay */
+        .class-selector-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .class-selector-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 320px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             overflow: hidden;
         }
-        body.dark .crop-card {
-            background: #1e293b;
+
+        .class-option {
+            padding: 14px 20px;
+            font-size: 14px;
+            color: var(--text-dark);
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
         }
 
-        .clickable-row:active {
-            transform: scale(0.99);
+        .class-option:last-child {
+            border-bottom: none;
         }
 
-     /* BOTTOM NAV */
-.bottom-nav{ border-top-left-radius:20px;border-top-right-radius: 20px ;
-  position:fixed;bottom:0;left:0;right:0;height:65px;background:#fff;
-  display:flex;justify-content:space-around;align-items:center;
-  border-top:1px solid #e5e7eb;box-shadow:0 -2px 10px rgba(0,0,0,.05);z-index:50
-}
-.nav-item{
-  flex:1;text-align:center;text-decoration:none;color:#888;
-  display:flex;flex-direction:column;align-items:center;gap:3px;font:500 11px Segoe UI
-}
-.nav-item i{width:24px;height:24px;stroke:#888;stroke-width:2}
-.nav-item.active{color:#3b49df}
-.nav-item.active i{stroke:#3b49df}
-.nav-item .icon-bg{padding:4px 10px;border-radius:12px}
-.nav-item.active .icon-bg{background:#eef2ff}
+        .class-option.selected {
+            background-color: #f1f5f9;
+        }
 
+        /* Toast Container */
+        #toast-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: 85%;
+        }
+
+        .toast {
+            background: #0f172a;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-top: 8px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 10px rgba(0,0,0,.05);
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            color: #888;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font: 600 11px 'Segoe UI', sans-serif;
+        }
+
+        .nav-item i {
+            width: 22px;
+            height: 22px;
+            stroke: #888;
+            stroke-width: 2;
+        }
+
+        .nav-item.active {
+            color: #3b49df;
+        }
+
+        .nav-item.active i {
+            stroke: #3b49df;
+        }
+
+        .nav-item .icon-bg {
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+
+        .nav-item.active .icon-bg {
+            background: #eef2ff;
+        }
+
+        .dots-loader {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dots-loader div {
+            width: 8px; height: 8px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        .dots-loader div:nth-child(2) { animation-delay: 0.2s; }
+        .dots-loader div:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            from { opacity: 0.3; transform: translateY(0); }
+            to { opacity: 1; transform: translateY(-4px); }
+        }
     </style>
 </head>
 <body>
 
-    <header class="app-header">
-        <div class="flex items-center gap-3">
-            <i data-lucide="bot" class="w-6 h-6 text-white"></i>
-            <span class="text-white text-base font-semibold">Profile & Settings</span>
-        </div>
-        <div class="flex items-center gap-1 text-white text-sm font-medium cursor-pointer">
-            <i data-lucide="settings" class="w-5 h-5"></i>
-        </div>
-    </header>
+<div class="app-container">
+    <div id="toast-container"></div>
 
-    <main class="app-content px-4 py-6">
-        
-        <!-- USER INFO HEADER -->
-        <div class="flex items-center justify-between mb-8 px-1">
-            <div class="flex items-center gap-4">
-                <div class="relative w-16 h-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800">
-                    <img id="profilePic" src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Avatar" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer" onclick="openProfileModal()">
-                        <i data-lucide="camera" class="w-5 h-5 text-white"></i>
-                    </div>
-                </div>
-                <div>
-                    <h2 id="username" class="text-xl font-bold tracking-wide text-gray-900 dark:text-white">Aninda Halder</h2>
-                    <p id="userEmail" class="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">edulivebangla@gmail.com</p>
-                    <span id="userClassBadge" class="text-[10px] bg-blue-100 text-blue-700 dark:bg-slate-800 dark:text-blue-400 font-bold px-2 py-0.5 rounded-md inline-block mt-1">Class 12</span>
+    <!-- APP HEADER -->
+    <div class="app-header">
+        <div class="header-title-box">
+            <i data-lucide="settings" style="width: 20px; height: 20px; color: #2c4ad1;"></i>
+            <span class="header-title">Profile & Settings</span>
+        </div>
+    </div>
+
+    <!-- MAIN VIEW -->
+    <div class="main-content">
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-info">
+                <img id="displayAvatar" class="profile-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" alt="User Avatar">
+                <div class="profile-details">
+                    <span id="displayName" class="profile-name"></span>
+                    <span id="displayPhone" class="profile-sub"></span>
                 </div>
             </div>
-            <button onclick="openProfileModal()" class="p-2 hover:bg-gray-200/50 dark:hover:bg-gray-700/50 rounded-full transition-all">
-                <i data-lucide="pencil" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i>
+            <button class="edit-icon-btn" onclick="openUpdateModal()">
+                <i data-lucide="pencil" style="width: 20px; height: 20px;"></i>
             </button>
         </div>
 
-        <!-- SETTINGS TOGGLES -->
-        <div class="rounded-[20px] p-1.5 mb-5 border border-transparent dark:border-slate-700">
-          
-
-            <div class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1" style="display:none;">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-[#f8f9fa] dark:bg-slate-900 flex items-center justify-center">
-                        <i data-lucide="moon" class="w-5 h-5 text-gray-900 dark:text-slate-300"></i>
-                    </div>
-                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Dark Mode</span>
+        <!-- Order History -->
+        <div class="menu-item">
+            <div class="menu-item-left">
+                <div class="menu-icon-box bg-blue-light">
+                    <i data-lucide="shopping-cart" style="width: 20px; height: 20px;"></i>
                 </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="darkToggleBtn">
-                    <span class="slider"></span>
+                <span class="menu-label">Order History</span>
+            </div>
+            <i data-lucide="chevron-right" class="chevron-icon"></i>
+        </div>
+
+        <!-- Rate This App -->
+        <div class="menu-item">
+            <div class="menu-item-left">
+                <div class="menu-icon-box bg-yellow-light">
+                    <i data-lucide="star" style="width: 20px; height: 20px;" fill="currentColor"></i>
+                </div>
+                <span class="menu-label">Rate This App</span>
+            </div>
+            <i data-lucide="chevron-right" class="chevron-icon"></i>
+        </div>
+
+        <!-- Contact Us -->
+        <div class="menu-item">
+            <div class="menu-item-left">
+                <div class="menu-icon-box bg-green-light">
+                    <i data-lucide="mail" style="width: 20px; height: 20px;"></i>
+                </div>
+                <span class="menu-label">Contact Us</span>
+            </div>
+            <i data-lucide="chevron-right" class="chevron-icon"></i>
+        </div>
+
+        <div class="menu-divider"></div>
+
+        <!-- Privacy Policy -->
+        <div class="menu-item">
+            <div class="menu-item-left">
+                <div class="menu-icon-box bg-slate-light">
+                    <i data-lucide="lock" style="width: 20px; height: 20px;"></i>
+                </div>
+                <span class="menu-label">Privacy Policy</span>
+            </div>
+            <i data-lucide="chevron-right" class="chevron-icon"></i>
+        </div>
+
+        <!-- Logout -->
+        <div class="menu-item" onclick="confirmLogout()">
+            <div class="menu-item-left">
+                <div class="menu-icon-box bg-red-light">
+                    <i data-lucide="log-out" style="width: 20px; height: 20px;"></i>
+                </div>
+                <span class="menu-label" style="color: #ef4444;">Logout</span>
+            </div>
+            <i data-lucide="chevron-right" class="chevron-icon"></i>
+        </div>
+
+        <div class="menu-divider"></div>
+
+        <!-- Footer Tag -->
+        <div class="footer-info-card">
+            <div class="footer-tag">
+                <i data-lucide="heart" style="width: 18px; height: 18px; fill: #3b82f6; color: #3b82f6;"></i>
+                <span>Made with Dal-Vat & Code 🇮🇳</span>
+            </div>
+            <span class="footer-version">App Version 1.2.4 | TutoGenius</span>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <div class="icon-bg"><i data-lucide="home"></i></div>
+            <span>Home</span>
+        </a>
+        <a href="courses.html" class="nav-item">
+            <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
+            <span>Courses</span>
+        </a>
+        <a href="library.html" class="nav-item">
+            <div class="icon-bg"><i data-lucide="book-open"></i></div>
+            <span>Library</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+            <div class="icon-bg"><i data-lucide="user"></i></div>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- MODAL: UPDATE PROFILE BOTTOM SHEET -->
+    <div id="updateProfileModal" class="modal-overlay hidden" onclick="handleOutsideClick(event, 'updateProfileModal')">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeModal('updateProfileModal')">
+                <i data-lucide="x" style="width: 22px; height: 22px;"></i>
+            </button>
+            <div class="modal-header-title">Update Profile</div>
+
+            <!-- Profile Photo Upload -->
+            <div class="avatar-upload-box">
+                <img id="editAvatar" class="avatar-upload-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" alt="Edit Avatar">
+                <label for="imageUploadInput" class="avatar-cam-btn">
+                    <i data-lucide="camera" style="width: 14px; height: 14px;"></i>
                 </label>
+                <input type="file" id="imageUploadInput" accept="image/*" style="display: none;" onchange="handleImageSelection(event)">
+            </div>
+
+            <!-- Name Field -->
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <div class="form-input-box">
+                    <i data-lucide="user"></i>
+                    <input type="text" id="editName" placeholder="Enter full name">
+                </div>
+            </div>
+
+            <!-- Mobile Number Field -->
+            <div class="form-group">
+                <label class="form-label">Mobile Number</label>
+                <div class="form-input-box">
+                    <i data-lucide="smartphone"></i>
+                    <input type="tel" id="editPhone" placeholder="Enter mobile number" maxlength="10">
+                </div>
+            </div>
+
+            <!-- Select Class Field -->
+            <div class="form-group">
+                <label class="form-label">Select Class</label>
+                <div class="form-input-box" onclick="openClassSelector()">
+                    <i data-lucide="graduation-cap"></i>
+                    <input type="text" id="editClass" value="Teacher" readonly style="cursor: pointer;">
+                    <i data-lucide="chevron-down" style="margin-left: auto;"></i>
+                </div>
+            </div>
+
+            <button id="submitUpdateBtn" class="btn-update" onclick="submitProfileUpdate()">Update</button>
+        </div>
+    </div>
+
+    <!-- MODAL: LOGOUT CONFIRMATION -->
+    <div id="logoutModal" class="modal-overlay hidden" onclick="handleOutsideClick(event, 'logoutModal')">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="logout-content">
+                <div class="logout-icon-circle">
+                    <i data-lucide="log-out" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div class="logout-title">Log Out?</div>
+                <div class="logout-desc">Are you sure you want to log out of your account?</div>
+                <div class="modal-btn-group">
+                    <button class="btn-cancel" onclick="closeModal('logoutModal')">Cancel</button>
+                    <button id="logoutConfirmBtn" class="btn-logout-confirm" onclick="executeLogout()">Logout</button>
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- QUICK LINKS -->
-        <a href="https://edulive.ooulet.com/account" target="_blank" class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-full bg-[#edf2ff] dark:bg-indigo-950/40 flex items-center justify-center">
-                    <i data-lucide="shopping-cart" class="w-5 h-5 text-[#3047a5] dark:text-indigo-400"></i>
-                </div>
-                <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Order History</span>
-            </div>
-            <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-        </a>
-
-        <a href="https://search.google.com/local/writereview?placeid=ChIJC7tiZ6eItw4RGutOrlxl4sA&source=g.page.m.ia._&laa=nmx-review-solicitation-ia2" target="_blank" class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-full bg-[#fff9db] dark:bg-amber-950/30 flex items-center justify-center">
-                    <i data-lucide="star" class="w-5 h-5 text-[#fab005] dark:text-amber-400"></i>
-                </div>
-                <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Rate This App</span>
-            </div>
-            <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-        </a>
-
-        <a href="mailto:admin.tutogenius@gmail.com" class="clickable-row flex items-center justify-between bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-full bg-[#ebfbee] dark:bg-emerald-950/30 flex items-center justify-center">
-                    <i data-lucide="mail" class="w-5 h-5 text-[#40c057] dark:text-emerald-400"></i>
-                </div>
-                <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Contact Us</span>
-            </div>
-            <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-        </a>
-
-        <div class="border-t border-gray-200/60 dark:border-slate-700/60 my-5 mx-2"></div>
-
-        <div class="bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-800 rounded-2xl p-2 text-center shadow-sm mx-1 mt-1">
-            <a href="policy" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] bg-gray-50 dark:bg-slate-700/40 mb-2">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-[#f1f3f5] dark:bg-slate-900 flex items-center justify-center">
-                        <i data-lucide="lock" class="w-5 h-5 text-gray-700 dark:text-slate-300"></i>
-                    </div>
-                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">Privacy Policy</span>
-                </div>
-                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-            </a>
-
-            <a href="about" class="clickable-row flex items-center justify-between p-2.5 rounded-[10px] bg-gray-50 dark:bg-slate-700/40">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-[#fff5f5] dark:bg-red-950/30 flex items-center justify-center">
-                        <i data-lucide="info" class="w-5 h-5 text-[#ff6b6b]"></i>
-                    </div>
-                    <span class="font-medium text-[15px] text-gray-900 dark:text-slate-200">About</span>
-                </div>
-                <i data-lucide="chevron-right" class="text-gray-400 dark:text-slate-500 w-5 h-5"></i>
-            </a>
+    <!-- CLASS SELECTOR POPUP -->
+    <div id="classSelectorModal" class="class-selector-overlay hidden" onclick="handleOutsideClick(event, 'classSelectorModal')">
+        <div class="class-selector-card" onclick="event.stopPropagation()">
+            <div class="class-option" onclick="selectClass('Class 9')">Class 9</div>
+            <div class="class-option" onclick="selectClass('Class 10')">Class 10</div>
+            <div class="class-option" onclick="selectClass('Madhyamik')">Madhyamik</div>
+            <div class="class-option" onclick="selectClass('Class 11')">Class 11</div>
+            <div class="class-option" onclick="selectClass('Class 12 (HS)')">Class 12 (HS)</div>
+            <div class="class-option" onclick="selectClass('College')">College</div>
+            <div class="class-option selected" onclick="selectClass('Teacher')">Teacher</div>
         </div>
-
-        <!-- FOOTER BRANDING CARD -->
-        <div class="bg-white dark:bg-slate-800 border border-gray-200/70 dark:border-slate-700 rounded-2xl p-5 text-center shadow-sm mx-1 mt-8 mb-4">
-            <div class="flex items-center justify-center gap-2 text-gray-800 dark:text-slate-200 font-medium text-[15px]">
-                <span class="text-blue-500">💙</span>
-                <span>Founder: Aninda Halder</span>
-                <span class="text-base">🇮🇳</span>
-            </div>
-            <div class="text-xs text-gray-400 dark:text-slate-400 font-medium mt-1.5 flex justify-center gap-1.5">
-                <span>App Version 1.1</span>
-                <span>|</span>
-                <span>TutoGenius</span>
-            </div>
-        </div>
-    </main>
-
-   <!-- BOTTOM NAV -->
-<div class="bottom-nav">
-  <a href="home.html" class="nav-item">
-    <div class="icon-bg"><i data-lucide="home"></i></div>
-    <span>Home</span>
-  </a>
-
-  <a href="courses.html" class="nav-item">
-    <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
-    <span>Courses</span>
-  </a>
-
-  <a href="library.html" class="nav-item">
-    <div class="icon-bg"><i data-lucide="book-open"></i></div>
-    <span>Library</span>
-  </a>
-
-  <a href="profile.html" class="nav-item active">
-    <div class="icon-bg"><i data-lucide="user"></i></div>
-    <span>Profile</span>
-  </a>
+    </div>
 </div>
 
-    <!-- EDIT PROFILE MODAL -->
-    <div id="profileModal" onclick="closeModalOnBg(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Edit Profile</h3>
-                <button onclick="closeModal()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700">
-                    <i data-lucide="x" class="w-5 h-5 text-gray-500 dark:text-slate-400"></i>
-                </button>
-            </div>
-            
-            <div class="flex flex-col items-center mb-6">
-                <div class="relative w-20 h-20 rounded-full overflow-hidden bg-gray-100 dark:bg-slate-900 cursor-pointer" onclick="triggerUploadFromModal()">
-                    <img id="modalAvatarPreview" src="https://i.ibb.co/4pDNDk1/avatar.png" alt="Avatar" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <i data-lucide="camera" class="w-6 h-6 text-white"></i>
-                    </div>
-                </div>
-                <p class="text-xs text-blue-600 dark:text-indigo-400 mt-2 font-medium cursor-pointer" onclick="triggerUploadFromModal()">Change profile photo</p>
-            </div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+        getFirestore, doc, updateDoc, onSnapshot 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Full Name</label>
-                    <input type="text" id="editNameInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Email Address</label>
-                    <input type="email" id="editEmailInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Mobile Number</label>
-                    <input type="text" id="editMobileInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Select Class</label>
-                    <select id="editClassInput" class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-gray-900 dark:text-white outline-none text-sm">
-                        <option>Class 9</option>
-                        <option>Class 10</option>
-                        <option>Class 11</option>
-                        <option>Class 12</option>
-                        <option>College</option>
-                    </select>
-                </div>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
+        authDomain: "tutogenius-1.firebaseapp.com",
+        projectId: "tutogenius-1",
+        storageBucket: "tutogenius-1.firebasestorage.app",
+        messagingSenderId: "65839146612",
+        appId: "1:65839146612:web:4e54c6ad4cea4bc5859321"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let unsubSnapshot = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+        loadFromLocalStorage();
+        initProfileData();
+    });
+
+    /* LOCAL STORAGE HELPERS FOR FAST FIRST LOAD */
+    function loadFromLocalStorage() {
+        const cachedName = localStorage.getItem('tg_name');
+        const cachedPhone = localStorage.getItem('tg_phone');
+        const cachedPhoto = localStorage.getItem('tg_photo');
+        const cachedClass = localStorage.getItem('tg_class');
+
+        if (cachedName) document.getElementById('displayName').textContent = cachedName;
+        if (cachedPhone) document.getElementById('displayPhone').textContent = cachedPhone;
+        if (cachedPhoto) document.getElementById('displayAvatar').src = cachedPhoto;
+        if (cachedClass) document.getElementById('editClass').value = cachedClass;
+    }
+
+    function saveToLocalStorage(name, phone, photo, userClass) {
+        if (name !== undefined) localStorage.setItem('tg_name', name);
+        if (phone !== undefined) localStorage.setItem('tg_phone', phone);
+        if (photo !== undefined) localStorage.setItem('tg_photo', photo);
+        if (userClass !== undefined) localStorage.setItem('tg_class', userClass);
+    }
+
+    /* UI UTILITIES & OVERLAY TAP-TO-CLOSE */
+    window.showAlert = function(msg) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = msg;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    };
+
+    window.closeModal = function(id) {
+        document.getElementById(id).classList.add('hidden');
+    };
+
+    window.handleOutsideClick = function(event, modalId) {
+        if (event.target.id === modalId) {
+            closeModal(modalId);
+        }
+    };
+
+    function showDotLoading(btnElement) {
+        btnElement.dataset.originalText = btnElement.textContent;
+        btnElement.disabled = true;
+        btnElement.innerHTML = `<div class="dots-loader"><div></div><div></div><div></div></div>`;
+    }
+
+    function hideDotLoading(btnElement) {
+        if (btnElement.dataset.originalText) {
+            btnElement.textContent = btnElement.dataset.originalText;
+        }
+        btnElement.disabled = false;
+    }
+
+    /* PROFILE INITIALIZATION */
+    function initProfileData() {
+        const uid = localStorage.getItem('tg_uid') || "TG0001";
+
+        if (unsubSnapshot) unsubSnapshot();
+        unsubSnapshot = onSnapshot(doc(db, "users", uid), (snap) => {
+            if (snap.exists()) {
+                const data = snap.data();
+                const userName = data.name || "";
+                const userPhone = data.phone || "";
+                const userClass = data.userClass || "";
+                const userPhoto = data.photo || "";
+
+                document.getElementById('displayName').textContent = userName;
+                document.getElementById('displayPhone').textContent = userPhone;
                 
-                <button id="updateProfileBtn" onclick="saveUpdatedProfile()" class="w-full bg-[#3047a5] dark:bg-indigo-600 text-white py-3.5 rounded-xl text-base font-semibold mt-4 shadow-md active:scale-95">
-                    Save Changes
-                </button>
-            </div>
-        </div>
-    </div>
+                if (userPhoto) {
+                    document.getElementById('displayAvatar').src = userPhoto;
+                }
+                if (userClass) {
+                    document.getElementById('editClass').value = userClass;
+                }
 
-    <!-- IMAGE CROPPER MODAL -->
-    <div id="cropModalWindow" class="crop-modal">
-        <div class="crop-card">
-            <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center">
-                <h4 class="font-bold text-gray-900 dark:text-white">Adjust Framework</h4>
-                <button onclick="closeCropModal()" class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700">
-                    <i data-lucide="x" class="w-5 h-5 dark:text-slate-400"></i>
-                </button>
-            </div>
-            <div class="p-4 bg-gray-50 dark:bg-slate-900 flex items-center justify-center max-h-[50vh] overflow-hidden">
-                <img id="cropImageElement" alt="Crop Preview" class="max-w-full">
-            </div>
-            <div class="p-4 border-t border-gray-100 dark:border-slate-700 flex gap-2 justify-end">
-                <button onclick="closeCropModal()" class="px-5 py-2 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 font-medium text-sm">Cancel</button>
-                <button onclick="confirmCrop()" class="px-5 py-2 rounded-xl bg-[#3047a5] dark:bg-indigo-600 text-white font-medium text-sm">Apply</button>
-            </div>
-        </div>
-    </div>
-  
-    <input type="file" id="hiddenFileInput" accept="image/*" style="display: none;">
-
-    <script>
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-
-        // ===== UNIFIED LOCALSTORAGE HELPERS =====
-        function getStoredUserData() {
-            const primary = JSON.parse(localStorage.getItem('tgUser')) || {};
-            const secondary = JSON.parse(localStorage.getItem('tgUser2')) || {};
-            
-            // Legacy fallbacks
-            const legacyName = localStorage.getItem('student_display_name');
-            const legacyEmail = localStorage.getItem('profile_vault_email');
-            const legacyAvatar = localStorage.getItem('profile_image_url');
-
-            return {
-                name: primary.name || secondary.name || legacyName || "Update Profile",
-                email: primary.email || secondary.email || legacyEmail || "sample@gmail.com",
-                pic: primary.pic || secondary.pic || legacyAvatar || "https://i.ibb.co/4pDNDk1/avatar.png",
-                mobile: primary.mobile || secondary.mobile || "",
-                class: primary.class || secondary.class || "",
-                completed: primary.completed || secondary.completed || false
-            };
-        }
-
-        function saveUserData(data) {
-            const current = getStoredUserData();
-            const updated = { ...current, ...data };
-            
-            // Sync to all profile storage keys
-            localStorage.setItem('tgUser', JSON.stringify(updated));
-            localStorage.setItem('tgUser2', JSON.stringify(updated));
-            
-            // Legacy Keys sync
-            localStorage.setItem('student_display_name', updated.name);
-            localStorage.setItem('profile_vault_email', updated.email);
-            localStorage.setItem('profile_image_url', updated.pic);
-
-            return updated;
-        }
-
-        let currentCropper = null;
-        const mainAvatar = document.getElementById('profilePic');
-        const modalAvatarPreview = document.getElementById('modalAvatarPreview');
-        const usernameSpan = document.getElementById('username');
-        const userEmailSpan = document.getElementById('userEmail');
-        const userClassBadge = document.getElementById('userClassBadge');
-        
-        const editNameInput = document.getElementById('editNameInput');
-        const editEmailInput = document.getElementById('editEmailInput');
-        const editMobileInput = document.getElementById('editMobileInput');
-        const editClassInput = document.getElementById('editClassInput');
-        
-        const fileInput = document.getElementById('hiddenFileInput');
-        const darkToggleBtn = document.getElementById('darkToggleBtn');
-
-        // Initial Data Load
-        window.addEventListener('DOMContentLoaded', () => {
-            loadUserProfileData();
-
-            // Dark Mode setup
-            const isDarkMode = localStorage.getItem('darkMode') === "true";
-            darkToggleBtn.checked = isDarkMode;
-            toggleDarkModeClass(isDarkMode);
+                saveToLocalStorage(userName, userPhone, userPhoto, userClass);
+            }
         });
+    }
 
-        function loadUserProfileData() {
-            const data = getStoredUserData();
-            
-            usernameSpan.textContent = data.name;
-            userEmailSpan.textContent = data.email;
-            userClassBadge.textContent = data.class;
-            
-            mainAvatar.src = data.pic;
-            modalAvatarPreview.src = data.pic;
-        }
+    /* MODAL & CLASS POPUP ACTIONS */
+    window.openUpdateModal = function() {
+        document.getElementById('editName').value = document.getElementById('displayName').textContent;
+        document.getElementById('editPhone').value = document.getElementById('displayPhone').textContent;
+        document.getElementById('editAvatar').src = document.getElementById('displayAvatar').src;
+        document.getElementById('updateProfileModal').classList.remove('hidden');
+        lucide.createIcons();
+    };
 
-        // Dark Mode Logic
-        darkToggleBtn.addEventListener('change', function() {
-            const isDark = this.checked;
-            localStorage.setItem("darkMode", isDark ? "true" : "false");
-            toggleDarkModeClass(isDark);
-        });
+    window.openClassSelector = function() {
+        document.getElementById('classSelectorModal').classList.remove('hidden');
+    };
 
-        function toggleDarkModeClass(isDark) {
-            if (isDark) {
-                document.body.classList.add('dark');
-                document.documentElement.classList.add('dark');
+    window.selectClass = function(className) {
+        document.getElementById('editClass').value = className;
+        
+        // Highlight active option
+        const options = document.querySelectorAll('.class-option');
+        options.forEach(opt => {
+            if(opt.textContent === className) {
+                opt.classList.add('selected');
             } else {
-                document.body.classList.remove('dark');
-                document.documentElement.classList.remove('dark');
-            }
-        }
-
-        // Modal Handling
-        function openProfileModal() {
-            const data = getStoredUserData();
-            editNameInput.value = data.name;
-            editEmailInput.value = data.email;
-            editMobileInput.value = data.mobile;
-            editClassInput.value = data.class;
-            
-            document.getElementById('profileModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('profileModal').classList.remove('active');
-        }
-
-        function closeModalOnBg(e) {
-            if(e.target.id === 'profileModal') closeModal();
-        }
-
-        function saveUpdatedProfile() {
-            saveUserData({
-                name: editNameInput.value.trim(),
-                email: editEmailInput.value.trim(),
-                mobile: editMobileInput.value.trim(),
-                class: editClassInput.value,
-                pic: modalAvatarPreview.src,
-                completed: true
-            });
-            
-            loadUserProfileData();
-            closeModal();
-        }
-
-        function triggerUploadFromModal() {
-            fileInput.click();
-        }
-
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    document.getElementById('cropModalWindow').style.display = 'flex';
-                    const cropImg = document.getElementById('cropImageElement');
-                    cropImg.src = event.target.result;
-                    
-                    if (currentCropper) currentCropper.destroy();
-                    
-                    setTimeout(() => {
-                        currentCropper = new Cropper(cropImg, {
-                            aspectRatio: 1,
-                            viewMode: 1,
-                            background: false
-                        });
-                    }, 50);
-                };
-                reader.readAsDataURL(file);
+                opt.classList.remove('selected');
             }
         });
 
-        function closeCropModal() {
-            document.getElementById('cropModalWindow').style.display = 'none';
-            fileInput.value = '';
-        }
+        document.getElementById('classSelectorModal').classList.add('hidden');
+    };
 
-        function confirmCrop() {
-            if (!currentCropper) return;
-            const canvas = currentCropper.getCroppedCanvas({
-                width: 180,
-                height: 180
-            });
-            
-            const croppedDataUrl = canvas.toDataURL('image/jpeg');
-            mainAvatar.src = croppedDataUrl;
-            modalAvatarPreview.src = croppedDataUrl;
-            
-            saveUserData({ pic: croppedDataUrl });
-            closeCropModal();
+    window.handleImageSelection = function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('editAvatar').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
-    </script>
+    };
+
+    window.submitProfileUpdate = async function() {
+        const btn = document.getElementById('submitUpdateBtn');
+        const newName = document.getElementById('editName').value.trim();
+        const newPhone = document.getElementById('editPhone').value.trim();
+        const newClass = document.getElementById('editClass').value;
+        const newPhoto = document.getElementById('editAvatar').src;
+
+        if (!newName) { showAlert("Please enter your name!"); return; }
+        if (!/^\d{10}$/.test(newPhone)) { showAlert("Enter a valid 10-digit mobile number!"); return; }
+
+        showDotLoading(btn);
+        const uid = localStorage.getItem('tg_uid') || "TG0001";
+
+        try {
+            await updateDoc(doc(db, "users", uid), {
+                name: newName,
+                phone: newPhone,
+                userClass: newClass,
+                photo: newPhoto
+            });
+
+            // Immediately update Local Storage & UI
+            document.getElementById('displayName').textContent = newName;
+            document.getElementById('displayPhone').textContent = newPhone;
+            document.getElementById('displayAvatar').src = newPhoto;
+            saveToLocalStorage(newName, newPhone, newPhoto, newClass);
+
+            closeModal('updateProfileModal');
+            showAlert("Profile updated successfully!");
+        } catch (e) {
+            showAlert("Failed to update profile: " + e.message);
+        } finally {
+            hideDotLoading(btn);
+        }
+    };
+
+    /* LOGOUT LOGIC */
+    window.confirmLogout = function() {
+        document.getElementById('logoutModal').classList.remove('hidden');
+        lucide.createIcons();
+    };
+
+    window.executeLogout = function() {
+        const btn = document.getElementById('logoutConfirmBtn');
+        showDotLoading(btn);
+
+        // Clear session storage
+        localStorage.removeItem('tg_uid');
+        localStorage.removeItem('tg_name');
+        localStorage.removeItem('tg_phone');
+        localStorage.removeItem('tg_photo');
+        localStorage.removeItem('tg_class');
+
+        setTimeout(() => {
+            window.location.href = "home.html";
+        }, 500);
+    };
+</script>
 </body>
 </html>
+
