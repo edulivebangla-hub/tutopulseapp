@@ -57,6 +57,115 @@
             min-height: 100vh;
         }
 
+        /* --- WHITE LOADING SCREEN & ANIMATIONS --- */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Animatic Logo / Icon pulse effect */
+        .animatic-icon-box {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .animatic-icon-box img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 18px;
+            z-index: 2;
+            animation: floatBounce 2s ease-in-out infinite;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(37, 99, 235, 0.15);
+            animation: pulseRing 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            z-index: 1;
+        }
+
+        /* RGB Animated Glowing Text */
+        .rgb-text {
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bfd, #7a00ff, #ff00c8, #ff0000);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowGradient 4s linear infinite, fadeInUp 0.8s ease-out forwards;
+            margin-bottom: 12px;
+        }
+
+        /* Modern Loading Bar */
+        .loading-bar-container {
+            width: 160px;
+            height: 4px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .loading-bar-fill {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #3b82f6);
+            border-radius: 10px;
+            animation: loadingProgress 1.8s ease-in-out infinite;
+            transform-origin: left;
+        }
+
+        @keyframes rainbowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.03); }
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        @keyframes loadingProgress {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* APPLICATION CONTAINER MAIN */
         .app-container {
             position: fixed;
@@ -949,6 +1058,18 @@
 </head>
 <body>
 
+    <!-- WHITE ANIMATIC LOADING SPLASH SCREEN -->
+    <div id="loadingScreen">
+        <div class="animatic-icon-box">
+            <div class="pulse-ring"></div>
+            <img src="https://tuttogenius.netlify.app/AddText_07-04-09.46.22.png" alt="TutoGenius Logo">
+        </div>
+        <div class="rgb-text">Welcome to TutoGenius E-learning Platform</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar-fill"></div>
+        </div>
+    </div>
+
     <!-- SMART BLUE HEADER (Hidden on Auth views) -->
     <div id="mainHeader" class="header hidden">
         <img src="https://i.ibb.co/VpC7mGB9/1000209961-10kb.jpg" alt="Logo">
@@ -1452,6 +1573,18 @@
     let currentUserData = {};
     let realKey = "";
 
+    /* HIDE LOADING SCREEN CONTROLLER */
+    function hideLoadingScreen() {
+        const loader = document.getElementById('loadingScreen');
+        if (loader) {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         lucide.createIcons();
         updateTimeGreeting();
@@ -1550,6 +1683,7 @@
                     localStorage.setItem('tg_user_data', JSON.stringify(freshData));
                     setAppAuthState(true);
                     loadDashboard(savedUid, savedKey);
+                    hideLoadingScreen();
                     return;
                 }
             } catch (e) {
@@ -1558,6 +1692,7 @@
         }
 
         setAppAuthState(false);
+        hideLoadingScreen();
     }
 
     /* RENDER USER DATA FROM LOCAL STORAGE OR FIRESTORE */
@@ -1815,7 +1950,7 @@
         }
 
         try {
-            await updateDoc(doc(db, "users", uid), { key: newKey });
+            await updateDoc(doc(doc(db, "users", uid)), { key: newKey });
             localStorage.setItem('tg_key', newKey);
             
             const cachedData = JSON.parse(localStorage.getItem('tg_user_data') || '{}');
