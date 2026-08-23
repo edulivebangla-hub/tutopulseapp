@@ -73,6 +73,8 @@
         justify-content: center;
         align-items: flex-start;
         transition: background-color 0.3s, color 0.3s;
+        margin: 0;
+        padding: 0;
     }
 
     /* Fullscreen Page Loader Overlay */
@@ -135,7 +137,7 @@
         left: 0;
         width: 100%;
         height: 55px;
-        background: #e6f7ff;
+        background: #2563eb;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -160,6 +162,7 @@
 
     /* --- TG WALLET CUSTOM STYLING --- */
     .tg-wallet-card {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -168,6 +171,9 @@
         padding: 4px 10px;
         gap: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        min-width: 180px;
+        min-height: 38px;
     }
 
     .tg-wallet-left {
@@ -272,6 +278,7 @@
         opacity: 1;
     }
 
+    /* --- SKELETON SHIMMER SYSTEM --- */
     .skeleton-shimmer {
         position: absolute;
         top: 0;
@@ -280,8 +287,16 @@
         height: 100%;
         background: linear-gradient(90deg, var(--shimmer-start) 25%, var(--shimmer-mid) 50%, var(--shimmer-start) 75%);
         background-size: 200% 100%;
-        animation: shimmerLinear 1.6s infinite;
-        z-index: 2;
+        animation: shimmerLinear 1.6s infinite ease-in-out;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    .skeleton-shimmer.hidden-skeleton {
+        opacity: 0;
+        pointer-events: none;
     }
 
     .media-frame.loaded .skeleton-shimmer {
@@ -353,6 +368,7 @@
         color: var(--text-muted);
     }
 
+    /* --- ACTION DOCK (FOOTER) --- */
     .action-dock {
         position: fixed;
         bottom: 0;
@@ -368,6 +384,7 @@
         box-sizing: border-box;
         z-index: 10;
         box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+        overflow: hidden;
     }
 
     .badge-free {
@@ -382,6 +399,7 @@
         font-weight: 700;
         font-size: 18px;
         text-transform: uppercase;
+        position: relative;
     }
 
     .btn-action-trigger {
@@ -526,7 +544,7 @@
     .workflow-pane { display: none; }
     .workflow-pane.active { display: block; }
 
-    .input-group { margin-bottom: 20px; }
+    .input-group { margin-bottom: 16px; }
     .input-control {
         width: 100%;
         height: 50px;
@@ -555,18 +573,64 @@
         position: relative;
     }
 
+    /* --- DISCOUNT PROMO CODE STYLES --- */
+    .promo-section {
+        background: #f8fafc;
+        border: 1.5px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+
+    .promo-input-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .btn-apply-promo {
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 0 16px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .price-breakdown {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .price-strike {
+        text-decoration: line-through;
+        color: #ef4444;
+        margin-right: 6px;
+    }
+
+    /* --- TOAST HUB --- */
     .toast-notification-hub {
         position: fixed; 
         top: 80px;
         left: 50%;
         transform: translateX(-50%);
         width: calc(100% - 40px);
-        max-width: 440px;
+        max-width: 400px;
         z-index: 200;
         pointer-events: none;
     }
 
     .custom-toast {
+        position: fixed; 
+        width: calc(100%);
+        z-index: 200;
+        pointer-events: none;
         background: #1e293b;
         color: #ffffff;
         padding: 12px 16px;
@@ -587,18 +651,40 @@
         transform: translateY(0);
         opacity: 1;
     }
+
+    /* Dynamic Success Popup */
+    .success-popup-card {
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    .success-popup-icon {
+        width: 64px;
+        height: 64px;
+        background: #dcfce7;
+        color: #16a34a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px auto;
+    }
+
+    /* --- PARTY PAPER CONFETTI CANVAS --- */
+    #confettiCanvas {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 999;
+    }
     </style>
 </head>
 <body>
 
-    <!-- Fullscreen Loading Loader Overlay -->
-    <div id="pageLoadingOverlay">
-        <div class="page-dots-loader">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
+    <!-- PARTY PAPER ANIMATION CANVAS -->
+    <canvas id="confettiCanvas"></canvas>
 
     <div class="app-container">
         <div class="toast-notification-hub" id="toastHub"></div>
@@ -607,10 +693,11 @@
             <button class="nav-btn" onclick="goBack()"><i data-lucide="x"></i></button>
             
             <!-- Dynamic UID Badge -->
-            <span class="uid-badge" id="currentUidLabel" >UID: Unset</span>
+            <span class="uid-badge" style="display: none;" id="currentUidLabel" onclick="promptSwitchUid()">UID: Unset</span>
 
-            <!-- TG WALLET COMPONENT -->
-            <div class="tg-wallet-card">
+            <!-- TG WALLET COMPONENT WITH SKELETON -->
+            <div class="tg-wallet-card" id="walletContainer">
+                <div class="skeleton-shimmer" id="walletSkeleton"></div>
                 <div class="tg-wallet-left">
                     <div class="tg-wallet-icon-box">
                         <i data-lucide="wallet" size="18"></i>
@@ -621,7 +708,7 @@
                     </div>
                 </div>
                 <div class="tg-wallet-actions">
-                    <button class="tg-refresh-btn" onclick="syncRealtimeBalance()" aria-label="Refresh">
+                    <button class="tg-refresh-btn" onclick="syncRealtimeBalance(true)" aria-label="Refresh">
                         <i data-lucide="rotate-cw" size="16"></i>
                     </button>
                     <button onclick="window.location.href='https://tuttogenius.netlify.app/coin';" class="tg-add-btn">Add</button>
@@ -668,8 +755,10 @@
             <p>উচ্চমাধ্যমিক দ্বাদশ শ্রেণির <b>তৃতীয় সেমিস্টার</b> শিক্ষার্থীদের জন্য একটি গুরুত্বপূর্ণ ধাপ।</p>
         </main>
 
-        <footer class="action-dock">
-            <div class="badge-free">₹99</div> 
+        <!-- FOOTER / DOCK WITH SKELETON -->
+        <footer class="action-dock" id="footerDock">
+            <div class="skeleton-shimmer" id="footerSkeleton"></div>
+            <div class="badge-free" id="priceBadgeDisplay">₹99</div> 
             <button class="btn-action-trigger" id="masterActionButton" onclick="handleEnrollmentWorkflow()">
                 <span id="buttonTextLabel">Enroll Now</span>
                 <div class="loader-dots-element" id="dockButtonLoader">
@@ -678,13 +767,15 @@
             </button>
         </footer>
 
-        <div class="modal-overlay" id="workflowModalOverlay">
-            <div class="modal-sheet">
+        <!-- UNLOCK MODAL SHEET -->
+        <div class="modal-overlay" id="workflowModalOverlay" onclick="handleOverlayTouchClose(event)">
+            <div class="modal-sheet" onclick="event.stopPropagation()">
                 <div class="modal-header">
                     <h3 class="modal-title" id="modalDisplayTitle">Unlock Course</h3>
                     <button class="btn-modal-close" onclick="dismissModalSheet()"><i data-lucide="x"></i></button>
                 </div>
 
+                <!-- PANE: METHOD SELECTION -->
                 <div class="workflow-pane active" id="paneSelectionHub">
                     <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">কোর্সটি আনলক করতে নিচের যেকোনো একটি মাধ্যম বেছে নিন:</p>
                     
@@ -694,7 +785,7 @@
                         </div>
                         <div class="option-details">
                             <div class="option-title">Unlock with Rupee</div>
-                            <div class="option-sub">Requires 99 Rupees (Balance)</div>
+                            <div class="option-sub">Requires <span class="calc-final-price">99</span> Rupees (Balance)</div>
                         </div>
                         <i data-lucide="chevron-right" style="color:#cbd5e1"></i>
                     </div>
@@ -711,12 +802,31 @@
                     </div>
                 </div>
 
+                <!-- PANE: MONEY DEDUCTION + DISCOUNT CODE -->
                 <div class="workflow-pane" id="paneCoinProcessor">
-                    <div style="text-align:center; padding:10px 0 20px 0;">
+                    <div style="text-align:center; padding:10px 0 16px 0;">
                         <i data-lucide="badge-indian-rupee" style="width:48px; height:48px; color:#d97706; margin: 0 auto 12px auto;"></i>
                         <p style="font-size:15px; font-weight:600; margin-bottom:4px;">Confirm Rupees Deduction</p>
-                        <p style="font-size:13px; color:var(--text-muted);">₹99 will be deducted automatically from your active U ID account.</p>
+                        <p style="font-size:13px; color:var(--text-muted);">Balance will be deducted automatically from active UID.</p>
                     </div>
+
+                    <!-- Promo Code Box -->
+                    <div class="promo-section">
+                        <div style="font-size:13px; font-weight:600; color:var(--text-dark);">Have a Discount Code?</div>
+                        <div class="promo-input-row">
+                            <input type="text" class="input-control" id="promoCodeInput" placeholder="Enter Code" style="height:38px; text-transform:uppercase; font-size:13px;">
+                            <button class="btn-apply-promo" onclick="applyPromoCode()">Apply</button>
+                        </div>
+                    </div>
+
+                    <div class="price-breakdown">
+                        <span>Total Payable:</span>
+                        <div>
+                            <span class="price-strike" id="strikePrice" style="display:none;">₹99</span>
+                            <span style="font-size:16px; font-weight:700; color:#047857;">₹<span id="finalPayableAmount">99</span></span>
+                        </div>
+                    </div>
+
                     <button class="btn-submit-action" onclick="executeCoinDeductions()">
                         <span id="coinActionText">Confirm & Unlock</span>
                         <div class="loader-dots-element" id="coinPaneLoader">
@@ -725,6 +835,7 @@
                     </button>
                 </div>
 
+                <!-- PANE: PASSWORD PROCESSOR -->
                 <div class="workflow-pane" id="panePasswordProcessor">
                     <div class="input-group">
                         <input type="password" class="input-control" id="secretPasskeyField" placeholder="Enter Unlock Password">
@@ -737,11 +848,35 @@
                     </button>
                 </div>
 
+                <!-- PANE: SUCCESSFUL ENROLLMENT POPUP -->
+                <div class="workflow-pane" id="paneSuccessPopup">
+                    <div class="success-popup-card">
+                        <div class="success-popup-icon">
+                            <i data-lucide="circle-check" size="36"></i>
+                        </div>
+                        <h3 style="font-size:20px; font-weight:700; margin-bottom:8px;">Enrollment Successful!</h3>
+                        <p style="font-size:14px; color:var(--text-muted); margin-bottom:20px;">আপনার কোর্সটি সফলভাবে আনলক করা হয়েছে। এখন আপনি সম্পূর্ণ অ্যাক্সেস পাচ্ছেন।</p>
+                        <button class="btn-submit-action" style="background:#16a34a;" onclick="window.location.href='subject.html'">
+                            Start Learning Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PANE: CUSTOM UID INPUT MODAL -->
+                <div class="workflow-pane" id="paneUidChange">
+                    <div class="input-group">
+                        <input type="text" class="input-control" id="customUidInput" placeholder="Enter User ID (UID)">
+                    </div>
+                    <button class="btn-submit-action" onclick="saveCustomUidFromInput()">
+                        Save UID
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <!-- FIREBASE INTEGRATION & REALTIME ID STATE SYSTEM -->
+    <!-- FIREBASE INTEGRATION & STATE MANAGEMENT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -760,50 +895,181 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const COURSE_ID = "c12_sem8"; 
+        const COURSE_ID = "c12_sem"; 
         const REDIRECT_URL = "subject.html";
-        const REQUIRED_COINS_COST = 99; 
+        let BASE_COST = 99; 
+        let currentCost = 99;
         const SECRET_MASTER_PASSWORD = "123"; 
 
+        // Discount Coupons Data
+        const PROMO_CODES = {
+            "SAVE50": 50,
+            "FREE100": 99,
+            "TG20": 20
+        };
+
         let currentBalance = 0;
-        let loggedInUid = localStorage.getItem("tg_uid") || "Update User ID";
+        let loggedInUid = localStorage.getItem("tg_uid") || "";
         let balanceUnsubscribe = null;
         let enrollmentUnsubscribe = null;
 
-        let isBalanceLoaded = false;
-        let isEnrollmentLoaded = false;
+        // --- PARTY PAPER BLAST ANIMATION ENGINE ---
+        function firePartyPaperAnimation() {
+            const canvas = document.getElementById('confettiCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#2563eb', '#16a34a', '#d97706', '#dc2626', '#9333ea', '#06b6d4', '#f59e0b', '#ec4899'];
+
+            function createBurst(originX, originY, angleMin, angleMax) {
+                const count = 70; 
+                for (let i = 0; i < count; i++) {
+                    const angle = (Math.random() * (angleMax - angleMin) + angleMin) * (Math.PI / 180);
+                    const speed = Math.random() * 18 + 12;
+                    particles.push({
+                        x: originX,
+                        y: originY,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        size: Math.random() * 8 + 6,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        rotation: Math.random() * 360,
+                        rotSpeed: (Math.random() - 0.5) * 12,
+                        gravity: 0.35,
+                        drag: 0.96,
+                        opacity: 1,
+                        shrink: Math.random() * 0.008 + 0.005,
+                        shape: Math.random() > 0.4 ? 'rect' : 'circle'
+                    });
+                }
+            }
+
+            // Fire simultaneously from Left and Right Bottom Corners
+            createBurst(0, canvas.height, -85, -15);
+            createBurst(canvas.width, canvas.height, -165, -95);
+
+            let animationFrameId;
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.vx *= p.drag;
+                    p.vy *= p.drag;
+                    p.vy += p.gravity;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rotation += p.rotSpeed;
+                    p.opacity -= p.shrink;
+
+                    if (p.opacity <= 0 || p.y > canvas.height + 20) {
+                        particles.splice(i, 1);
+                        continue;
+                    }
+
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, p.opacity);
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+
+                    if (p.shape === 'rect') {
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    ctx.restore();
+                }
+
+                if (particles.length > 0) {
+                    animationFrameId = requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    cancelAnimationFrame(animationFrameId);
+                }
+            }
+
+            animate();
+        }
+
+        // TOUCH OUTSIDE TO CLOSE POPUPS
+        window.handleOverlayTouchClose = function(event) {
+            dismissModalSheet();
+        };
+
+        // VIBRATION UTILITY
+        function triggerDeviceVibration() {
+            if ("vibrate" in navigator) {
+                navigator.vibrate([150, 80, 150]);
+            }
+        }
+
+        // SKELETON DISPLAY CONTROLLERS
+        function showSkeletons() {
+            document.getElementById("walletSkeleton")?.classList.remove("hidden-skeleton");
+            document.getElementById("footerSkeleton")?.classList.remove("hidden-skeleton");
+        }
+
+        function hideSkeletons() {
+            document.getElementById("walletSkeleton")?.classList.add("hidden-skeleton");
+            document.getElementById("footerSkeleton")?.classList.add("hidden-skeleton");
+        }
 
         function updateUidDisplay() {
             const uidLabel = document.getElementById("currentUidLabel");
             if (uidLabel) {
-                uidLabel.innerText = `UID: ${loggedInUid}`;
+                uidLabel.innerText = loggedInUid ? `UID: ${loggedInUid}` : "Set UID";
             }
         }
 
         window.promptSwitchUid = function() {
-            const newUid = prompt("Enter User ID (U ID):", loggedInUid);
-            if (newUid && newUid.trim() !== "") {
-                window.setTgUid(newUid.trim());
+            document.getElementById("customUidInput").value = loggedInUid;
+            presentModalSheet();
+            routeToPane('uidChange');
+        };
+
+        window.saveCustomUidFromInput = function() {
+            const val = document.getElementById("customUidInput").value.trim();
+            if (val) {
+                window.setTgUid(val);
+                dismissModalSheet();
+                dispatchToast("UID Updated successfully!", "success");
+            } else {
+                triggerDeviceVibration();
+                dispatchToast("Please enter a valid UID", "error");
             }
         };
 
-        function checkDataLoadComplete() {
-            if (isBalanceLoaded && isEnrollmentLoaded) {
-                const overlay = document.getElementById("pageLoadingOverlay");
-                if (overlay) overlay.classList.add("hidden-loader");
-            }
-        }
-
         window.goBack = function() { window.history.back(); };
 
-        // Sync Balance from Firestore
-        window.syncRealtimeBalance = function() {
+        // LOCAL STORAGE ENROLLMENT PERSISTENCE
+        function getLocalEnrollmentStatus() {
+            if (!loggedInUid) return false;
+            return localStorage.getItem(`tg_enrollment_${loggedInUid}_${COURSE_ID}`) === "true";
+        }
+
+        function setLocalEnrollmentStatus(status) {
+            if (!loggedInUid) return;
+            localStorage.setItem(`tg_enrollment_${loggedInUid}_${COURSE_ID}`, status ? "true" : "false");
+        }
+
+        // SYNC BALANCE WITH FIREBASE & SKELETON
+        window.syncRealtimeBalance = function(manualTrigger = false) {
+            if (manualTrigger) showSkeletons();
+
             if (balanceUnsubscribe) balanceUnsubscribe();
 
             if (!loggedInUid) {
                 document.getElementById("balance").innerText = "0.00";
-                isBalanceLoaded = true;
-                checkDataLoadComplete();
+                setTimeout(hideSkeletons, 400);
                 return;
             }
 
@@ -815,43 +1081,42 @@
                     currentBalance = 0;
                     document.getElementById("balance").innerText = "0.00";
                 }
-                isBalanceLoaded = true;
-                checkDataLoadComplete();
+                setTimeout(hideSkeletons, 400);
             }, () => {
-                isBalanceLoaded = true;
-                checkDataLoadComplete();
+                setTimeout(hideSkeletons, 400);
             });
         };
 
-        // Sync Enrollment per UID from Firestore
+        // LISTEN TO ENROLLMENT STATUS WITH LOCAL STORAGE FALLBACK
         function listenToEnrollmentStatus() {
             if (enrollmentUnsubscribe) enrollmentUnsubscribe();
 
-            if (!loggedInUid) {
+            if (getLocalEnrollmentStatus()) {
+                evaluateEnrollmentLockState(true);
+            } else {
                 evaluateEnrollmentLockState(false);
-                isEnrollmentLoaded = true;
-                checkDataLoadComplete();
+            }
+
+            if (!loggedInUid) {
+                setTimeout(hideSkeletons, 400);
                 return;
             }
 
             const enrollmentRef = doc(db, "users", loggedInUid, "enrollments", COURSE_ID);
             enrollmentUnsubscribe = onSnapshot(enrollmentRef, (docSnap) => {
                 if (docSnap.exists() && docSnap.data().enrolled === true) {
+                    setLocalEnrollmentStatus(true);
                     evaluateEnrollmentLockState(true);
                 } else {
+                    setLocalEnrollmentStatus(false);
                     evaluateEnrollmentLockState(false);
-                    // Open re-enrollment option if needed when UID is updated
                 }
-                isEnrollmentLoaded = true;
-                checkDataLoadComplete();
+                setTimeout(hideSkeletons, 400);
             }, () => {
-                evaluateEnrollmentLockState(false);
-                isEnrollmentLoaded = true;
-                checkDataLoadComplete();
+                setTimeout(hideSkeletons, 400);
             });
         }
 
-        // Global function to update UID dynamically
         window.setTgUid = function(newUid) {
             loggedInUid = newUid;
             if (newUid) {
@@ -860,15 +1125,11 @@
                 localStorage.removeItem("tg_uid");
             }
             updateUidDisplay();
-            isBalanceLoaded = false;
-            isEnrollmentLoaded = false;
-            document.getElementById("pageLoadingOverlay")?.classList.remove("hidden-loader");
-            
+            showSkeletons();
             syncRealtimeBalance();
             listenToEnrollmentStatus();
         };
 
-        // Listen for storage changes across tabs or external scripts
         window.addEventListener("storage", (e) => {
             if (e.key === "tg_uid") {
                 window.setTgUid(e.newValue);
@@ -876,20 +1137,12 @@
         });
 
         document.addEventListener("DOMContentLoaded", () => {
-            if (!localStorage.getItem("tg_uid")) {
-                localStorage.setItem("tg_uid", loggedInUid);
-            }
+            showSkeletons();
             updateUidDisplay();
             syncRealtimeBalance();
             listenToEnrollmentStatus();
             initializeViewLifecycle();
             lucide.createIcons();
-
-            setTimeout(() => {
-                isBalanceLoaded = true;
-                isEnrollmentLoaded = true;
-                checkDataLoadComplete();
-            }, 3000);
         });
 
         function initializeViewLifecycle() {
@@ -902,6 +1155,7 @@
             }
         }
 
+        // CUSTOM TOAST NOTIFICATION
         window.dispatchToast = function(textAlert, mode = "error") {
             const hub = document.getElementById("toastHub");
             const toast = document.createElement("div");
@@ -953,7 +1207,7 @@
                 } else {
                     presentModalSheet();
                 }
-            }, 600); 
+            }, 400); 
         };
 
         function presentModalSheet() {
@@ -964,7 +1218,17 @@
         window.dismissModalSheet = function() {
             document.getElementById("workflowModalOverlay").classList.remove("active");
             document.getElementById("secretPasskeyField").value = "";
+            document.getElementById("promoCodeInput").value = "";
+            resetPricing();
         };
+
+        function resetPricing() {
+            currentCost = BASE_COST;
+            document.getElementById("finalPayableAmount").innerText = BASE_COST;
+            document.getElementById("strikePrice").style.display = "none";
+            document.querySelectorAll(".calc-final-price").forEach(el => el.innerText = BASE_COST);
+            document.getElementById("priceBadgeDisplay").innerText = `₹${BASE_COST}`;
+        }
 
         window.routeToPane = function(paneId) {
             const titleEl = document.getElementById("modalDisplayTitle");
@@ -972,6 +1236,8 @@
             document.getElementById("paneSelectionHub").classList.remove("active");
             document.getElementById("paneCoinProcessor").classList.remove("active");
             document.getElementById("panePasswordProcessor").classList.remove("active");
+            document.getElementById("paneSuccessPopup").classList.remove("active");
+            document.getElementById("paneUidChange").classList.remove("active");
 
             if (paneId === 'hub') {
                 titleEl.innerText = "Unlock Course";
@@ -982,15 +1248,41 @@
             } else if (paneId === 'password') {
                 titleEl.innerText = "Unlock via Password";
                 document.getElementById("panePasswordProcessor").classList.add("active");
+            } else if (paneId === 'success') {
+                titleEl.innerText = "Congratulations!";
+                document.getElementById("paneSuccessPopup").classList.add("active");
+            } else if (paneId === 'uidChange') {
+                titleEl.innerText = "Update User ID";
+                document.getElementById("paneUidChange").classList.add("active");
             }
         };
 
-        /* FIREBASE DEDUCTION LOGIC FOR U ID */
+        // PROMO CODE APPLICATION
+        window.applyPromoCode = function() {
+            const code = document.getElementById("promoCodeInput").value.trim().toUpperCase();
+            if (PROMO_CODES[code] !== undefined) {
+                const discount = PROMO_CODES[code];
+                currentCost = Math.max(0, BASE_COST - discount);
+                
+                document.getElementById("strikePrice").style.display = "inline";
+                document.getElementById("finalPayableAmount").innerText = currentCost;
+                document.querySelectorAll(".calc-final-price").forEach(el => el.innerText = currentCost);
+                document.getElementById("priceBadgeDisplay").innerText = `₹${currentCost}`;
+                
+                dispatchToast(`Discount Applied! Saved ₹${discount}`, "success");
+            } else {
+                triggerDeviceVibration();
+                dispatchToast("Invalid Promo Code!", "error");
+            }
+        };
+
+        // FIREBASE TRANSACTION & UNLOCK
         window.executeCoinDeductions = async function() {
             const textLabel = document.getElementById("coinActionText");
             const loader = document.getElementById("coinPaneLoader");
 
             if (!loggedInUid) {
+                triggerDeviceVibration();
                 dispatchToast("ইউজার আইডি যুক্ত করুন!", "error");
                 return;
             }
@@ -1001,26 +1293,29 @@
             loader.style.display = "flex";
 
             try {
-                await runTransaction(db, async (transaction) => {
-                    const userRef = doc(db, "users", loggedInUid);
-                    const userSnap = await transaction.get(userRef);
+                if (currentCost > 0) {
+                    await runTransaction(db, async (transaction) => {
+                        const userRef = doc(db, "users", loggedInUid);
+                        const userSnap = await transaction.get(userRef);
 
-                    let dbBalance = 0;
-                    if (userSnap.exists()) {
-                        dbBalance = Number(userSnap.data().balance || 0);
-                    }
+                        let dbBalance = 0;
+                        if (userSnap.exists()) {
+                            dbBalance = Number(userSnap.data().balance || 0);
+                        }
 
-                    if (dbBalance < REQUIRED_COINS_COST) {
-                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই! (Need ₹99)");
-                    }
+                        if (dbBalance < currentCost) {
+                            throw new Error(`পর্যাপ্ত ব্যালেন্স নেই! (Need ₹${currentCost})`);
+                        }
 
-                    const newBalance = dbBalance - REQUIRED_COINS_COST;
-                    transaction.set(userRef, { balance: newBalance }, { merge: true });
-                });
+                        const newBalance = dbBalance - currentCost;
+                        transaction.set(userRef, { balance: newBalance }, { merge: true });
+                    });
+                }
 
                 await saveEnrollmentToFirebase();
                 commitSuccessfulUnlock();
             } catch (err) {
+                triggerDeviceVibration();
                 dispatchToast(err.message || "টাকা কাটা ব্যর্থ হয়েছে!", "error");
             } finally {
                 textLabel.style.opacity = "1";
@@ -1034,6 +1329,7 @@
             const loader = document.getElementById("passPaneLoader");
 
             if (inputField.value.trim() !== SECRET_MASTER_PASSWORD) {
+                triggerDeviceVibration();
                 dispatchToast("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।", "error");
                 return;
             }
@@ -1062,9 +1358,13 @@
         }
 
         function commitSuccessfulUnlock() {
-            dispatchToast("কোর্সটি সফলভাবে আনলক করা হয়েছে!", "success");
+            setLocalEnrollmentStatus(true);
             evaluateEnrollmentLockState(true);
-            dismissModalSheet();
+            routeToPane('success');
+            lucide.createIcons();
+            
+            // FIRE PARTY PAPER ANIMATION
+            firePartyPaperAnimation();
         }
     </script>
 </body>
