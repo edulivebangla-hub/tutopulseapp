@@ -1,5904 +1,1763 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<meta name="theme-color" content="#155EEF">
-
-<title>TG Wallet — New Edition</title>
-
-<!-- QR Generator -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<!-- QR Scanner -->
-<script src="https://unpkg.com/html5-qrcode" defer></script>
-
-<!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
-
-<style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
-}
-
-:root{
-
-    /* SINGLE COLOR SYSTEM */
-    --primary:#155EEF;
-    --primary-dark:#1047B8;
-    --primary-light:#EAF1FF;
-    --primary-soft:#F3F6FF;
-
-    --bg:#F5F8FF;
-    --surface:#FFFFFF;
-    --surface-2:#F8FAFF;
-
-    --text:#101828;
-    --muted:#667085;
-    --muted-2:#98A2B3;
-
-    --border:#E4EAF5;
-
-    --shadow:
-        0 12px 35px rgba(21,94,239,.08);
-
-    --shadow-large:
-        0 25px 70px rgba(16,24,40,.16);
-}
-
-html,
-body{
-    width:100%;
-    min-height:100%;
-}
-
-body{
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 10% 0%,
-            #DCE8FF,
-            transparent 30%
-        ),
-        #EAF0FA;
-
-    color:var(--text);
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-button,
-input{
-    font:inherit;
-}
-
-button{
-    border:0;
-    cursor:pointer;
-}
-
-img{
-    max-width:100%;
-}
-
-.hidden{
-    display:none!important;
-}
-
-
-/* =========================================================
-   APP
-========================================================= */
-
-.app{
-
-    width:100%;
-    max-width:440px;
-    height:100vh;
-
-    position:relative;
-
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            180deg,
-            #F8FAFF 0%,
-            #F2F6FF 100%
-        );
-
-    box-shadow:var(--shadow-large);
-}
-
-.screen{
-
-    height:100%;
-
-    overflow-y:auto;
-
-    padding-bottom:35px;
-
-    scrollbar-width:none;
-}
-
-.screen::-webkit-scrollbar{
-    display:none;
-}
-
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.topbar{
-
-    position:sticky;
-    top:0;
-
-    z-index:30;
-
-    height:70px;
-
-    padding:12px 15px;
-
-    display:flex;
-    align-items:center;
-    gap:11px;
-
-    background:
-        rgba(248,250,255,.90);
-
-    backdrop-filter:
-        blur(22px);
-
-    border-bottom:
-        1px solid rgba(21,94,239,.08);
-}
-
-.back-button{
-
-    width:42px;
-    height:42px;
-
-    flex:none;
-
-    border-radius:14px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-
-    transition:.18s;
-}
-
-.back-button:active{
-    transform:scale(.92);
-}
-
-.brand{
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    flex:1;
-}
-
-.brand-logo{
-
-    width:42px;
-    height:42px;
-
-    border-radius:14px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:white;
-
-    background:
-        linear-gradient(
-            145deg,
-            #155EEF,
-            #1047B8
-        );
-
-    box-shadow:
-        0 8px 20px rgba(21,94,239,.25);
-}
-
-.brand-title{
-
-    font-size:15px;
-    font-weight:950;
-
-    letter-spacing:-.4px;
-}
-
-.brand-sub{
-
-    margin-top:2px;
-
-    color:var(--muted);
-
-    font-size:9px;
-    font-weight:750;
-}
-
-
-/* =========================================================
-   NOTICE
-========================================================= */
-
-.notice{
-
-    margin:14px 16px 0;
-
-    padding:12px 13px;
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    border-radius:17px;
-
-    background:
-        var(--primary-light);
-
-    border:
-        1px solid #D6E3FF;
-
-    animation:
-        fadeIn .3s ease;
-}
-
-.notice-icon{
-
-    width:35px;
-    height:35px;
-
-    flex:none;
-
-    border-radius:12px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:white;
-}
-
-.notice-text{
-
-    font-size:10px;
-
-    font-weight:750;
-
-    line-height:1.45;
-
-    color:#29416F;
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.content{
-    padding:16px;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile{
-
-    padding:18px;
-
-    border-radius:10px;
-
-    background:
-        rgba(255,255,255,.90);
-
-    border:
-        1px solid rgba(21,94,239,.08);
-
-    box-shadow:var(--shadow);
-
-    animation:
-        fadeUp .35s ease;
-}
-
-.profile-head{
-
-    display:flex;
-    align-items:center;
-
-    gap:13px;
-}
-
-.avatar{
-
-    width:60px;
-    height:60px;
-
-    border-radius:20px;
-
-    object-fit:cover;
-
-    border:
-        3px solid white;
-
-    box-shadow:
-        0 8px 22px rgba(21,94,239,.15);
-}
-
-.profile-info{
-    flex:1;
-}
-
-.profile-name{
-
-    font-size:17px;
-
-    font-weight:950;
-
-    letter-spacing:-.3px;
-}
-
-.profile-meta{
-
-    display:flex;
-    align-items:center;
-
-    gap:5px;
-
-    margin-top:5px;
-
-    color:var(--muted);
-
-    font-size:10px;
-
-    font-weight:700;
-}
-
-
-/* =========================================================
-   QR USER
-========================================================= */
-
-.user-qr{
-
-    margin-top:17px;
-
-    padding-top:16px;
-
-    border-top:
-        1px dashed #CBD7EC;
-
-    display:flex;
-    align-items:center;
-
-    gap:14px;
-}
-
-.qr-container{
-
-    width:88px;
-    height:88px;
-
-    padding:6px;
-
-    flex:none;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:white;
-
-    border-radius:17px;
-
-    border:
-        1px solid var(--border);
-}
-
-.qr-container img{
-
-    width:74px!important;
-    height:74px!important;
-}
-
-.uid-info{
-    flex:1;
-}
-
-.uid-label{
-
-    color:var(--muted);
-
-    font-size:9px;
-
-    font-weight:850;
-
-    text-transform:uppercase;
-
-    letter-spacing:.7px;
-}
-
-.uid-value{
-
-    margin-top:4px;
-
-    color:var(--primary);
-
-    font-size:14px;
-
-    font-weight:950;
-
-    letter-spacing:.3px;
-}
-
-.key-value{
-
-    margin-top:6px;
-
-    color:var(--muted);
-
-    font-size:10px;
-
-    font-weight:700;
-}
-
-.small-btn{
-
-    margin-top:8px;
-
-    padding:7px 10px;
-
-    border-radius:10px;
-
-    display:inline-flex;
-    align-items:center;
-
-    gap:5px;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-
-    font-size:9px;
-
-    font-weight:850;
-}
-
-
-/* =========================================================
-   BALANCE
-========================================================= */
-
-.balance{
-
-    margin-top:14px;
-
-    padding:10px;
-
-    border-radius:10px;
-
-    color:white;
-
-    background:
-        linear-gradient(
-            145deg,
-            #155EEF,
-            #1047B8
-        );
-
-    box-shadow:
-        0 20px 38px rgba(21,94,239,.25);
-
-    position:relative;
-
-    overflow:hidden;
-
-    animation:
-        fadeUp .4s ease;
-}
-
-.balance::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:180px;
-    height:180px;
-
-    right:-90px;
-    top:-80px;
-
-    border-radius:50%;
-
-    background:
-        rgba(255,255,255,.10);
-}
-
-.balance::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:100px;
-    height:100px;
-
-    left:-55px;
-    bottom:-60px;
-
-    border-radius:50%;
-
-    background:
-        rgba(255,255,255,.06);
-}
-
-.balance-top{
-
-    position:relative;
-    z-index:2;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:flex-start;
-}
-
-.balance-label{
-
-    color:#DCE8FF;
-
-    font-size:9px;
-
-    font-weight:800;
-
-    text-transform:uppercase;
-
-    letter-spacing:1px;
-}
-
-.balance-value{
-
-    margin-top:5px;
-
-    font-size:31px;
-
-    font-weight:950;
-
-    letter-spacing:-1.2px;
-}
-
-.wallet-icon{
-
-    width:45px;
-    height:45px;
-
-    border-radius:15px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        rgba(255,255,255,.14);
-
-    position:relative;
-    z-index:2;
-}
-
-.add-money{
-
-    width:100%;
-
-    margin-top:16px;
-
-    padding:12px;
-
-    border-radius:15px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    gap:7px;
-
-    color:var(--primary);
-
-    background:white;
-
-    font-size:11px;
-
-    font-weight:950;
-
-    position:relative;
-    z-index:2;
-
-    transition:.18s;
-}
-
-.add-money:active{
-    transform:scale(.97);
-}
-
-
-/* =========================================================
-   SECTION
-========================================================= */
-
-.section-title{
-
-    margin:
-        20px 2px 11px;
-
-    display:flex;
-
-    justify-content:space-between;
-    align-items:center;
-}
-
-.section-title h3{
-
-    font-size:14px;
-
-    font-weight:950;
-}
-
-.section-title span{
-
-    color:var(--muted);
-
-    font-size:9px;
-
-    font-weight:750;
-}
-
-
-/* =========================================================
-   ACTIONS
-========================================================= */
-
-.actions{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:10px;
-}
-
-.action{
-
-    min-height:145px;
-
-    padding:10px 10px;
-
-    position:relative;
-
-    border-radius:10px;
-
-    background:
-        rgba(255,255,255,.92);
-
-    border:
-        1px solid var(--border);
-
-    box-shadow:
-        0 8px 25px rgba(21,94,239,.055);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:9px;
-
-    transition:
-        transform .18s,
-        box-shadow .18s;
-}
-
-.action:active{
-
-    transform:
-        scale(.96);
-
-    box-shadow:
-        0 4px 15px rgba(21,94,239,.08);
-}
-
-.action-icon{
-
-    width:53px;
-    height:53px;
-
-    border-radius:18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-}
-
-.action-title{
-
-    font-size:11px;
-
-    font-weight:950;
-
-    text-align:center;
-}
-
-.action-sub{
-
-    color:var(--muted);
-
-    font-size:9px;
-
-    font-weight:700;
-
-    text-align:center;
-}
-
-.cashback{
-
-    position:absolute;
-
-    top:9px;
-    right:9px;
-
-    padding:4px 7px;
-
-    border-radius:8px;
-
-    color:white;
-
-    background:
-        var(--primary);
-
-    font-size:7px;
-
-    font-weight:950;
-
-    letter-spacing:.2px;
-}
-
-
-/* =========================================================
-   UID CARD
-========================================================= */
-
-.uid-card{
-
-    margin-top:12px;
-margin-bottom: 10px;
-    padding:10px;
-
-    border-radius:12px;
-
-    background:white;
-
-    border:
-        1px solid var(--border);
-
-    box-shadow:
-        0 8px 25px rgba(21,94,239,.05);
-}
-
-.uid-card-header{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    margin-bottom:12px;
-}
-
-.uid-card-icon{
-
-    width:38px;
-    height:38px;
-
-    border-radius:13px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-}
-
-.uid-card-title{
-
-    font-size:11px;
-
-    font-weight:950;
-}
-
-.uid-card-sub{
-
-    margin-top:2px;
-
-    color:var(--muted);
-
-    font-size:8px;
-
-    font-weight:700;
-}
-
-.uid-input-group{
-
-    display:flex;
-
-    gap:8px;
-}
-
-.input{
-
-    width:100%;
-
-    padding:13px 14px;
-
-    border:
-        1px solid #D5DEEE;
-
-    border-radius:14px;
-
-    outline:none;
-
-    color:var(--text);
-
-    background:white;
-
-    font-size:12px;
-
-    font-weight:700;
-
-    transition:.18s;
-}
-
-.input:focus{
-
-    border-color:
-        var(--primary);
-
-    box-shadow:
-        0 0 0 4px
-        rgba(21,94,239,.08);
-}
-
-.uid-input-group .input{
-
-    margin-bottom:0;
-}
-
-.uid-submit-btn{
-
-    flex:none;
-
-    padding:0 15px;
-
-    border-radius:14px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    gap:5px;
-
-    color:white;
-
-    background:
-        var(--primary);
-
-    font-size:10px;
-
-    font-weight:950;
-
-    transition:.18s;
-}
-
-.uid-submit-btn:active{
-    transform:scale(.95);
-}
-
-
-/* =========================================================
-   TRANSACTIONS
-========================================================= */
-
-.transactions{
-
-    margin-top:15px;
-
-    padding:10px;
-
-    border-radius:12px;
- 
-    background:white;
-
-    border:
-        1px solid var(--border);
-}
-
-.tx-head{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-}
-
-.tx-title{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:7px;
-
-    font-size:12px;
-
-    font-weight:950;
-}
-
-.clear-btn{
-
-    background:none;
-
-    color:var(--primary);
-
-    font-size:9px;
-
-    font-weight:850;
-}
-
-.tx-list{
-
-    margin-top:12px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:8px;
-
-    max-height:270px;
-
-    overflow-y:auto;
-}
-
-.tx{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    padding:11px;
-
-    border-radius:15px;
-
-    background:
-        var(--surface-2);
-
-    border:
-        1px solid #EEF2F8;
-}
-
-.tx-icon{
-
-    width:36px;
-    height:36px;
-
-    border-radius:12px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-}
-
-.tx-info{
-    flex:1;
-}
-
-.tx-name{
-
-    font-size:10px;
-
-    font-weight:900;
-}
-
-.tx-date{
-
-    margin-top:3px;
-
-    color:var(--muted-2);
-
-    font-size:8px;
-
-    font-weight:650;
-}
-
-.tx-amount{
-
-    font-size:11px;
-
-    font-weight:950;
-
-    color:var(--primary);
-}
-
-.no-tx{
-
-    padding:22px 5px;
-
-    color:var(--muted-2);
-
-    text-align:center;
-
-    font-size:10px;
-
-    font-weight:700;
-}
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-.auth{
-
-    min-height:
-        calc(100vh - 70px);
-
-    padding:30px 20px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-}
-
-.auth-logo{
-
-    width:78px;
-    height:78px;
-
-    border-radius:26px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:white;
-
-    background:
-        linear-gradient(
-            145deg,
-            #155EEF,
-            #1047B8
-        );
-
-    box-shadow:
-        0 18px 35px rgba(21,94,239,.25);
-
-    margin-bottom:17px;
-}
-
-.auth-title{
-
-    font-size:26px;
-
-    font-weight:950;
-
-    letter-spacing:-1px;
-}
-
-.auth-sub{
-
-    margin-top:5px;
-
-    margin-bottom:24px;
-
-    color:var(--muted);
-
-    font-size:10px;
-
-    font-weight:700;
-
-    text-align:center;
-}
-
-.input{
-    margin-bottom:10px;
-}
-
-.primary-btn{
-
-    width:100%;
-
-    min-height:48px;
-
-    margin-top:5px;
-
-    border-radius:15px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:7px;
-
-    color:white;
-
-    background:
-        linear-gradient(
-            145deg,
-            #155EEF,
-            #1047B8
-        );
-
-    font-size:11px;
-
-    font-weight:950;
-
-    transition:.18s;
-}
-
-.primary-btn:active{
-    transform:scale(.98);
-}
-
-.primary-btn:disabled{
-    opacity:.7;
-}
-
-.text-btn{
-
-    margin-top:13px;
-
-    background:none;
-
-    color:var(--primary);
-
-    font-size:10px;
-
-    font-weight:850;
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-.overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:100;
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:center;
-
-    background:
-        rgba(16,24,40,.48);
-
-    backdrop-filter:
-        blur(12px);
-}
-
-.modal{
-
-    width:100%;
-
-    max-width:440px;
-
-    max-height:92vh;
-
-    overflow-y:auto;
-
-    padding:22px 18px 25px;
-
-    border-radius:
-        29px 29px 0 0;
-
-    background:white;
-
-    box-shadow:
-        0 -20px 60px
-        rgba(16,24,40,.20);
-
-    animation:
-        slideUp .25s ease;
-}
-
-.modal-center{
-    align-items:center;
-}
-
-.modal.center-card{
-
-    width:
-        calc(100% - 32px);
-
-    max-width:360px;
-
-    border-radius:25px;
-
-    padding:21px;
-
-    animation:
-        popIn .22s ease;
-}
-
-.modal-head{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    margin-bottom:13px;
-}
-
-.modal-title{
-
-    font-size:16px;
-
-    font-weight:950;
-}
-
-.close{
-
-    width:36px;
-    height:36px;
-
-    border-radius:12px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-}
-
-.modal-sub{
-
-    margin-bottom:15px;
-
-    color:var(--muted);
-
-    font-size:10px;
-
-    line-height:1.55;
-
-    font-weight:650;
-}
-
-
-/* =========================================================
-   SCANNER
-========================================================= */
-
-.scanner-box{
-
-    width:100%;
-
-    overflow:hidden;
-
-    border-radius:20px;
-
-    background:#081A3A;
-
-    margin-bottom:13px;
-}
-
-#qr-reader{
-    width:100%;
-}
-
-#qr-reader video{
-    border-radius:18px!important;
-}
-
-#qr-reader__dashboard_section{
-    padding:10px!important;
-}
-
-#qr-reader__dashboard_section_csr{
-    color:white!important;
-}
-
-.scanner-tip{
-
-    padding:11px;
-
-    border-radius:14px;
-
-    color:#29416F;
-
-    background:
-        var(--primary-light);
-
-    text-align:center;
-
-    font-size:9px;
-
-    font-weight:750;
-}
-
-
-/* =========================================================
-   AMOUNT
-========================================================= */
-
-.scan-success{
-
-    padding:11px;
-
-    margin-bottom:13px;
-
-    border-radius:14px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:7px;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-
-    font-size:10px;
-
-    font-weight:850;
-}
-
-.amount-box{
-
-    padding:16px;
-
-    margin-bottom:12px;
-
-    border-radius:18px;
-
-    background:
-        var(--surface-2);
-
-    border:
-        1px solid var(--border);
-
-    text-align:center;
-}
-
-.amount-label{
-
-    color:var(--muted);
-
-    font-size:9px;
-
-    font-weight:850;
-}
-
-.amount-uid{
-
-    margin-top:4px;
-
-    color:var(--primary);
-
-    font-size:14px;
-
-    font-weight:950;
-}
-
-.amount-input{
-
-    width:100%;
-
-    margin-top:13px;
-
-    padding:14px;
-
-    border:0;
-
-    outline:0;
-
-    border-radius:15px;
-
-    color:var(--text);
-
-    background:white;
-
-    text-align:center;
-
-    font-size:25px;
-
-    font-weight:950;
-
-    box-shadow:
-        inset 0 0 0 1px #E2E8F3;
-}
-
-
-/* =========================================================
-   RECEIPT
-========================================================= */
-
-.receipt-preview{
-
-    width:100%;
-
-    padding:17px;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #FFFFFF,
-            #F5F8FF
-        );
-
-    border:
-        1px solid var(--border);
-}
-
-.receipt-brand{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    font-size:13px;
-
-    font-weight:950;
-}
-
-.receipt-status{
-
-    margin-top:13px;
-
-    padding:9px;
-
-    border-radius:12px;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-
-    text-align:center;
-
-    font-size:10px;
-
-    font-weight:950;
-}
-
-.receipt-row{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:10px;
-
-    padding:10px 0;
-
-    border-bottom:
-        1px dashed #CBD5E5;
-
-    font-size:9px;
-}
-
-.receipt-row span{
-
-    color:var(--muted);
-
-    font-weight:700;
-}
-
-.receipt-row strong{
-
-    text-align:right;
-
-    font-weight:950;
-
-    word-break:break-word;
-}
-
-.receipt-total{
-
-    margin-top:11px;
-
-    padding:13px;
-
-    border-radius:14px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-
-    font-size:11px;
-
-    font-weight:950;
-}
-
-.share-btn,
-.download-btn,
-.close-full{
-
-    width:100%;
-
-    margin-top:9px;
-
-    padding:13px;
-
-    border-radius:14px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:7px;
-
-    font-size:10px;
-
-    font-weight:950;
-}
-
-.share-btn{
-
-    color:white;
-
-    background:
-        var(--primary);
-}
-
-.download-btn{
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-}
-
-.close-full{
-
-    color:#475467;
-
-    background:#F1F4F9;
-}
-
-
-/* =========================================================
-   LOADER
-========================================================= */
-
-.loader{
-
-    width:20px;
-    height:20px;
-
-    border:
-        3px solid
-        rgba(255,255,255,.35);
-
-    border-top-color:
-        white;
-
-    border-radius:50%;
-
-    animation:
-        spin .0s linear infinite;
-}
-
-
-/* =========================================================
-   CUSTOM ALERT
-========================================================= */
-
-.alert-container{
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:9999;
-
-    pointer-events:none;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:flex-end;
-
-    padding:20px;
-
-}
-
-.custom-alert{
-
-    width:100%;
-
-    max-width:380px;
-
-    padding:14px 15px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:11px;
-
-    border-radius:17px;
-
-    color:white;
-
-    background:
-        #155EEF;
-
-    box-shadow:
-        0 18px 45px
-        rgba(16,24,40,.25);
-
-    pointer-events:auto;
-
-    animation:
-        alertIn .25s ease;
-}
-
-.alert-icon{
-
-    width:35px;
-    height:35px;
-
-    flex:none;
-
-    border-radius:12px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    background:
-        rgba(255,255,255,.16);
-}
-
-.alert-message{
-
-    flex:1;
-
-    font-size:10px;
-
-    line-height:1.4;
-
-    font-weight:800;
-}
-
-.alert-close{
-
-    width:27px;
-    height:27px;
-
-    border-radius:9px;
-
-    color:white;
-
-    background:
-        rgba(255,255,255,.12);
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-}
-
-
-/* =========================================================
-   CONFIRM ICON
-========================================================= */
-
-.confirm-icon{
-
-    width:58px;
-    height:58px;
-
-    margin:
-        0 auto 12px;
-
-    border-radius:18px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:
-        var(--primary-light);
-}
-
-
-/* =========================================================
-   ANIMATION
-========================================================= */
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes slideUp{
-
-    from{
-        transform:translateY(100%);
-    }
-
-    to{
-        transform:translateY(0);
-    }
-}
-
-@keyframes popIn{
-
-    from{
-        transform:scale(.92);
-        opacity:0;
-    }
-
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-}
-
-@keyframes fadeUp{
-
-    from{
-        transform:translateY(10px);
-        opacity:0;
-    }
-
-    to{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-    }
-
-    to{
-        opacity:1;
-    }
-}
-
-@keyframes alertIn{
-
-    from{
-        opacity:0;
-        transform:translateY(18px) scale(.97);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-}
-
-
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media(min-width:600px){
-
-    .app{
-
-        height:900px;
-
-        border-radius:30px;
-
-        overflow:hidden;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TG Wallet - Next Gen Light UI</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- QRCode Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- HTML5 QR Code Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease, border-color 0.2s, box-shadow 0.2s;
+            -webkit-tap-highlight-color: transparent !important;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div, button, input {
+            -webkit-tap-highlight-color: transparent !important;
+            text-decoration: none;
+        }
+
+        input {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+        }
+
+        img {
+            -webkit-user-drag: none;
+            object-fit: cover;
+        }
+
+        :root {
+            --bg-light: #f1f5f9;
+            --blue-primary: #2563eb;
+            --blue-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            --green-btn: #10b981;
+            --green-light: #d1fae5;
+            --red-btn: #ef4444;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --radius-xl: 10px;
+            --radius-lg: 12px;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container Frame */
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            max-height: 880px;
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        @media (min-width: 440px) {
+            .app-container {
+                border-radius: 28px;
+            }
+        }
+
+        /* Top Header Navigation */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: #2563eb;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: #f8fafc;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-btn:active {
+            transform: scale(0.92);
+        }
+
+        .header-title {
+            font-weight: 800;
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        /* Notifications Bar */
+        .notification-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background-color: #fef2f2;
+            margin: 10px 16px 0 16px;
+            border-radius: 12px;
+            border: 1px solid #fecaca;
+        }
+
+        .notification-banner.green {
+            background-color: var(--green-light);
+            border-color: #a7f3d0;
+        }
+
+        .notification-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        /* Views */
+        .view {
+            flex: 1;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transition: opacity 0.25s ease;
+            overflow-y: auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .initial-loader-view {
+            background-color: #ffffff;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .auth-view {
+            background-color: #ffffff;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 36px;
+        }
+
+        .auth-title {
+            color: var(--blue-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            font-size: 15px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            background: #ffffff;
+            color: var(--text-dark);
+        }
+
+        .custom-input:focus {
+            border-color: var(--blue-primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-label {
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 11px;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit {
+            background: var(--blue-gradient);
+            color: white;
+            border: none;
+            width: 100%;
+            min-height: 48px;
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* DASHBOARD VIEW */
+        .dashboard-view {
+            padding: 16px;
+            gap: 16px;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 2px;
+        }
+
+        .profile-name {
+            font-weight: 800;
+            color: var(--text-dark);
+            font-size: 17px;
+        }
+
+        .profile-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .user-qr-row {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1.5px dashed var(--border-color);
+        }
+
+        .qr-box {
+            background: #ffffff;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .user-info-text {
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .user-info-text span {
+            color: var(--text-dark);
+            font-size: 13px;
+        }
+
+        .btn-small-blue {
+            background-color: #eff6ff;
+            color: var(--blue-primary);
+            border: 1px solid #bfdbfe;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-small-blue:active {
+            transform: scale(0.95);
+        }
+
+        /* Wallet Balance Card */
+        .wallet-pill {
+            background: var(--blue-gradient);
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .wallet-pill-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .flaticon-icon {
+            width: 48px;
+            height: 48px;
+             }
+
+        .wallet-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #bfdbfe;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .wallet-amount {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .btn-add-money {
+            background-color: #ffffff;
+            color: var(--blue-primary);
+            border: none;
+            padding: 10px 16px;
+            border-radius: var(--radius-lg);
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        .btn-add-money:active {
+            transform: scale(0.95);
+        }
+
+        /* Action Grid */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .action-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .action-card:active {
+            transform: scale(0.97);
+        }
+
+        .action-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-color: #f8fafc;
+        }
+
+        .action-card-title {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .cashback-badge {
+            position: absolute;
+            top: -2px;
+            right: 12px;
+            background: var(--green-btn);
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .lock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--red-btn);
+        }
+
+        /* Transactions Section */
+        .transactions-section {
+            background: #ffffff;
+            border-radius: var(--radius-xl);
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .transactions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .transactions-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-clear-tx {
+            font-size: 11px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 700;
+            border: none;
+            background: none;
+        }
+
+        .tx-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .tx-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .tx-item:active {
+            transform: scale(0.98);
+        }
+
+        .tx-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tx-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e0e7ff;
+            color: var(--blue-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tx-icon.gift {
+            background: var(--green-light);
+            color: var(--green-btn);
+        }
+
+        .tx-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tx-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .tx-date {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .tx-amount {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--red-btn);
+        }
+
+        .tx-amount.positive {
+            color: var(--green-btn);
+        }
+
+        .no-tx {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 16px 0;
+            font-weight: 600;
+        }
+
+        /* Footer Payments Display */
+        .payments-footer {
+            margin-top: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+        }
+
+        .brand-logo {
+            font-weight: 800;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+        }
+
+        .phonepe { color: #5f259f; }
+        .paytm { color: #00baf2; }
+        .gpay { color: #5f6368; }
+
+        /* Loader */
+        .dots-loader {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 24px;
+        }
+
+        .dots-loader div {
+            width: 8px;
+            height: 8px;
+            background-color: var(--blue-primary);
+            border-radius: 50%;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        .btn-submit .dots-loader div, .btn-modal-confirm .dots-loader div {
+            background-color: #ffffff;
+        }
+
+        .dots-loader div:nth-child(2) { animation-delay: 0.15s; }
+        .dots-loader div:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes bounce {
+            from { opacity: 0.3; transform: translateY(0); }
+            to { opacity: 1; transform: translateY(-4px); }
+        }
+
+        /* Toast Notifications */
+        #toast-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: 88%;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--text-dark);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin-top: 8px;
+            animation: slideUp 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Modal Overlays */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 330px;
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            animation: scaleUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-icon-badge {
+            width: 52px;
+            height: 52px;
+            background-color: #eff6ff;
+            color: var(--blue-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .modal-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: -6px;
+            line-height: 1.4;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .btn-modal-cancel {
+            flex: 1;
+            background-color: #f1f5f9;
+            color: var(--text-muted);
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-modal-confirm {
+            flex: 1;
+            background: var(--blue-gradient);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+        }
+
+        /* Bottom Sheet Popup */
+        .bottom-sheet-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: flex-end;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .bottom-sheet-card {
+            background: #ffffff;
+            width: 100%;
+            border-top-left-radius: 28px;
+            border-top-right-radius: 28px;
+            padding: 24px 20px 28px 20px;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            animation: slideUp 0.25s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        /* Choice Grid inside Bottom Sheet */
+        .recharge-choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 6px 0;
+        }
+
+        .choice-card {
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .choice-card:hover, .choice-card:active {
+            border-color: var(--blue-primary);
+            background: #eff6ff;
+        }
+
+        .choice-card-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Scanner Component */
+        .scanner-wrapper {
+            width: 100%;
+            height: 240px;
+            background: #000000;
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #qr-reader {
+            width: 100% !important;
+            height: 100% !important;
+            border: none !important;
+        }
+
+        #qr-reader video {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+        .scanner-laser {
+            width: 85%;
+            height: 2px;
+            background: var(--green-btn);
+            position: absolute;
+            box-shadow: 0 0 12px var(--green-btn);
+            animation: scanMove 2s infinite ease-in-out;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        @keyframes scanMove {
+            0%, 100% { top: 15%; }
+            50% { top: 85%; }
+        }
+
+        /* Bill Receipt Modal */
+        .bill-card {
+            background: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            width: 100%;
+            text-align: left;
+            margin-top: 4px;
+        }
+
+        .bill-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #475569;
+        }
+
+        .bill-row.total {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 8px;
+            font-weight: 800;
+            color: var(--text-dark);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.92); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
 </head>
-
-
 <body>
+    <div class="app-container">
+        <div id="toast-container"></div>
 
-<div class="app">
-
-
-<!-- =======================================================
-     TOP BAR
-======================================================= -->
-
-<div class="topbar">
-
-    <button
-        class="back-button"
-        onclick="goBack()"
-        aria-label="Back"
-    >
-        <i data-lucide="arrow-left"></i>
-    </button>
-
-    <div class="brand">
-
-       
-
-        <div>
-
-            <div class="brand-title">
-                TG WALLET
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div class="back-btn" onclick="goBack()">
+                <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
             </div>
+            <div class="header-title">TG WALLET</div>
+            <div style="width: 40px;"></div>
+        </div>
 
-            <div class="brand-sub">
-                Secure Digital Wallet
+        <!-- SYSTEM NOTIFICATION BAR -->
+        <div id="notifBanner" class="notification-banner">
+            <i id="notifIcon" data-lucide="bell-ring" style="width: 18px; height: 18px; color: var(--red-btn);"></i>
+            <div class="notification-text" id="notifText">Loading wallet status...</div>
+        </div>
+
+        <!-- VIEW 0: INITIAL SYSTEM LOADER -->
+        <div id="initialLoaderView" class="view initial-loader-view">
+            <div class="dots-loader">
+                <div></div><div></div><div></div>
             </div>
-
         </div>
 
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     NOTICE
-======================================================= -->
-
-<div class="notice" style="display: none;">
-
-    <div class="notice-icon">
-
-        <i data-lucide="sparkles"></i>
-
-    </div>
-
-    <div
-        id="noticeText"
-        class="notice-text"
-    >
-        Welcome to the new TG Wallet.
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     AUTH
-======================================================= -->
-
-<div
-    id="authView"
-    class="screen hidden"
->
-
-    <div class="auth">
-
-        <div class="auth-logo">
-
-            <i
-                data-lucide="wallet-cards"
-                style="width:35px;height:35px"
-            ></i>
-
-        </div>
-
-        <div
-            id="authTitle"
-            class="auth-title"
-        >
-            TG Wallet
-        </div>
-
-        <div class="auth-sub">
-            Secure wallet for TutoGenius users
-        </div>
-
-
-        <div
-            id="registerFields"
-            class="hidden"
-            style="width:100%"
-        >
-
-            <input
-                id="regName"
-                class="input"
-                placeholder="Full Name"
-            >
-
-            <input
-                id="regPhone"
-                class="input"
-                type="tel"
-                placeholder="Phone Number"
-            >
-
-            <input
-                id="regClass"
-                class="input"
-                placeholder="Class / Grade"
-            >
-
-        </div>
-
-
-        <input
-            id="uidInput"
-            class="input"
-            placeholder="Enter U ID"
-            style="text-transform:uppercase"
-        >
-
-
-        <input
-            id="keyInput"
-            class="input"
-            type="password"
-            maxlength="6"
-            inputmode="numeric"
-            placeholder="6 Digit Secret Key"
-        >
-
-
-        <button
-            id="authSubmitBtn"
-            class="primary-btn"
-            onclick="confirmAuthAction()"
-        >
-
-            <i data-lucide="log-in"></i>
-
-            Login
-
-        </button>
-
-
-        <button
-            id="authToggleBtn"
-            class="text-btn"
-            onclick="toggleAuthMode()"
-        >
-            Create New Account
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     DASHBOARD
-======================================================= -->
-
-<div
-    id="dashboardView"
-    class="screen hidden"
->
-
-<div class="content">
-
-
-<!-- PROFILE -->
-
-<div class="profile">
-
-   
-
-       
-
-
-
-    <!-- USER QR -->
-
-    <div class="user-qr">
-
-        <div class="qr-container">
-
-            <div id="qrcode"></div>
-
-        </div>
-
-
-        <div class="uid-info">
-
-            <div class="uid-label">
-                Your Wallet ID
-            </div>
-
-            <div
-                id="dashUid"
-                class="uid-value"
-            >
-                -
-            </div>
-
-            <div class="key-value">
-
-                Secret Key:
-                <span id="dashKey">
-                    ******
-                </span>
-
-            </div>
-
-            <button
-                class="small-btn"
-                onclick="openChangeKeyModal()"
-            >
-
-                <i
-                    data-lucide="key-round"
-                    style="width:13px"
-                ></i>
-
-                Change Key
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- BALANCE -->
-
-<div class="balance">
-
-    <div class="balance-top">
-
-        <div>
-
-            <div class="balance-label">
-                Available TG Balance
-            </div>
-
-            <div class="balance-value">
-                ₹<span id="dashBalance">0.00</span>
-            </div>
-
-        </div>
-
-        <div class="wallet-icon">
-
-            <i
-                data-lucide="wallet"
-                style="width:24px"
-            ></i>
-
-        </div>
-
-    </div>
-
-
-    <button
-        class="add-money"
-        onclick="triggerAddMoney()"
-    >
-
-        <i data-lucide="plus-circle"></i>
-
-        Add Money
-
-    </button>
-
-</div>
-
-
-<!-- QUICK ACTIONS -->
-
-<div class="section-title">
-
-    <h3>
-        Quick Actions
-    </h3>
-
-    <span>
-        Fast & Secure
-    </span>
-
-</div>
-<!-- MANUAL UID -->
-
-<div class="uid-card">
-
-    <div class="uid-card-header">
-
-        <div class="uid-card-icon">
-
-            <i
-                data-lucide="user-check"
-                style="width:20px"
-            ></i>
-
-        </div>
-
-        <div>
-
-            <div class="uid-card-title">
-                Enter UID to Recharge
-            </div>
-
-            <div class="uid-card-sub">
-                Recharge directly using Recipient Wallet ID
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="uid-input-group">
-
-        <input
-            id="manualUidInput"
-            class="input"
-            placeholder="e.g. TG2026000001"
-            style="text-transform:uppercase"
-        >
-
-        <button
-            class="uid-submit-btn"
-            onclick="submitManualUid()"
-        >
-
-            <i
-                data-lucide="arrow-right"
-                style="width:16px"
-            ></i>
-
-            Next
-
-        </button>
-
-    </div>
-
-</div>
-
-<div class="actions">
-
-
-    <div
-        class="action"
-        onclick="openScanner()"
-    >
-
-        <span class="cashback">
-            5%–20% CASHBACK
-        </span>
-
-        <div class="action-icon">
-
-            <i
-                data-lucide="scan-line"
-                style="width:27px"
-            ></i>
-
-        </div>
-
-        <div class="action-title">
-            Scan & Recharge
-        </div>
-
-        <div class="action-sub">
-            Scan recipient QR
-        </div>
-
-    </div>
-
-
-    <div
-        class="action"
-        onclick="openGiftModal()"
-    >
-
-        <div class="action-icon">
-
-            <i
-                data-lucide="gift"
-                style="width:27px"
-            ></i>
-
-        </div>
-
-        <div class="action-title">
-            Redeem Code
-        </div>
-
-        <div class="action-sub">
-            Add gift balance
-        </div>
-
-    </div>
-
-</div>
-
-
-
-
-
-<!-- TRANSACTIONS -->
-
-<div class="transactions">
-
-    <div class="tx-head">
-
-        <div class="tx-title">
-
-            <i
-                data-lucide="history"
-                style="
-                    width:16px;
-                    color:var(--primary)
-                "
-            ></i>
-
-            Recent Activity
-
-        </div>
-
-        <button
-            class="clear-btn"
-            onclick="clearTransactions()"
-        >
-            Clear
-        </button>
-
-    </div>
-
-
-    <div
-        id="txList"
-        class="tx-list"
-    ></div>
-
-</div>
-
-</div>
-</div>
-
-
-<!-- =======================================================
-     SCANNER MODAL
-======================================================= -->
-
-<div
-    id="scannerModal"
-    class="overlay hidden"
->
-
-    <div class="modal">
-
-        <div class="modal-head">
-
-            <div class="modal-title">
-                Scan Recipient QR
-            </div>
-
-            <button
-                class="close"
-                onclick="closeScanner()"
-            >
-
-                <i data-lucide="x"></i>
-
-            </button>
-
-        </div>
-
-
-        <div class="modal-sub">
-
-            Scan the recipient's TG Wallet QR code.
-            After scanning, only the recharge amount will be requested.
-
-        </div>
-
-
-        <div class="scanner-box">
-
-            <div id="qr-reader"></div>
-
-        </div>
-
-
-        <div class="scanner-tip">
-
-            <i
-                data-lucide="camera"
-                style="width:13px;vertical-align:middle"
-            ></i>
-
-            Allow camera access to scan the recipient ID.
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     AMOUNT MODAL
-======================================================= -->
-
-<div
-    id="amountModal"
-    class="overlay modal-center hidden"
->
-
-    <div class="modal center-card">
-
-        <div class="modal-head">
-
-            <div class="modal-title">
-                Recharge Wallet
-            </div>
-
-            <button
-                class="close"
-                onclick="closeModal('amountModal')"
-            >
-
-                <i data-lucide="x"></i>
-
-            </button>
-
-        </div>
-
-
-        <div class="scan-success">
-
-            <i data-lucide="badge-check"></i>
-
-            Recipient verified
-
-        </div>
-
-
-        <div class="amount-box">
-
-            <div class="amount-label">
-                RECIPIENT U ID
-            </div>
-
-            <div
-                id="scannedUid"
-                class="amount-uid"
-            >
-                -
-            </div>
-
-            <input
-                id="rechargeAmountInput"
-                class="amount-input"
-                type="number"
-                min="1"
-                step="0.01"
-                placeholder="₹ 0"
-            >
-
-        </div>
-
-
-        <button
-            id="confirmRechargeBtn"
-            class="primary-btn"
-            onclick="confirmRecharge()"
-        >
-
-            <i data-lucide="send"></i>
-
-            Recharge Now
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     RECEIPT MODAL
-======================================================= -->
-
-<div
-    id="receiptModal"
-    class="overlay modal-center hidden"
->
-
-    <div class="modal center-card">
-
-        <div class="modal-head">
-
-            <div class="modal-title">
-                Payment Receipt
-            </div>
-
-            <button
-                class="close"
-                onclick="closeModal('receiptModal')"
-            >
-
-                <i data-lucide="x"></i>
-
-            </button>
-
-        </div>
-
-
-        <div
-            id="receiptPreview"
-            class="receipt-preview"
-        >
-
-            <div class="receipt-brand">
-
-                <div
-                    class="brand-logo"
-                    style="
-                        width:32px;
-                        height:32px;
-                        border-radius:10px
-                    "
-                >
-
-                    <i
-                        data-lucide="wallet"
-                        style="width:18px"
-                    ></i>
-
+        <!-- VIEW 1: AUTHENTICATION -->
+        <div id="authView" class="view auth-view hidden">
+            <h2 id="authTitle" class="auth-title">Wallet Login</h2>
+            <div id="registerFields" class="hidden" style="width: 100%;">
+                <div class="input-group">
+                    <input type="text" id="regName" class="custom-input" placeholder="Full Name">
                 </div>
-
-                TG WALLET
-
+                <div class="input-group">
+                    <input type="tel" id="regPhone" class="custom-input" placeholder="Phone Number">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="regClass" class="custom-input" placeholder="Class / Grade">
+                </div>
             </div>
-
-
-            <div class="receipt-status">
-
-                ✓ PAYMENT SUCCESSFUL
-
+            <div class="input-group">
+                <input type="text" id="uidInput" class="custom-input" placeholder="Enter Your U ID" style="text-transform: uppercase;">
+                <div class="input-label" id="uidLabel">Your User Unique ID</div>
             </div>
-
-
-            <div class="receipt-row">
-
-                <span>
-                    Transaction ID
-                </span>
-
-                <strong id="receiptTxn">
-                    -
-                </strong>
-
+            <div class="input-group">
+                <input type="password" id="keyInput" class="custom-input" maxlength="6" pattern="\d{6}" placeholder="* * * * * *" inputmode="numeric">
+                <div class="input-label" id="keyLabel">Enter 6-Digit Secret Key</div>
             </div>
-
-
-            <div class="receipt-row">
-
-                <span>
-                    Recipient ID
-                </span>
-
-                <strong id="receiptTarget">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="receipt-row">
-
-                <span>
-                    Recharge
-                </span>
-
-                <strong id="receiptAmount">
-                    ₹0.00
-                </strong>
-
-            </div>
-
-
-            <div class="receipt-row">
-
-                <span>
-                    Cashback
-                </span>
-
-                <strong id="receiptCashback">
-                    ₹0.00
-                </strong>
-
-            </div>
-
-
-            <div class="receipt-row">
-
-                <span>
-                    Cashback Rate
-                </span>
-
-                <strong id="receiptRate">
-                    0%
-                </strong>
-
-            </div>
-
-
-            <div class="receipt-row">
-
-                <span>
-                    Date & Time
-                </span>
-
-                <strong id="receiptDate">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="receipt-total">
-
-                <span>
-                    Wallet Used
-                </span>
-
-                <strong id="receiptNet">
-                    ₹0.00
-                </strong>
-
-            </div>
-
+            <button id="authSubmitBtn" class="btn-submit" onclick="confirmAuthAction()">Login</button>
+            <button id="authToggleBtn" style="background:none; border:none; color:var(--blue-primary); font-size:13px; font-weight:700; cursor:pointer; margin-top:14px;" onclick="toggleAuthMode()">Create New Account</button>
         </div>
 
+        <!-- VIEW 2: MAIN DASHBOARD -->
+        <div id="dashboardView" class="view dashboard-view hidden">
+            <!-- User Profile Card -->
+            <div class="profile-card">
+                <div class="profile-header">
+                   <div class="profile-details">
+                        <div id="dashName" class="profile-name">Loading...</div>
+                        <div class="profile-sub">
+                            <i data-lucide="phone" style="width: 12px; height: 12px;"></i>
+                            <span id="dashPhone">-</span>
+                        </div>
+                        <div class="profile-sub">
+                            <i data-lucide="graduation-cap" style="width: 12px; height: 12px;"></i>
+                            <span id="dashClass">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-qr-row">
+                    <div class="qr-box">
+                        <div id="qrcode"></div>
+                    </div>
+                    <div class="user-details">
+                        <div class="user-info-text">U ID: <span id="dashUid">-</span></div>
+                        <div class="user-info-text">KEY : <span id="dashKey">******</span></div>
+                        <button class="btn-small-blue" onclick="openChangeKeyModal()">
+                            <i data-lucide="key-round" style="width: 12px; height: 12px;"></i> Change Key
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-        <button
-            class="share-btn"
-            onclick="shareReceiptImage()"
-        >
+            <!-- Wallet Balance Card -->
+            <div class="wallet-pill">
+                <div class="wallet-pill-left">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2704/2704332.png" class="flaticon-icon" alt="Wallet">
+                    <div>
+                        <div class="wallet-title">TG Balance</div>
+                        <div class="wallet-amount">&#8377;<span id="dashBalance">0.00</span></div>
+                    </div>
+                </div>
+                <button class="btn-add-money" onclick="triggerAddMoney()">
+                    <i data-lucide="plus" style="width: 16px; height: 16px;"></i> Add Money
+                </button>
+            </div>
 
-            <i data-lucide="share-2"></i>
+            <!-- Dashboard Quick Actions -->
+            <div class="action-grid">
+                <div class="action-card" id="rechargeCard" onclick="openRechargeOptions()">
+                    <span class="cashback-badge">UPTO 20% OFF</span>
+                    <i id="rechargeLockIcon" class="lock-badge hidden" data-lucide="lock" style="width: 16px; height: 16px;"></i>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055672.png" style="width: 36px; height: 36px;" alt="Recharge">
+                    <div class="action-card-title">Recharge Other ID</div>
+                </div>
+                <div class="action-card" onclick="openGiftModal()">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213948.png" style="width: 36px; height: 36px;" alt="Redeem">
+                    <div class="action-card-title">Redeem Code</div>
+                </div>
+            </div>
 
-            Share Receipt Image
+            <!-- Recent Transactions Section -->
+            <div class="transactions-section">
+                <div class="transactions-header">
+                    <div class="transactions-title">
+                        <i data-lucide="history" style="width: 16px; height: 16px; color: var(--blue-primary);"></i> Recent Transactions
+                    </div>
+                    <button class="btn-clear-tx" onclick="clearTransactions()">Clear</button>
+                </div>
+                <div class="tx-list" id="txList">
+                    <div class="no-tx">No transactions saved</div>
+                </div>
+            </div>
 
-        </button>
+            <!-- Footer Gateway Display -->
+            <div class="payments-footer">
+                <div class="brand-logos">
+                    <span class="brand-logo phonepe"><span style="background:#5f259f;color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;margin-right:4px;">P</span> PhonePe</span>
+                    <span class="brand-logo paytm"><span style="color:#002e6e">Pay</span>tm</span>
+                    <span class="brand-logo gpay"><span style="color:#4285f4">G</span><span style="color:#ea4335">P</span><span style="color:#fbbc05">a</span><span style="color:#34a853">y</span></span>
+                </div>
+            </div>
+        </div>
 
+        <!-- GLOBAL CONFIRMATION MODAL -->
+        <div id="actionConfirmModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-icon-badge" id="confirmModalIcon">
+                    <i data-lucide="help-circle" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="modal-title" id="confirmModalTitle">Are you sure?</div>
+                <div class="modal-subtitle" id="confirmModalSubtitle">Do you want to proceed?</div>
+                <div class="modal-actions">
+                    <button class="btn-modal-cancel" onclick="closeModal('actionConfirmModal')">Cancel</button>
+                    <button id="confirmModalBtn" class="btn-modal-confirm">Confirm</button>
+                </div>
+            </div>
+        </div>
 
-        <button
-            class="download-btn"
-            onclick="downloadReceiptImage()"
-        >
+        <!-- RECHARGE METHOD SELECTOR -->
+        <div id="rechargeBottomSheet" class="bottom-sheet-overlay hidden">
+            <div class="bottom-sheet-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-weight:800; font-size:16px; color:var(--text-dark);">Choose Recharge Method</div>
+                    <i data-lucide="x" style="cursor:pointer; color:var(--text-muted);" onclick="closeModal('rechargeBottomSheet')"></i>
+                </div>
+                <div style="font-size:12px; color:var(--green-btn); font-weight:700;">Earn 5% to 20% cashback instantly!</div>
+                
+                <div class="recharge-choice-grid">
+                    <div class="choice-card" onclick="selectRechargeMode('uid')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" style="width: 34px; height: 34px;" alt="Enter UID">
+                        <div class="choice-card-title">Enter U ID</div>
+                    </div>
+                    <div class="choice-card" onclick="selectRechargeMode('scan')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/714/714390.png" style="width: 34px; height: 34px;" alt="Scan QR">
+                        <div class="choice-card-title">Scan Camera QR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <i data-lucide="download"></i>
+        <!-- RECHARGE EXECUTION SHEET -->
+        <div id="rechargeFormSheet" class="bottom-sheet-overlay hidden">
+            <div class="bottom-sheet-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-weight:800; font-size:16px; color:var(--text-dark);" id="rechargeFormTitle">Recharge Target ID</div>
+                    <i data-lucide="x" style="cursor:pointer; color:var(--text-muted);" onclick="closeRechargeForm()"></i>
+                </div>
+                
+                <!-- Dynamic Input / WebCam Reader Container -->
+                <div id="rechargeModeContainer"></div>
 
-            Save Receipt Image
+                <div class="input-group" style="margin-bottom:0;">
+                    <input type="number" id="rechargeAmountInput" class="custom-input" placeholder="Enter Amount (&#8377;)">
+                </div>
+                <button id="submitRechargeBtn" class="btn-submit" style="width:100%; margin-top: 4px;" onclick="processRecharge()">Pay & Recharge</button>
+            </div>
+        </div>
 
-        </button>
+        <!-- RECEIPT BILL MODAL -->
+        <div id="billModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-icon-badge" style="background:var(--green-light); color:var(--green-btn);">
+                    <i data-lucide="check-circle" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div class="modal-title">Recharge Successful!</div>
+                <div class="bill-card">
+                    <div class="bill-row"><span>Target ID:</span> <strong id="billTargetId">-</strong></div>
+                    <div class="bill-row"><span>Recharge Amount:</span> <strong id="billAmount">&#8377;0.00</strong></div>
+                    <div class="bill-row"><span>Cashback Earned:</span> <strong id="billCashback" style="color:var(--green-btn);">&#8377;0.00</strong></div>
+                    <div class="bill-row total"><span>Net Balance Used:</span> <strong id="billNetUsed">&#8377;0.00</strong></div>
+                </div>
+                <button class="btn-whatsapp" onclick="shareBillOnWhatsApp()">
+                    <i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Share on WhatsApp
+                </button>
+                <button class="btn-modal-cancel" style="width:100%;" onclick="closeModal('billModal')">Close</button>
+            </div>
+        </div>
 
+        <!-- CASHBACK NOTIFICATION MODAL -->
+        <div id="cashbackModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-icon-badge" style="background:var(--green-light); color:var(--green-btn);">
+                    <i data-lucide="gift" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div class="modal-title">Cashback Credited!</div>
+                <div class="modal-subtitle">Congratulations! Cashback has been added to your balance.</div>
+                <div class="bill-card">
+                    <div class="bill-row"><span>Cashback Amount:</span> <strong id="cashbackModalAmount" style="color:var(--green-btn);">&#8377;0.00</strong></div>
+                </div>
+                <button class="btn-modal-confirm" style="width:100%;" onclick="closeModal('cashbackModal')">Awesome!</button>
+            </div>
+        </div>
 
-        <button
-            class="close-full"
-            onclick="closeModal('receiptModal')"
-        >
-            Done
-        </button>
+        <!-- TRANSACTION DETAILS MODAL -->
+        <div id="txDetailModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-icon-badge" id="txDetailIcon">
+                    <i data-lucide="receipt" style="width: 28px; height: 28px;"></i>
+                </div>
+                <div class="modal-title">Transaction Details</div>
+                <div class="bill-card">
+                    <div class="bill-row"><span>Title:</span> <strong id="txDetailTitle">-</strong></div>
+                    <div class="bill-row"><span>Type:</span> <strong id="txDetailType">-</strong></div>
+                    <div class="bill-row"><span>Amount:</span> <strong id="txDetailAmount">&#8377;0.00</strong></div>
+                    <div class="bill-row"><span>Cashback:</span> <strong id="txDetailCashback" style="color:var(--green-btn);">&#8377;0.00</strong></div>
+                    <div class="bill-row"><span>Date & Time:</span> <strong id="txDetailDate">-</strong></div>
+                </div>
+                <button class="btn-modal-cancel" style="width:100%;" onclick="closeModal('txDetailModal')">Close</button>
+            </div>
+        </div>
 
+        <!-- CHANGE SECRET KEY MODAL -->
+        <div id="changeKeyModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-icon-badge">
+                    <i data-lucide="key-round" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="modal-title">Change Secret Key</div>
+                <input type="password" id="newKeyInput" class="custom-input" maxlength="6" pattern="\d{6}" placeholder="* * * * * *" inputmode="numeric">
+                <div class="modal-actions">
+                    <button class="btn-modal-cancel" onclick="closeModal('changeKeyModal')">Cancel</button>
+                    <button id="updateKeyBtn" class="btn-modal-confirm" onclick="submitNewKey()">Update</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- REDEEM GIFT CODE MODAL -->
+        <div id="giftModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-icon-badge">
+                    <i data-lucide="gift" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="modal-title">Redeem Gift Code</div>
+                <input type="text" id="giftCodeInput" class="custom-input" placeholder="ENTER GIFT CODE" style="text-transform: uppercase;">
+                <div class="modal-actions">
+                    <button class="btn-modal-cancel" onclick="closeModal('giftModal')">Cancel</button>
+                    <button id="redeemBtn" class="btn-modal-confirm" onclick="submitGiftCode()">Redeem</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-</div>
-
-
-<!-- =======================================================
-     CHANGE KEY
-======================================================= -->
-
-<div
-    id="changeKeyModal"
-    class="overlay modal-center hidden"
->
-
-    <div class="modal center-card">
-
-        <div class="modal-title">
-            Change Secret Key
-        </div>
-
-        <div class="modal-sub">
-            Enter a new 6 digit wallet key.
-        </div>
-
-
-        <input
-            id="newKeyInput"
-            class="input"
-            type="password"
-            maxlength="6"
-            inputmode="numeric"
-            placeholder="6 Digit Key"
-        >
-
-
-        <button
-            id="updateKeyBtn"
-            class="primary-btn"
-            onclick="submitNewKey()"
-        >
-            Update Key
-        </button>
-
-
-        <button
-            class="close-full"
-            onclick="closeModal('changeKeyModal')"
-        >
-            Cancel
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     GIFT MODAL
-======================================================= -->
-
-<div
-    id="giftModal"
-    class="overlay modal-center hidden"
->
-
-    <div class="modal center-card">
-
-        <div class="modal-title">
-            Redeem Gift Code
-        </div>
-
-        <div class="modal-sub">
-            Enter your TG Wallet gift/recharge code.
-        </div>
-
-
-        <input
-            id="giftCodeInput"
-            class="input"
-            placeholder="TGCOIN_XXXXXXXX"
-            style="text-transform:uppercase"
-        >
-
-
-        <button
-            id="redeemBtn"
-            class="primary-btn"
-            onclick="submitGiftCode()"
-        >
-
-            <i data-lucide="gift"></i>
-
-            Redeem Code
-
-        </button>
-
-
-        <button
-            class="close-full"
-            onclick="closeModal('giftModal')"
-        >
-            Cancel
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     CUSTOM CONFIRM MODAL
-======================================================= -->
-
-<div
-    id="confirmModal"
-    class="overlay modal-center hidden"
->
-
-    <div class="modal center-card">
-
-        <div class="confirm-icon">
-
-            <i
-                id="confirmIcon"
-                data-lucide="circle-help"
-                style="width:28px"
-            ></i>
-
-        </div>
-
-
-        <div
-            id="confirmTitle"
-            class="modal-title"
-            style="text-align:center"
-        >
-            Confirm
-        </div>
-
-
-        <div
-            id="confirmText"
-            class="modal-sub"
-            style="
-                text-align:center;
-                margin-top:7px
-            "
-        >
-            Continue?
-        </div>
-
-
-        <div
-            style="
-                display:flex;
-                gap:8px;
-                width:100%
-            "
-        >
-
-            <button
-                class="close-full"
-                onclick="closeModal('confirmModal')"
-                style="margin:0"
-            >
-                Cancel
-            </button>
-
-
-            <button
-                id="confirmBtn"
-                class="primary-btn"
-                style="margin:0"
-            >
-                Confirm
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =======================================================
-     CUSTOM ALERT CONTAINER
-======================================================= -->
-
-<div
-    id="alertContainer"
-    class="alert-container"
-></div>
-
-
-</div>
-
-
-<script type="module">
-
-/* =========================================================
-   FIREBASE
-========================================================= */
-
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-
-import {
-    getFirestore,
-    doc,
-    getDoc,
-    updateDoc,
-    runTransaction,
-    onSnapshot,
-    arrayUnion
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
-
-    authDomain:
-        "tutogenius-1.firebaseapp.com",
-
-    projectId:
-        "tutogenius-1",
-
-    storageBucket:
-        "tutogenius-1.firebasestorage.app",
-
-    messagingSenderId:
-        "65839146612",
-
-    appId:
-        "1:65839146612:web:4e54c6ad4cea4bc5859321"
-
-};
-
-
-const app =
-    initializeApp(firebaseConfig);
-
-const db =
-    getFirestore(app);
-
-
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
-
-let isCreateMode = false;
-
-let unsubscribeUser = null;
-
-let currentUserData = {};
-
-let currentReceipt = null;
-
-let scanner = null;
-
-let scannerRunning = false;
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        if(window.lucide){
-
-            lucide.createIcons();
-
-        }
-
-        setupImageFallbacks();
-
-        checkLoginStatus();
-
-    }
-);
-
-
-/* =========================================================
-   IMAGE FALLBACK
-========================================================= */
-
-function setupImageFallbacks(){
-
-    document
-        .querySelectorAll("img")
-        .forEach(img => {
-
-            img.addEventListener(
-                "error",
-                function(){
-
-                    this.onerror = null;
-
-                    this.src =
-                        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23EAF1FF'/%3E%3Ccircle cx='50' cy='38' r='17' fill='%23155EEF'/%3E%3Cpath d='M20 85c3-21 17-31 30-31s27 10 30 31' fill='%23155EEF'/%3E%3C/svg%3E";
-
-                }
-
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   CUSTOM ALERT
-========================================================= */
-
-window.showAlert = function(message){
-
-    const container =
-        document.getElementById(
-            "alertContainer"
-        );
-
-    container.innerHTML = "";
-
-    const alert =
-        document.createElement("div");
-
-    alert.className =
-        "custom-alert";
-
-    alert.innerHTML = `
-
-        <div class="alert-icon">
-
-            <i
-                data-lucide="bell"
-                style="width:18px"
-            ></i>
-
-        </div>
-
-        <div class="alert-message"></div>
-
-        <button
-            class="alert-close"
-            aria-label="Close"
-        >
-
-            <i
-                data-lucide="x"
-                style="width:14px"
-            ></i>
-
-        </button>
-
-    `;
-
-    alert.querySelector(
-        ".alert-message"
-    ).textContent = message;
-
-    alert.querySelector(
-        ".alert-close"
-    ).onclick = () => {
-
-        alert.remove();
-
-    };
-
-    container.appendChild(alert);
-
-    if(window.lucide){
-
-        lucide.createIcons();
-
-    }
-
-    setTimeout(
-        () => {
-
-            if(alert.isConnected){
-
-                alert.style.opacity = "0";
-
-                alert.style.transform =
-                    "translateY(15px)";
-
-                alert.style.transition =
-                    ".25s";
-
-                setTimeout(
-                    () => alert.remove(),
-                    250
-                );
-
-            }
-
-        },
-        3500
-    );
-
-};
-
-
-/* =========================================================
-   MODALS
-========================================================= */
-
-window.closeModal = function(id){
-
-    const element =
-        document.getElementById(id);
-
-    if(element){
-
-        element.classList.add("hidden");
-
-    }
-
-};
-
-
-function openModal(id){
-
-    const element =
-        document.getElementById(id);
-
-    if(element){
-
-        element.classList.remove("hidden");
-
-    }
-
-}
-
-
-/* =========================================================
-   CUSTOM CONFIRM
-========================================================= */
-
-function confirmAction(
-    title,
-    text,
-    callback
-){
-
-    document.getElementById(
-        "confirmTitle"
-    ).textContent = title;
-
-    document.getElementById(
-        "confirmText"
-    ).textContent = text;
-
-    const button =
-        document.getElementById(
-            "confirmBtn"
-        );
-
-    button.onclick = async () => {
-
-        closeModal("confirmModal");
-
-        await callback();
-
-    };
-
-    openModal("confirmModal");
-
-}
-
-
-/* =========================================================
-   LOGIN STATUS
-========================================================= */
-
-async function checkLoginStatus(){
-
-    const uid =
-        localStorage.getItem(
-            "tg_uid"
-        );
-
-    const key =
-        localStorage.getItem(
-            "tg_key"
-        );
-
-    if(!uid || !key){
-
-        document
-            .getElementById("authView")
-            .classList.remove("hidden");
-
-        updateNotice(
-            "Login or create your TG Wallet account to continue."
-        );
-
-        return;
-
-    }
-
-    try{
-
-        const snap =
-            await getDoc(
-                doc(
-                    db,
-                    "users",
-                    uid
-                )
-            );
-
-        if(
-            snap.exists() &&
-            snap.data().key === key
-        ){
-
-            loadDashboard(uid);
-
-            return;
-
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-    }
-
-    localStorage.removeItem("tg_uid");
-
-    localStorage.removeItem("tg_key");
-
-    document
-        .getElementById("authView")
-        .classList.remove("hidden");
-
-}
-
-
-/* =========================================================
-   NOTICE
-========================================================= */
-
-function updateNotice(text){
-
-    document.getElementById(
-        "noticeText"
-    ).textContent = text;
-
-}
-
-
-/* =========================================================
-   AUTH MODE
-========================================================= */
-
-window.toggleAuthMode = function(){
-
-    isCreateMode =
-        !isCreateMode;
-
-    const title =
-        document.getElementById(
-            "authTitle"
-        );
-
-    const button =
-        document.getElementById(
-            "authSubmitBtn"
-        );
-
-    const toggle =
-        document.getElementById(
-            "authToggleBtn"
-        );
-
-    const uid =
-        document.getElementById(
-            "uidInput"
-        );
-
-    const fields =
-        document.getElementById(
-            "registerFields"
-        );
-
-
-    if(isCreateMode){
-
-        title.textContent =
-            "Create Wallet";
-
-        button.innerHTML =
-            `<i data-lucide="user-plus"></i> Register`;
-
-        toggle.textContent =
-            "Already have an account? Login";
-
-        uid.disabled = true;
-
-        uid.placeholder =
-            "U ID will be generated automatically";
-
-        fields.classList.remove(
-            "hidden"
-        );
-
-    }else{
-
-        title.textContent =
-            "TG Wallet";
-
-        button.innerHTML =
-            `<i data-lucide="log-in"></i> Login`;
-
-        toggle.textContent =
-            "Create New Account";
-
-        uid.disabled = false;
-
-        uid.placeholder =
-            "Enter U ID";
-
-        fields.classList.add(
-            "hidden"
-        );
-
-    }
-
-    lucide.createIcons();
-
-};
-
-
-/* =========================================================
-   AUTH CONFIRM
-========================================================= */
-
-window.confirmAuthAction = function(){
-
-    const key =
-        document
-            .getElementById("keyInput")
-            .value
-            .trim();
-
-    if(!/^\d{6}$/.test(key)){
-
-        showAlert(
-            "Secret key must contain exactly 6 digits."
-        );
-
-        return;
-
-    }
-
-    confirmAction(
-
-        isCreateMode
-            ? "Create Wallet?"
-            : "Login?",
-
-        isCreateMode
-            ? "Create your new TG Wallet account?"
-            : "Login to your TG Wallet?",
-
-        handleAuth
-
-    );
-
-};
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-async function handleAuth(){
-
-    const key =
-        document
-            .getElementById("keyInput")
-            .value
-            .trim();
-
-    const button =
-        document.getElementById(
-            "authSubmitBtn"
-        );
-
-    const original =
-        button.innerHTML;
-
-    button.disabled = true;
-
-    button.innerHTML =
-        `<div class="loader"></div>`;
-
-
-    try{
-
-        if(isCreateMode){
-
-            const name =
-                document
-                    .getElementById("regName")
-                    .value
-                    .trim();
-
-            const phone =
-                document
-                    .getElementById("regPhone")
-                    .value
-                    .trim();
-
-            const userClass =
-                document
-                    .getElementById("regClass")
-                    .value
-                    .trim();
-
-
-            if(!name || !phone){
-
-                throw new Error(
-                    "Name and phone number are required."
-                );
-
-            }
-
-
-            const newUid =
-                await runTransaction(
-                    db,
-                    async transaction => {
-
-                        const metaRef =
-                            doc(
-                                db,
-                                "metadata",
-                                "users"
-                            );
-
-                        const metaSnap =
-                            await transaction.get(
-                                metaRef
-                            );
-
-                        const lastId =
-                            metaSnap.exists()
-                                ? Number(
-                                    metaSnap.data().lastId || 0
-                                  )
-                                : 0;
-
-                        const nextId =
-                            lastId + 1;
-
-                        const uid =
-                            "TG2026" +
-                            String(nextId)
-                                .padStart(
-                                    6,
-                                    "0"
-                                );
-
-
-                        transaction.set(
-                            metaRef,
-                            {
-                                lastId:nextId
-                            },
-                            {
-                                merge:true
-                            }
-                        );
-
-
-                        transaction.set(
-                            doc(
-                                db,
-                                "users",
-                                uid
-                            ),
-                            {
-                                name,
-                                phone,
-                                userClass,
-                                key,
-                                balance:0
-                            }
-                        );
-
-
-                        return uid;
-
-                    }
-                );
-
-
-            localStorage.setItem(
-                "tg_uid",
-                newUid
-            );
-
-            localStorage.setItem(
-                "tg_key",
-                key
-            );
-
-
-            showAlert(
-                "Wallet created successfully."
-            );
-
-            loadDashboard(newUid);
-
-        }else{
-
-            const uid =
-                document
-                    .getElementById("uidInput")
-                    .value
-                    .trim()
-                    .toUpperCase();
-
-
-            if(!uid){
-
-                throw new Error(
-                    "Enter your Wallet UID."
-                );
-
-            }
-
-
-            const snap =
-                await getDoc(
-                    doc(
-                        db,
-                        "users",
-                        uid
-                    )
-                );
-
-
-            if(
-                !snap.exists() ||
-                snap.data().key !== key
-            ){
-
-                throw new Error(
-                    "Invalid U ID or Secret Key."
-                );
-
-            }
-
-
-            localStorage.setItem(
-                "tg_uid",
-                uid
-            );
-
-            localStorage.setItem(
-                "tg_key",
-                key
-            );
-
-
-            showAlert(
-                "Login successful."
-            );
-
-            loadDashboard(uid);
-
-        }
-
-
-    }catch(error){
-
-        showAlert(
-            error.message ||
-            "Authentication failed."
-        );
-
-    }finally{
-
-        button.disabled = false;
-
-        button.innerHTML =
-            original;
-
-        lucide.createIcons();
-
-    }
-
-}
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-function loadDashboard(uid){
-
-    document
-        .getElementById("authView")
-        .classList.add("hidden");
-
-    document
-        .getElementById("dashboardView")
-        .classList.remove("hidden");
-
-
-    document.getElementById(
-        "dashUid"
-    ).textContent = uid;
-
-
-    generateUserQR(uid);
-
-    renderTransactions();
-
-
-    if(unsubscribeUser){
-
-        unsubscribeUser();
-
-    }
-
-
-    unsubscribeUser =
-        onSnapshot(
-            doc(
-                db,
-                "users",
-                uid
-            ),
-            snap => {
-
-                if(!snap.exists()){
-
-                    showAlert(
-                        "Wallet account no longer exists."
-                    );
-
-                    return;
-
-                }
-
-
-                currentUserData =
-                    snap.data();
-
-
-                updateDashboard(
-                    currentUserData
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   DASHBOARD DATA
-========================================================= */
-
-function updateDashboard(data){
-
-    const balance =
-        Number(
-            data.balance || 0
-        );
-
-
-    document.getElementById(
-        "dashBalance"
-    ).textContent =
-        balance.toFixed(2);
-
-
-    document.getElementById(
-        "dashName"
-    ).textContent =
-        data.name || "User";
-
-
-    document.getElementById(
-        "dashPhone"
-    ).textContent =
-        data.phone || "-";
-
-
-    document.getElementById(
-        "dashClass"
-    ).textContent =
-        data.userClass || "-";
-
-
-    document.getElementById(
-        "dashKey"
-    ).textContent =
-        data.key || "******";
-
-
-    updateNotice(
-
-        balance >= 10
-
-            ? "Wallet active. Scan a recipient QR or enter a Wallet UID to recharge."
-
-            : "Add money to your wallet to start recharging other IDs."
-
-    );
-
-}
-
-
-/* =========================================================
-   USER QR
-========================================================= */
-
-function generateUserQR(uid){
-
-    const container =
-        document.getElementById(
-            "qrcode"
-        );
-
-    container.innerHTML = "";
-
-
-    new QRCode(
-        container,
-        {
-            text:
-                `TGWALLET:${uid}`,
-
-            width:74,
-
-            height:74,
-
-            correctLevel:
-                QRCode.CorrectLevel.M
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ADD MONEY
-========================================================= */
-
-window.triggerAddMoney = function(){
-
-    confirmAction(
-
-        "Add Money",
-
-        "Open the TutoGenius payment portal to add money to your wallet?",
-
-        () => {
-
-            window.open(
-                "https://tutogenius.in",
-                "_blank"
-            );
-
-        }
-
-    );
-
-};
-
-
-/* =========================================================
-   MANUAL UID
-========================================================= */
-
-window.submitManualUid = async function(){
-
-    const input =
-        document.getElementById(
-            "manualUidInput"
-        );
-
-
-    const uid =
-        String(
-            input.value || ""
-        )
-        .trim()
-        .toUpperCase();
-
-
-    if(!uid){
-
-        showAlert(
-            "Please enter a Recipient UID."
-        );
-
-        return;
-
-    }
-
-
-    const balance =
-        Number(
-            currentUserData.balance || 0
-        );
-
-
-    if(balance < 10){
-
-        confirmAction(
-
-            "Wallet Balance Low",
-
-            "Minimum wallet balance of ₹10 is required. Add money first.",
-
-            triggerAddMoney
-
-        );
-
-        return;
-
-    }
-
-
-    await processRecipientUid(uid);
-
-};
-
-
-/* =========================================================
-   OPEN SCANNER
-========================================================= */
-
-window.openScanner = function(){
-
-    const balance =
-        Number(
-            currentUserData.balance || 0
-        );
-
-
-    if(balance < 10){
-
-        confirmAction(
-
-            "Wallet Balance Low",
-
-            "Minimum wallet balance of ₹10 is required. Add money first.",
-
-            triggerAddMoney
-
-        );
-
-        return;
-
-    }
-
-
-    openModal(
-        "scannerModal"
-    );
-
-
-    setTimeout(
-        startScanner,
-        300
-    );
-
-};
-
-
-/* =========================================================
-   START SCANNER
-========================================================= */
-
-async function startScanner(){
-
-    if(scannerRunning){
-
-        return;
-
-    }
-
-
-    const reader =
-        document.getElementById(
-            "qr-reader"
-        );
-
-
-    reader.innerHTML = "";
-
-
-    scanner =
-        new Html5Qrcode(
-            "qr-reader"
-        );
-
-
-    try{
-
-        await scanner.start(
-
-            {
-                facingMode:"environment"
-            },
-
-            {
-                fps:10,
-
-                qrbox:{
-                    width:230,
-                    height:230
-                }
-
-            },
-
-            decodedText => {
-
-                handleScannedQR(
-                    decodedText
-                );
-
-            },
-
-            () => {}
-
-        );
-
-
-        scannerRunning = true;
-
-
-    }catch(error){
-
-        console.error(error);
-
-        showAlert(
-            "Camera permission is required for QR scanning."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   CLOSE SCANNER
-========================================================= */
-
-window.closeScanner = async function(){
-
-    if(
-        scanner &&
-        scannerRunning
-    ){
-
-        try{
-
-            await scanner.stop();
-
-        }catch(e){}
-
-        scannerRunning = false;
-
-    }
-
-
-    document
-        .getElementById(
-            "scannerModal"
-        )
-        .classList.add(
-            "hidden"
-        );
-
-};
-
-
-/* =========================================================
-   QR RESULT
-========================================================= */
-
-async function handleScannedQR(raw){
-
-    let uid =
-        String(
-            raw || ""
-        )
-        .trim()
-        .toUpperCase();
-
-
-    if(
-        uid.startsWith(
-            "TGWALLET:"
-        )
-    ){
-
-        uid =
-            uid
-            .replace(
-                "TGWALLET:",
-                ""
-            )
-            .trim();
-
-    }
-
-
-    if(
-        uid.startsWith("UID:")
-    ){
-
-        uid =
-            uid
-            .replace(
-                "UID:",
-                ""
-            )
-            .trim();
-
-    }
-
-
-    await closeScanner();
-
-    await processRecipientUid(uid);
-
-}
-
-
-/* =========================================================
-   VERIFY RECIPIENT
-========================================================= */
-
-async function processRecipientUid(uid){
-
-    const myUid =
-        localStorage.getItem(
-            "tg_uid"
-        );
-
-
-    if(uid === myUid){
-
-        showAlert(
-            "You cannot recharge your own wallet."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        const targetSnap =
-            await getDoc(
-                doc(
-                    db,
-                    "users",
-                    uid
-                )
-            );
-
-
-        if(!targetSnap.exists()){
-
-            showAlert(
-                "Recipient wallet was not found."
-            );
-
-            return;
-
-        }
-
-
-        document.getElementById(
-            "scannedUid"
-        ).textContent = uid;
-
-
-        document.getElementById(
-            "rechargeAmountInput"
-        ).value = "";
-
-
-        openModal(
-            "amountModal"
-        );
-
-
-        setTimeout(
-            () => {
-
-                document
-                    .getElementById(
-                        "rechargeAmountInput"
-                    )
-                    .focus();
-
-            },
-            250
-        );
-
-
-    }catch(error){
-
-        showAlert(
-            "Unable to verify recipient."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   RECHARGE
-========================================================= */
-
-window.confirmRecharge = async function(){
-
-    const targetUid =
-        document
-            .getElementById(
-                "scannedUid"
-            )
-            .textContent
-            .trim();
-
-
-    const amount =
-        Number(
-            document
-                .getElementById(
-                    "rechargeAmountInput"
-                )
-                .value
-        );
-
-
-    const myUid =
-        localStorage.getItem(
-            "tg_uid"
-        );
-
-
-    if(
-        !amount ||
-        amount <= 0
-    ){
-
-        showAlert(
-            "Enter a valid recharge amount."
-        );
-
-        return;
-
-    }
-
-
-    const balance =
-        Number(
-            currentUserData.balance || 0
-        );
-
-
-    /*
-       Cashback rate:
-       5% to 20%
-    */
-
-    const cashbackRate =
-        Number(
-            (
-                5 +
-                Math.random() * 15
-            ).toFixed(2)
-        );
-
-
-    const cashback =
-        Number(
-            (
-                amount *
-                cashbackRate /
-                100
-            ).toFixed(2)
-        );
-
-
-    const netUsed =
-        Number(
-            (
-                amount -
-                cashback
-            ).toFixed(2)
-        );
-
-
-    if(netUsed > balance){
-
-        showAlert(
-            "Insufficient wallet balance."
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "confirmRechargeBtn"
-        );
-
-
-    const original =
-        button.innerHTML;
-
-
-    button.disabled = true;
-
-
-    button.innerHTML =
-        `<div class="loader"></div> Processing`;
-
-
-    try{
-
-        const txnId =
-            createTransactionId();
-
-
-        await runTransaction(
-            db,
-            async transaction => {
-
-                const senderRef =
-                    doc(
-                        db,
-                        "users",
-                        myUid
-                    );
-
-
-                const targetRef =
-                    doc(
-                        db,
-                        "users",
-                        targetUid
-                    );
-
-
-                const senderSnap =
-                    await transaction.get(
-                        senderRef
-                    );
-
-
-                const targetSnap =
-                    await transaction.get(
-                        targetRef
-                    );
-
-
-                if(
-                    !senderSnap.exists()
-                ){
-
-                    throw new Error(
-                        "Sender wallet not found."
-                    );
-
-                }
-
-
-                if(
-                    !targetSnap.exists()
-                ){
-
-                    throw new Error(
-                        "Recipient wallet not found."
-                    );
-
-                }
-
-
-                const senderBalance =
-                    Number(
-                        senderSnap
-                            .data()
-                            .balance || 0
-                    );
-
-
-                if(
-                    senderBalance <
-                    netUsed
-                ){
-
-                    throw new Error(
-                        "Insufficient wallet balance."
-                    );
-
-                }
-
-
-                const targetBalance =
-                    Number(
-                        targetSnap
-                            .data()
-                            .balance || 0
-                    );
-
-
-                transaction.update(
-                    senderRef,
-                    {
-                        balance:
-                            Number(
-                                (
-                                    senderBalance -
-                                    netUsed
-                                ).toFixed(2)
-                            )
-                    }
-                );
-
-
-                transaction.update(
-                    targetRef,
-                    {
-                        balance:
-                            Number(
-                                (
-                                    targetBalance +
-                                    amount
-                                ).toFixed(2)
-                            )
-                    }
-                );
-
-            }
-        );
-
-
-        currentReceipt = {
-
-            txnId,
-
-            senderUid:
-                myUid,
-
-            targetUid,
-
-            amount,
-
-            cashback,
-
-            cashbackRate,
-
-            netUsed,
-
-            date:
-                new Date()
-                    .toLocaleString(
-                        "en-IN"
-                    )
-
+    <!-- Firebase & Functional Core Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, runTransaction, onSnapshot, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
+            authDomain: "tutogenius-1.firebaseapp.com",
+            projectId: "tutogenius-1",
+            storageBucket: "tutogenius-1.firebasestorage.app",
+            messagingSenderId: "65839146612",
+            appId: "1:65839146612:web:4e54c6ad4cea4bc5859321"
         };
 
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        saveTransactionLocally({
+        let isCreateMode = false;
+        let unsubSnapshot = null;
+        let pendingConfirmAction = null;
+        let currentUserData = {};
+        let currentReceipt = null;
+        let capturedTargetUid = "";
+        let html5QrCodeScanner = null;
+        const TARGET_ADD_MONEY_URL = "https://tutogenius.in";
 
-            type:
-                "RECHARGE",
-
-            title:
-                `Recharge ${targetUid}`,
-
-            amount:
-                netUsed,
-
-            date:
-                currentReceipt.date,
-
-            txnId
-
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            checkLoginStatus();
         });
 
-
-        closeModal(
-            "amountModal"
-        );
-
-
-        showReceipt(
-            currentReceipt
-        );
-
-
-        showAlert(
-            `Recharge successful. ${cashbackRate}% cashback earned.`
-        );
-
-
-    }catch(error){
-
-        showAlert(
-            error.message ||
-            "Recharge failed."
-        );
-
-    }finally{
-
-        button.disabled = false;
-
-        button.innerHTML =
-            original;
-
-        lucide.createIcons();
-
-    }
-
-};
-
-
-/* =========================================================
-   TRANSACTION ID
-========================================================= */
-
-function createTransactionId(){
-
-    const time =
-        Date.now()
-            .toString(36)
-            .toUpperCase();
-
-
-    const random =
-        Math.random()
-            .toString(36)
-            .substring(2,7)
-            .toUpperCase();
-
-
-    return (
-        "TG" +
-        time +
-        random
-    );
-
-}
-
-
-/* =========================================================
-   AUTO RECEIPT FILE NAME
-========================================================= */
-
-function createReceiptFilename(){
-
-    if(!currentReceipt){
-
-        return "TGWALLET_RECEIPT.png";
-
-    }
-
-
-    const date =
-        new Date();
-
-
-    const yyyy =
-        date
-            .getFullYear();
-
-
-    const mm =
-        String(
-            date.getMonth()+1
-        )
-        .padStart(2,"0");
-
-
-    const dd =
-        String(
-            date.getDate()
-        )
-        .padStart(2,"0");
-
-
-    const hh =
-        String(
-            date.getHours()
-        )
-        .padStart(2,"0");
-
-
-    const min =
-        String(
-            date.getMinutes()
-        )
-        .padStart(2,"0");
-
-
-    const sec =
-        String(
-            date.getSeconds()
-        )
-        .padStart(2,"0");
-
-
-    return (
-
-        "TGWALLET_RECEIPT_" +
-
-        currentReceipt.txnId +
-
-        "_" +
-
-        yyyy +
-        mm +
-        dd +
-
-        "_" +
-
-        hh +
-        min +
-        sec +
-
-        ".png"
-
-    );
-
-}
-
-
-/* =========================================================
-   SHOW RECEIPT
-========================================================= */
-
-function showReceipt(receipt){
-
-    document.getElementById(
-        "receiptTxn"
-    ).textContent =
-        receipt.txnId;
-
-
-    document.getElementById(
-        "receiptTarget"
-    ).textContent =
-        receipt.targetUid;
-
-
-    document.getElementById(
-        "receiptAmount"
-    ).textContent =
-        `₹${receipt.amount.toFixed(2)}`;
-
-
-    document.getElementById(
-        "receiptCashback"
-    ).textContent =
-        `₹${receipt.cashback.toFixed(2)}`;
-
-
-    document.getElementById(
-        "receiptRate"
-    ).textContent =
-        `${receipt.cashbackRate}%`;
-
-
-    document.getElementById(
-        "receiptDate"
-    ).textContent =
-        receipt.date;
-
-
-    document.getElementById(
-        "receiptNet"
-    ).textContent =
-        `₹${receipt.netUsed.toFixed(2)}`;
-
-
-    openModal(
-        "receiptModal"
-    );
-
-
-    lucide.createIcons();
-
-}
-
-
-/* =========================================================
-   CREATE RECEIPT IMAGE
-========================================================= */
-
-async function createReceiptImage(){
-
-    if(!currentReceipt){
-
-        throw new Error(
-            "Receipt not available."
-        );
-
-    }
-
-
-    const canvas =
-        document.createElement(
-            "canvas"
-        );
-
-
-    const width =
-        1080;
-
-
-    const height =
-        1450;
-
-
-    canvas.width =
-        width;
-
-    canvas.height =
-        height;
-
-
-    const ctx =
-        canvas.getContext(
-            "2d"
-        );
-
-
-    /* BACKGROUND */
-
-    ctx.fillStyle =
-        "#F5F8FF";
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    /* MAIN CARD */
-
-    ctx.fillStyle =
-        "#FFFFFF";
-
-
-    roundRect(
-        ctx,
-        45,
-        45,
-        width-90,
-        height-90,
-        42
-    );
-
-
-    ctx.fill();
-
-
-    /* HEADER */
-
-    const header =
-        ctx.createLinearGradient(
-            0,
-            0,
-            width,
-            0
-        );
-
-
-    header.addColorStop(
-        0,
-        "#155EEF"
-    );
-
-
-    header.addColorStop(
-        1,
-        "#1047B8"
-    );
-
-
-    ctx.fillStyle =
-        header;
-
-
-    roundRect(
-        ctx,
-        70,
-        70,
-        width-140,
-        230,
-        35
-    );
-
-
-    ctx.fill();
-
-
-    ctx.fillStyle =
-        "#FFFFFF";
-
-
-    ctx.font =
-        "900 48px Arial";
-
-
-    ctx.fillText(
-        "TG WALLET",
-        110,
-        145
-    );
-
-
-    ctx.font =
-        "600 25px Arial";
-
-
-    ctx.fillStyle =
-        "#DCE8FF";
-
-
-    ctx.fillText(
-        "TutoGenius Digital Wallet",
-        110,
-        190
-    );
-
-
-    ctx.font =
-        "600 19px Arial";
-
-
-    ctx.fillText(
-        "SECURE PAYMENT RECEIPT",
-        110,
-        235
-    );
-
-
-    /* SUCCESS */
-
-    ctx.fillStyle =
-        "#EAF1FF";
-
-
-    roundRect(
-        ctx,
-        90,
-        340,
-        width-180,
-        90,
-        22
-    );
-
-
-    ctx.fill();
-
-
-    ctx.fillStyle =
-        "#155EEF";
-
-
-    ctx.font =
-        "900 30px Arial";
-
-
-    ctx.textAlign =
-        "center";
-
-
-    ctx.fillText(
-        "✓ PAYMENT SUCCESSFUL",
-        width/2,
-        397
-    );
-
-
-    ctx.textAlign =
-        "left";
-
-
-    /* ROWS */
-
-    const rows = [
-
-        [
-            "Transaction ID",
-            currentReceipt.txnId
-        ],
-
-        [
-            "Sender Wallet",
-            currentReceipt.senderUid
-        ],
-
-        [
-            "Recipient Wallet",
-            currentReceipt.targetUid
-        ],
-
-        [
-            "Recharge Amount",
-            `₹${currentReceipt.amount.toFixed(2)}`
-        ],
-
-        [
-            "Cashback",
-            `₹${currentReceipt.cashback.toFixed(2)}`
-        ],
-
-        [
-            "Cashback Rate",
-            `${currentReceipt.cashbackRate}%`
-        ],
-
-        [
-            "Date & Time",
-            currentReceipt.date
-        ]
-
-    ];
-
-
-    let y =
-        505;
-
-
-    rows.forEach(
-        row => {
-
-            ctx.strokeStyle =
-                "#D7DFEC";
-
-
-            ctx.setLineDash(
-                [8,8]
-            );
-
-
-            ctx.beginPath();
-
-
-            ctx.moveTo(
-                90,
-                y+55
-            );
-
-
-            ctx.lineTo(
-                width-90,
-                y+55
-            );
-
-
-            ctx.stroke();
-
-
-            ctx.setLineDash([]);
-
-
-            ctx.fillStyle =
-                "#667085";
-
-
-            ctx.font =
-                "600 23px Arial";
-
-
-            ctx.fillText(
-                row[0],
-                95,
-                y
-            );
-
-
-            ctx.fillStyle =
-                "#101828";
-
-
-            ctx.font =
-                "900 24px Arial";
-
-
-            ctx.textAlign =
-                "right";
-
-
-            ctx.fillText(
-                row[1],
-                width-95,
-                y
-            );
-
-
-            ctx.textAlign =
-                "left";
-
-
-            y += 92;
-
-        }
-    );
-
-
-    /* NET */
-
-    ctx.fillStyle =
-        "#EAF1FF";
-
-
-    roundRect(
-        ctx,
-        85,
-        y+18,
-        width-170,
-        120,
-        25
-    );
-
-
-    ctx.fill();
-
-
-    ctx.fillStyle =
-        "#475467";
-
-
-    ctx.font =
-        "700 23px Arial";
-
-
-    ctx.fillText(
-        "NET WALLET USED",
-        115,
-        y+70
-    );
-
-
-    ctx.fillStyle =
-        "#155EEF";
-
-
-    ctx.font =
-        "900 38px Arial";
-
-
-    ctx.textAlign =
-        "right";
-
-
-    ctx.fillText(
-        `₹${currentReceipt.netUsed.toFixed(2)}`,
-        width-115,
-        y+76
-    );
-
-
-    ctx.textAlign =
-        "left";
-
-
-    /* FOOTER */
-
-    ctx.fillStyle =
-        "#98A2B3";
-
-
-    ctx.font =
-        "600 20px Arial";
-
-
-    ctx.textAlign =
-        "center";
-
-
-    ctx.fillText(
-        "Thank you for using TG Wallet",
-        width/2,
-        1305
-    );
-
-
-    ctx.font =
-        "600 17px Arial";
-
-
-    ctx.fillText(
-        "This receipt was generated electronically.",
-        width/2,
-        1340
-    );
-
-
-    ctx.font =
-        "700 16px Arial";
-
-
-    ctx.fillText(
-        "TutoGenius",
-        width/2,
-        1380
-    );
-
-
-    ctx.textAlign =
-        "left";
-
-
-    return new Promise(
-        resolve => {
-
-            canvas.toBlob(
-                blob => {
-
-                    resolve(blob);
-
-                },
-                "image/png"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ROUND RECT
-========================================================= */
-
-function roundRect(
-    ctx,
-    x,
-    y,
-    width,
-    height,
-    radius
-){
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        x+radius,
-        y
-    );
-
-    ctx.arcTo(
-        x+width,
-        y,
-        x+width,
-        y+height,
-        radius
-    );
-
-    ctx.arcTo(
-        x+width,
-        y+height,
-        x,
-        y+height,
-        radius
-    );
-
-    ctx.arcTo(
-        x,
-        y+height,
-        x,
-        y,
-        radius
-    );
-
-    ctx.arcTo(
-        x,
-        y,
-        x+width,
-        y,
-        radius
-    );
-
-    ctx.closePath();
-
-}
-
-
-/* =========================================================
-   SHARE RECEIPT IMAGE
-========================================================= */
-
-window.shareReceiptImage =
-    async function(){
-
-    try{
-
-        const blob =
-            await createReceiptImage();
-
-
-        const filename =
-            createReceiptFilename();
-
-
-        const file =
-            new File(
-                [blob],
-                filename,
-                {
-                    type:
-                        "image/png"
-                }
-            );
-
-
-        /*
-          Android/iOS:
-          Native share sheet opens.
-          User can select WhatsApp.
-        */
-
-        if(
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({
-                files:[file]
-            })
-        ){
-
-            await navigator.share({
-
-                title:
-                    "TG Wallet Receipt",
-
-                text:
-                    "TG Wallet payment receipt",
-
-                files:[
-                    file
-                ]
-
-            });
-
-
-            showAlert(
-                "Receipt image shared successfully."
-            );
-
-
-            return;
-
+        window.showAlert = function(msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast`;
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        };
+
+        window.closeModal = function(id) {
+            document.getElementById(id).classList.add('hidden');
+        };
+
+        window.showConfirmationModal = function({ icon, title, subtitle, confirmText, onConfirm }) {
+            const iconBadge = document.getElementById('confirmModalIcon');
+            iconBadge.innerHTML = `<i data-lucide="${icon || 'help-circle'}" style="width: 24px; height: 24px;"></i>`;
+            lucide.createIcons();
+            document.getElementById('confirmModalTitle').textContent = title;
+            document.getElementById('confirmModalSubtitle').textContent = subtitle;
+            const confirmBtn = document.getElementById('confirmModalBtn');
+            confirmBtn.textContent = confirmText || 'Confirm';
+            pendingConfirmAction = async () => {
+                closeModal('actionConfirmModal');
+                if (onConfirm) await onConfirm();
+            };
+            confirmBtn.onclick = pendingConfirmAction;
+            document.getElementById('actionConfirmModal').classList.remove('hidden');
+        };
+
+        function showDotLoading(btnElement) {
+            btnElement.dataset.originalText = btnElement.textContent;
+            btnElement.disabled = true;
+            btnElement.innerHTML = `<div class="dots-loader"><div></div><div></div><div></div></div>`;
         }
 
-
-        /*
-          Browser fallback
-        */
-
-        downloadBlob(
-            blob,
-            filename
-        );
-
-
-        showAlert(
-            "Image sharing is unavailable. Receipt saved automatically."
-        );
-
-
-    }catch(error){
-
-        if(
-            error.name ===
-            "AbortError"
-        ){
-
-            return;
-
+        function hideDotLoading(btnElement) {
+            if (btnElement.dataset.originalText) {
+                btnElement.textContent = btnElement.dataset.originalText;
+            }
+            btnElement.disabled = false;
         }
 
-
-        console.error(error);
-
-
-        showAlert(
-            "Unable to share receipt image."
-        );
-
-    }
-
-};
-
-
-/* =========================================================
-   DOWNLOAD RECEIPT
-========================================================= */
-
-window.downloadReceiptImage =
-    async function(){
-
-    try{
-
-        const blob =
-            await createReceiptImage();
-
-
-        const filename =
-            createReceiptFilename();
-
-
-        downloadBlob(
-            blob,
-            filename
-        );
-
-
-        showAlert(
-            `Receipt saved as ${filename}`
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        showAlert(
-            "Unable to create receipt image."
-        );
-
-    }
-
-};
-
-
-/* =========================================================
-   DOWNLOAD BLOB
-========================================================= */
-
-function downloadBlob(
-    blob,
-    filename
-){
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const a =
-        document.createElement(
-            "a"
-        );
-
-
-    a.href =
-        url;
-
-
-    a.download =
-        filename;
-
-
-    document.body.appendChild(
-        a
-    );
-
-
-    a.click();
-
-
-    a.remove();
-
-
-    setTimeout(
-        () => {
-
-            URL.revokeObjectURL(
-                url
-            );
-
-        },
-        1000
-    );
-
-}
-
-
-/* =========================================================
-   TRANSACTIONS
-========================================================= */
-
-function saveTransactionLocally(tx){
-
-    const list =
-        JSON.parse(
-            localStorage.getItem(
-                "tg_transactions"
-            ) || "[]"
-        );
-
-
-    list.unshift(tx);
-
-
-    localStorage.setItem(
-        "tg_transactions",
-        JSON.stringify(
-            list.slice(
-                0,
-                50
-            )
-        )
-    );
-
-
-    renderTransactions();
-
-}
-
-
-function renderTransactions(){
-
-    const container =
-        document.getElementById(
-            "txList"
-        );
-
-
-    const list =
-        JSON.parse(
-            localStorage.getItem(
-                "tg_transactions"
-            ) || "[]"
-        );
-
-
-    if(!list.length){
-
-        container.innerHTML =
-            `
-            <div class="no-tx">
-                No transactions yet
-            </div>
-            `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        list
-        .map(
-            tx => {
-
-                return `
-
-                <div class="tx">
-
-                    <div class="tx-icon">
-
-                        <i
-                            data-lucide="${
-                                tx.type === "REDEEM"
-                                    ? "gift"
-                                    : "send"
-                            }"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="tx-info">
-
-                        <div class="tx-name">
-
-                            ${escapeHTML(
-                                tx.title
-                            )}
-
+        function saveTransactionLocally(tx) {
+            const existing = JSON.parse(localStorage.getItem('tg_transactions') || '[]');
+            existing.unshift(tx);
+            localStorage.setItem('tg_transactions', JSON.stringify(existing));
+            renderTransactions();
+        }
+
+        function renderTransactions() {
+            const txList = document.getElementById('txList');
+            const existing = JSON.parse(localStorage.getItem('tg_transactions') || '[]');
+            if (existing.length === 0) {
+                txList.innerHTML = `<div class="no-tx">No transactions saved</div>`;
+                return;
+            }
+            txList.innerHTML = existing.map((tx, idx) => `
+                <div class="tx-item" onclick="showTxDetails(${idx})">
+                    <div class="tx-left">
+                        <div class="tx-icon ${tx.type === 'REDEEM' || tx.type === 'CASHBACK' ? 'gift' : ''}">
+                            <i data-lucide="${tx.type === 'REDEEM' || tx.type === 'CASHBACK' ? 'gift' : 'arrow-up-right'}" style="width: 18px; height: 18px;"></i>
                         </div>
-
-
-                        <div class="tx-date">
-
-                            ${escapeHTML(
-                                tx.date
-                            )}
-
+                        <div class="tx-details">
+                            <div class="tx-title">${tx.title}</div>
+                            <div class="tx-date">${tx.date}</div>
                         </div>
-
                     </div>
-
-
-                    <div class="tx-amount">
-
-                        ${
-                            tx.type === "REDEEM"
-                                ? "+"
-                                : "-"
-                        }
-
-                        ₹${Number(
-                            tx.amount
-                        ).toFixed(2)}
-
+                    <div class="tx-amount ${tx.type === 'REDEEM' || tx.type === 'CASHBACK' ? 'positive' : ''}">
+                        ${tx.type === 'REDEEM' || tx.type === 'CASHBACK' ? '+' : '-'}₹${tx.amount.toFixed(2)}
                     </div>
-
                 </div>
+            `).join('');
+            lucide.createIcons();
+        }
 
+        window.showTxDetails = function(idx) {
+            const existing = JSON.parse(localStorage.getItem('tg_transactions') || '[]');
+            const tx = existing[idx];
+            if (!tx) return;
+
+            document.getElementById('txDetailTitle').textContent = tx.title || '-';
+            document.getElementById('txDetailType').textContent = tx.type || 'RECHARGE';
+            document.getElementById('txDetailAmount').textContent = `₹${(tx.amount || 0).toFixed(2)}`;
+            document.getElementById('txDetailCashback').textContent = `₹${(tx.cashback || 0).toFixed(2)}`;
+            document.getElementById('txDetailDate').textContent = tx.date || '-';
+
+            const iconBadge = document.getElementById('txDetailIcon');
+            if (tx.type === 'REDEEM' || tx.type === 'CASHBACK') {
+                iconBadge.style.background = 'var(--green-light)';
+                iconBadge.style.color = 'var(--green-btn)';
+                iconBadge.innerHTML = `<i data-lucide="gift" style="width: 28px; height: 28px;"></i>`;
+            } else {
+                iconBadge.style.background = '#eff6ff';
+                iconBadge.style.color = 'var(--blue-primary)';
+                iconBadge.innerHTML = `<i data-lucide="arrow-up-right" style="width: 28px; height: 28px;"></i>`;
+            }
+            lucide.createIcons();
+            document.getElementById('txDetailModal').classList.remove('hidden');
+        };
+
+        window.clearTransactions = function() {
+            localStorage.removeItem('tg_transactions');
+            renderTransactions();
+            showAlert("Transaction history cleared");
+        };
+
+        async function checkLoginStatus() {
+            const savedUid = localStorage.getItem('tg_uid');
+            const savedKey = localStorage.getItem('tg_key');
+            if (savedUid && savedKey) {
+                try {
+                    const userSnap = await getDoc(doc(db, "users", savedUid));
+                    if (userSnap.exists() && userSnap.data().key === savedKey) {
+                        document.getElementById('initialLoaderView').classList.add('hidden');
+                        loadDashboard(savedUid, savedKey);
+                        return;
+                    }
+                } catch (e) {
+                    console.error("Session sync failed", e);
+                }
+            }
+            document.getElementById('initialLoaderView').classList.add('hidden');
+            document.getElementById('authView').classList.remove('hidden');
+            updateNotification("Please login or create an account to start.", "red");
+        }
+
+        function updateNotification(msg, color = "green") {
+            const banner = document.getElementById('notifBanner');
+            const icon = document.getElementById('notifIcon');
+            const text = document.getElementById('notifText');
+            text.textContent = msg;
+            if (color === "green") {
+                banner.className = "notification-banner green";
+                icon.style.color = "var(--green-btn)";
+            } else {
+                banner.className = "notification-banner";
+                icon.style.color = "var(--red-btn)";
+            }
+        }
+
+        window.toggleAuthMode = function() {
+            isCreateMode = !isCreateMode;
+            const title = document.getElementById('authTitle');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const toggleBtn = document.getElementById('authToggleBtn');
+            const uidInput = document.getElementById('uidInput');
+            const regFields = document.getElementById('registerFields');
+            if (isCreateMode) {
+                title.textContent = "Create Account";
+                submitBtn.textContent = "Register";
+                toggleBtn.textContent = "Already have an account? Login";
+                uidInput.placeholder = "Auto-Generated U ID";
+                uidInput.disabled = true;
+                uidInput.value = "";
+                regFields.classList.remove('hidden');
+            } else {
+                title.textContent = "Wallet Login";
+                submitBtn.textContent = "Login";
+                toggleBtn.textContent = "Create New Account";
+                uidInput.placeholder = "Enter Your U ID";
+                uidInput.disabled = false;
+                regFields.classList.add('hidden');
+            }
+        };
+
+        window.confirmAuthAction = function() {
+            const key = document.getElementById('keyInput').value.trim();
+            if (!/^\d{6}$/.test(key)) {
+                showAlert("Key must be exactly 6 numeric digits!");
+                return;
+            }
+            const actionText = isCreateMode ? 'Registration' : 'Login';
+            showConfirmationModal({
+                icon: isCreateMode ? 'user-check' : 'log-in',
+                title: `Confirm ${actionText}`,
+                subtitle: `Are you sure you want to proceed with ${actionText.toLowerCase()}?`,
+                confirmText: isCreateMode ? 'Register' : 'Login',
+                onConfirm: () => handleAuth()
+            });
+        };
+
+        async function handleAuth() {
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const key = document.getElementById('keyInput').value.trim();
+            showDotLoading(submitBtn);
+            if (isCreateMode) {
+                try {
+                    const name = document.getElementById('regName').value.trim();
+                    const phone = document.getElementById('regPhone').value.trim();
+                    const userClass = document.getElementById('regClass').value.trim();
+                    const newUid = await runTransaction(db, async (transaction) => {
+                        const metaRef = doc(db, "metadata", "users");
+                        const metaSnap = await transaction.get(metaRef);
+                        const nextId = (metaSnap.exists() ? (metaSnap.data().lastId || 0) : 0) + 1;
+                        const formattedId = "TG2026" + String(nextId).padStart(6, "0");
+                        transaction.set(metaRef, { lastId: nextId }, { merge: true });
+                        transaction.set(doc(db, "users", formattedId), { name: name, phone: phone, userClass: userClass, key: key, balance: 0.00 });
+                        return formattedId;
+                    });
+                    showAlert(`Account Created! ID: ${newUid}`);
+                    localStorage.setItem('tg_uid', newUid);
+                    localStorage.setItem('tg_key', key);
+                    loadDashboard(newUid, key);
+                } catch (e) {
+                    showAlert("Registration failed: " + e.message);
+                } finally {
+                    hideDotLoading(submitBtn);
+                }
+            } else {
+                const uid = document.getElementById('uidInput').value.trim().toUpperCase();
+                try {
+                    const userSnap = await getDoc(doc(db, "users", uid));
+                    if (userSnap.exists() && userSnap.data().key === key) {
+                        showAlert("Login successful!");
+                        localStorage.setItem('tg_uid', uid);
+                        localStorage.setItem('tg_key', key);
+                        loadDashboard(uid, key);
+                    } else {
+                        showAlert("Invalid ID or Secret Key!");
+                    }
+                } catch (e) {
+                    showAlert("Login error: " + e.message);
+                } finally {
+                    hideDotLoading(submitBtn);
+                }
+            }
+        }
+
+        function loadDashboard(uid, key) {
+            document.getElementById('authView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+            document.getElementById('dashUid').textContent = uid;
+            document.getElementById('dashKey').textContent = key;
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), { text: `UID:${uid}`, width: 72, height: 72 });
+            renderTransactions();
+
+            if (unsubSnapshot) unsubSnapshot();
+            unsubSnapshot = onSnapshot(doc(db, "users", uid), (snap) => {
+                if (snap.exists()) {
+                    const data = snap.data();
+                    currentUserData = data;
+                    const bal = Number(data.balance || 0);
+                    document.getElementById('dashBalance').textContent = bal.toFixed(2);
+                    document.getElementById('dashName').textContent = data.name || "User";
+                    document.getElementById('dashPhone').textContent = data.phone || "-";
+                    document.getElementById('dashClass').textContent = data.userClass || "-";
+                    
+                    const rechargeCard = document.getElementById('rechargeCard');
+                    const lockIcon = document.getElementById('rechargeLockIcon');
+                    if (bal < 10) {
+                        rechargeCard.classList.add('disabled');
+                        lockIcon.classList.remove('hidden');
+                        updateNotification("Balance below ₹10. Recharge option is locked!", "red");
+                    } else {
+                        rechargeCard.classList.remove('disabled');
+                        lockIcon.classList.add('hidden');
+                        updateNotification("Wallet active! Get up to 20% cashback on recharges.", "green");
+                    }
+                }
+            });
+        }
+
+        window.triggerAddMoney = function() {
+            showConfirmationModal({
+                icon: 'external-link',
+                title: 'Add Money to Wallet',
+                subtitle: 'You will be redirected to the secure portal.',
+                confirmText: 'Proceed to Pay',
+                onConfirm: () => { window.open(TARGET_ADD_MONEY_URL, '_blank'); }
+            });
+        };
+
+        window.openRechargeOptions = function() {
+            const currentBal = Number(currentUserData.balance || 0);
+            if (currentBal < 10) {
+                showConfirmationModal({
+                    icon: 'alert-triangle',
+                    title: 'Recharge Locked',
+                    subtitle: 'Minimum balance of ₹10 is required to recharge other IDs.',
+                    confirmText: 'Add Money Now',
+                    onConfirm: () => triggerAddMoney()
+                });
+                return;
+            }
+            document.getElementById('rechargeBottomSheet').classList.remove('hidden');
+        };
+
+        window.selectRechargeMode = function(mode) {
+            closeModal('rechargeBottomSheet');
+            const container = document.getElementById('rechargeModeContainer');
+            const titleEl = document.getElementById('rechargeFormTitle');
+            capturedTargetUid = "";
+            
+            if (mode === 'uid') {
+                titleEl.textContent = "Enter U ID & Amount";
+                container.innerHTML = `
+                    <div class="input-group" style="margin-bottom:0;">
+                        <input type="text" id="targetUidInput" class="custom-input" placeholder="Enter Target U ID" style="text-transform: uppercase;">
+                    </div>
                 `;
-
+            } else if (mode === 'scan') {
+                titleEl.textContent = "Scan Target QR Code";
+                container.innerHTML = `
+                    <div class="scanner-wrapper">
+                        <div class="scanner-laser"></div>
+                        <div id="qr-reader"></div>
+                    </div>
+                    <div style="font-size:12px; text-align:center; color:var(--green-btn); font-weight:700; margin-top:4px;" id="scannerStatusText">Align QR code inside camera frame</div>
+                `;
+                
+                setTimeout(() => {
+                    stopScanner();
+                    html5QrCodeScanner = new Html5Qrcode("qr-reader");
+                    html5QrCodeScanner.start(
+                        { facingMode: "environment" },
+                        { fps: 10, qrbox: { width: 180, height: 180 } },
+                        (decodedText) => {
+                            let parsedUid = decodedText.trim();
+                            if (parsedUid.startsWith("UID:")) {
+                                parsedUid = parsedUid.replace("UID:", "");
+                            }
+                            capturedTargetUid = parsedUid.toUpperCase();
+                            const statusText = document.getElementById('scannerStatusText');
+                            if (statusText) {
+                                statusText.textContent = `Scanned ID: ${capturedTargetUid}`;
+                            }
+                            showAlert(`Captured ID: ${capturedTargetUid}`);
+                            stopScanner();
+                        },
+                        () => {}
+                    ).catch((err) => {
+                        const statusText = document.getElementById('scannerStatusText');
+                        if (statusText) {
+                            statusText.style.color = "var(--red-btn)";
+                            statusText.textContent = "Camera access denied/unavailable.";
+                        }
+                    });
+                }, 100);
             }
-        )
-        .join("");
+            document.getElementById('rechargeAmountInput').value = "";
+            document.getElementById('rechargeFormSheet').classList.remove('hidden');
+        };
 
+        function stopScanner() {
+            if (html5QrCodeScanner) {
+                html5QrCodeScanner.stop().catch(() => {}).then(() => {
+                    html5QrCodeScanner.clear();
+                    html5QrCodeScanner = null;
+                });
+            }
+        }
 
-    lucide.createIcons();
+        window.closeRechargeForm = function() {
+            stopScanner();
+            closeModal('rechargeFormSheet');
+        };
 
-}
-
-
-window.clearTransactions =
-    function(){
-
-        confirmAction(
-
-            "Clear History?",
-
-            "Remove your locally saved transaction history from this device?",
-
-            () => {
-
-                localStorage.removeItem(
-                    "tg_transactions"
-                );
-
-
-                renderTransactions();
-
-
-                showAlert(
-                    "Transaction history cleared."
-                );
-
+        window.processRecharge = async function() {
+            let targetUid = "";
+            const uidInputField = document.getElementById('targetUidInput');
+            if (uidInputField) {
+                targetUid = uidInputField.value.trim().toUpperCase();
+            } else {
+                targetUid = capturedTargetUid;
             }
 
-        );
+            const amount = Number(document.getElementById('rechargeAmountInput').value);
+            const myUid = localStorage.getItem('tg_uid');
 
-    };
-
-
-function escapeHTML(value){
-
-    return String(value)
-        .replace(
-            /[&<>"']/g,
-            char => ({
-
-                "&":
-                    "&amp;",
-
-                "<":
-                    "&lt;",
-
-                ">":
-                    "&gt;",
-
-                '"':
-                    "&quot;",
-
-                "'":
-                    "&#039;"
-
-            })[char]
-        );
-
-}
-
-
-/* =========================================================
-   CHANGE KEY
-========================================================= */
-
-window.openChangeKeyModal =
-    function(){
-
-        document.getElementById(
-            "newKeyInput"
-        ).value = "";
-
-
-        openModal(
-            "changeKeyModal"
-        );
-
-    };
-
-
-window.submitNewKey =
-    async function(){
-
-    const newKey =
-        document
-            .getElementById(
-                "newKeyInput"
-            )
-            .value
-            .trim();
-
-
-    if(
-        !/^\d{6}$/.test(
-            newKey
-        )
-    ){
-
-        showAlert(
-            "New key must contain 6 digits."
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "updateKeyBtn"
-        );
-
-
-    const original =
-        button.innerHTML;
-
-
-    button.disabled = true;
-
-
-    button.innerHTML =
-        `<div class="loader"></div>`;
-
-
-    try{
-
-        const uid =
-            localStorage.getItem(
-                "tg_uid"
-            );
-
-
-        await updateDoc(
-            doc(
-                db,
-                "users",
-                uid
-            ),
-            {
-                key:newKey
+            if (targetUid === myUid) {
+                showAlert("You cannot recharge your own ID!");
+                return;
             }
-        );
-
-
-        localStorage.setItem(
-            "tg_key",
-            newKey
-        );
-
-
-        document.getElementById(
-            "dashKey"
-        ).textContent =
-            newKey;
-
-
-        closeModal(
-            "changeKeyModal"
-        );
-
-
-        showAlert(
-            "Secret key updated successfully."
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        showAlert(
-            "Unable to update key."
-        );
-
-
-    }finally{
-
-        button.disabled = false;
-
-        button.innerHTML =
-            original;
-
-        lucide.createIcons();
-
-    }
-
-};
-
-
-/* =========================================================
-   GIFT
-========================================================= */
-
-window.openGiftModal =
-    function(){
-
-        document.getElementById(
-            "giftCodeInput"
-        ).value = "";
-
-
-        openModal(
-            "giftModal"
-        );
-
-    };
-
-
-window.submitGiftCode =
-    async function(){
-
-    const code =
-        document
-            .getElementById(
-                "giftCodeInput"
-            )
-            .value
-            .trim()
-            .toUpperCase();
-
-
-    if(!code){
-
-        showAlert(
-            "Enter a gift code."
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "redeemBtn"
-        );
-
-
-    const original =
-        button.innerHTML;
-
-
-    button.disabled = true;
-
-
-    button.innerHTML =
-        `<div class="loader"></div>`;
-
-
-    const uid =
-        localStorage.getItem(
-            "tg_uid"
-        );
-
-
-    try{
-
-        let amount = 0;
-
-
-        await runTransaction(
-            db,
-            async transaction => {
-
-                const codeRef =
-                    doc(
-                        db,
-                        "gift_codes",
-                        code
-                    );
-
-
-                const userRef =
-                    doc(
-                        db,
-                        "users",
-                        uid
-                    );
-
-
-                const codeSnap =
-                    await transaction.get(
-                        codeRef
-                    );
-
-
-                const userSnap =
-                    await transaction.get(
-                        userRef
-                    );
-
-
-                if(
-                    !codeSnap.exists()
-                ){
-
-                    throw new Error(
-                        "Invalid gift code."
-                    );
-
-                }
-
-
-                const codeData =
-                    codeSnap.data();
-
-
-                if(
-                    codeData.active === false
-                ){
-
-                    throw new Error(
-                        "Gift code is expired."
-                    );
-
-                }
-
-
-                const usedBy =
-                    codeData.usedBy || [];
-
-
-                if(
-                    usedBy.includes(uid)
-                ){
-
-                    throw new Error(
-                        "You have already used this code."
-                    );
-
-                }
-
-
-                amount =
-                    Number(
-                        codeData.amount || 0
-                    );
-
-
-                const balance =
-                    Number(
-                        userSnap
-                            .data()
-                            .balance || 0
-                    );
-
-
-                transaction.update(
-                    userRef,
-                    {
-                        balance:
-                            balance +
-                            amount
+            if (!targetUid || amount <= 0) {
+                showAlert("Enter valid Target ID and Amount");
+                return;
+            }
+
+            const currentBal = Number(currentUserData.balance || 0);
+            if (amount > currentBal) {
+                showAlert("Insufficient wallet balance!");
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitRechargeBtn');
+            showDotLoading(submitBtn);
+
+            try {
+                const randomPercentage = (Math.floor(Math.random() * 16) + 5) / 100;
+                const cashback = Number((amount * randomPercentage).toFixed(2));
+
+                await runTransaction(db, async (transaction) => {
+                    const targetRef = doc(db, "users", targetUid);
+                    const myRef = doc(db, "users", myUid);
+                    const targetSnap = await transaction.get(targetRef);
+                    if (!targetSnap.exists()) {
+                        throw new Error("Target U ID does not exist!");
                     }
-                );
-
-
-                transaction.update(
-                    codeRef,
-                    {
-                        usedBy:
-                            arrayUnion(
-                                uid
-                            )
+                    const mySnap = await transaction.get(myRef);
+                    const myBal = Number(mySnap.data().balance || 0);
+                    if (myBal < amount) {
+                        throw new Error("Insufficient balance for transaction!");
                     }
-                );
+                    const targetBal = Number(targetSnap.data().balance || 0);
+                    transaction.update(targetRef, { balance: targetBal + amount });
+                    transaction.update(myRef, { balance: myBal - amount });
+                });
 
+                closeRechargeForm();
+                currentReceipt = {
+                    targetUid: targetUid,
+                    amount: amount,
+                    cashback: cashback,
+                    percentage: Math.round(randomPercentage * 100),
+                    netUsed: amount,
+                    date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                };
+
+                saveTransactionLocally({
+                    type: 'RECHARGE',
+                    title: `Recharge to ${targetUid}`,
+                    amount: amount,
+                    cashback: cashback,
+                    date: currentReceipt.date
+                });
+
+                document.getElementById('billTargetId').textContent = targetUid;
+                document.getElementById('billAmount').textContent = `₹${amount.toFixed(2)}`;
+                document.getElementById('billCashback').textContent = `₹${cashback.toFixed(2)} (${currentReceipt.percentage}%)`;
+                document.getElementById('billNetUsed').textContent = `₹${amount.toFixed(2)}`;
+                document.getElementById('billModal').classList.remove('hidden');
+                showAlert("Recharge completed successfully!");
+
+                setTimeout(async () => {
+                    try {
+                        await runTransaction(db, async (transaction) => {
+                            const myRef = doc(db, "users", myUid);
+                            const mySnap = await transaction.get(myRef);
+                            const myBal = Number(mySnap.data().balance || 0);
+                            transaction.update(myRef, { balance: myBal + cashback });
+                        });
+
+                        saveTransactionLocally({
+                            type: 'CASHBACK',
+                            title: `Cashback from ${targetUid}`,
+                            amount: cashback,
+                            cashback: cashback,
+                            date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                        });
+
+                        document.getElementById('cashbackModalAmount').textContent = `₹${cashback.toFixed(2)}`;
+                        document.getElementById('cashbackModal').classList.remove('hidden');
+                    } catch (e) {
+                        console.error("Cashback credit failed", e);
+                    }
+                }, 3000);
+
+            } catch (e) {
+                showAlert(e.message || "Recharge failed");
+            } finally {
+                hideDotLoading(submitBtn);
             }
-        );
+        };
 
+        window.shareBillOnWhatsApp = function() {
+            if (!currentReceipt) return;
+            const text = `TG WALLET RECHARGE RECEIPT\n` +
+                `----------------------------\n` +
+                `Target ID: ${currentReceipt.targetUid}\n` +
+                `Amount Recharged: ₹${currentReceipt.amount}\n` +
+                `Cashback Earned: ₹${currentReceipt.cashback} (${currentReceipt.percentage}%)\n` +
+                `Net Used: ₹${currentReceipt.netUsed}\n` +
+                `Date: ${currentReceipt.date}\n` +
+                `----------------------------\n` +
+                `Status: SUCCESSFUL`;
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        };
 
-        saveTransactionLocally({
+        window.openChangeKeyModal = function() {
+            document.getElementById('newKeyInput').value = "";
+            document.getElementById('changeKeyModal').classList.remove('hidden');
+        };
 
-            type:
-                "REDEEM",
+        window.submitNewKey = async function() {
+            const newKey = document.getElementById('newKeyInput').value.trim();
+            if (!/^\d{6}$/.test(newKey)) {
+                showAlert("Key must be 6 digits!");
+                return;
+            }
+            const btn = document.getElementById('updateKeyBtn');
+            showDotLoading(btn);
+            try {
+                await updateDoc(doc(db, "users", localStorage.getItem('tg_uid')), { key: newKey });
+                localStorage.setItem('tg_key', newKey);
+                document.getElementById('dashKey').textContent = newKey;
+                closeModal('changeKeyModal');
+                showAlert("Secret key updated!");
+            } catch (e) {
+                showAlert("Failed to change key");
+            } finally {
+                hideDotLoading(btn);
+            }
+        };
 
-            title:
-                `Gift Code ${code}`,
+        window.openGiftModal = function() {
+            document.getElementById('giftCodeInput').value = "";
+            document.getElementById('giftModal').classList.remove('hidden');
+        };
 
-            amount,
+        window.submitGiftCode = async function() {
+            const codeInput = document.getElementById('giftCodeInput').value.trim().toUpperCase();
+            if (!codeInput) return;
+            const btn = document.getElementById('redeemBtn');
+            showDotLoading(btn);
+            const uid = localStorage.getItem('tg_uid');
+            try {
+                let redeemedAmount = 0;
+                await runTransaction(db, async (transaction) => {
+                    const codeRef = doc(db, "gift_codes", codeInput);
+                    const codeSnap = await transaction.get(codeRef);
+                    if (!codeSnap.exists() || codeSnap.data().active === false) throw new Error("Invalid/Expired Code!");
+                    const usedBy = codeSnap.data().usedBy || [];
+                    if (usedBy.includes(uid)) throw new Error("Code already redeemed!");
+                    redeemedAmount = Number(codeSnap.data().amount || 0);
+                    const userRef = doc(db, "users", uid);
+                    const userSnap = await transaction.get(userRef);
+                    transaction.update(userRef, { balance: Number(userSnap.data().balance || 0) + redeemedAmount });
+                    transaction.update(codeRef, { usedBy: arrayUnion(uid) });
+                });
 
-            date:
-                new Date()
-                    .toLocaleString(
-                        "en-IN"
-                    )
+                saveTransactionLocally({
+                    type: 'REDEEM',
+                    title: `Redeemed ${codeInput}`,
+                    amount: redeemedAmount,
+                    cashback: 0,
+                    date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                });
 
-        });
+                closeModal('giftModal');
+                showAlert("Code Redeemed!");
+            } catch (e) {
+                showAlert(e.message);
+            } finally {
+                hideDotLoading(btn);
+            }
+        };
 
-
-        closeModal(
-            "giftModal"
-        );
-
-
-        showAlert(
-            `₹${amount.toFixed(2)} added successfully.`
-        );
-
-
-    }catch(error){
-
-        showAlert(
-            error.message ||
-            "Redeem failed."
-        );
-
-    }finally{
-
-        button.disabled = false;
-
-        button.innerHTML =
-            original;
-
-        lucide.createIcons();
-
-    }
-
-};
-
-
-/* =========================================================
-   BACK
-========================================================= */
-
-window.goBack =
-    function(){
-
-        if(
-            window.history.length > 1
-        ){
-
+        window.goBack = function() {
             window.history.back();
-
-        }
-
-    };
-
-
-/* =========================================================
-   CLEANUP
-========================================================= */
-
-window.addEventListener(
-    "beforeunload",
-    async () => {
-
-        if(
-            scanner &&
-            scannerRunning
-        ){
-
-            try{
-
-                await scanner.stop();
-
-            }catch(e){}
-
-        }
-
-    }
-);
-
-</script>
-
+        };
+    </script>
 </body>
 </html>
