@@ -1,169 +1,77 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TG Wallet - Smart UI</title>
-    <!-- QR Code Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- Lucide Icons Library -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            transition: background 0.3s, color 0.3s, border-color 0.3s;
-            -webkit-tap-highlight-color: transparent !important;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>TutoGenius App</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
-        a, span, p, h1, h2, h3, h4, h5, h6, div, button, input, select {
-            -webkit-tap-highlight-color: transparent !important;
-            text-decoration: none;
-        }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+html,body{width:100%;height:100%}
+body{
+  background:#f1f5f9;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+input,select{-webkit-user-select:text;user-select:text}
 
-        input, select {
-            -webkit-user-select: auto !important;
-            -moz-user-select: auto !important;
-            -ms-user-select: auto !important;
-            user-select: auto !important;
-        }
+:root{
+  --primary:#2563eb;
+  --primary-dark:#1e3a8a;
+  --text:#0f172a;
+  --sub:#64748b;
+  --bg:#fff;
+  --input:#f1f5f9;
+  --border:#C9CDFF;
+  --danger:#ef4444;
+  --success:#16a34a;
+}
 
-        :root { 
-            --sub: #64748b;
-            --primary: #2563eb;
-            --danger: #ef4444;
-            --ok: #22c55e;
-            --card: #fff;
-            --border: #C9CDFF;
-            --bg: #fff;
-            --text: #0f172a;
-            --primary-dark: #1e3a8a;
-            --input-bg: #f1f5f9;
-        }
+/* ================= LOADING ================= */
+#loadingScreen{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+  transition:.5s;
+}
+.loading-bar{
+  width:150px;
+  height:4px;
+  border-radius:10px;
+  background:#e5e7eb;
+  overflow:hidden;
+}
+.loading-fill{
+  width:60%;
+  height:100%;
+  background:var(--primary);
+  animation:load 1.2s infinite;
+}
+@keyframes load{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(260%)}
+}
 
-        body {
-            background-color: transparent;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* --- WHITE LOADING SCREEN & ANIMATIONS --- */
-        #loadingScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .animatic-icon-box {
-            position: relative;
-            width: 90px;
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-        }
-
-        .animatic-icon-box img {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-            border-radius: 18px;
-            z-index: 2;
-            animation: floatBounce 2s ease-in-out infinite;
-        }
-
-        .pulse-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(37, 99, 235, 0.15);
-            animation: pulseRing 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-            z-index: 1;
-        }
-
-        .rgb-text {
-            font-size: 20px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bfd, #7a00ff, #ff00c8, #ff0000);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: rainbowGradient 4s linear infinite, fadeInUp 0.8s ease-out forwards;
-            margin-bottom: 12px;
-        }
-
-        .loading-bar-container {
-            width: 160px;
-            height: 4px;
-            background-color: #f1f5f9;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            margin-top: 10px;
-        }
-
-        .loading-bar-fill {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #3b82f6);
-            border-radius: 10px;
-            animation: loadingProgress 1.8s ease-in-out infinite;
-            transform-origin: left;
-        }
-
-        @keyframes rainbowGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes floatBounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-8px) scale(1.03); }
-        }
-
-        @keyframes pulseRing {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-
-        @keyframes loadingProgress {
-            0% { transform: translateX(-100%); }
-            50% { transform: translateX(0%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* APPLICATION CONTAINER MAIN */
+/* ================= APP ================= */
+  /* APPLICATION CONTAINER MAIN */
         .app-container {
             position: fixed;
             top: 0;
@@ -171,7 +79,7 @@
             flex-direction: column;
             bottom: 0;
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             overflow-y: auto;
             background: var(--bg);
             scrollbar-width: none;
@@ -181,7 +89,7 @@
         }
 
         .app-container.logged-in {
-            top: 55px;
+            top: 48px;
             bottom: 65px;
         }
 
@@ -189,541 +97,344 @@
             display: none;
         }
 
-        /* SMART BLUE HEADER */
-        .header {
-            position: fixed;
+/* ================= HEADER ================= */
+.header{
+  position: fixed;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-            max-width: 480px;
-            height: 55px;
+            max-width: 500px;
+            height: 50px;
             background: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
-        }
+       }
+.header-logo{
+  height:35px;
+  width:auto;
+  border-radius:9px;
+  object-fit:contain;
+}
+.header-notification{
+  position:absolute;
+  right:13px;
+  top:9px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:12px;
+  
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.header-notification:active{transform:scale(.96)}
+.header-notification svg{
+  width:21px;
+  height:21px;
+}
+.notification-dot{
+  position:absolute;
+  right:7px;
+  top:6px;
+  width:8px;
+  height:8px;
+  background:#ef4444;
+  border:2px solid var(--primary);
+  border-radius:50%;
+}
 
-        .header img {
-            height: 35px;
-            object-fit: contain;
-            border-radius: 8px;
-        }
+/* ================= GENERAL ================= */
+.hidden{display:none!important}
+.view{min-height:100%}
 
-        .view {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
+/* ================= AUTH WELCOME ================= */
+.auth-welcome-view{
+  min-height:100vh;
+  padding:30px 24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:#fff;
+}
+.auth-welcome-hero{
+  width:100px;
+  height:100px;
+  border-radius:30px;
+  background:#eff6ff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:20px;
+  box-shadow:0 15px 35px rgba(37,99,235,.12);
+}
+.auth-welcome-hero img{
+  width:76px;
+  height:76px;
+  object-fit:contain;
+}
+.welcome-title{
+  color:var(--primary-dark);
+  font-size:27px;
+  font-weight:850;
+}
+.welcome-sub{
+  color:var(--sub);
+  font-size:14px;
+  margin-top:6px;
+}
+.auth-welcome-actions{
+  width:100%;
+  margin-top:32px;
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+}
+.btn-welcome-primary,
+.btn-welcome-secondary{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  font-size:15px;
+  font-weight:750;
+}
+.btn-welcome-primary{
+  color:#fff;
+  background:var(--primary);
+  border:0;
+  box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+.btn-welcome-secondary{
+  color:var(--primary);
+  background:#f8fafc;
+  border:1px solid var(--border);
+}
 
-        .hidden {
-            display: none !important;
-        }
+/* ================= DASHBOARD ================= */
+.dashboard-view{background:#fff}
 
-        /* --- AUTH ENTRY SCREEN --- */
-        .auth-welcome-view {
-            background-color: #ffffff;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            height: 100%;
-        }
+.top-card-section{
+  background:var(--primary);
+  padding:20px 20px 45px;
+  border-radius:0 0 32px 32px;
+  box-shadow:0 5px 20px rgba(37,99,235,.16);
+}
+.dash-header-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.dash-profile-img{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#fff;
+  border:2px solid rgba(255,255,255,.5);
+}
+.dash-greeting-box{
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+}
+.greeting-text{
+  font-size:12px;
+  font-weight:600;
+  opacity:.9;
+}
+.dash-user-name{
+  font-size:19px;
+  font-weight:800;
+  margin-top:1px;
+}
+.study-tip-text{
+  font-size:10px;
+  opacity:.8;
+  margin-top:2px;
+}
 
-        .auth-welcome-hero {
-            width: 100px;
-            height: 100px;
-            background: #eff6ff;
-            color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-        }
-
-        .auth-welcome-actions {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 32px;
-        }
-
-        .btn-welcome-primary {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-welcome-secondary {
-            width: 100%;
-            background-color: var(--input-bg);
-            color: var(--primary);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        /* --- AUTH VIEWS IN BOTTOM SHEET --- */
-        .auth-view {
-            background-color: #ffffff;
-            padding: 12px 4px;
-            width: 100%;
-            text-align: left;
-        }
-
-        .auth-header-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--primary-dark);
-            margin-bottom: 4px;
-        }
-
-        .auth-subtitle {
-            font-size: 13px;
-            color: var(--sub);
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .avatar-upload-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .avatar-upload-circle {
-            position: relative;
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background-color: var(--input-bg);
-            border: 2px dashed var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            overflow: hidden;
-        }
-
-        .avatar-upload-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .form-input-wrapper {
-            position: relative;
-            width: 100%;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-        }
-
-        .form-input-wrapper i.left-icon {
-            position: absolute;
-            left: 16px;
-            color: var(--sub);
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-        }
-
-        .form-input-wrapper i.right-icon {
-            position: absolute;
-            right: 16px;
-            color: var(--sub);
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .ui-input {
-            width: 100%;
-            background-color: var(--input-bg);
-            border: 1.5px solid transparent;
-            border-radius: 14px;
-            padding: 14px 18px;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .ui-input:focus { border-color: var(--primary); background: #fff; }
-
-        .ui-input.has-left-icon { padding-left: 48px; }
-        .ui-input.has-right-icon { padding-right: 48px; }
-
-        .ui-input::placeholder { color: #94a3b8; font-weight: 500; }
-
-        .ui-select {
-            appearance: none;
-            cursor: pointer;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px top 50%;
-            background-size: 12px auto;
-        }
-
-        .forgot-link {
-            display: block;
-            text-align: right;
-            color: var(--primary);
-            font-size: 13px;
-            font-weight: 600;
-            margin-top: -4px;
-            margin-bottom: 16px;
-            cursor: pointer;
-        }
-
-        .btn-auth-submit {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 50px;
-        }
-
-        .auth-switch-text {
-            text-align: center;
-            margin-top: 14px;
-            font-size: 13px;
-            color: var(--sub);
-            font-weight: 600;
-        }
-        .auth-switch-text span {
-            color: var(--primary);
-            cursor: pointer;
-            font-weight: 700;
-        }
-
-        /* --- DASHBOARD VIEW SMART DESIGN --- */
-        .dashboard-view {
-            padding: 0;
-            background-color: var(--bg);
-        }
-
-        .top-card-section {
-            background: var(--primary);
-            padding: 20px 20px 45px 20px;
-            border-bottom-left-radius: 32px;
-            border-bottom-right-radius: 32px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
-        }
-
-        .dash-header-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .dash-profile-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.4);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .dash-greeting-box {
-            display: flex;
-            flex-direction: column;
-            color: #ffffff;
-        }
-
-        .greeting-text {
-            font-size: 13px;
-            font-weight: 600;
-            opacity: 0.95;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .study-tip-text {
-            font-size: 11px;
-            font-weight: 500;
-            opacity: 0.85;
-            margin-top: 2px;
-        }
-
-        .dash-user-name {
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-        }
-
-        .dash-credentials-row {
-            margin-top: 16px;
+/* UID + KEY */
+.dash-credentials-row{
+  margin-top: 16px;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
-            border-radius: 12px;
-            padding: 5px 16px;
+            border-radius: 10px;
+            padding: 6px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             color: #ffffff;
             font-size: 13px;
             font-weight: 600;
-        }
-        
-        .dash-credentials-row .cred-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+}
+.cred-item{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  min-width:0;
+}
+.uid-value{
+  font-weight:800;
+  letter-spacing:.2px;
+  white-space:nowrap;
+}
+.copy-uid-btn{
+  width:25px;
+  height:25px;
+  border:0;
+  border-radius:7px;
+         
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+}
+.copy-uid-btn svg{
+  width:13px;
+  height:13px;
+}
+.copy-uid-btn:active{transform:scale(.88)}
 
-        .wallet-pill {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 10px;
-            margin: -30px 20px 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            position: relative;
-            z-index: 10;
-        }
+.key-toggle{
+  width:24px;
+  height:24px;
+  border:0;
+  background:transparent;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.key-toggle svg{
+  width:15px;
+  height:15px;
+}
 
-        .wallet-pill-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+/* ================= WALLET ================= */
+.wallet-pill{
+  margin:-29px 20px 17px;
+  padding:10px;
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 10px 28px rgba(15,23,42,.09);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+  z-index:5;
+}
+.wallet-pill-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.wallet-pill-icon{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  background:#ecfdf5;
+  color:#16a34a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.wallet-pill-icon svg{width:21px}
+.wallet-pill-info{
+  display:flex;
+  flex-direction:column;
+}
+.wallet-pill-title{
+  color:var(--sub);
+  font-size:11px;
+  font-weight:700;
+}
+.wallet-pill-amount{
+  color:var(--text);
+  font-size:18px;
+  font-weight:850;
+}
+.wallet-pill-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.refresh-btn{
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:50%;
+  background:#eff6ff;
+  color:var(--primary);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.refresh-btn svg{width:17px}
+.btn-add-pill{
+  border:0;
+  border-radius:12px;
+  padding:10px 13px;
+  background:var(--text);
+  color:#fff;
+  font-size:11px;
+  font-weight:750;
+}
 
-        .wallet-pill-icon {
-            width: 44px;
-            height: 44px;
-            background-color: #ecfdf5;
-            color: var(--ok);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* ================= QUICK ACTIONS ================= */
+.quick-actions{
+  padding:0 20px 16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.action-btn{
+  min-height:30px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  color:var(--text);
+  font-size:12px;
+  font-weight:750;
+  box-shadow:0 4px 10px rgba(15,23,42,.025);
+}
+.action-btn svg{
+  width:18px;
+  color:var(--primary);
+}
 
-        .wallet-pill-info { display: flex; flex-direction: column; }
-        .wallet-pill-title { font-size: 13px; font-weight: 700; color: var(--sub); }
-        .wallet-pill-amount { font-size: 18px; font-weight: 800; color: var(--text); }
-
-        .wallet-pill-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .refresh-btn {
-            color: var(--primary);
-            background: var(--input-bg);
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-
-        .btn-add-pill {
-            background-color: var(--text);
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-add-pill:active { background-color: #334155; }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding: 0 20px 16px 20px;
-        }
-        
-        .action-btn {
-            background: #fff;
-            border-radius: 16px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            border: 1px solid var(--border);
-            cursor: pointer;
-        }
-        .action-btn i { color: var(--primary); width: 18px; height: 18px; }
-
-        /* SMART BOTTOM SHEET MODALS */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 50%; transform: translateX(-50%);
-            width: 100%; max-width: 480px; height: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        .modal-card {
-            background: #ffffff;
-            width: 100%;
-            border-radius: 28px 28px 0 0;
-            padding: 20px 24px calc(24px + env(safe-area-inset-bottom, 0px)) 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: default;
-            animation: slideUp 0.35s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-card::before {
-            content: '';
-            width: 40px;
-            height: 5px;
-            background: #cbd5e1;
-            border-radius: 10px;
-            margin-bottom: 16px;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .modal-title { font-size: 20px; font-weight: 800; color: var(--text); }
-        .modal-subtitle { font-size: 14px; color: var(--sub); margin-top: 4px; margin-bottom: 12px; }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn-modal-cancel {
-            flex: 1;
-            background-color: var(--input-bg);
-            color: var(--text);
-            border: none;
-            padding: 14px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        .btn-modal-confirm {
-            flex: 1;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        /* Toast Container */
-        #toast-container {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            width: 85%;
-            max-width: 400px;
-        }
-
-        .toast {
-            background: #1e293b;
-            color: white;
-            padding: 14px 18px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            text-align: center;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            margin-top: 10px;
-            animation: fadeInOut 3s forwards;
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(10px); }
-            10% { opacity: 1; transform: translateY(0); }
-            90% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(10px); }
-        }
-
-        /* SECTION HEADER */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
-
-        .section-title { font-size: 17px; font-weight: 800; }
-        .section-title span { color: var(--primary); }
-
-        .view-all-btn {
-            border: 1.5px solid var(--primary);
-            color: var(--primary);
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            background: transparent;
-        }
-
-        /* COURSE GRID */
-        .course-grid {
+/* ================= COURSES ================= */
+.section-header{
+  padding:10px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.section-title{
+  font-size:16px;
+  font-weight:850;
+}
+.section-title span{color:var(--primary)}
+.view-all-btn{
+  border:1px solid var(--primary);
+  color:var(--primary);
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+}
+ .course-grid {
             padding: 10px 14px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -770,1172 +481,2709 @@
             font-weight: bold;
             border: 1px solid var(--card);
         }
+/* ================= EXPLORE ================= */
+.explore-buy-section{
+  display:flex;
+  justify-content:center;
+  padding:3px 15px 12px;
+}
+.explore-buy-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+.explore-buy-btn{
+  flex:1;
+  max-width:190px;
+  padding:8px 13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  background:#fff;
+  border:2px solid var(--border);
+  border-radius:10px;
+  color:#111827;
+  box-shadow:0 3px 10px rgba(15,23,42,.03);
+}
+.explore-buy-btn img{
+  width:27px;
+  height:27px;
+  object-fit:contain;
+}
+.explore-buy-btn span{
+  font-size:12px;
+  font-weight:700;
+}
 
-        /* TOP TABS MENU */
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            background: #fff;
-            border-bottom: 1px solid #e5e7eb;
-            top: 0;
-            z-index: 10;
-        }
+/* ================= TABS ================= */
+.tabs{
+  display:flex;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+}
+.tab{
+  flex:1;
+  padding:9px 2px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  color:#64748b;
+  font-size:10px;
+  font-weight:700;
+  position:relative;
+}
+.tab.active{color:var(--primary)}
+.tab.active:after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  width:60%;
+  height:3px;
+  border-radius:3px;
+  background:var(--primary);
+}
+.tab-icon{
+  width:19px;
+  height:19px;
+}
+.view-container{padding:12px 14px}
 
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px 4px;
-            font: 600 12px 'Segoe UI', sans-serif;
-            color: #666;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            transition: color 0.15s;
-        }
+/* ================= JOB CARDS ================= */
+.card{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:60px;
+  margin-bottom:9px;
+  padding:10px;
+  background:#fff;
+  border:1.5px solid #e0e7ff;
+  border-radius:12px;
+}
+.card img{
+  width:42px;
+  height:42px;
+  border-radius:9px;
+  object-fit:cover;
+  flex:none;
+}
+.card>div:not(.date){
+  min-width:0;
+}
+.card h3{
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:2px;
+  line-height:1.25;
+}
+.card p{
+  color:#64748b;
+  font-size:10px;
+  line-height:1.3;
+}
+.apply{
+  margin-left:auto;
+  padding:3px 10px;
+  border:0;
+  border-radius:18px;
+  background:#22c55e;
+  color:#fff;
+  font-size:12px;
+  font-weight:750;
+  flex:none;
+}
+.date{
+  position:absolute;
+  right:0;
+  bottom:0;
+  padding:2px 7px;
+  border-radius:9px 0 9px 0;
+  background:#fee2e2;
+  color:#b91c1c;
+  font-size:8px;
+  font-weight:750;
+}
 
-        .tab.active {
-            color: #3b49df;
-            font-weight: 700;
-            position: relative;
-        }
+/* ================= SHOWCASE ================= */
+.showcase-wrapper{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:8px 4px;
+  scrollbar-width:none;
+}
+.showcase-wrapper::-webkit-scrollbar{display:none}
+.showcase-item{
+  min-width:calc(100% - 30px);
+  border-radius:13px;
+  overflow:hidden;
+}
+.showcase-item img{
+  display:block;
+  width:100%;
+  height:145px;
+  object-fit:cover;
+}
 
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20%;
-            width: 60%;
-            height: 3px;
-            background: #3b49df;
-            border-radius: 3px;
-        }
+/* ================= SOCIAL ================= */
+.social{
+  text-align:center;
+  padding:18px 0 20px;
+}
+.social p{
+  color:#64748b;
+  font-size:12px;
+  font-weight:650;
+  margin-bottom:10px;
+}
+.social-icons{
+  display:flex;
+  justify-content:center;
+  gap:11px;
+}
+.social-icons a{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.social-icons svg{
+  width:17px;
+  height:17px;
+  fill:#fff;
+}
+.fb{background:#1877f2}
+.ig{background:#d62976}
+.tg{background:#2aabee}
+.wa{background:#25d366}
+.yt{background:#ff0000}
 
-        .tab-icon {
-            width: 20px;
-            height: 20px;
-            transition: filter 0.15s;
-        }
+/* ================= BOTTOM NAV ================= */
+.bottom-nav{
+  position:fixed;
+  bottom:0; border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+           
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  height:65px; 
+  background:#fff;
+  border-top:1px solid var(--border);
+  box-shadow:0 -5px 20px rgba(15,23,42,.05);
+  display:flex;
+  z-index:1000;
+}
+.nav-item{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  color:#64748b;
+  font-size:10px;
+  font-weight:650;
+}
+.nav-item svg{width:21px;height:21px}
+.nav-item.active{color:var(--primary)}
+.icon-bg{
+  padding:4px 12px;
+  border-radius:12px;
+}
+.nav-item.active .icon-bg{background:#eff6ff}
 
-        .view-container {
-            padding: 12px 14px;
-        }
+/* =========================================================
+   MODAL SYSTEM
+========================================================= */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  width:100%;
+  max-width:480px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(15,23,42,.62);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+  z-index:5000;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:0;
+}
+.modal-card{
+  width:100%;
+  background:#fff;
+  border-radius:28px 28px 0 0;
+  padding:12px 20px calc(22px + env(safe-area-inset-bottom));
+  max-height:92vh;
+  overflow-y:auto;
+  position:relative;
+  animation:modalUp .32s cubic-bezier(.16,1,.3,1);
+}
+@keyframes modalUp{
+  from{transform:translateY(100%)}
+  to{transform:translateY(0)}
+}
+.modal-handle{
+  width:42px;
+  height:4px;
+  border-radius:10px;
+  background:#cbd5e1;
+  margin:0 auto 17px;
+}
+.modal-top{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+.modal-title{
+  font-size:19px;
+  font-weight:850;
+  color:var(--text);
+}
+.modal-close{
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:11px;
+  background:#f1f5f9;
+  color:#64748b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal-close svg{width:18px}
+.modal-close:active{transform:scale(.9)}
 
-        .card {
-            background: #fff;
-            border: 1.5px solid #e0e7ff;
-            border-radius: 14px;
-            padding: 12px;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 10px;
-            position: relative;
-        }
+.modal-subtitle{
+  color:var(--sub);
+  font-size:12px;
+  margin-top:-8px;
+  margin-bottom:15px;
+}
 
-        .card img {
-            width: 44px;
-            height: 44px;
-            border-radius: 10%;
-            object-fit: cover;
-        }
+/* ================= AUTH MODAL ================= */
+.auth-view{
+  width:100%;
+}
+.auth-header-title{
+  color:var(--primary-dark);
+  font-size:23px;
+  font-weight:850;
+}
+.auth-subtitle{
+  color:var(--sub);
+  font-size:12px;
+  margin:4px 0 19px;
+}
+.avatar-upload-wrapper{
+  display:flex;
+  justify-content:center;
+  margin-bottom:18px;
+}
+.avatar-upload-circle{
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  background:#f1f5f9;
+  border:2px dashed var(--primary);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.avatar-upload-circle img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-        .card h3 {
-            font: 700 14px 'Segoe UI', sans-serif;
-            margin-bottom: 2px;
-        }
+/* ================= FORM ================= */
+.form-input-wrapper{
+  width:100%;
+  position:relative;
+  margin-bottom:11px;
+}
+.left-icon,
+.right-icon{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  color:#94a3b8;
+  z-index:2;
+}
+.left-icon{
+  left:15px;
+  width:18px;
+  height:18px;
+  pointer-events:none;
+}
+.right-icon{
+  right:13px;
+  width:18px;
+  height:18px;
+  cursor:pointer;
+}
+.ui-input{
+  width:100%;
+  height:49px;
+  border:1.5px solid transparent;
+  outline:none;
+  border-radius:14px;
+  background:#f1f5f9;
+  color:var(--text);
+  padding:0 16px;
+  font-size:14px;
+  font-weight:600;
+}
+.ui-input.has-left-icon{padding-left:46px}
+.ui-input.has-right-icon{padding-right:46px}
+.ui-input:focus{
+  background:#fff;
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(37,99,235,.08);
+}
+.ui-input::placeholder{
+  color:#94a3b8;
+  font-weight:500;
+}
+.ui-select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='3'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 15px center;
+}
+.forgot-link{
+  display:block;
+  text-align:right;
+  color:var(--primary);
+  font-size:11px;
+  font-weight:700;
+  margin:-2px 2px 13px;
+}
+.btn-auth-submit{
+  width:100%;
+  min-height:49px;
+  border:0;
+  border-radius:14px;
+  background:var(--primary);
+  color:#fff;
+  font-size:14px;
+  font-weight:800;
+  box-shadow:0 7px 17px rgba(37,99,235,.23);
+}
+.btn-auth-submit:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+.auth-switch-text{
+  text-align:center;
+  color:var(--sub);
+  font-size:11px;
+  font-weight:600;
+  margin-top:13px;
+}
+.auth-switch-text span{
+  color:var(--primary);
+  font-weight:800;
+}
 
-        .card p {
-            font: 400 12px 'Segoe UI', sans-serif;
-            color: #555;
-        }
+/* ================= QR MODAL ================= */
+.qr-modal-card{
+  padding-bottom:calc(28px + env(safe-area-inset-bottom));
+}
+.qr-only-wrap{
+  min-height:330px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.qr-box{
+  width:245px;
+  height:245px;
+  padding:16px;
+  background:#fff;
+  border-radius:22px;
+  border:1px solid #e2e8f0;
+  box-shadow:0 14px 40px rgba(15,23,42,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#qrcode{
+  width:210px;
+  height:210px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#qrcode img,
+#qrcode canvas{
+  width:210px!important;
+  height:210px!important;
+  display:block;
+}
+.qr-label{
+  margin-top:17px;
+  color:#64748b;
+  font-size:11px;
+  font-weight:650;
+}
 
-        .apply {
-            margin-left: auto;
-            background: #22c55e;
-            color: #fff;
-            font: 700 12px 'Segoe UI', sans-serif;
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: transform 0.1s ease;
-        }
+/* ================= NOTIFICATION MODAL ================= */
+.notification-list{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+.notification-item{
+  width:100%;
+  padding:12px;
+  border:1px solid #e2e8f0;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  background:#fff;
+}
+.notification-icon{
+  width:39px;
+  height:39px;
+  flex:none;
+  border-radius:12px;
+  background:#eff6ff;
+  color:var(--primary);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.notification-icon svg{width:19px}
+.notification-info{
+  min-width:0;
+}
+.notification-info strong{
+  display:block;
+  color:var(--text);
+  font-size:12px;
+  font-weight:800;
+}
+.notification-info span{
+  display:block;
+  color:var(--sub);
+  font-size:10px;
+  margin-top:2px;
+}
+.notification-empty{
+  text-align:center;
+  padding:25px 10px;
+  color:#94a3b8;
+  font-size:12px;
+}
 
-        .apply:active {
-            transform: scale(0.95);
-        }
+/* ================= EDIT MODAL ================= */
+.modal-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:6px;
+}
+.btn-modal-cancel,
+.btn-modal-confirm{
+  min-height:47px;
+  border:0;
+  border-radius:14px;
+  font-size:13px;
+  font-weight:800;
+}
+.btn-modal-cancel{
+  background:#f1f5f9;
+  color:var(--text);
+}
+.btn-modal-confirm{
+  background:var(--primary);
+  color:#fff;
+}
 
-        .date {
-            position: absolute;
-            right: 0px;
-            bottom: 0px;
-            background: #fee2e2;
-            color: #b91c1c;
-            font: 700 9px 'Segoe UI', sans-serif;
-            padding: 2px 8px;
-            border-radius: 10px 0px 10px 0px;
-        }
+/* ================= TOAST ================= */
+#toast-container{
+  position:fixed;
+  z-index:9999;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 30px);
+  max-width:430px;
+  pointer-events:none;
+}
+.toast{ position: fixed;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  width:100%;
+  padding:12px 14px;
+  margin-top:8px;
+  border-radius:14px;
+  background:#0f172a;
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  animation:toastIn .25s ease,toastOut .3s ease 2.5s forwards;
+}
+.toast.success{background: #22c55e;}
+.toast.error{background: #ef4444;}
+.toast.info{background: #3b82f6:}
+@keyframes toastIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes toastOut{
+  to{opacity:0;transform:translateY(8px)}
+}
 
-        .showcase-wrapper { 
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 10px 14px;
-            scrollbar-width: none;
-        }
-
-        .showcase-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .showcase-item {
-            min-width: calc(100% - 30px);
-            border-radius: 12px;
-            overflow: hidden;
-            scroll-snap-align: start;
-        }
-
-        .showcase-item img {
-            width: 100%;
-            height: 150px;
-            display: block;
-        }
-
-        .social {
-            text-align: center;
-            padding: 20px 0 10px;
-        }
-
-        .social p {
-            color: #666;
-            font: 600 13px 'Segoe UI', sans-serif;
-            margin-bottom: 10px;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-        }
-
-        .social-icons a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.15s ease;
-        }
-
-        .social-icons a:active {
-            transform: scale(0.9);
-        }
-
-        .fb { background: #1877f2; }
-        .ig { background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af); }
-        .tg { background: #2aabee; }
-        .wa { background: #25d366; }
-        .yt { background: #ff0000; }
-
-        .social-icons svg {
-            width: 18px;
-            height: 18px;
-            fill: #fff;
-        }
-
-        .hide {
-            display: none !important;
-        }
-
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 100%; max-width: 480px; height: 65px;
-            background: #fff; display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -4px 20px rgba(0,0,0,.04);
-            z-index: 1000;
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-        }
-        .nav-item {
-            flex: 1; text-align: center; color: var(--sub);
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            font: 600 11px 'Segoe UI', sans-serif;
-        }
-        .nav-item i { width: 22px; height: 22px; stroke-width: 2.5; }
-        .nav-item.active { color: var(--primary); }
-        .nav-item .icon-bg { padding: 4px 12px; border-radius: 12px; }
-        .nav-item.active .icon-bg { background: #eff6ff; }
-
-        .explore-buy-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        .explore-buy-wrapper {
-            display: flex;
-            gap: 50px;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .explore-buy-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 25px;
-            background: #ffffff;
-            border-radius: 15px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-            box-shadow: 1px 2px 1px 1px var(--border);
-        }
-
-        .explore-buy-btn img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-            flex-shrink: 0;
-        }
-
-        .explore-buy-btn span {
-            font-size: 15px;
-            font-weight: 500;
-            color: #111827;
-            white-space: nowrap;
-        }
-
-        .explore-buy-btn .arrow {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: -2px;
-            color: #111827;
-        }
-
-        @media(max-width: 480px){
-            .explore-buy-wrapper {
-                gap: 50px;
-            }
-            .explore-buy-btn img {
-                width: 30px;
-                height: 30px;
-            }
-            .explore-buy-btn span {
-                font-size: 14px;
-            }
-        }
-    </style>
+/* ================= MOBILE ================= */
+@media(max-width:360px){
+  .dash-credentials-row{font-size:10px}
+  .btn-add-pill{padding:9px 9px}
+  .course-grid{gap:6px}
+  .course-card{font-size:9px}
+  .qr-box{width:225px;height:225px}
+  #qrcode,#qrcode img,#qrcode canvas{
+    width:190px!important;
+    height:190px!important;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <!-- WHITE ANIMATIC LOADING SPLASH SCREEN -->
-    <div id="loadingScreen">
-         <div class="loading-bar-container">
-            <div class="loading-bar-fill"></div>
-        </div>
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="loading-bar">
+    <div class="loading-fill"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div id="mainHeader" class="header hidden">
+  <img
+    class="header-logo"
+    src="https://i.ibb.co/VpC7mGB9/1000209961-10kb.jpg"
+    alt="TutoGenius"
+  >
+
+  <a href="" class="header-notification" aria-label="Notifications">
+    <i data-lucide="bell"></i>
+    <span class="notification-dot"></span>
+  </a>
+</div>
+
+<!-- APP -->
+<div id="appContainer" class="app-container">
+
+<div id="toast-container"></div>
+
+<!-- ================= WELCOME ================= -->
+<div id="authWelcomeView" class="view auth-welcome-view hidden">
+
+  <div class="auth-welcome-hero">
+    <img
+      src="https://tuttogenius.netlify.app/AddText_07-04-09.46.22.png"
+      alt="TutoGenius"
+    >
+  </div>
+
+  <h1 class="welcome-title">TutoGenius</h1>
+  <p class="welcome-sub">
+    Manage your balance and study easily
+  </p>
+
+  <div class="auth-welcome-actions">
+    <button
+      class="btn-welcome-primary"
+      onclick="openAuthModal('login')"
+    >
+      Login
+    </button>
+
+    <button
+      class="btn-welcome-secondary"
+      onclick="openAuthModal('register')"
+    >
+      Create Account
+    </button>
+  </div>
+</div>
+
+<!-- ================= DASHBOARD ================= -->
+<div id="dashboardView" class="view dashboard-view hidden">
+
+  <div class="top-card-section">
+
+    <div class="dash-header-row">
+
+      <img
+        id="dashPhoto"
+        class="dash-profile-img"
+        src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+        alt="Profile"
+      >
+
+      <div class="dash-greeting-box">
+        <span id="greetingText" class="greeting-text">
+          Good Morning
+        </span>
+
+        <span id="dashName" class="dash-user-name">
+          User Name
+        </span>
+
+        <span id="studyTipText" class="study-tip-text">
+          Ready for today's session?
+        </span>
+      </div>
+
     </div>
 
-    <!-- SMART BLUE HEADER (Hidden on Auth views) -->
-    <div id="mainHeader" class="header hidden">
-        <img src="https://i.ibb.co/VpC7mGB9/1000209961-10kb.jpg" alt="Logo">
+    <!-- UID / KEY -->
+    <div class="dash-credentials-row">
+
+      <div class="cred-item">
+        <i data-lucide="fingerprint" style="width:15px"></i>
+
+        <span>UID:</span>
+
+        <span id="dashUid" class="uid-value">-</span>
+
+        <button
+          class="copy-uid-btn"
+          onclick="copyUID()"
+          title="Copy UID"
+          aria-label="Copy UID"
+        >
+          <i data-lucide="copy"></i>
+        </button>
+      </div>
+
+      <div class="cred-item">
+
+        <i data-lucide="key" style="width:15px"></i>
+
+        <span>KEY:</span>
+
+        <span id="dashKey">******</span>
+
+        <button
+          id="toggleDashKey"
+          class="key-toggle"
+          onclick="toggleDashKeyVisibility()"
+          aria-label="Show key"
+        >
+          <i data-lucide="eye-off"></i>
+        </button>
+
+      </div>
+
     </div>
 
-    <div id="appContainer" class="app-container">
-        <div id="toast-container"></div>
+  </div>
 
-        <!-- AUTH WELCOME ENTRY SCREEN -->
-        <div id="authWelcomeView" class="view auth-welcome-view hidden">
-            <div class="auth-welcome-hero">
-               <img src="https://tuttogenius.netlify.app/AddText_07-04-09.46.22.png" alt="Hero"></div>
-            <h1 style="font-size: 26px; font-weight: 800; color: var(--primary-dark);">TutoGenius</h1>
-            <p style="font-size: 14px; color: var(--sub); margin-top: 6px; max-width: 280px;">Manage your balance and study easily</p>
-            
-            <div class="auth-welcome-actions">
-                <button class="btn-welcome-primary" onclick="openAuthModal('login')">Login</button>
-                <button class="btn-welcome-secondary" onclick="openAuthModal('register')">Create Account</button>
-            </div>
+  <!-- WALLET -->
+  <div class="wallet-pill">
+
+    <div class="wallet-pill-left">
+
+      <div class="wallet-pill-icon">
+        <i data-lucide="wallet"></i>
+      </div>
+
+      <div class="wallet-pill-info">
+        <span class="wallet-pill-title">TG Wallet</span>
+
+        <span class="wallet-pill-amount">
+          ₹ <span id="dashBalance">0.00</span>
+        </span>
+      </div>
+
+    </div>
+
+    <div class="wallet-pill-actions">
+
+      <button
+        class="refresh-btn"
+        onclick="refreshBalance()"
+        aria-label="Refresh balance"
+      >
+        <i data-lucide="rotate-cw"></i>
+      </button>
+
+      <button
+        class="btn-add-pill"
+        onclick="window.location.href='https://tuttogenius.netlify.app/coin';"
+      >
+        Add Money
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="quick-actions">
+
+    <button
+      class="action-btn"
+      onclick="openQRModal()"
+    >
+      <i data-lucide="qr-code"></i>
+      Show QR Code
+    </button>
+
+    <button
+      class="action-btn"
+      onclick="openModal('editProfileModal')"
+    >
+      <i data-lucide="key-round"></i>
+      Edit Key
+    </button>
+
+  </div>
+
+  <!-- COURSES -->
+  <div class="section-header">
+    <h2 class="section-title">
+      Top <span>Study Course</span>
+    </h2>
+
+    <a href="courses" class="view-all-btn">
+      View all
+    </a>
+  </div>
+
+  <div class="course-grid">
+
+    <a href="#" class="course-card">
+      <div class="course-icon-container">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2641/2641409.png"
+          onerror="this.src='https://placehold.co/50x50'"
+          alt="Exam Prep"
+        >
+      </div>
+      <span>Exam Prep</span>
+    </a>
+
+    <a href="mp/mp.html" class="course-card">
+      <div class="course-icon-container">
+        <img
+          src="https://edulivestore.netlify.app/image/wbbse.png"
+          onerror="this.src='https://placehold.co/50x50'"
+          alt="Madhyamik"
+        >
+        <span class="badge-notification">A+</span>
+      </div>
+      <span>মাধ্যমিক</span>
+    </a>
+
+    <a href="hs/hs.html" class="course-card">
+      <div class="course-icon-container">
+        <img
+          src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png"
+          onerror="this.src='https://placehold.co/50x50'"
+          alt="HS"
+        >
+        <span class="badge-notification">A+</span>
+      </div>
+      <span>HS 11-12</span>
+    </a>
+
+    <a href="#" class="course-card">
+      <div class="course-icon-container">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/13972/13972644.png"
+          onerror="this.src='https://placehold.co/50x50'"
+          alt="Test"
+        >
+      </div>
+      <span>Test+</span>
+    </a>
+
+  </div>
+
+  <!-- EXPLORE -->
+  <div class="explore-buy-section">
+    <div class="explore-buy-wrapper">
+
+      <a
+        href="https://tutogenius.sbs"
+        target="_blank"
+        class="explore-buy-btn"
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/8995/8995625.png"
+          alt="Explore"
+        >
+        <span>Explore 》</span>
+      </a>
+
+      <a
+        href="https://edulive.ooulet.com"
+        target="_blank"
+        class="explore-buy-btn"
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/1040/1040254.png"
+          alt="Buy Notes"
+        >
+        <span>Buy Notes</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+
+    <div
+      class="tab active"
+      onclick="switchView(event,'admission')"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/1027/1027530.png"
+        class="tab-icon"
+      >
+      Admission
+    </div>
+
+    <div
+      class="tab"
+      onclick="switchView(event,'govt')"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/3688/3688609.png"
+        class="tab-icon"
+      >
+      Govt. Jobs
+    </div>
+
+    <div
+      class="tab"
+      onclick="switchView(event,'private')"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/18550/18550026.png"
+        class="tab-icon"
+      >
+      Private Sch.
+    </div>
+
+    <div
+      class="tab"
+      onclick="switchView(event,'govtsch')"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/4720/4720515.png"
+        class="tab-icon"
+      >
+      Govt Sch.
+    </div>
+
+  </div>
+
+  <div class="view-container">
+
+    <!-- ADMISSION -->
+    <div id="admission" class="tab-content">
+
+      <div class="card">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png"
+          alt="CLAT"
+        >
+        <div>
+          <h3>CLAT - National Law Admission 2026</h3>
+          <p>UG BA LLB From Central University</p>
         </div>
+        <button
+          class="apply"
+          onclick="window.open('https://consortiumofnlus.ac.in/','_blank')"
+        >
+          Apply
+        </button>
+        <div class="date">OCT 31</div>
+      </div>
 
-        <!-- DASHBOARD VIEW -->
-        <div id="dashboardView" class="view dashboard-view hidden">
-            <div class="top-card-section">
-                <div id="profileHeaderReal">
-                    <div class="dash-header-row">
-                        <img id="dashPhoto" class="dash-profile-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Profile Photo">
-                        <div class="dash-greeting-box">
-                            <span id="greetingText" class="greeting-text">Good Morning</span>
-                            <span id="dashName" class="dash-user-name">User Name</span>
-                            <span id="studyTipText" class="study-tip-text">Ready for today's session?</span>
-                        </div>
-                    </div>
-                    
-                    <div class="dash-credentials-row">
-                        <div class="cred-item">
-                            <i data-lucide="fingerprint" style="width:16px;"></i> UID: <span id="dashUid">-</span>
-                        </div>
-                        <div class="cred-item">
-                            <i data-lucide="key" style="width:16px;"></i> KEY: <span id="dashKey">******</span>
-                            <i data-lucide="eye-off" id="toggleDashKey" style="width: 16px; cursor: pointer; margin-left:4px;" onclick="toggleDashKeyVisibility()"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="card">
+        <img
+          src="https://i.ibb.co/rKQhWWyb/logo.png"
+          alt="NSOU"
+        >
+        <div>
+          <h3>NSOU Admission 2026-27</h3>
+          <p>UG/PG Distance Course</p>
+        </div>
+        <button
+          class="apply"
+          onclick="window.open('https://www.wbnsou.ac.in/','_blank')"
+        >
+          Apply
+        </button>
+        <div class="date">AUG 31</div>
+      </div>
 
-            <!-- Wallet Balance Pill -->
-            <div class="wallet-pill">
-                <div class="wallet-pill-left">
-                    <div class="wallet-pill-icon">
-                        <i data-lucide="wallet"></i>
-                    </div>
-                    <div class="wallet-pill-info">
-                        <span class="wallet-pill-title">TG Wallet</span>
-                        <span class="wallet-pill-amount">&#8377; 
-                            <span id="dashBalance">0.00</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="wallet-pill-actions">
-                    <span class="refresh-btn" onclick="refreshBalance()"><i data-lucide="rotate-cw" style="width: 18px;"></i></span>
-                    <button onclick="window.location.href='https://tuttogenius.netlify.app/coin';" class="btn-add-pill">Add Money</button>
-                </div>
-            </div>
+      <div class="card">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png"
+          alt="WBCAP"
+        >
+        <div>
+          <h3>WBCAP 2026 (Phase - 3)</h3>
+          <p>Special Round for Vacant Seats</p>
+        </div>
+        <button
+          class="apply"
+          onclick="window.open('https://wbcap.in/','_blank')"
+        >
+          Apply
+        </button>
+        <div class="date">AUG 08</div>
+      </div>
 
-            <!-- QUICK ACTIONS -->
-            <div class="quick-actions">
-                <div class="action-btn" onclick="openModal('viewDetailsModal')">
-                    <i data-lucide="qr-code"></i> Show QR Code
-                </div>
-                <div class="action-btn" onclick="openModal('editProfileModal')">
-                    <i data-lucide="edit-3"></i> Edit Key
-                </div>
-            </div>
+      <div class="card">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png"
+          alt="DELED"
+        >
+        <div>
+          <h3>WB DElEd Admission 2026</h3>
+          <p>12th Pass, 50% Marks</p>
+        </div>
+        <button
+          class="apply"
+          onclick="window.open('https://www.wbbpe.org/','_blank')"
+        >
+          Apply
+        </button>
+        <div class="date">AUG 07</div>
+      </div>
 
-            <div class="section-header">
-                <h2 class="section-title">Top <span>Study Course</span></h2>
-                <a href="courses" class="view-all-btn">View all</a>
-            </div>
+    </div>
 
-            <!-- COURSE GRID -->
-            <div class="course-grid">
-                <a href="#" class="course-card">
-                    <div class="course-icon-container">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2641/2641409.png" onerror="this.src='https://placehold.co/50x50'" alt="Exam Prep">
-                    </div>
-                    <span>Exam Prep</span>
-                </a>
-                <a href="mp/mp.html" class="course-card">
-                    <div class="course-icon-container">
-                        <img src="https://edulivestore.netlify.app/image/wbbse.png" onerror="this.src='https://placehold.co/50x50'" alt="Madhyamik">
-                        <span class="badge-notification">A+</span>
-                    </div>
-                    <span>মাধ্যমিক</span>
-                </a>
-                <a href="hs/hs.html" class="course-card">
-                    <div class="course-icon-container">
-                        <img src="https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png" onerror="this.src='https://placehold.co/50x50'" alt="HS">
-                        <span class="badge-notification">A+</span>
-                    </div>
-                    <span>HS 11-12</span>
-                </a>
-                <a href="#" class="course-card">
-                    <div class="course-icon-container">
-                        <img src="https://cdn-icons-png.flaticon.com/512/13972/13972644.png" onerror="this.src='https://placehold.co/50x50'" alt="Skills">
-                    </div>
-                    <span>Test+</span>
-                </a>
-            </div>
+    <!-- GOVT JOBS -->
+    <div id="govt" class="tab-content hidden">
 
-            <div class="explore-buy-section">
-                <div class="explore-buy-wrapper">
-                    <a href="https://tutogenius.sbs" target="_blank" class="explore-buy-btn">
-                        <img src="https://cdn-icons-png.flaticon.com/512/8995/8995625.png" alt="Explore">
-                        <span>Explore <span class="arrow">》</span></span>
-                    </a>
-                    <a href="https://edulive.ooulet.com" target="_blank" class="explore-buy-btn">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1040/1040254.png" alt="Buy Notes">
-                        <span>Buy Notes</span>
-                    </a>
-                </div>
-            </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>RRB Section Controller</h3>
+          <p>Railway Recruitment (Graduate)</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.rrbcdg.gov.in/','_blank')">
+          Apply
+        </button>
+        <div class="date">AUG 14</div>
+      </div>
 
-            <!-- TOP MENU TABS -->
-            <div class="tabs">
-                <div class="tab active" onclick="switchView(event, 'admission')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1027/1027530.png" class="tab-icon"> Admission
-                </div>
-                <div class="tab" onclick="switchView(event, 'govt')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3688/3688609.png" class="tab-icon"> Govt. Jobs
-                </div>
-                <div class="tab" onclick="switchView(event, 'private')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/18550/18550026.png" class="tab-icon"> Private Sch.
-                </div>
-                <div class="tab" onclick="switchView(event, 'govtsch')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4720/4720515.png" class="tab-icon"> Govt Sch.
-                </div>
-            </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>ISRO Recruitment</h3>
+          <p>Upper Division Clerk & Assistant</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.isro.gov.in/','_blank')">
+          Apply
+        </button>
+        <div class="date">AUG 16</div>
+      </div>
 
-            <!-- DYNAMIC TAB VIEWS -->
-            <div class="view-container" id="main-view-target">
-                <!-- ADMISSION TAB -->
-                <div id="admission" class="tab-content">
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="CLAT">
-                        <div>
-                            <h3>CLAT - National Law Admission 2026</h3>
-                            <p>UG BA LLB From Central University</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://consortiumofnlus.ac.in/','_blank')">Apply</button>
-                        <div class="date">OCT 31</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://i.ibb.co/rKQhWWyb/logo.png" alt="NSOU">
-                        <div>
-                            <h3>NSOU Admission 2026-27</h3>
-                            <p>UG/PG Distance Course</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.wbnsou.ac.in/','_blank')">Apply</button>
-                        <div class="date">AUG 31</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="WBCAP">
-                        <div>
-                            <h3>WBCAP 2026 (Phase - 3)</h3>
-                            <p>Special Round for Vacant Seats</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://wbcap.in/','_blank')">Apply</button>
-                        <div class="date">AUG 08</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="DELED">
-                        <div>
-                            <h3>WB DElEd Admission 2026</h3>
-                            <p>12th Pass, 50% Marks</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.wbbpe.org/','_blank')">Apply</button>
-                        <div class="date">AUG 07</div>
-                    </div>
-                </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>IBPS Clerk Recruitment 2026</h3>
+          <p>Govt Bank | 11k+ Vacancies</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.ibps.in/','_blank')">
+          Apply
+        </button>
+        <div class="date">AUG 21</div>
+      </div>
 
-                <!-- GOVT JOBS TAB -->
-                <div id="govt" class="tab-content hide">
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="RRB">
-                        <div>
-                            <h3>RRB Section Controller</h3>
-                            <p>Railway Recruitment (Graduate)</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.rrbcdg.gov.in/','_blank')">Apply</button>
-                        <div class="date">AUG 14</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="ISRO">
-                        <div>
-                            <h3>ISRO Recruitment</h3>
-                            <p>Upper Division Clerk & Assistant</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.isro.gov.in/','_blank')">Apply</button>
-                        <div class="date">AUG 16</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="IBPS">
-                        <div>
-                            <h3>IBPS Clerk Recruitment 2026</h3>
-                            <p>Govt Bank | 11k+ Vacancies</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.ibps.in/','_blank')">Apply</button>
-                        <div class="date">AUG 21</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Saha">
-                        <div>
-                            <h3>Saha Institute Kolkata</h3>
-                            <p>Clerk, Assistant, Scientist Various Vacancies - 10th Pass to M.Sc</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.saha.ac.in/','_blank')">Apply</button>
-                        <div class="date">SEP 15</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Panchayat">
-                        <div>
-                            <h3>Panchayat Recruitment 2026</h3>
-                            <p>Registration Soon through WBPSC (10th/12th/Graduate)</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://wbpsc.in/','_blank')">Apply</button>
-                        <div class="date">SEP 30</div>
-                    </div>
-                </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Saha Institute Kolkata</h3>
+          <p>Clerk, Assistant, Scientist Various Vacancies</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.saha.ac.in/','_blank')">
+          Apply
+        </button>
+        <div class="date">SEP 15</div>
+      </div>
 
-                <!-- PRIVATE SCHOLARSHIP TAB -->
-                <div id="private" class="tab-content hide">
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Kotak">
-                        <div>
-                            <h3>Kotak Kanya Scholarship</h3>
-                            <p>12th Pass UG Girls (Professional Courses) - 75% Marks</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.buddy4study.com/scholarship/kotak-kanya-scholarship','_blank')">Apply</button>
-                        <div class="date">AUG 31</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="SBI">
-                        <div>
-                            <h3>SBI Asha Scholarship</h3>
-                            <p>School (IX-XII), UG, PG, Medical, IIT, IIM - 75% Marks</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.buddy4study.com/scholarship/sbi-asha-scholarship-program','_blank')">Apply</button>
-                        <div class="date">SEP 04</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="GP Birla">
-                        <div>
-                            <h3>GP Birla Scholarship</h3>
-                            <p>HS Pass - 85% Marks</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.gpbirlascholarship.com/','_blank')">Apply</button>
-                        <div class="date">AUG 15</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Hero">
-                        <div>
-                            <h3>Hero Ram Kanth Scholarship</h3>
-                            <p>12th Pass - 80% Marks</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.buddy4study.com/scholarship/hero-rama-kant-scholarship','_blank')">Apply</button>
-                        <div class="date">AUG 31</div>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Jindal">
-                        <div>
-                            <h3>Sitaram Jindal Scholarship</h3>
-                            <p>10th Pass, 12th Pass, UG PG 75% Marks</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://www.sitaramjindalfoundation.org/','_blank')">Apply</button>
-                        <div class="date">AUG 31</div>
-                    </div>
-                </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Panchayat Recruitment 2026</h3>
+          <p>10th/12th/Graduate</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://wbpsc.in/','_blank')">
+          Apply
+        </button>
+        <div class="date">SEP 30</div>
+      </div>
 
-                <!-- GOVT SCHOLARSHIP TAB -->
-                <div id="govtsch" class="tab-content hide">
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="SVMCM">
-                        <div>
-                            <h3>SVMCM Scholarship</h3>
-                            <p>Swami Vivekananda Scholarship: 10th, HS, UG, PG 60%</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://svmcm.wbhed.gov.in/','_blank')">Apply</button>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="CM">
-                        <div>
-                            <h3>Chief Minister Scholarship</h3>
-                            <p>Financial aid offered by West Bengal CM Relief Fund.</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://cmrf.wb.gov.in/','_blank')">Apply</button>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Oasis">
-                        <div>
-                            <h3>Oasis Scholarship</h3>
-                            <p>Scholarship for SC, ST, and OBC students by West Bengal govt</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://oasis.gov.in/','_blank')">Apply</button>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="Aikyashree">
-                        <div>
-                            <h3>Aikyashree Scholarship</h3>
-                            <p>Scholarship for minority students in West Bengal from WBMDFC.</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://wbmdfcscholarship.org/','_blank')">Apply</button>
-                    </div>
-                    <div class="card">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png" alt="NSP">
-                        <div>
-                            <h3>National Scholarship Portal</h3>
-                            <p>Central govt scholarships for SC/ST/OBC and minority students</p>
-                        </div>
-                        <button class="apply" onclick="window.open('https://scholarships.gov.in/','_blank')">Apply</button>
-                    </div>
-                </div>
-            </div>
+    </div>
 
-            <div style="padding: 10px;">
-                <div class="showcase-wrapper">
-                    <div class="showcase-item">
-                        <img src="https://i.ibb.co/pvHrmp04/Class-11.jpg" alt="Career Guidance">
-                    </div>
-                    <div class="showcase-item">
-                        <img src="https://i.ibb.co/nN1kVj31/class-12.jpg" alt="College">
-                    </div>
-                </div>
-            </div>
+    <!-- PRIVATE SCHOLARSHIP -->
+    <div id="private" class="tab-content hidden">
 
-            <!-- SOCIAL LINKS -->
-            <div class="social">
-                <p>Follow & Subscribe Us</p>
-                <div class="social-icons">
-                    <a href="#" class="fb"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Kotak Kanya Scholarship</h3>
+          <p>12th Pass UG Girls - 75% Marks</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.buddy4study.com/scholarship/kotak-kanya-scholarship','_blank')">
+          Apply
+        </button>
+        <div class="date">AUG 31</div>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>SBI Asha Scholarship</h3>
+          <p>School, UG, PG, Medical, IIT, IIM</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.buddy4study.com/scholarship/sbi-asha-scholarship-program','_blank')">
+          Apply
+        </button>
+        <div class="date">SEP 04</div>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>GP Birla Scholarship</h3>
+          <p>HS Pass - 85% Marks</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.gpbirlascholarship.com/','_blank')">
+          Apply
+        </button>
+        <div class="date">AUG 15</div>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Hero Ram Kanth Scholarship</h3>
+          <p>12th Pass - 80% Marks</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.buddy4study.com/scholarship/hero-rama-kant-scholarship','_blank')">
+          Apply
+        </button>
+        <div class="date">AUG 31</div>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Sitaram Jindal Scholarship</h3>
+          <p>10th, 12th, UG, PG</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://www.sitaramjindalfoundation.org/','_blank')">
+          Apply
+        </button>
+        <div class="date">AUG 31</div>
+      </div>
+
+    </div>
+
+    <!-- GOVT SCHOLARSHIP -->
+    <div id="govtsch" class="tab-content hidden">
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>SVMCM Scholarship</h3>
+          <p>10th, HS, UG, PG - 60%</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://svmcm.wbhed.gov.in/','_blank')">
+          Apply
+        </button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Chief Minister Scholarship</h3>
+          <p>Financial aid by West Bengal CM Relief Fund</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://cmrf.wb.gov.in/','_blank')">
+          Apply
+        </button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Oasis Scholarship</h3>
+          <p>SC, ST and OBC students</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://oasis.gov.in/','_blank')">
+          Apply
+        </button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>Aikyashree Scholarship</h3>
+          <p>Minority students in West Bengal</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://wbmdfcscholarship.org/','_blank')">
+          Apply
+        </button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4999/4999563.png">
+        <div>
+          <h3>National Scholarship Portal</h3>
+          <p>Central Government Scholarships</p>
+        </div>
+        <button class="apply"
+          onclick="window.open('https://scholarships.gov.in/','_blank')">
+          Apply
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SHOWCASE -->
+  <div style="padding:8px 10px">
+    <div class="showcase-wrapper">
+
+      <div class="showcase-item">
+        <img
+          src="https://i.ibb.co/pvHrmp04/Class-11.jpg"
+          alt="Class 11"
+        >
+      </div>
+
+      <div class="showcase-item">
+        <img
+          src="https://i.ibb.co/nN1kVj31/class-12.jpg"
+          alt="Class 12"
+        >
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div class="social">
+    <p>Follow & Subscribe Us</p>
+
+    <div class="social-icons">
+
+        <a href="#" class="fb"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
                     <a href="#" class="ig"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 2 .3 2.5.5a5 5 0 0 1 1.8 1.1 5 5 0 0 1 1.1 1.8c.2.5.4 1.3.5 2.5.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2-.5 2.5a5 5 0 0 1-1.1 1.8 5 5 0 0 1-1.8 1.1c-.5.2-1.3.4-2.5.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2-.3-2.5-.5a5 5 0 0 1-1.8-1.1 5 5 0 0 1-1.1-1.8c-.2-.5-.4-1.3-.5-2.5C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-2 .5-2.5a5 5 0 0 1 1.1-1.8 5 5 0 0 1 1.8-1.1c.5-.2 1.3-.4 2.5-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.8.1-1 .1-1.6.2-2 .4a3 3 0 0 0-1.1.7 3 3 0 0 0-.7 1.1c-.2.4-.3 1-.4 2-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c.1 1 .2 1.6.4 2 .2.4.4.8.7 1.1.3.3.6.5 1.1.7.4.2 1 .3 2 .4 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1-.1 1.6-.2 2-.4a3 3 0 0 0 1.1-.7 3 3 0 0 0 .7-1.1c.2-.4.3-1 .4-2 .1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1-.2-1.6-.4-2a3 3 0 0 0-.7-1.1 3 3 0 0 0-1.1-.7c-.4-.2-1-.3-2-.4-1.3-.1-1.7-.1-4.8-.1zm0 3.6a5.4 5.4 0 1 1 0 10.8 5.4 5.4 0 0 1 0-10.8zm0 1.8a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2zm5.5-1.9a1.26 1.26 0 1 1 0 2.52 1.26 1.26 0 0 1 0-2.52z"/></svg></a>
                     <a href="#" class="tg"><svg viewBox="0 0 24 24"><path d="M9.04 15.9l-.38 3.62c.54 0 .78-.23 1.06-.5l2.54-2.43 5.27 3.87c.97.53 1.66.25 1.9-.9l3.46-16.3c.18-.84-.3-1.17-.83-.97L1.6 9.45c-.8.31-.78.75-.14.95l4.86 1.52L18.9 5.5c.7-.44 1.34-.2.81.24"/></svg></a>
                     <a href="#" class="wa"><svg viewBox="0 0 24 24"><path d="M20.52 3.45A11.9 11.9 0 0 0 12 0 12 12 0 0 0 1.3 20.7L0 24l3.4-.9A12 12 0 0 0 12 24a11.9 11.9 0 0 0 8.5-20.55zM12 22a10 10 0 0 1-5.1-1.4l-.3-.2-3 .8.9-2.9-.2-.3A10 10 0 0 1 12 22zm5.9-7.3c-.3-.1-1.8-.9-2.1-1s-.5-.2-.7.1-.8 1-1 1.2-.3.2-.6 0a7.6 7.6 0 0 1-2.2-1.4 8.3 8.3 0 0 1-1.5-1.9c-.2-.3 0-.5.1-.6s.3-.4.4-.6c.1-.2.2-.3.3-.5s.1-.4 0-.6l-1-2.4c-.3-.7-.5-.6-.7-.6l-.6 0c-.2 0-.5.1-.8.4a3.3 3.3 0 0 0-1 2.4 5.8 5.8 0 0 0 1.2 3.1 11.5 11.5 0 0 0 4.3 3.8c.6.3 1.1.5 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.1-1.4z"/></svg></a>
-                    <a href="#" class="yt"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.8 3.5-6.8 3.5z"/></svg></a>
-                </div>
-            </div>
-        </div>
+                    <a href="#" class="yt"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.8 3.5-6.8 3.5z"/></svg></a>               
+    </div>
+  </div>
 
-        <!-- SMART BOTTOM SHEET AUTH MODAL (LOGIN & REGISTER) -->
-        <div id="authModal" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'authModal')">
-            <div class="modal-card">
-                <!-- LOGIN FORM -->
-                <div id="loginFormContainer" class="auth-view hidden">
-                    <h1 class="auth-header-title">Welcome Back</h1>
-                    <p class="auth-subtitle">Login to access your smart wallet</p>
+</div>
 
-                    <div class="form-input-wrapper">
-                        <i data-lucide="user" class="left-icon"></i>
-                        <input type="text" id="loginUid" class="ui-input has-left-icon has-right-icon" placeholder="Enter Your U ID" style="text-transform: uppercase;">
-                        <i data-lucide="x" class="right-icon" onclick="document.getElementById('loginUid').value=''"></i>
-                    </div>
+<!-- ======================================================
+     AUTH MODAL
+====================================================== -->
+<div
+  id="authModal"
+  class="modal-overlay hidden"
+  onclick="closeModalOnOverlay(event,'authModal')"
+>
 
-                    <div class="form-input-wrapper">
-                        <i data-lucide="lock" class="left-icon"></i>
-                        <input type="password" id="loginKey" class="ui-input has-left-icon has-right-icon" placeholder="Enter 6-Digit Key" maxlength="6" inputmode="numeric">
-                        <i data-lucide="eye-off" id="toggleLoginKey" class="right-icon" onclick="togglePasswordVisibility('loginKey', 'toggleLoginKey')"></i>
-                    </div>
+  <div class="modal-card">
 
-                    <span class="forgot-link" onclick="showAlert('Please contact administrator to recover your key.')">Forgot Key?</span>
+    <div class="modal-handle"></div>
 
-                    <button id="loginSubmitBtn" class="btn-auth-submit" onclick="confirmLoginAction()">Login securely</button>
+    <div class="modal-top">
+      <div id="authModalTitle" class="modal-title">
+        Account
+      </div>
 
-                    <p class="auth-switch-text">Don't have an account? <span onclick="switchAuthModalTab('register')">Create New ID</span></p>
-                </div>
-
-                <!-- REGISTER FORM -->
-                <div id="registerFormContainer" class="auth-view hidden">
-                    <h1 class="auth-header-title">Create ID</h1>
-                    <p class="auth-subtitle">Join us and unlock features</p>
-
-                    <!-- Circular Profile Photo Upload -->
-                    <div class="avatar-upload-wrapper">
-                        <div class="avatar-upload-circle" onclick="document.getElementById('regPhoto').click()">
-                            <img id="avatarPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" alt="Preview">
-                        </div>
-                        <input type="file" id="regPhoto" accept="image/*" class="hidden" onchange="previewAvatar(this)">
-                    </div>
-
-                    <div class="form-input-wrapper">
-                        <i data-lucide="user" class="left-icon"></i>
-                        <input type="text" id="regName" class="ui-input has-left-icon" placeholder="Full Name">
-                    </div>
-
-                    <div class="form-input-wrapper">
-                        <i data-lucide="phone" class="left-icon"></i>
-                        <input type="tel" id="regPhone" class="ui-input has-left-icon" placeholder="Phone No">
-                    </div>
-
-                    <div class="form-input-wrapper">
-                        <i data-lucide="lock" class="left-icon"></i>
-                        <input type="password" id="regKey" class="ui-input has-left-icon has-right-icon" placeholder="Set 6-Digit Key" maxlength="6" inputmode="numeric">
-                        <i data-lucide="eye-off" id="toggleRegKey" class="right-icon" onclick="togglePasswordVisibility('regKey', 'toggleRegKey')"></i>
-                    </div>
-
-                    <div class="form-input-wrapper">
-                        <select id="regClass" class="ui-input ui-select">
-                            <option value="" disabled selected>Select Your Class</option>
-                            <option value="Class 9">Class 9</option>
-                            <option value="Class 10">Class 10</option>
-                            <option value="Class 11">Class 11</option>
-                            <option value="Class 12">Class 12</option>
-                        </select>
-                    </div>
-
-                    <button id="regSubmitBtn" class="btn-auth-submit" onclick="confirmRegisterAction()">Register Now</button>
-
-                    <p class="auth-switch-text">Already have an ID? <span onclick="switchAuthModalTab('login')">Login</span></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- DASHBOARD DETAILS MODAL -->
-        <div id="viewDetailsModal" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'viewDetailsModal')">
-            <div class="modal-card">
-                <div class="modal-title">Your QR & Details</div>
-                <div id="qrcode" style="margin: 5px 0; display:flex; justify-content:center;"></div>
-                <div class="modal-subtitle">Scan to receive or verify credentials</div>
-                <div style="background: var(--input-bg); border-radius: 12px; padding: 12px 16px; width: 100%; text-align: left; font-size: 14px;">
-                    <p style="margin-bottom:6px;"><i data-lucide="phone" style="width:14px; display:inline; vertical-align:middle; color:var(--sub)"></i> <strong style="color:var(--sub);">Phone:</strong> <span id="detailPhone" style="font-weight:600;">-</span></p>
-                    <p><i data-lucide="graduation-cap" style="width:14px; display:inline; vertical-align:middle; color:var(--sub)"></i> <strong style="color:var(--sub);">Class:</strong> <span id="detailClass" style="font-weight:600;">-</span></p>
-                </div>
-                <button class="btn-modal-cancel" style="width: 100%; margin-top: 12px;" onclick="closeModal('viewDetailsModal')">Close</button>
-            </div>
-        </div>
-
-        <!-- EDIT PROFILE MODAL -->
-        <div id="editProfileModal" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'editProfileModal')">
-            <div class="modal-card">
-                <div class="modal-title">Edit Key</div>
-                <div class="form-input-wrapper" style="margin-top: 10px;">
-                    <i data-lucide="lock" class="left-icon"></i>
-                    <input type="password" id="editKey" class="ui-input has-left-icon has-right-icon" placeholder="Enter New 6-digit Key" maxlength="6" inputmode="numeric">
-                    <i data-lucide="eye-off" id="toggleEditKey" class="right-icon" onclick="togglePasswordVisibility('editKey', 'toggleEditKey')"></i>
-                </div>
-
-                <div class="modal-actions">
-                    <button class="btn-modal-cancel" onclick="closeModal('editProfileModal')">Cancel</button>
-                    <button id="updateProfileBtn" class="btn-modal-confirm" onclick="submitProfileEdit()">Save Changes</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- BOTTOM NAV (Hidden during Auth) -->
-        <div id="mainBottomNav" class="bottom-nav hidden">
-            <a href="home.html" class="nav-item active">
-                <div class="icon-bg"><i data-lucide="home"></i></div>
-                <span>Home</span>
-            </a>
-            <a href="courses.html" class="nav-item">
-                <div class="icon-bg"><i data-lucide="monitor-play"></i></div>
-                <span>Courses</span>
-            </a>
-            <a href="library.html" class="nav-item">
-                <div class="icon-bg"><i data-lucide="book-open"></i></div>
-                <span>Library</span>
-            </a>
-            <a href="profile.html" class="nav-item">
-                <div class="icon-bg"><i data-lucide="user"></i></div>
-                <span>Profile</span>
-            </a>
-        </div>
+      <button
+        class="modal-close"
+        onclick="closeModal('authModal')"
+      >
+        <i data-lucide="x"></i>
+      </button>
     </div>
 
+    <!-- LOGIN -->
+    <div id="loginFormContainer" class="auth-view hidden">
+
+      <h1 class="auth-header-title">
+        Welcome Back
+      </h1>
+
+      <p class="auth-subtitle">
+        Login to access your smart wallet
+      </p>
+
+      <div class="form-input-wrapper">
+
+        <i data-lucide="user" class="left-icon"></i>
+
+        <input
+          type="text"
+          id="loginUid"
+          class="ui-input has-left-icon has-right-icon"
+          placeholder="Enter Your UID"
+          autocomplete="username"
+          autocapitalize="characters"
+          spellcheck="false"
+          oninput="formatUID(this)"
+        >
+
+        <i
+          data-lucide="x"
+          class="right-icon"
+          onclick="clearInput('loginUid')"
+        ></i>
+
+      </div>
+
+      <div class="form-input-wrapper">
+
+        <i data-lucide="lock" class="left-icon"></i>
+
+        <input
+          type="password"
+          id="loginKey"
+          class="ui-input has-left-icon has-right-icon"
+          placeholder="Enter 6-Digit Key"
+          maxlength="6"
+          inputmode="numeric"
+          autocomplete="current-password"
+        >
+
+        <i
+          data-lucide="eye-off"
+          id="toggleLoginKey"
+          class="right-icon"
+          onclick="togglePasswordVisibility('loginKey','toggleLoginKey')"
+        ></i>
+
+      </div>
+
+      <span
+        class="forgot-link"
+        onclick="showAlert('Please contact administrator to recover your key.','info')"
+      >
+        Forgot Key?
+      </span>
+
+      <button
+        id="loginSubmitBtn"
+        class="btn-auth-submit"
+        onclick="confirmLoginAction()"
+      >
+        Login securely
+      </button>
+
+      <p class="auth-switch-text">
+        Don't have an account?
+        <span onclick="switchAuthModalTab('register')">
+          Create New ID
+        </span>
+      </p>
+
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerFormContainer" class="auth-view hidden">
+
+      <h1 class="auth-header-title">
+        Create ID
+      </h1>
+
+      <p class="auth-subtitle">
+        Join us and unlock features
+      </p>
+
+      <div class="avatar-upload-wrapper">
+        <div
+          class="avatar-upload-circle"
+          onclick="document.getElementById('regPhoto').click()"
+        >
+          <img
+            id="avatarPreview"
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>"
+            alt="Profile"
+          >
+        </div>
+
+        <input
+          type="file"
+          id="regPhoto"
+          accept="image/*"
+          class="hidden"
+          onchange="previewAvatar(this)"
+        >
+      </div>
+
+      <div class="form-input-wrapper">
+        <i data-lucide="user" class="left-icon"></i>
+        <input
+          type="text"
+          id="regName"
+          class="ui-input has-left-icon"
+          placeholder="Full Name"
+        >
+      </div>
+
+      <div class="form-input-wrapper">
+        <i data-lucide="phone" class="left-icon"></i>
+        <input
+          type="tel"
+          id="regPhone"
+          class="ui-input has-left-icon"
+          placeholder="Phone No"
+          inputmode="tel"
+        >
+      </div>
+
+      <div class="form-input-wrapper">
+
+        <i data-lucide="lock" class="left-icon"></i>
+
+        <input
+          type="password"
+          id="regKey"
+          class="ui-input has-left-icon has-right-icon"
+          placeholder="Set 6-Digit Key"
+          maxlength="6"
+          inputmode="numeric"
+        >
+
+        <i
+          data-lucide="eye-off"
+          id="toggleRegKey"
+          class="right-icon"
+          onclick="togglePasswordVisibility('regKey','toggleRegKey')"
+        ></i>
+
+      </div>
+
+      <div class="form-input-wrapper">
+
+        <select
+          id="regClass"
+          class="ui-input ui-select"
+        >
+          <option value="" disabled selected>
+            Select Your Class
+          </option>
+          <option value="Class 9">Class 9</option>
+          <option value="Class 10">Class 10</option>
+          <option value="Class 11">Class 11</option>
+          <option value="Class 12">Class 12</option>
+        </select>
+
+      </div>
+
+      <button
+        id="regSubmitBtn"
+        class="btn-auth-submit"
+        onclick="confirmRegisterAction()"
+      >
+        Register Now
+      </button>
+
+      <p class="auth-switch-text">
+        Already have an ID?
+        <span onclick="switchAuthModalTab('login')">
+          Login
+        </span>
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================================================
+     NEW QR MODAL - QR ONLY
+====================================================== -->
+<div
+  id="viewDetailsModal"
+  class="modal-overlay hidden"
+  onclick="closeModalOnOverlay(event,'viewDetailsModal')"
+>
+
+  <div class="modal-card qr-modal-card">
+
+    <div class="modal-handle"></div>
+
+    <div class="modal-top">
+      <div class="modal-title">My QR Code</div>
+
+      <button
+        class="modal-close"
+        onclick="closeModal('viewDetailsModal')"
+      >
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="qr-only-wrap">
+
+      <div class="qr-box">
+        <div id="qrcode"></div>
+      </div>
+
+      <div class="qr-label">
+        Scan this QR code to verify your UID
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================================================
+     NOTIFICATION MODAL
+====================================================== -->
+<div
+  id="notificationModal"
+  class="modal-overlay hidden"
+  onclick="closeModalOnOverlay(event,'notificationModal')"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-handle"></div>
+
+    <div class="modal-top">
+      <div class="modal-title">
+        Notifications
+      </div>
+
+      <button
+        class="modal-close"
+        onclick="closeModal('notificationModal')"
+      >
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="notification-list">
+
+      <div class="notification-item">
+
+        <div class="notification-icon">
+          <i data-lucide="wallet-cards"></i>
+        </div>
+
+        <div class="notification-info">
+          <strong>Welcome to TG Wallet</strong>
+          <span>Your wallet account is ready to use.</span>
+        </div>
+
+      </div>
+
+      <div class="notification-item">
+
+        <div class="notification-icon">
+          <i data-lucide="graduation-cap"></i>
+        </div>
+
+        <div class="notification-info">
+          <strong>Study Updates</strong>
+          <span>Check the latest courses and exam updates.</span>
+        </div>
+
+      </div>
+
+      <div class="notification-item">
+
+        <div class="notification-icon">
+          <i data-lucide="shield-check"></i>
+        </div>
+
+        <div class="notification-info">
+          <strong>Account Security</strong>
+          <span>Keep your 6-digit key private.</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================================================
+     EDIT KEY MODAL
+====================================================== -->
+<div
+  id="editProfileModal"
+  class="modal-overlay hidden"
+  onclick="closeModalOnOverlay(event,'editProfileModal')"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-handle"></div>
+
+    <div class="modal-top">
+
+      <div class="modal-title">
+        Edit Security Key
+      </div>
+
+      <button
+        class="modal-close"
+        onclick="closeModal('editProfileModal')"
+      >
+        <i data-lucide="x"></i>
+      </button>
+
+    </div>
+
+    <div class="modal-subtitle">
+      Create a new 6-digit numerical key.
+    </div>
+
+    <div class="form-input-wrapper">
+
+      <i data-lucide="lock" class="left-icon"></i>
+
+      <input
+        type="password"
+        id="editKey"
+        class="ui-input has-left-icon has-right-icon"
+        placeholder="Enter New 6-digit Key"
+        maxlength="6"
+        inputmode="numeric"
+      >
+
+      <i
+        data-lucide="eye-off"
+        id="toggleEditKey"
+        class="right-icon"
+        onclick="togglePasswordVisibility('editKey','toggleEditKey')"
+      ></i>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        class="btn-modal-cancel"
+        onclick="closeModal('editProfileModal')"
+      >
+        Cancel
+      </button>
+
+      <button
+        id="updateProfileBtn"
+        class="btn-modal-confirm"
+        onclick="submitProfileEdit()"
+      >
+        Save Changes
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= BOTTOM NAV ================= -->
+<div id="mainBottomNav" class="bottom-nav hidden">
+
+  <a href="home.html" class="nav-item active">
+    <div class="icon-bg">
+      <i data-lucide="home"></i>
+    </div>
+    <span>Home</span>
+  </a>
+
+  <a href="courses.html" class="nav-item">
+    <div class="icon-bg">
+      <i data-lucide="monitor-play"></i>
+    </div>
+    <span>Courses</span>
+  </a>
+
+  <a href="library.html" class="nav-item">
+    <div class="icon-bg">
+      <i data-lucide="book-open"></i>
+    </div>
+    <span>Library</span>
+  </a>
+
+  <a href="profile.html" class="nav-item">
+    <div class="icon-bg">
+      <i data-lucide="user"></i>
+    </div>
+    <span>Profile</span>
+  </a>
+
+</div>
+
+</div>
+
+<!-- ======================================================
+     FIREBASE
+====================================================== -->
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { 
-        getFirestore, doc, getDoc, updateDoc, runTransaction, onSnapshot 
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
-        authDomain: "tutogenius-1.firebaseapp.com",
-        projectId: "tutogenius-1",
-        storageBucket: "tutogenius-1.firebasestorage.app",
-        messagingSenderId: "65839146612",
-        appId: "1:65839146612:web:4e54c6ad4cea4bc5859321"
-    };
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  runTransaction,
+  onSnapshot
+}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    let unsubSnapshot = null;
-    let currentUserData = {};
-    let realKey = "";
+const firebaseConfig={
+  apiKey:"AIzaSyCfd1bdt9dWsRKkX9xLFB_7Hf7GmZFZBag",
+  authDomain:"tutogenius-1.firebaseapp.com",
+  projectId:"tutogenius-1",
+  storageBucket:"tutogenius-1.firebasestorage.app",
+  messagingSenderId:"65839146612",
+  appId:"1:65839146612:web:4e54c6ad4cea4bc5859321"
+};
 
-    function hideLoadingScreen() {
-        const loader = document.getElementById('loadingScreen');
-        if (loader) {
-            loader.style.opacity = '0';
-            loader.style.visibility = 'hidden';
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 500);
-        }
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+let unsubSnapshot=null;
+let currentUserData={};
+let realKey="";
+
+/* ================= LOAD ================= */
+function hideLoadingScreen(){
+  const loader=document.getElementById("loadingScreen");
+
+  if(!loader)return;
+
+  loader.style.opacity="0";
+  loader.style.visibility="hidden";
+
+  setTimeout(()=>{
+    loader.style.display="none";
+  },500);
+}
+
+/* ================= INIT ================= */
+document.addEventListener("DOMContentLoaded",()=>{
+  lucide.createIcons();
+  updateTimeGreeting();
+  checkLoginStatus();
+});
+
+/* ================= GREETING ================= */
+function updateTimeGreeting(){
+
+  const hour=new Date().getHours();
+  const greeting=document.getElementById("greetingText");
+  const tip=document.getElementById("studyTipText");
+
+  if(!greeting||!tip)return;
+
+  if(hour>=4&&hour<12){
+    greeting.textContent="Good Morning";
+    tip.textContent="Start fresh! Time for deep study & practice.";
+  }
+  else if(hour>=12&&hour<16){
+    greeting.textContent="Good Noon";
+    tip.textContent="Keep up the flow! Perfect time to study more.";
+  }
+  else if(hour>=16&&hour<20){
+    greeting.textContent="Good Afternoon";
+    tip.textContent="Great time to review & quick revision!";
+  }
+  else{
+    greeting.textContent="Good Night";
+    tip.textContent="Complete your daily targets & review notes.";
+  }
+}
+
+/* ================= IMAGE ================= */
+function processImageFile(file){
+
+  return new Promise((resolve,reject)=>{
+
+    if(!file){
+      resolve(null);
+      return;
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        lucide.createIcons();
-        updateTimeGreeting();
-        checkLoginStatus();
+    const reader=new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload=e=>{
+
+      const img=new Image();
+
+      img.src=e.target.result;
+
+      img.onload=()=>{
+
+        const canvas=document.createElement("canvas");
+        const ctx=canvas.getContext("2d");
+
+        const maxW=200;
+        const maxH=200;
+
+        let width=img.width;
+        let height=img.height;
+
+        if(width>height){
+
+          if(width>maxW){
+            height*=maxW/width;
+            width=maxW;
+          }
+
+        }else{
+
+          if(height>maxH){
+            width*=maxH/height;
+            height=maxH;
+          }
+
+        }
+
+        canvas.width=width;
+        canvas.height=height;
+
+        ctx.drawImage(img,0,0,width,height);
+
+        resolve(
+          canvas.toDataURL("image/jpeg",.8)
+        );
+      };
+
+      img.onerror=reject;
+    };
+
+    reader.onerror=reject;
+
+  });
+}
+
+/* ================= AVATAR ================= */
+window.previewAvatar=function(input){
+
+  if(!input.files||!input.files[0])return;
+
+  const reader=new FileReader();
+
+  reader.onload=e=>{
+    document.getElementById("avatarPreview").src=e.target.result;
+  };
+
+  reader.readAsDataURL(input.files[0]);
+};
+
+/* ================= LOGIN STATUS ================= */
+async function checkLoginStatus(){
+
+  const savedUid=localStorage.getItem("tg_uid");
+  const savedKey=localStorage.getItem("tg_key");
+  const cached=localStorage.getItem("tg_user_data");
+
+  if(savedUid&&savedKey){
+
+    if(cached){
+
+      try{
+
+        const data=JSON.parse(cached);
+
+        renderUserData(
+          savedUid,
+          savedKey,
+          data
+        );
+
+        setAppAuthState(true);
+
+      }catch(e){
+        console.error(e);
+      }
+
+    }
+
+    try{
+
+      const snap=await getDoc(
+        doc(db,"users",savedUid)
+      );
+
+      if(
+        snap.exists() &&
+        snap.data().key===savedKey
+      ){
+
+        const data=snap.data();
+
+        localStorage.setItem(
+          "tg_user_data",
+          JSON.stringify(data)
+        );
+
+        renderUserData(
+          savedUid,
+          savedKey,
+          data
+        );
+
+        setAppAuthState(true);
+        loadDashboard(savedUid,savedKey);
+
+        hideLoadingScreen();
+        return;
+      }
+
+    }catch(e){
+
+      console.log(
+        "Using cached account data",
+        e
+      );
+
+    }
+
+  }
+
+  setAppAuthState(false);
+  hideLoadingScreen();
+}
+
+/* ================= RENDER USER ================= */
+function renderUserData(uid,key,data){
+
+  realKey=key;
+  currentUserData=data||{};
+
+  const uidEl=document.getElementById("dashUid");
+
+  if(uidEl)
+    uidEl.textContent=String(uid).trim();
+
+  document.getElementById("dashName").textContent=
+    data.name||"User Name";
+
+  document.getElementById("dashBalance").textContent=
+    Number(data.balance||0).toFixed(2);
+
+  if(data.photo){
+    document.getElementById("dashPhoto").src=data.photo;
+  }
+
+  createQR(uid);
+}
+
+/* ================= QR ================= */
+function createQR(uid){
+
+  const qr=document.getElementById("qrcode");
+
+  if(!qr)return;
+
+  qr.innerHTML="";
+
+  new QRCode(qr,{
+    text:String(uid).trim(),
+    width:210,
+    height:210,
+    colorDark:"#000000",
+    colorLight:"#ffffff",
+    correctLevel:QRCode.CorrectLevel.H
+  });
+}
+
+window.openQRModal=function(){
+
+  const uid=localStorage.getItem("tg_uid");
+
+  if(!uid){
+    showAlert(
+      "UID not available",
+      "error"
+    );
+    return;
+  }
+
+  createQR(uid);
+
+  openModal("viewDetailsModal");
+};
+
+/* ================= DASHBOARD SNAPSHOT ================= */
+function loadDashboard(uid,key){
+
+  if(unsubSnapshot)
+    unsubSnapshot();
+
+  unsubSnapshot=onSnapshot(
+    doc(db,"users",uid),
+    snap=>{
+
+      if(!snap.exists())return;
+
+      const data=snap.data();
+
+      localStorage.setItem(
+        "tg_user_data",
+        JSON.stringify(data)
+      );
+
+      renderUserData(
+        uid,
+        key,
+        data
+      );
+
+    }
+  );
+}
+
+/* ================= AUTH STATE ================= */
+function setAppAuthState(isLoggedIn){
+
+  const header=document.getElementById("mainHeader");
+  const footer=document.getElementById("mainBottomNav");
+  const container=document.getElementById("appContainer");
+  const welcome=document.getElementById("authWelcomeView");
+  const dashboard=document.getElementById("dashboardView");
+
+  if(isLoggedIn){
+
+    header.classList.remove("hidden");
+    footer.classList.remove("hidden");
+
+    container.classList.add("logged-in");
+
+    welcome.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+
+    closeModal("authModal");
+
+  }else{
+
+    header.classList.add("hidden");
+    footer.classList.add("hidden");
+
+    container.classList.remove("logged-in");
+
+    welcome.classList.remove("hidden");
+    dashboard.classList.add("hidden");
+
+  }
+
+  lucide.createIcons();
+}
+
+/* ================= AUTH MODAL ================= */
+window.openAuthModal=function(type){
+
+  switchAuthModalTab(type);
+  openModal("authModal");
+
+};
+
+window.switchAuthModalTab=function(type){
+
+  const login=document.getElementById(
+    "loginFormContainer"
+  );
+
+  const register=document.getElementById(
+    "registerFormContainer"
+  );
+
+  const title=document.getElementById(
+    "authModalTitle"
+  );
+
+  if(type==="login"){
+
+    login.classList.remove("hidden");
+    register.classList.add("hidden");
+
+    title.textContent="Login";
+
+  }else{
+
+    login.classList.add("hidden");
+    register.classList.remove("hidden");
+
+    title.textContent="Create Account";
+
+  }
+
+  lucide.createIcons();
+};
+
+/* ================= UID FORMAT ================= */
+window.formatUID=function(input){
+
+  /*
+    Removes ALL spaces.
+    Keeps UID uppercase.
+  */
+
+  input.value=input.value
+    .replace(/\s+/g,"")
+    .toUpperCase();
+
+};
+
+/* ================= CLEAR ================= */
+window.clearInput=function(id){
+
+  const el=document.getElementById(id);
+
+  if(el){
+    el.value="";
+    el.focus();
+  }
+
+};
+
+/* ================= COPY UID ================= */
+window.copyUID=async function(){
+
+  const uid=document.getElementById("dashUid").textContent.trim();
+
+  if(!uid||uid==="-"){
+    showAlert("UID not available","error");
+    return;
+  }
+
+  try{
+
+    await navigator.clipboard.writeText(uid);
+
+    showAlert(
+      "UID copied successfully!",
+      "success"
+    );
+
+  }catch(e){
+
+    const temp=document.createElement("textarea");
+
+    temp.value=uid;
+    temp.style.position="fixed";
+    temp.style.opacity="0";
+
+    document.body.appendChild(temp);
+
+    temp.select();
+
+    try{
+      document.execCommand("copy");
+
+      showAlert(
+        "UID copied successfully!",
+        "success"
+      );
+
+    }catch(err){
+
+      showAlert(
+        "Unable to copy UID",
+        "error"
+      );
+
+    }
+
+    temp.remove();
+
+  }
+
+};
+
+/* ================= LOGIN ================= */
+window.confirmLoginAction=async function(){
+
+  /*
+    trim() + remove internal spaces.
+    Therefore TG 2026 000001 becomes TG2026000001.
+  */
+
+  const uid=document.getElementById("loginUid")
+    .value
+    .replace(/\s+/g,"")
+    .toUpperCase();
+
+  const key=document.getElementById("loginKey")
+    .value
+    .trim();
+
+  if(!uid||!/^\d{6}$/.test(key)){
+
+    showAlert(
+      "Please enter valid UID and 6-digit Key",
+      "error"
+    );
+
+    return;
+  }
+
+  const btn=document.getElementById(
+    "loginSubmitBtn"
+  );
+
+  btn.disabled=true;
+  btn.textContent="Authenticating...";
+
+  try{
+
+    const snap=await getDoc(
+      doc(db,"users",uid)
+    );
+
+    if(
+      snap.exists() &&
+      snap.data().key===key
+    ){
+
+      const data=snap.data();
+
+      localStorage.setItem("tg_uid",uid);
+      localStorage.setItem("tg_key",key);
+      localStorage.setItem(
+        "tg_user_data",
+        JSON.stringify(data)
+      );
+
+      renderUserData(uid,key,data);
+
+      setAppAuthState(true);
+      loadDashboard(uid,key);
+
+      showAlert(
+        "Login Successful!",
+        "success"
+      );
+
+    }else{
+
+      showAlert(
+        "Invalid UID or Key!",
+        "error"
+      );
+
+    }
+
+  }catch(e){
+
+    showAlert(
+      "Login error: "+e.message,
+      "error"
+    );
+
+  }finally{
+
+    btn.disabled=false;
+    btn.textContent="Login securely";
+
+  }
+
+};
+
+/* ================= REGISTER ================= */
+window.confirmRegisterAction=async function(){
+
+  const name=document
+    .getElementById("regName")
+    .value
+    .trim();
+
+  const phone=document
+    .getElementById("regPhone")
+    .value
+    .trim();
+
+  const key=document
+    .getElementById("regKey")
+    .value
+    .trim();
+
+  const userClass=document
+    .getElementById("regClass")
+    .value;
+
+  const photoFile=document
+    .getElementById("regPhoto")
+    .files[0];
+
+  if(
+    !name||
+    !phone||
+    !/^\d{6}$/.test(key)||
+    !userClass
+  ){
+
+    showAlert(
+      "Please fill in all details correctly!",
+      "error"
+    );
+
+    return;
+  }
+
+  const btn=document.getElementById(
+    "regSubmitBtn"
+  );
+
+  btn.disabled=true;
+  btn.textContent="Creating Account...";
+
+  try{
+
+    const photoBase64=
+      await processImageFile(photoFile);
+
+    const userPayload={
+      name,
+      phone,
+      userClass,
+      photo:photoBase64||"",
+      key,
+      balance:0
+    };
+
+    const newUid=await runTransaction(
+      db,
+      async transaction=>{
+
+        const metaRef=doc(
+          db,
+          "metadata",
+          "users"
+        );
+
+        const metaSnap=
+          await transaction.get(metaRef);
+
+        const nextId=
+          (metaSnap.exists()
+            ?metaSnap.data().lastId||0
+            :0)+1;
+
+        const formattedId=
+          "TG2026"+
+          String(nextId).padStart(6,"0");
+
+        transaction.set(
+          metaRef,
+          {lastId:nextId},
+          {merge:true}
+        );
+
+        transaction.set(
+          doc(db,"users",formattedId),
+          userPayload
+        );
+
+        return formattedId;
+      }
+    );
+
+    localStorage.setItem(
+      "tg_uid",
+      newUid
+    );
+
+    localStorage.setItem(
+      "tg_key",
+      key
+    );
+
+    localStorage.setItem(
+      "tg_user_data",
+      JSON.stringify(userPayload)
+    );
+
+    renderUserData(
+      newUid,
+      key,
+      userPayload
+    );
+
+    setAppAuthState(true);
+    loadDashboard(newUid,key);
+
+    showAlert(
+      "Account created successfully!",
+      "success"
+    );
+
+  }catch(e){
+
+    showAlert(
+      "Registration failed: "+e.message,
+      "error"
+    );
+
+  }finally{
+
+    btn.disabled=false;
+    btn.textContent="Register Now";
+
+  }
+
+};
+
+/* ================= EDIT KEY ================= */
+window.submitProfileEdit=async function(){
+
+  const newKey=document
+    .getElementById("editKey")
+    .value
+    .trim();
+
+  const uid=localStorage.getItem("tg_uid");
+
+  if(!/^\d{6}$/.test(newKey)){
+
+    showAlert(
+      "Enter a valid 6-digit numerical key!",
+      "error"
+    );
+
+    return;
+  }
+
+  const btn=document.getElementById(
+    "updateProfileBtn"
+  );
+
+  btn.disabled=true;
+  btn.textContent="Saving...";
+
+  try{
+
+    await updateDoc(
+      doc(db,"users",uid),
+      {key:newKey}
+    );
+
+    localStorage.setItem(
+      "tg_key",
+      newKey
+    );
+
+    realKey=newKey;
+
+    currentUserData.key=newKey;
+
+    localStorage.setItem(
+      "tg_user_data",
+      JSON.stringify(currentUserData)
+    );
+
+    document.getElementById(
+      "dashKey"
+    ).textContent="******";
+
+    showAlert(
+      "Key updated successfully!",
+      "success"
+    );
+
+    document.getElementById("editKey").value="";
+
+    closeModal("editProfileModal");
+
+  }catch(e){
+
+    showAlert(
+      "Update failed: "+e.message,
+      "error"
+    );
+
+  }finally{
+
+    btn.disabled=false;
+    btn.textContent="Save Changes";
+
+  }
+
+};
+
+/* ================= BALANCE ================= */
+window.refreshBalance=async function(){
+
+  const uid=localStorage.getItem("tg_uid");
+
+  if(!uid)return;
+
+  try{
+
+    const snap=await getDoc(
+      doc(db,"users",uid)
+    );
+
+    if(snap.exists()){
+
+      const data=snap.data();
+
+      localStorage.setItem(
+        "tg_user_data",
+        JSON.stringify(data)
+      );
+
+      document.getElementById(
+        "dashBalance"
+      ).textContent=
+        Number(data.balance||0).toFixed(2);
+
+      showAlert(
+        "Balance synced",
+        "success"
+      );
+
+    }
+
+  }catch(e){
+
+    showAlert(
+      "Sync error",
+      "error"
+    );
+
+  }
+
+};
+
+/* ================= DASH KEY ================= */
+window.toggleDashKeyVisibility=function(){
+
+  const span=document.getElementById("dashKey");
+  const btn=document.getElementById("toggleDashKey");
+
+  if(span.textContent==="******"){
+
+    span.textContent=realKey;
+
+    btn.innerHTML=
+      '<i data-lucide="eye"></i>';
+
+  }else{
+
+    span.textContent="******";
+
+    btn.innerHTML=
+      '<i data-lucide="eye-off"></i>';
+
+  }
+
+  lucide.createIcons();
+
+};
+
+/* ================= PASSWORD ================= */
+window.togglePasswordVisibility=function(
+  inputId,
+  iconId
+){
+
+  const input=document.getElementById(inputId);
+  const icon=document.getElementById(iconId);
+
+  if(input.type==="password"){
+
+    input.type="text";
+
+    icon.setAttribute(
+      "data-lucide",
+      "eye"
+    );
+
+  }else{
+
+    input.type="password";
+
+    icon.setAttribute(
+      "data-lucide",
+      "eye-off"
+    );
+
+  }
+
+  lucide.createIcons();
+
+};
+
+/* ================= MODALS ================= */
+window.openModal=function(id){
+
+  const el=document.getElementById(id);
+
+  if(!el)return;
+
+  el.classList.remove("hidden");
+
+  document.body.style.overflow="hidden";
+
+  lucide.createIcons();
+
+};
+
+window.closeModal=function(id){
+
+  const el=document.getElementById(id);
+
+  if(!el)return;
+
+  el.classList.add("hidden");
+
+  const anyOpen=
+    document.querySelector(
+      ".modal-overlay:not(.hidden)"
+    );
+
+  if(!anyOpen)
+    document.body.style.overflow="hidden";
+
+};
+
+window.closeModalOnOverlay=function(e,id){
+
+  if(e.target.id===id){
+    closeModal(id);
+  }
+
+};
+
+/* ================= TABS ================= */
+window.switchView=function(evt,tabName){
+
+  document
+    .querySelectorAll(".tab-content")
+    .forEach(el=>{
+      el.classList.add("hidden");
     });
 
-    function updateTimeGreeting() {
-        const hour = new Date().getHours();
-        const greetingEl = document.getElementById('greetingText');
-        const tipEl = document.getElementById('studyTipText');
+  document
+    .querySelectorAll(".tab")
+    .forEach(el=>{
+      el.classList.remove("active");
+    });
 
-        if (!greetingEl || !tipEl) return;
+  const target=document.getElementById(tabName);
 
-        if (hour >= 4 && hour < 12) {
-            greetingEl.innerHTML = `Good Morning `;
-            tipEl.textContent = "Start fresh! Time for deep study & practice.";
-        } else if (hour >= 12 && hour < 16) {
-            greetingEl.innerHTML = `Good Noon `;
-            tipEl.textContent = "Keep up the flow! Perfect time to study more.";
-        } else if (hour >= 16 && hour < 20) {
-            greetingEl.innerHTML = `Good Afternoon `;
-            tipEl.textContent = "Great time to review & quick revision!";
-        } else {
-            greetingEl.innerHTML = `Good Night `;
-            tipEl.textContent = "Complete your daily targets & review notes.";
-        }
-    }
+  if(target)
+    target.classList.remove("hidden");
 
-    function processImageFile(file) {
-        return new Promise((resolve, reject) => {
-            if (!file) return resolve(null);
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (event) => {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    const maxW = 200;
-                    const maxH = 200;
-                    let width = img.width;
-                    let height = img.height;
-                    
-                    if (width > height) {
-                        if (width > maxW) { height *= maxW / width; width = maxW; }
-                    } else {
-                        if (height > maxH) { width *= maxH / height; height = maxH; }
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL('image/jpeg', 0.8));
-                };
-            };
-            reader.onerror = error => reject(error);
-        });
-    }
+  evt.currentTarget.classList.add("active");
 
-    window.previewAvatar = function(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('avatarPreview').src = e.target.result;
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    };
+};
 
-    async function checkLoginStatus() {
-        const savedUid = localStorage.getItem('tg_uid');
-        const savedKey = localStorage.getItem('tg_key');
-        const cachedUserData = localStorage.getItem('tg_user_data');
+/* ================= TOAST ================= */
+window.showAlert=function(
+  msg,
+  type="info"
+){
 
-        if (savedUid && savedKey) {
-            if (cachedUserData) {
-                try {
-                    const parsedData = JSON.parse(cachedUserData);
-                    renderUserData(savedUid, savedKey, parsedData);
-                    setAppAuthState(true);
-                } catch (e) {
-                    console.error("Local storage parse error", e);
-                }
-            }
+  const container=
+    document.getElementById(
+      "toast-container"
+    );
 
-            try {
-                const userSnap = await getDoc(doc(db, "users", savedUid));
-                if (userSnap.exists() && userSnap.data().key === savedKey) {
-                    const freshData = userSnap.data();
-                    localStorage.setItem('tg_user_data', JSON.stringify(freshData));
-                    setAppAuthState(true);
-                    loadDashboard(savedUid, savedKey);
-                    hideLoadingScreen();
-                    return;
-                }
-            } catch (e) {
-                console.error("Session sync failed, using cached data", e);
-            }
-        }
+  if(!container)return;
 
-        if (!savedUid || !savedKey) {
-            setAppAuthState(false);
-        }
-        hideLoadingScreen();
-    }
+  const toast=document.createElement("div");
 
-    function renderUserData(uid, key, data) {
-        realKey = key;
-        currentUserData = data;
-        
-        document.getElementById('dashUid').textContent = uid;
-        document.getElementById('dashName').textContent = data.name || "User Name";
-        document.getElementById('dashBalance').textContent = Number(data.balance || 0).toFixed(2);
-        
-        if (data.photo) {
-            document.getElementById('dashPhoto').src = data.photo;
-        }
+  toast.className=
+    "toast "+type;
 
-        document.getElementById('detailPhone').textContent = data.phone || "-";
-        document.getElementById('detailClass').textContent = data.userClass || "-";
+  let icon="info";
 
-        const qrContainer = document.getElementById('qrcode');
-        if (qrContainer) {
-            qrContainer.innerHTML = '';
-            new QRCode(qrContainer, {
-                text: String(uid),
-                width: 140,
-                height: 140
-            });
-        }
-    }
+  if(type==="success")
+    icon="check-circle";
 
-    function loadDashboard(uid, key) {
-        if (unsubSnapshot) unsubSnapshot();
-        unsubSnapshot = onSnapshot(doc(db, "users", uid), (docSnap) => {
-            if (docSnap.exists()) {
-                const freshData = docSnap.data();
-                localStorage.setItem('tg_user_data', JSON.stringify(freshData));
-                renderUserData(uid, key, freshData);
-            }
-        });
-    }
+  if(type==="error")
+    icon="alert-circle";
 
-    function setAppAuthState(isLoggedIn) {
-        const header = document.getElementById('mainHeader');
-        const footer = document.getElementById('mainBottomNav');
-        const container = document.getElementById('appContainer');
-        const welcomeView = document.getElementById('authWelcomeView');
-        const dashView = document.getElementById('dashboardView');
+  toast.innerHTML=`
+    <i data-lucide="${icon}" style="width:16px;flex:none"></i>
+    <span>${escapeHTML(msg)}</span>
+  `;
 
-        if (isLoggedIn) {
-            header.classList.remove('hidden');
-            footer.classList.remove('hidden');
-            container.classList.add('logged-in');
-            welcomeView.classList.add('hidden');
-            dashView.classList.remove('hidden');
-            closeModal('authModal');
-        } else {
-            header.classList.add('hidden');
-            footer.classList.add('hidden');
-            container.classList.remove('logged-in');
-            welcomeView.classList.remove('hidden');
-            dashView.classList.add('hidden');
-        }
-    }
+  container.appendChild(toast);
 
-    window.openAuthModal = function(type) {
-        switchAuthModalTab(type);
-        openModal('authModal');
-    };
+  lucide.createIcons();
 
-    window.switchAuthModalTab = function(type) {
-        const loginForm = document.getElementById('loginFormContainer');
-        const regForm = document.getElementById('registerFormContainer');
-        if (type === 'login') {
-            loginForm.classList.remove('hidden');
-            regForm.classList.add('hidden');
-        } else {
-            loginForm.classList.add('hidden');
-            regForm.classList.remove('hidden');
-        }
-    };
+  setTimeout(()=>{
+    toast.remove();
+  },2900);
 
-    window.confirmLoginAction = async function() {
-        const uid = document.getElementById('loginUid').value.trim().toUpperCase();
-        const key = document.getElementById('loginKey').value.trim();
+};
 
-        if (!uid || !/^\d{6}$/.test(key)) {
-            showAlert("Please enter valid U ID and 6-digit Key", "error");
-            return;
-        }
+/* ================= SAFE TEXT ================= */
+function escapeHTML(str){
 
-        const btn = document.getElementById('loginSubmitBtn');
-        btn.disabled = true;
-        btn.textContent = "Authenticating...";
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
-        try {
-            const userSnap = await getDoc(doc(db, "users", uid));
-            if (userSnap.exists() && userSnap.data().key === key) {
-                const data = userSnap.data();
-                localStorage.setItem('tg_uid', uid);
-                localStorage.setItem('tg_key', key);
-                localStorage.setItem('tg_user_data', JSON.stringify(data));
-                
-                showAlert("Login Successful!", "success");
-                renderUserData(uid, key, data);
-                setAppAuthState(true);
-                loadDashboard(uid, key);
-            } else {
-                showAlert("Invalid U ID or Key!", "error");
-            }
-        } catch (e) {
-            showAlert("Login error: " + e.message, "error");
-        } finally {
-            btn.disabled = false;
-            btn.textContent = "Login securely";
-        }
-    };
+}
 
-    window.confirmRegisterAction = async function() {
-        const name = document.getElementById('regName').value.trim();
-        const phone = document.getElementById('regPhone').value.trim();
-        const key = document.getElementById('regKey').value.trim();
-        const userClass = document.getElementById('regClass').value;
-        const photoFile = document.getElementById('regPhoto').files[0];
-
-        if (!name || !phone || !/^\d{6}$/.test(key) || !userClass) {
-            showAlert("Please fill in all details correctly!", "error");
-            return;
-        }
-
-        const btn = document.getElementById('regSubmitBtn');
-        btn.disabled = true;
-        btn.textContent = "Creating Account...";
-
-        try {
-            const photoBase64 = await processImageFile(photoFile);
-            const userPayload = {
-                name: name,
-                phone: phone,
-                userClass: userClass,
-                photo: photoBase64 || "",
-                key: key,
-                balance: 0.00
-            };
-
-            const newUid = await runTransaction(db, async (transaction) => {
-                const metaRef = doc(db, "metadata", "users");
-                const metaSnap = await transaction.get(metaRef);
-                const nextId = (metaSnap.exists() ? (metaSnap.data().lastId || 0) : 0) + 1;
-                const formattedId = "TG2026" + String(nextId).padStart(6, "0");
-
-                transaction.set(metaRef, { lastId: nextId }, { merge: true });
-                transaction.set(doc(db, "users", formattedId), userPayload);
-                return formattedId;
-            });
-
-            localStorage.setItem('tg_uid', newUid);
-            localStorage.setItem('tg_key', key);
-            localStorage.setItem('tg_user_data', JSON.stringify(userPayload));
-
-            showAlert(`Registered Successfully! Your UID: ${newUid}`, "success");
-            renderUserData(newUid, key, userPayload);
-            setAppAuthState(true);
-            loadDashboard(newUid, key);
-        } catch (e) {
-            showAlert("Registration failed: " + e.message, "error");
-        } finally {
-            btn.disabled = false;
-            btn.textContent = "Register Now";
-        }
-    };
-
-    window.submitProfileEdit = async function() {
-        const newKey = document.getElementById('editKey').value.trim();
-        const uid = localStorage.getItem('tg_uid');
-
-        if (!/^\d{6}$/.test(newKey)) {
-            showAlert("Enter a valid 6-digit numerical key!", "error");
-            return;
-        }
-
-        const btn = document.getElementById('updateProfileBtn');
-        btn.disabled = true;
-        btn.textContent = "Saving...";
-
-        try {
-            await updateDoc(doc(db, "users", uid), { key: newKey });
-            localStorage.setItem('tg_key', newKey);
-            realKey = newKey;
-            
-            currentUserData.key = newKey;
-            localStorage.setItem('tg_user_data', JSON.stringify(currentUserData));
-            
-            document.getElementById('dashKey').textContent = "******";
-            const icon = document.getElementById('toggleDashKey');
-            if (icon) icon.setAttribute('data-lucide', 'eye-off');
-            lucide.createIcons();
-
-            showAlert("Key updated successfully!", "success");
-            closeModal('editProfileModal');
-        } catch (e) {
-            showAlert("Update failed: " + e.message, "error");
-        } finally {
-            btn.disabled = false;
-            btn.textContent = "Save Changes";
-        }
-    };
-
-    window.refreshBalance = async function() {
-        const uid = localStorage.getItem('tg_uid');
-        if (!uid) return;
-        try {
-            const snap = await getDoc(doc(db, "users", uid));
-            if (snap.exists()) {
-                const freshData = snap.data();
-                localStorage.setItem('tg_user_data', JSON.stringify(freshData));
-                document.getElementById('dashBalance').textContent = Number(freshData.balance || 0).toFixed(2);
-                showAlert("Balance synced", "success");
-            }
-        } catch (e) {
-            showAlert("Sync error", "error");
-        }
-    };
-
-    window.toggleDashKeyVisibility = function() {
-        const keySpan = document.getElementById('dashKey');
-        const icon = document.getElementById('toggleDashKey');
-        if (keySpan.textContent === "******") {
-            keySpan.textContent = realKey;
-            icon.setAttribute('data-lucide', 'eye');
-        } else {
-            keySpan.textContent = "******";
-            icon.setAttribute('data-lucide', 'eye-off');
-        }
-        lucide.createIcons();
-    };
-
-    window.togglePasswordVisibility = function(inputId, iconId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.setAttribute('data-lucide', 'eye');
-        } else {
-            input.type = "password";
-            icon.setAttribute('data-lucide', 'eye-off');
-        }
-        lucide.createIcons();
-    };
-
-    window.openModal = function(id) {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove('hidden');
-    };
-
-    window.closeModal = function(id) {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
-    };
-
-    window.closeModalOnOverlay = function(e, id) {
-        if (e.target.id === id) closeModal(id);
-    };
-
-    window.switchView = function(evt, tabName) {
-        const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(c => c.classList.add('hide'));
-        
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(t => t.classList.remove('active'));
-
-        document.getElementById(tabName).classList.remove('hide');
-        evt.currentTarget.classList.add('active');
-    };
-
-    window.showAlert = function(msg, type = "info") {
-        const container = document.getElementById('toast-container');
-        if (!container) return;
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.style.borderColor = type === 'error' ? 'var(--danger)' : 'var(--ok)';
-        toast.textContent = msg;
-        container.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    };
 </script>
+
 </body>
 </html>
 
