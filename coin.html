@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TG Wallet - Next Gen Light UI</title>
-    <!-- Lucide Icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TG Wallet - Fast & Smooth UI</title>
+
+    <!-- Preload Critical Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- QRCode Generator Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- HTML5 QR Code Scanner Library -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
     <style>
         *, *::before, *::after {
             box-sizing: border-box;
@@ -43,7 +42,7 @@
         }
 
         :root {
-            --bg-light: #f1f5f9;
+            --bg-light: #ffffff;
             --blue-primary: #2563eb;
             --blue-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             --green-btn: #10b981;
@@ -63,42 +62,45 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow: hidden;
         }
 
-        /* Mobile Container Frame */
         .app-container {
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            max-height: 880px;
-            background-color: var(--bg-light);
+            position: fixed;
+            top: 40px;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            overflow-y: auto;
+            background: #fff;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            will-change: scroll-position;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
-        @media (min-width: 440px) {
-            .app-container {
-                border-radius: 28px;
-            }
-        }
-
-        /* Top Header Navigation */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 20px;
+        .header { 
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            height: 40px;
             background: #2563eb;
-            border-bottom: 1px solid var(--border-color);
-            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
         }
 
         .back-btn {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             border: 1px solid var(--border-color);
             background: #f8fafc;
@@ -120,7 +122,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Notifications Bar */
         .notification-banner {
             display: flex;
             align-items: center;
@@ -144,26 +145,19 @@
             flex: 1;
         }
 
-        /* Views */
         .view {
             flex: 1;
             padding: 16px;
             display: flex;
             flex-direction: column;
             opacity: 1;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.2s ease;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .hidden {
             display: none !important;
-        }
-
-        .initial-loader-view {
-            background-color: #ffffff;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
         }
 
         .auth-view {
@@ -236,107 +230,11 @@
             transform: scale(0.98);
         }
 
-        /* DASHBOARD VIEW */
         .dashboard-view {
             padding: 16px;
             gap: 16px;
         }
 
-        .profile-card {
-            background: #ffffff;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .profile-details {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            gap: 2px;
-        }
-
-        .profile-name {
-            font-weight: 800;
-            color: var(--text-dark);
-            font-size: 17px;
-        }
-
-        .profile-sub {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .user-qr-row {
-            display: flex;
-            gap: 14px;
-            align-items: center;
-            padding-top: 12px;
-            border-top: 1.5px dashed var(--border-color);
-        }
-
-        .qr-box {
-            background: #ffffff;
-            padding: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-        }
-
-        .user-details {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex: 1;
-        }
-
-        .user-info-text {
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 12px;
-        }
-
-        .user-info-text span {
-            color: var(--text-dark);
-            font-size: 13px;
-        }
-
-        .btn-small-blue {
-            background-color: #eff6ff;
-            color: var(--blue-primary);
-            border: 1px solid #bfdbfe;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-            width: fit-content;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .btn-small-blue:active {
-            transform: scale(0.95);
-        }
-
-        /* Wallet Balance Card */
         .wallet-pill {
             background: var(--blue-gradient);
             color: #ffffff;
@@ -357,7 +255,7 @@
         .flaticon-icon {
             width: 48px;
             height: 48px;
-             }
+        }
 
         .wallet-title {
             font-size: 11px;
@@ -372,6 +270,25 @@
             font-weight: 800;
             color: #ffffff;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .skeleton-balance {
+            display: inline-block;
+            width: 90px;
+            height: 24px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0.2) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s infinite linear;
+            border-radius: 6px;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .btn-add-money {
@@ -393,7 +310,6 @@
             transform: scale(0.95);
         }
 
-        /* Action Grid */
         .action-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -451,7 +367,6 @@
             color: var(--red-btn);
         }
 
-        /* Transactions Section */
         .transactions-section {
             background: #ffffff;
             border-radius: var(--radius-xl);
@@ -566,7 +481,6 @@
             font-weight: 600;
         }
 
-        /* Footer Payments Display */
         .payments-footer {
             margin-top: auto;
             padding: 12px;
@@ -594,7 +508,6 @@
         .paytm { color: #00baf2; }
         .gpay { color: #5f6368; }
 
-        /* Loader */
         .dots-loader {
             display: inline-flex;
             align-items: center;
@@ -622,7 +535,6 @@
             to { opacity: 1; transform: translateY(-4px); }
         }
 
-        /* Toast Notifications */
         #toast-container {
             position: absolute;
             bottom: 20px;
@@ -646,7 +558,6 @@
             animation: slideUp 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Modal Overlays */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -660,7 +571,8 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            animation: fadeIn 0.2s ease;
+            animation: fadeIn 0.2s ease forwards;
+            will-change: opacity;
         }
 
         .modal-card {
@@ -675,9 +587,10 @@
             flex-direction: column;
             align-items: center;
             gap: 14px;
-            animation: scaleUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: scaleUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             max-height: 90vh;
             overflow-y: auto;
+            will-change: transform;
         }
 
         .modal-icon-badge {
@@ -740,7 +653,84 @@
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
         }
 
-        /* Bottom Sheet Popup */
+        /* --- REDESIGNED GIFT CODE MODAL --- */
+        .gift-modal-card {
+            position: relative;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            padding: 24px 20px 20px 20px;
+            overflow: hidden;
+        }
+
+        .gift-modal-header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
+        }
+
+        .gift-modal-badge {
+            position: relative;
+            z-index: 2;
+            width: 68px;
+            height: 68px;
+            background: #ffffff;
+            color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 8px;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+            border: 3px solid #ecfdf5;
+        }
+
+        .gift-modal-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gift-input-wrapper {
+            width: 100%;
+            position: relative;
+            margin: 4px 0;
+        }
+
+        .gift-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px dashed #a7f3d0;
+            border-radius: var(--radius-lg);
+            font-size: 16px;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 2px;
+            color: #065f46;
+            background: #f0fdf4;
+            outline: none;
+            text-transform: uppercase;
+        }
+
+        .gift-input:focus {
+            border-color: #10b981;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        }
+
+        .gift-btn-redeem {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        }
+
         .bottom-sheet-overlay {
             position: absolute;
             top: 0;
@@ -752,7 +742,8 @@
             z-index: 1000;
             display: flex;
             align-items: flex-end;
-            animation: fadeIn 0.2s ease;
+            animation: fadeIn 0.2s ease forwards;
+            will-change: opacity;
         }
 
         .bottom-sheet-card {
@@ -765,10 +756,10 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
-            animation: slideUp 0.25s cubic-bezier(0, 0, 0.2, 1);
+            animation: slideUp 0.25s cubic-bezier(0, 0, 0.2, 1) forwards;
+            will-change: transform;
         }
 
-        /* Choice Grid inside Bottom Sheet */
         .recharge-choice-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -799,7 +790,6 @@
             color: var(--text-dark);
         }
 
-        /* Scanner Component */
         .scanner-wrapper {
             width: 100%;
             height: 240px;
@@ -841,7 +831,6 @@
             50% { top: 85%; }
         }
 
-        /* Bill Receipt Modal */
         .bill-card {
             background: #f8fafc;
             border: 1.5px dashed #cbd5e1;
@@ -906,29 +895,19 @@
     <div class="app-container">
         <div id="toast-container"></div>
 
-        <!-- TOP NAVIGATION HEADER -->
         <div class="header">
             <div class="back-btn" onclick="goBack()">
-                <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+                <i data-lucide="arrow-left" style="width: 25px; height: 25px; color: #2563eb;"></i>
             </div>
             <div class="header-title">TG WALLET</div>
             <div style="width: 40px;"></div>
         </div>
 
-        <!-- SYSTEM NOTIFICATION BAR -->
-        <div id="notifBanner" class="notification-banner">
+        <div id="notifBanner" style="display: none;" class="notification-banner">
             <i id="notifIcon" data-lucide="bell-ring" style="width: 18px; height: 18px; color: var(--red-btn);"></i>
             <div class="notification-text" id="notifText">Loading wallet status...</div>
         </div>
 
-        <!-- VIEW 0: INITIAL SYSTEM LOADER -->
-        <div id="initialLoaderView" class="view initial-loader-view">
-            <div class="dots-loader">
-                <div></div><div></div><div></div>
-            </div>
-        </div>
-
-        <!-- VIEW 1: AUTHENTICATION -->
         <div id="authView" class="view auth-view hidden">
             <h2 id="authTitle" class="auth-title">Wallet Login</h2>
             <div id="registerFields" class="hidden" style="width: 100%;">
@@ -954,44 +933,13 @@
             <button id="authToggleBtn" style="background:none; border:none; color:var(--blue-primary); font-size:13px; font-weight:700; cursor:pointer; margin-top:14px;" onclick="toggleAuthMode()">Create New Account</button>
         </div>
 
-        <!-- VIEW 2: MAIN DASHBOARD -->
         <div id="dashboardView" class="view dashboard-view hidden">
-            <!-- User Profile Card -->
-            <div class="profile-card">
-                <div class="profile-header">
-                   <div class="profile-details">
-                        <div id="dashName" class="profile-name">Loading...</div>
-                        <div class="profile-sub">
-                            <i data-lucide="phone" style="width: 12px; height: 12px;"></i>
-                            <span id="dashPhone">-</span>
-                        </div>
-                        <div class="profile-sub">
-                            <i data-lucide="graduation-cap" style="width: 12px; height: 12px;"></i>
-                            <span id="dashClass">-</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="user-qr-row">
-                    <div class="qr-box">
-                        <div id="qrcode"></div>
-                    </div>
-                    <div class="user-details">
-                        <div class="user-info-text">U ID: <span id="dashUid">-</span></div>
-                        <div class="user-info-text">KEY : <span id="dashKey">******</span></div>
-                        <button class="btn-small-blue" onclick="openChangeKeyModal()">
-                            <i data-lucide="key-round" style="width: 12px; height: 12px;"></i> Change Key
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Wallet Balance Card -->
             <div class="wallet-pill">
                 <div class="wallet-pill-left">
                     <img src="https://cdn-icons-png.flaticon.com/512/2704/2704332.png" class="flaticon-icon" alt="Wallet">
                     <div>
                         <div class="wallet-title">TG Balance</div>
-                        <div class="wallet-amount">&#8377;<span id="dashBalance">0.00</span></div>
+                        <div class="wallet-amount">&#8377;<span id="dashBalance"><span class="skeleton-balance"></span></span></div>
                     </div>
                 </div>
                 <button class="btn-add-money" onclick="triggerAddMoney()">
@@ -999,7 +947,6 @@
                 </button>
             </div>
 
-            <!-- Dashboard Quick Actions -->
             <div class="action-grid">
                 <div class="action-card" id="rechargeCard" onclick="openRechargeOptions()">
                     <span class="cashback-badge">UPTO 20% OFF</span>
@@ -1013,7 +960,6 @@
                 </div>
             </div>
 
-            <!-- Recent Transactions Section -->
             <div class="transactions-section">
                 <div class="transactions-header">
                     <div class="transactions-title">
@@ -1026,7 +972,6 @@
                 </div>
             </div>
 
-            <!-- Footer Gateway Display -->
             <div class="payments-footer">
                 <div class="brand-logos">
                     <span class="brand-logo phonepe"><span style="background:#5f259f;color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;margin-right:4px;">P</span> PhonePe</span>
@@ -1036,8 +981,7 @@
             </div>
         </div>
 
-        <!-- GLOBAL CONFIRMATION MODAL -->
-        <div id="actionConfirmModal" class="modal-overlay hidden">
+        <div id="actionConfirmModal" class="modal-overlay hidden" onclick="handleOverlayClick(event, 'actionConfirmModal')">
             <div class="modal-card">
                 <div class="modal-icon-badge" id="confirmModalIcon">
                     <i data-lucide="help-circle" style="width: 24px; height: 24px;"></i>
@@ -1051,8 +995,7 @@
             </div>
         </div>
 
-        <!-- RECHARGE METHOD SELECTOR -->
-        <div id="rechargeBottomSheet" class="bottom-sheet-overlay hidden">
+        <div id="rechargeBottomSheet" class="bottom-sheet-overlay hidden" onclick="handleOverlayClick(event, 'rechargeBottomSheet')">
             <div class="bottom-sheet-card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div style="font-weight:800; font-size:16px; color:var(--text-dark);">Choose Recharge Method</div>
@@ -1073,15 +1016,13 @@
             </div>
         </div>
 
-        <!-- RECHARGE EXECUTION SHEET -->
-        <div id="rechargeFormSheet" class="bottom-sheet-overlay hidden">
+        <div id="rechargeFormSheet" class="bottom-sheet-overlay hidden" onclick="handleOverlayClick(event, 'rechargeFormSheet', closeRechargeForm)">
             <div class="bottom-sheet-card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div style="font-weight:800; font-size:16px; color:var(--text-dark);" id="rechargeFormTitle">Recharge Target ID</div>
                     <i data-lucide="x" style="cursor:pointer; color:var(--text-muted);" onclick="closeRechargeForm()"></i>
                 </div>
                 
-                <!-- Dynamic Input / WebCam Reader Container -->
                 <div id="rechargeModeContainer"></div>
 
                 <div class="input-group" style="margin-bottom:0;">
@@ -1091,8 +1032,7 @@
             </div>
         </div>
 
-        <!-- RECEIPT BILL MODAL -->
-        <div id="billModal" class="modal-overlay hidden">
+        <div id="billModal" class="modal-overlay hidden" onclick="handleOverlayClick(event, 'billModal')">
             <div class="modal-card">
                 <div class="modal-icon-badge" style="background:var(--green-light); color:var(--green-btn);">
                     <i data-lucide="check-circle" style="width: 28px; height: 28px;"></i>
@@ -1111,8 +1051,7 @@
             </div>
         </div>
 
-        <!-- CASHBACK NOTIFICATION MODAL -->
-        <div id="cashbackModal" class="modal-overlay hidden">
+        <div id="cashbackModal" class="modal-overlay hidden" onclick="handleOverlayClick(event, 'cashbackModal')">
             <div class="modal-card">
                 <div class="modal-icon-badge" style="background:var(--green-light); color:var(--green-btn);">
                     <i data-lucide="gift" style="width: 28px; height: 28px;"></i>
@@ -1126,8 +1065,7 @@
             </div>
         </div>
 
-        <!-- TRANSACTION DETAILS MODAL -->
-        <div id="txDetailModal" class="modal-overlay hidden">
+        <div id="txDetailModal" class="modal-overlay hidden" onclick="handleOverlayClick(event, 'txDetailModal')">
             <div class="modal-card">
                 <div class="modal-icon-badge" id="txDetailIcon">
                     <i data-lucide="receipt" style="width: 28px; height: 28px;"></i>
@@ -1144,38 +1082,31 @@
             </div>
         </div>
 
-        <!-- CHANGE SECRET KEY MODAL -->
-        <div id="changeKeyModal" class="modal-overlay hidden">
-            <div class="modal-card">
-                <div class="modal-icon-badge">
-                    <i data-lucide="key-round" style="width: 24px; height: 24px;"></i>
+        <!-- REDESIGNED GIFT CODE MODAL CONTAINER -->
+        <div id="giftModal" class="modal-overlay hidden" onclick="handleOverlayClick(event, 'giftModal')">
+            <div class="modal-card gift-modal-card">
+                <div class="gift-modal-header-bg"></div>
+                <div class="gift-modal-badge">
+                    <i data-lucide="gift" style="width: 32px; height: 32px;"></i>
                 </div>
-                <div class="modal-title">Change Secret Key</div>
-                <input type="password" id="newKeyInput" class="custom-input" maxlength="6" pattern="\d{6}" placeholder="* * * * * *" inputmode="numeric">
-                <div class="modal-actions">
-                    <button class="btn-modal-cancel" onclick="closeModal('changeKeyModal')">Cancel</button>
-                    <button id="updateKeyBtn" class="btn-modal-confirm" onclick="submitNewKey()">Update</button>
-                </div>
-            </div>
-        </div>
+                <div class="gift-modal-content">
+                    <div class="modal-title" style="margin-top:2px;">Redeem Gift Code</div>
+                    <div class="modal-subtitle">Enter your promo code below to claim instantly to your balance.</div>
+                    
+                    <div class="gift-input-wrapper">
+                        <input type="text" id="giftCodeInput" class="gift-input" placeholder="ENTER CODE HERE">
+                    </div>
 
-        <!-- REDEEM GIFT CODE MODAL -->
-        <div id="giftModal" class="modal-overlay hidden">
-            <div class="modal-card">
-                <div class="modal-icon-badge">
-                    <i data-lucide="gift" style="width: 24px; height: 24px;"></i>
-                </div>
-                <div class="modal-title">Redeem Gift Code</div>
-                <input type="text" id="giftCodeInput" class="custom-input" placeholder="ENTER GIFT CODE" style="text-transform: uppercase;">
-                <div class="modal-actions">
-                    <button class="btn-modal-cancel" onclick="closeModal('giftModal')">Cancel</button>
-                    <button id="redeemBtn" class="btn-modal-confirm" onclick="submitGiftCode()">Redeem</button>
+                    <div class="modal-actions">
+                        <button class="btn-modal-cancel" onclick="closeModal('giftModal')">Cancel</button>
+                        <button id="redeemBtn" class="btn-modal-confirm gift-btn-redeem" onclick="submitGiftCode()">Claim Code</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase & Functional Core Scripts -->
+    <!-- Firebase System Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, runTransaction, onSnapshot, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -1203,8 +1134,91 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
-            checkLoginStatus();
+            initFastSessionLoad();
         });
+
+        /* --- 1-Click Close Outside Overlay Handler --- */
+        window.handleOverlayClick = function(event, modalId, customCloseFn = null) {
+            if (event.target.id === modalId) {
+                if (typeof customCloseFn === 'function') {
+                    customCloseFn();
+                } else {
+                    closeModal(modalId);
+                }
+            }
+        };
+
+        /* --- Local Storage & Fast Session Strategy --- */
+        function initFastSessionLoad() {
+            const savedUid = localStorage.getItem('tg_uid');
+            const savedKey = localStorage.getItem('tg_key');
+            const cachedBalance = localStorage.getItem('tg_cached_balance');
+
+            if (savedUid && savedKey) {
+                document.getElementById('authView').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('hidden');
+
+                if (cachedBalance !== null) {
+                    const balNum = Number(cachedBalance);
+                    document.getElementById('dashBalance').textContent = balNum.toFixed(2);
+                    updateCardState(balNum);
+                } else {
+                    document.getElementById('dashBalance').innerHTML = `<span class="skeleton-balance"></span>`;
+                }
+
+                renderTransactions();
+                syncLiveData(savedUid, savedKey);
+            } else {
+                document.getElementById('authView').classList.remove('hidden');
+                updateNotification("Please login or create an account to start.", "red");
+            }
+        }
+
+        function updateCardState(bal) {
+            const rechargeCard = document.getElementById('rechargeCard');
+            const lockIcon = document.getElementById('rechargeLockIcon');
+            if (bal < 10) {
+                rechargeCard.classList.add('disabled');
+                lockIcon.classList.remove('hidden');
+                updateNotification("Balance below ₹10. Recharge option is locked!", "red");
+            } else {
+                rechargeCard.classList.remove('disabled');
+                lockIcon.classList.add('hidden');
+                updateNotification("Wallet active! Get up to 20% cashback on recharges.", "green");
+            }
+        }
+
+        function syncLiveData(uid, key) {
+            if (unsubSnapshot) unsubSnapshot();
+            unsubSnapshot = onSnapshot(doc(db, "users", uid), (snap) => {
+                if (!snap.exists()) {
+                    handleLogoutRedirect();
+                    return;
+                }
+                const data = snap.data();
+                if (data.key !== key) {
+                    handleLogoutRedirect();
+                    return;
+                }
+
+                currentUserData = data;
+                const bal = Number(data.balance || 0);
+
+                localStorage.setItem('tg_cached_balance', bal);
+                document.getElementById('dashBalance').textContent = bal.toFixed(2);
+                updateCardState(bal);
+            }, (error) => {
+                console.error("Snapshot sync error:", error);
+            });
+        }
+
+        function handleLogoutRedirect() {
+            if (unsubSnapshot) unsubSnapshot();
+            localStorage.removeItem('tg_uid');
+            localStorage.removeItem('tg_key');
+            localStorage.removeItem('tg_cached_balance');
+            window.location.href = "home.html";
+        }
 
         window.showAlert = function(msg) {
             const container = document.getElementById('toast-container');
@@ -1248,6 +1262,7 @@
             btnElement.disabled = false;
         }
 
+        /* --- Local Storage Transaction History --- */
         function saveTransactionLocally(tx) {
             const existing = JSON.parse(localStorage.getItem('tg_transactions') || '[]');
             existing.unshift(tx);
@@ -1312,30 +1327,11 @@
             showAlert("Transaction history cleared");
         };
 
-        async function checkLoginStatus() {
-            const savedUid = localStorage.getItem('tg_uid');
-            const savedKey = localStorage.getItem('tg_key');
-            if (savedUid && savedKey) {
-                try {
-                    const userSnap = await getDoc(doc(db, "users", savedUid));
-                    if (userSnap.exists() && userSnap.data().key === savedKey) {
-                        document.getElementById('initialLoaderView').classList.add('hidden');
-                        loadDashboard(savedUid, savedKey);
-                        return;
-                    }
-                } catch (e) {
-                    console.error("Session sync failed", e);
-                }
-            }
-            document.getElementById('initialLoaderView').classList.add('hidden');
-            document.getElementById('authView').classList.remove('hidden');
-            updateNotification("Please login or create an account to start.", "red");
-        }
-
         function updateNotification(msg, color = "green") {
             const banner = document.getElementById('notifBanner');
             const icon = document.getElementById('notifIcon');
             const text = document.getElementById('notifText');
+            banner.style.display = "flex";
             text.textContent = msg;
             if (color === "green") {
                 banner.className = "notification-banner green";
@@ -1391,6 +1387,7 @@
             const submitBtn = document.getElementById('authSubmitBtn');
             const key = document.getElementById('keyInput').value.trim();
             showDotLoading(submitBtn);
+
             if (isCreateMode) {
                 try {
                     const name = document.getElementById('regName').value.trim();
@@ -1408,7 +1405,8 @@
                     showAlert(`Account Created! ID: ${newUid}`);
                     localStorage.setItem('tg_uid', newUid);
                     localStorage.setItem('tg_key', key);
-                    loadDashboard(newUid, key);
+                    localStorage.setItem('tg_cached_balance', '0');
+                    initFastSessionLoad();
                 } catch (e) {
                     showAlert("Registration failed: " + e.message);
                 } finally {
@@ -1422,7 +1420,8 @@
                         showAlert("Login successful!");
                         localStorage.setItem('tg_uid', uid);
                         localStorage.setItem('tg_key', key);
-                        loadDashboard(uid, key);
+                        localStorage.setItem('tg_cached_balance', userSnap.data().balance || 0);
+                        initFastSessionLoad();
                     } else {
                         showAlert("Invalid ID or Secret Key!");
                     }
@@ -1432,41 +1431,6 @@
                     hideDotLoading(submitBtn);
                 }
             }
-        }
-
-        function loadDashboard(uid, key) {
-            document.getElementById('authView').classList.add('hidden');
-            document.getElementById('dashboardView').classList.remove('hidden');
-            document.getElementById('dashUid').textContent = uid;
-            document.getElementById('dashKey').textContent = key;
-            document.getElementById("qrcode").innerHTML = "";
-            new QRCode(document.getElementById("qrcode"), { text: `UID:${uid}`, width: 72, height: 72 });
-            renderTransactions();
-
-            if (unsubSnapshot) unsubSnapshot();
-            unsubSnapshot = onSnapshot(doc(db, "users", uid), (snap) => {
-                if (snap.exists()) {
-                    const data = snap.data();
-                    currentUserData = data;
-                    const bal = Number(data.balance || 0);
-                    document.getElementById('dashBalance').textContent = bal.toFixed(2);
-                    document.getElementById('dashName').textContent = data.name || "User";
-                    document.getElementById('dashPhone').textContent = data.phone || "-";
-                    document.getElementById('dashClass').textContent = data.userClass || "-";
-                    
-                    const rechargeCard = document.getElementById('rechargeCard');
-                    const lockIcon = document.getElementById('rechargeLockIcon');
-                    if (bal < 10) {
-                        rechargeCard.classList.add('disabled');
-                        lockIcon.classList.remove('hidden');
-                        updateNotification("Balance below ₹10. Recharge option is locked!", "red");
-                    } else {
-                        rechargeCard.classList.remove('disabled');
-                        lockIcon.classList.add('hidden');
-                        updateNotification("Wallet active! Get up to 20% cashback on recharges.", "green");
-                    }
-                }
-            });
         }
 
         window.triggerAddMoney = function() {
@@ -1480,7 +1444,7 @@
         };
 
         window.openRechargeOptions = function() {
-            const currentBal = Number(currentUserData.balance || 0);
+            const currentBal = Number(localStorage.getItem('tg_cached_balance') || currentUserData.balance || 0);
             if (currentBal < 10) {
                 showConfirmationModal({
                     icon: 'alert-triangle',
@@ -1537,7 +1501,7 @@
                             stopScanner();
                         },
                         () => {}
-                    ).catch((err) => {
+                    ).catch(() => {
                         const statusText = document.getElementById('scannerStatusText');
                         if (statusText) {
                             statusText.style.color = "var(--red-btn)";
@@ -1585,7 +1549,7 @@
                 return;
             }
 
-            const currentBal = Number(currentUserData.balance || 0);
+            const currentBal = Number(localStorage.getItem('tg_cached_balance') || currentUserData.balance || 0);
             if (amount > currentBal) {
                 showAlert("Insufficient wallet balance!");
                 return;
@@ -1686,35 +1650,10 @@
             window.open(url, '_blank');
         };
 
-        window.openChangeKeyModal = function() {
-            document.getElementById('newKeyInput').value = "";
-            document.getElementById('changeKeyModal').classList.remove('hidden');
-        };
-
-        window.submitNewKey = async function() {
-            const newKey = document.getElementById('newKeyInput').value.trim();
-            if (!/^\d{6}$/.test(newKey)) {
-                showAlert("Key must be 6 digits!");
-                return;
-            }
-            const btn = document.getElementById('updateKeyBtn');
-            showDotLoading(btn);
-            try {
-                await updateDoc(doc(db, "users", localStorage.getItem('tg_uid')), { key: newKey });
-                localStorage.setItem('tg_key', newKey);
-                document.getElementById('dashKey').textContent = newKey;
-                closeModal('changeKeyModal');
-                showAlert("Secret key updated!");
-            } catch (e) {
-                showAlert("Failed to change key");
-            } finally {
-                hideDotLoading(btn);
-            }
-        };
-
         window.openGiftModal = function() {
             document.getElementById('giftCodeInput').value = "";
             document.getElementById('giftModal').classList.remove('hidden');
+            lucide.createIcons();
         };
 
         window.submitGiftCode = async function() {
