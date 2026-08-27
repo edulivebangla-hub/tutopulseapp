@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy policy</title>
+
+    <!-- Preload Critical Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease, border-color 0.2s, box-shadow 0.2s;
+            -webkit-tap-highlight-color: transparent !important;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, div, button, input {
+            -webkit-tap-highlight-color: transparent !important;
+            text-decoration: none;
+        }
+
+        input {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+        }
+
+        img {
+            -webkit-user-drag: none;
+            object-fit: cover;
+        }
+
+        :root {
+            --bg-light: #ffffff;
+            --blue-primary: #2563eb;
+            --blue-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            --green-btn: #10b981;
+            --green-light: #d1fae5;
+            --red-btn: #ef4444;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --radius-xl: 10px;
+            --radius-lg: 12px;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            position: fixed;
+            top: 40px;
+            display: flex;
+            flex-direction: column;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            overflow-y: auto;
+            background: #f8fafc;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            will-change: scroll-position;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .app-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .header { 
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            height: 40px;
+            background: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        .back-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: #f8fafc;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-btn:active {
+            transform: scale(0.92);
+        }
+
+        .header-title {
+            font-weight: 800;
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Refined Content Styling --- */
+        .content {
+            padding: 20px 18px 40px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .content > p:first-of-type {
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--text-dark);
+            background: #ffffff;
+            padding: 14px 16px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 2px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 20px;
+        }
+
+        .badge-secure {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .badge-trusted {
+            background-color: var(--green-light);
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title + p, 
+        .section-title + ul {
+            background: #ffffff;
+            padding: 14px 16px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 18px;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--blue-primary);
+            font-weight: bold;
+            font-size: 16px;
+            position: absolute;
+            left: 2px;
+            top: -2px;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div id="toast-container"></div>
+
+        <div class="header">
+            <div class="back-btn" onclick="goBack()">
+                <i data-lucide="arrow-left" style="width: 20px; height: 20px; color: #2563eb;"></i>
+            </div>
+            <div class="header-title">Privacy policy</div>
+            <div style="width: 30px;"></div>
+        </div>
+
+       <!-- Main Content -->
+        <div class="content">
+            <div class="badge-container">
+                <span class="badge badge-secure">&#128274; 100% Safe & Secure</span>
+                <span class="badge badge-trusted">&#10004; Verified APK</span>
+            </div>
+
+            <p>Welcome to <strong>TutoGenius</strong>. Your privacy and trust are our top priorities. This Privacy Policy outlines how our application collects, uses, and safeguards your information.</p>
+
+            <div class="section-title">1. Information We Collect</div>
+            <ul>
+                <li>Account details (such as your name and email address) for user access.</li>
+                <li>Device information to optimize app stability and performance.</li>
+            </ul>
+
+            <div class="section-title">2. Safe & Secure Payments</div>
+            <p>All financial transactions within the TutoGenius app are processed through encrypted, industry-standard payment gateways. We do not store your financial details, bank card numbers, or banking credentials on our servers.</p>
+
+            <div class="section-title">3. APK Security & Integrity</div>
+            <p>The TutoGenius APK file is verified, safe, and built with strict security protocols. It contains no malicious code, third-party spyware, or unauthorized tracking mechanisms.</p>
+
+            <div class="section-title">4. Data Usage & Protection</div>
+            <p>Your personal data is never sold, rented, or shared with third parties for marketing purposes. Data is exclusively utilized to maintain your purchases and deliver your digital materials seamlessly.</p>
+
+            <div class="section-title">5. Contact Us</div>
+            <p>If you have any questions or concerns regarding this Privacy Policy or app security, please contact our support team.</p>
+
+           
+        </div>
+    </div>
+<script>
+        lucide.createIcons();
+        window.goBack = function() {
+            window.history.back();
+        };
+    </script>
+</body>
+</html>
