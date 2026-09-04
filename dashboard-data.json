@@ -1,0 +1,40 @@
+{
+  "courses": [
+    {
+      "title": "Exam Prep",
+      "icon": "https://cdn-icons-png.flaticon.com/512/2641/2641409.png",
+      "link": "#",
+      "badge": ""
+    },
+    {
+      "title": "মাধ্যমিক",
+      "icon": "https://edulivestore.netlify.app/image/wbbse.png",
+      "link": "https://tutogeniusin.netlify.app/All Course/course.html/?c=Madhyamik",
+      "badge": "A+"
+    },
+    {
+      "title": "HS 11-12",
+      "icon": "https://edulivestore.netlify.app/image/West_Bengal_Council_of_Higher_Secondary_Education_Logo.png",
+      "link": "https://tutogeniusin.netlify.app/All Course/course.html/?c=HS 11-12",
+      "badge": "A+"
+    },
+    {
+      "title": "Test+",
+      "icon": "https://cdn-icons-png.flaticon.com/512/13972/13972644.png",
+      "link": "#",
+      "badge": "New"
+    }
+  ],
+  "showcase": [
+    {
+      "imageUrl": "https://i.ibb.co/pvHrmp04/Class-11.jpg",
+      "altText": "Class 11 Ad",
+      "link": "courses.html"
+    },
+    {
+      "imageUrl": "https://i.ibb.co/nN1kVj31/class-12.jpg",
+      "altText": "Class 12 Ad",
+      "link": "courses.html"
+    }
+  ]
+}
