@@ -14,9 +14,9 @@
       "title": "NSOU Admission 2026-27",
       "subtitle": "UG/PG Distance Course",
       "date": "AUG 31",
-      "buttonText": "Details",
-      "actionType": "toast",
-      "actionValue": "Admission portal opens next week!"
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://TutoGenius.in"
     }
   ],
   "govt": [
@@ -34,9 +34,9 @@
       "title": "Promo Code Offer",
       "subtitle": "Get 50% Off Govt Job Books",
       "date": "LIMITED",
-      "buttonText": "Copy Code",
-      "actionType": "copy",
-      "actionValue": "GOVT50"
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://TutoGenius.in"
     }
   ],
   "private": [
@@ -55,8 +55,8 @@
       "icon": "https://cdn-icons-png.flaticon.com/512/4999/4999563.png",
       "title": "SVMCM Scholarship",
       "subtitle": "10th, HS, UG, PG - 60%",
-      "date": "",
-      "buttonText": "Portal",
+      "date": "Comming Soon",
+      "buttonText": "Apply",
       "actionType": "link",
       "actionValue": "https://svmcm.wbhed.gov.in/"
     }
