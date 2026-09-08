@@ -77,7 +77,7 @@
       "buttonText": "Apply",
       "actionType": "link",
       "actionValue": "https://www.tutogenius.in/"
-    },
+    }
   ],
   "private": [
     {
@@ -168,7 +168,7 @@
       "buttonText": "Apply",
       "actionType": "link",
       "actionValue": "https://www.tutogenius.in/"
-    },
+    }
   ],
   "govtsch": [
     {
@@ -211,6 +211,6 @@
       "buttonText": "Apply",
       "actionType": "link",
       "actionValue": "https://www.tutogenius.in/"
-    },
+    }
   ]
 }
