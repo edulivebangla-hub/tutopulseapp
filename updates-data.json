@@ -1,8 +1,8 @@
 {
   "admission": [
     {
-      "icon": "https://cdn-icons-png.flaticon.com/512/4999/4999563.png",
-      "title": "CLAT - National Law Admission 2026",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL-fFW7ixmQK6z75kXQQS50RApHd7qdGbADfRNAQJOrA&s=10",
+      "title": "CLAT - National Law Admission 2027",
       "subtitle": "UG BA LLB From Central University",
       "date": "OCT 31",
       "buttonText": "Apply",
@@ -10,10 +10,10 @@
       "actionValue": "https://consortiumofnlus.ac.in/"
     },
     {
-      "icon": "https://i.ibb.co/rKQhWWyb/logo.png",
-      "title": "NSOU Admission 2026-27",
-      "subtitle": "UG/PG Distance Course",
-      "date": "AUG 31",
+      "icon": "https://iimcat.ac.in/per/g06/pub/32842/ASM/WebPortal/1/images/CAT_IIMA_Logo_20Jul23.jpg",
+      "title": "IIM CAT MBA Admission 2026",
+      "subtitle": "Common Admission Test 2026",
+      "date": "SEP 15",
       "buttonText": "Apply",
       "actionType": "link",
       "actionValue": "https://TutoGenius.in"
@@ -21,44 +21,196 @@
   ],
   "govt": [
     {
-      "icon": "https://cdn-icons-png.flaticon.com/512/4999/4999563.png",
-      "title": "RRB Section Controller",
-      "subtitle": "Railway Recruitment (Graduate)",
-      "date": "AUG 14",
+      "icon": "https://ssc.gov.in/assets/sscLogo.webp",
+      "title": "SSC JE Recruitment",
+      "subtitle": "Junior Engineer Staff Selection",
+      "date": "SEP 22",
       "buttonText": "Apply",
       "actionType": "link",
-      "actionValue": "https://www.rrbcdg.gov.in/"
+      "actionValue": "https://www.tutogenius.in/"
     },
     {
-      "icon": "https://cdn-icons-png.flaticon.com/512/4999/4999563.png",
-      "title": "Promo Code Offer",
-      "subtitle": "Get 50% Off Govt Job Books",
-      "date": "LIMITED",
+      "icon": "https://www.rrbapply.gov.in/assets/images/logo.png",
+      "title": "RRB JE Recruitment",
+      "subtitle": "Railway Junior Engineer (Diploma/Degree)",
+      "date": "SEP 13",
       "buttonText": "Apply",
       "actionType": "link",
       "actionValue": "https://TutoGenius.in"
-    }
+    },{
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnN0W2hNRRMgLR2PPyNQMd918Ebg49r6N0s24u9pk0Ng&s",
+      "title": "Post Office GDS Recruitment",
+      "subtitle": "10th Pass | Gramin Dak Sevak",
+      "date": "SEP 19",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.rrbcdg.gov.in/"
+    },{
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUgnik7Mq9S7QM_2_WZIhvVDRyZEov4CJD8h5UrVjs_w&s",
+      "title": "Saha Institute Kolkata",
+      "subtitle": "Clerk, Assitant, Scientist Various Vacancies - 10th Pass to M.Sc",
+      "date": "SEP 15",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    },{
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSxp9Yt9EVmU2pH5T-hJlPhPyUocdtJnCrNUEssAbyQg&s",
+      "title": "APFC Recruitment: EPFO",
+      "subtitle": "Assistant Provident Fund Commissioner",
+      "date": "SEP 11",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+     },{
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-uv-_UJJT8nxTgxVfTIPEvmwuaKR8bBJUsX5ULsAVzQ&s=10",
+      "title": "CPCB Recruitment 2026",
+      "subtitle": "Scientist, Data Entry Operator, Field Assistant",
+      "date": "SEP 7",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+   },{
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Emblem_of_West_Bengal_%282026%29.png/500px-Emblem_of_West_Bengal_%282026%29.png",
+      "title": "Panchyat Recruitment 2026 (Soon..)",
+      "subtitle": "Registration Soon through WBPSC (10th/12th/Graduate)",
+      "date": "SEP 30",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    },
   ],
   "private": [
     {
-      "icon": "https://cdn-icons-png.flaticon.com/512/4999/4999563.png",
-      "title": "Kotak Kanya Scholarship",
-      "subtitle": "12th Pass UG Girls - 75% Marks",
-      "date": "AUG 31",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO1BWTboLNeyOAyMhLVxyhfp_tToInkSdT0LefhaYwZ9FbWAndTSeiM-nP&s=10",
+      "title": "Shrawan Todi Foundation Scholarship",
+      "subtitle": "School (11/12) - 60% MarksSchool (11/12) - 60% Marks",
+      "date": "OCT 11",
       "buttonText": "Apply",
       "actionType": "link",
-      "actionValue": "https://www.buddy4study.com/"
-    }
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqjmt4yYEacoyBQezoxSgPo5RcJHycFYlf_4jLFxApKw&s=10",
+      "title": "TATA Pankh Scholarship",
+      "subtitle": "School (11/12), UG, ITI, Diploma - 60% Marks",
+      "date": "OCT 26",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO-zsDdnlptDqnVXN13MmJT40f9-8kap-7J3Wdjp8qUA2vrh8jaINFTlCM&s=10",
+      "title": "SBI Asha Scholarship",
+      "subtitle": "School (IX–XII), UG, PG, Medical, IIT, IIM - 75% Marks",
+      "date": "SEP 22 ",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://i.pinimg.com/736x/1e/b4/93/1eb49385575175ab7f541d7000273a1b.jpg",
+      "title": "HDFC Bank Scholarship",
+      "subtitle": "School (I–XII), UG, PG - 55% Marks",
+      "date": "OCT 31",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyG6BHZKf_Hf4y_KtlEoBOyEkePIWWIGxrjkCZUTm_2g&s=10",
+      "title": "Kotak Kanya Scholarship",
+      "subtitle": "12th Pass UG Girls (Professional Courses) - 75% Marks",
+      "date": "OCT 1",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIIhNT5AL0Lwzq_tjCPM5wm80eYxHm0Rpn8VSyN2IRoyu5UE2uJJKQjtub&s=10",
+      "title": "Reliance Foundation Scholarship",
+      "subtitle": "UG 1st Year - HS Pass 60% Marks",
+      "date": "OCT 10",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsZ2vCPoVq04rZfqBcR4xlV8dCGFLyi9GQ49DEGd7AJA&s=10",
+      "title": "IDFC First Bank Scholarship",
+      "subtitle": "BTech 1st Year Students (New)",
+      "date": "SEP 20",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2PjZbGU2tRK5yju9HQjgRfGdM08jkyEED-hyxIeuE_4vdrLAcHFmXLdU&s=10",
+      "title": "Legrand Scholarship (for Girls)",
+      "subtitle": "12th Pass UG Girls (B.Tech, BBA, B.Com, B.Sc Courses) - 80% Marks",
+      "date": "SEP 7",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP3jLFmbOg0lXLhwfOwNxHP3nFqm54A9nPxCuky6733kvEucZ_1gyymGA&s=10",
+      "title": "Hero Ramat Kant Scholarship",
+      "subtitle": "12th Pass - 80% Marks",
+      "date": "OCT ",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "https://app.sitaramjindalfoundation.org/Assets/Images/Logo/SJF-removebg-preview.png",
+      "title": "Sitaram Jindal Scholarship",
+      "subtitle": "10th Pass, 12th Pass, UG PG 75% Marks",
+      "date": "SEP 20",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    }, {
+      "icon": "",
+      "title": "",
+      "subtitle": "",
+      "date": "OCT ",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    },
   ],
   "govtsch": [
     {
-      "icon": "https://cdn-icons-png.flaticon.com/512/4999/4999563.png",
+      "icon": "https://www.edutips.in/fonts/icon/svmcm.png",
       "title": "SVMCM Scholarship",
-      "subtitle": "10th, HS, UG, PG - 60%",
-      "date": "Comming Soon",
+      "subtitle": "Swami Vivekananda Scholarship: 10th, HS, UG, PG 60%",
+      "date": "",
       "buttonText": "Apply",
       "actionType": "link",
-      "actionValue": "https://TutoGenius.in/"
-    }
+      "actionValue": "https://www.tutogenius.in/"
+    },{
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Emblem_of_West_Bengal_%282026%29.png/500px-Emblem_of_West_Bengal_%282026%29.png",
+      "title": "Chief Minister Scholarship",
+      "subtitle": "Financial aid offered by West Bengal CM Relief Fund.",
+      "date": "",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    },{
+      "icon": "https://www.edutips.in/fonts/icon/oasis.png",
+      "title": "Oasis Scholarship",
+      "subtitle": "Scholarship for SC, ST, and OBC students by West Bengal government.",
+      "date": "",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    },{
+      "icon": "https://www.edutips.in/fonts/icon/aikyashree.pnghttps://www.edutips.in/fonts/icon/aikyashree.png",
+      "title": "Aikyashree Scholarship",
+      "subtitle": "Scholarship for minority students in West Bengal from WBMDFC.",
+      "date": "",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    },{
+      "icon": "https://www.edutips.in/fonts/icon/nta.png",
+      "title": "National Scholarship Portal",
+      "subtitle": "Central govt scholarships for SC/ST/OBC and minority students through NSP portal.",
+      "date": "",
+      "buttonText": "Apply",
+      "actionType": "link",
+      "actionValue": "https://www.tutogenius.in/"
+    },
   ]
 }
